@@ -6,7 +6,7 @@
 #    By: sdiouane <sdiouane@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/03/12 23:52:42 by sdiouane          #+#    #+#              #
-#    Updated: 2024/03/13 01:01:04 by sdiouane         ###   ########.fr        #
+#    Updated: 2024/03/13 20:59:03 by sdiouane         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -17,7 +17,7 @@ CFLAGS = -Wall -Wextra -Werror
 RDFLAGS = -lreadline
 SRC = main.c \
       ft_split.c \
-	  lsts.c
+	  lsts.c \
 
 OBJ = $(SRC:.c=.o)
 
