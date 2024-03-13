@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: sdiouane <sdiouane@student.42.fr>          +#+  +:+       +#+         #
+#    By: sel-jadi <sel-jadi@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/03/12 23:52:42 by sdiouane          #+#    #+#              #
-#    Updated: 2024/03/13 01:01:04 by sdiouane         ###   ########.fr        #
+#    Updated: 2024/03/13 14:10:00 by sel-jadi         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -17,7 +17,8 @@ CFLAGS = -Wall -Wextra -Werror
 RDFLAGS = -lreadline
 SRC = main.c \
       ft_split.c \
-	  lsts.c
+	  lsts.c \
+	  prompt.c 
 
 OBJ = $(SRC:.c=.o)
 
