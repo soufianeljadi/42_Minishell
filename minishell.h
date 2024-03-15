@@ -6,7 +6,7 @@
 /*   By: sdiouane <sdiouane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 23:51:44 by sdiouane          #+#    #+#             */
-/*   Updated: 2024/03/13 20:58:58 by sdiouane         ###   ########.fr       */
+/*   Updated: 2024/03/14 23:49:39 by sdiouane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,11 @@ typedef	struct			s_sep
 	struct s_sep		*next;
 }						t_sep;
 
+typedef struct s_env
+{
+	char **env;
+} s_env;
+
 /********************************' ; '*/
 void	print_list(t_sep *list);
 t_sep	*add_cell(t_sep *list, char *cmd_sep, int pos);
@@ -43,5 +48,6 @@ t_sep	*ft_lstnew(char *data);
 void	ft_free_tab(char **tab);
 char	**ft_split(char	*s, char c);
 
-
+/*************************token****/
+int handle_char();
 #endif
