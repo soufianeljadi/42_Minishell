@@ -6,7 +6,7 @@
 /*   By: sdiouane <sdiouane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 23:51:44 by sdiouane          #+#    #+#             */
-/*   Updated: 2024/03/16 16:12:51 by sdiouane         ###   ########.fr       */
+/*   Updated: 2024/03/16 21:16:48 by sdiouane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,8 @@ void init_env(char **env);
 s_cmd	*ft_lstnew();
 void	ft_lstadd_back(s_cmd **lst, s_cmd *new);
 void	print_list(s_cmd *list);
+s_cmd	*ft_lstnew_data(char *data);
+
 
 // split :
 void	ft_free_tab(char **tab);
@@ -56,9 +58,9 @@ int handle_char();
 
 void nbr_quotes(char *str);
 void syntax_error();
-void check_next(char *line);
-void parse_double_input(char *line, char c);
-void parse_single_input(char *line, char c);
-void parsing(char *line);
+int check_next(char *line);
+int parse_double_input(char *line, char c);
+int parse_single_input(char *line, char c);
+int parsing(char *lineint );
 
 #endif

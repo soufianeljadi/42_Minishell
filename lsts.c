@@ -6,7 +6,7 @@
 /*   By: sdiouane <sdiouane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/13 00:32:13 by sdiouane          #+#    #+#             */
-/*   Updated: 2024/03/16 16:13:34 by sdiouane         ###   ########.fr       */
+/*   Updated: 2024/03/16 17:22:16 by sdiouane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,18 @@ s_cmd	*ft_lstnew()
 	if (!b)
 		exit(EXIT_FAILURE);
 	b ->cmd_sep = NULL;
+	b ->next = NULL;
+	return (b);
+}
+
+s_cmd	*ft_lstnew_data(char *data)
+{
+	s_cmd	*b;
+
+	b = (s_cmd *)malloc(sizeof(s_cmd));
+	if (!b)
+		exit(EXIT_FAILURE);
+	b ->cmd_sep = data;
 	b ->next = NULL;
 	return (b);
 }
@@ -46,16 +58,12 @@ void	ft_lstadd_back(s_cmd **lst, s_cmd *new)
 
 void	print_list(s_cmd *list)
 {
-  int		i;
-
-  i = 0;
+	int i = 1;
   while (list)
   {
-  	printf("-----------------------------------\n");
-  	printf("| i = %d                            \n", i);
-  	printf("| list->cmd_sep : %s            \n", list->cmd_sep);
-  	printf("-----------------------------------\n");
+	printf("%d\t\t", i);
+  	printf("%s\n", list->cmd_sep);
   	list = list->next;
-  	i++;
+	i++;
   }
 }
