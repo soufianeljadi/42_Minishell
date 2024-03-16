@@ -6,59 +6,28 @@
 /*   By: sdiouane <sdiouane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/13 00:32:13 by sdiouane          #+#    #+#             */
-/*   Updated: 2024/03/13 01:03:55 by sdiouane         ###   ########.fr       */
+/*   Updated: 2024/03/16 16:13:34 by sdiouane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-// t_sep	*create_cell(char *cmd_sep)
-// {
-//   t_sep	*cell;
 
-//   cell = malloc(sizeof(t_sep));
-//   if (!(cell))
-//   	return (NULL);
-//   cell->next = NULL;
-//   cell->cmd_sep = cmd_sep;
-//   return (cell);
-// }
-
-// t_sep	*add_cell(t_sep *list, char *cmd_sep, int pos)
-// {
-//   t_sep	*cur;
-//   t_sep	*cell;
-//   int		i;
-
-//   cur = list;
-//   i = 0;
-//   cell = create_cell(cmd_sep);
-//   if (list == NULL)
-//   	return (cell);
-//   while (i < pos)
-//   {
-//   	i++;
-//   	cur = cur->next;
-//   }
-//   cell->next = cur;
-//   return (list);
-// }
-
-t_sep	*ft_lstnew(char *data)
+s_cmd	*ft_lstnew()
 {
-	t_sep	*b;
+	s_cmd	*b;
 
-	b = (t_sep *)malloc(sizeof(t_sep));
+	b = (s_cmd *)malloc(sizeof(s_cmd));
 	if (!b)
 		exit(EXIT_FAILURE);
-	b ->cmd_sep = data;
+	b ->cmd_sep = NULL;
 	b ->next = NULL;
 	return (b);
 }
 
-void	ft_lstadd_back(t_sep **lst, t_sep *new)
+void	ft_lstadd_back(s_cmd **lst, s_cmd *new)
 {
-	t_sep	*tmp;
+	s_cmd	*tmp;
 
 	if (!lst || !new)
 		return ;
@@ -75,7 +44,7 @@ void	ft_lstadd_back(t_sep **lst, t_sep *new)
 
 }
 
-void	print_list(t_sep *list)
+void	print_list(s_cmd *list)
 {
   int		i;
 

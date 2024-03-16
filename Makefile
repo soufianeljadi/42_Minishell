@@ -6,7 +6,7 @@
 #    By: sdiouane <sdiouane@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/03/12 23:52:42 by sdiouane          #+#    #+#              #
-#    Updated: 2024/03/14 23:23:30 by sdiouane         ###   ########.fr        #
+#    Updated: 2024/03/16 16:03:48 by sdiouane         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -19,6 +19,7 @@ SRC = main.c \
       ft_split.c \
 	  lsts.c \
 	  token.c \
+	  parsing.c
 
 OBJ = $(SRC:.c=.o)
 

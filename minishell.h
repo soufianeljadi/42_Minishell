@@ -6,7 +6,7 @@
 /*   By: sdiouane <sdiouane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 23:51:44 by sdiouane          #+#    #+#             */
-/*   Updated: 2024/03/14 23:49:39 by sdiouane         ###   ########.fr       */
+/*   Updated: 2024/03/16 16:12:51 by sdiouane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,30 +24,41 @@
 
 #define MAX_COMMAND_LENGTH 100
 
-typedef	struct			s_sep
+typedef	struct			s_cmd
 {
 	char				*cmd_sep;
-	struct s_sep		*next;
-}						t_sep;
+	struct s_cmd		*next;
+}						s_cmd;
 
 typedef struct s_env
 {
 	char **env;
 } s_env;
 
-/********************************' ; '*/
-void	print_list(t_sep *list);
-t_sep	*add_cell(t_sep *list, char *cmd_sep, int pos);
-t_sep	*create_cell(char *cmd_sep);
+// init env :
 
-/*******************************lst*/
-void	ft_lstadd_back(t_sep **lst, t_sep *new);
-t_sep	*ft_lstnew(char *data);
+void init_env(char **env);
 
-/*****************************split*/
+
+// lst :
+s_cmd	*ft_lstnew();
+void	ft_lstadd_back(s_cmd **lst, s_cmd *new);
+void	print_list(s_cmd *list);
+
+// split :
 void	ft_free_tab(char **tab);
 char	**ft_split(char	*s, char c);
 
-/*************************token****/
+// token : 
 int handle_char();
+
+// parsing :
+
+void nbr_quotes(char *str);
+void syntax_error();
+void check_next(char *line);
+void parse_double_input(char *line, char c);
+void parse_single_input(char *line, char c);
+void parsing(char *line);
+
 #endif
