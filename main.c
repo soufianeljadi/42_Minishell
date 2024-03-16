@@ -6,14 +6,14 @@
 /*   By: sdiouane <sdiouane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 23:52:10 by sdiouane          #+#    #+#             */
-/*   Updated: 2024/03/14 23:50:32 by sdiouane         ###   ########.fr       */
+/*   Updated: 2024/03/16 00:14:59 by sdiouane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 void init_env(char **env)
 {
-	s_env *lst;
+	s_env *lst = NULL;
 	lst->env = env;
 }
 int only_spaces(char *str)
@@ -53,12 +53,52 @@ void nbr_quotes(char *str)
 		printf("error\n");
 }
 
+void syntax_error()
+{
+	printf("syntax error \n");
+}
+
+
+void check_next(char *line)
+{
+	int i = 0;
+	int f = 0;
+	while (line[i] != '\0')
+	{
+		if(line[i] != ' ' && line[i] != '\t')
+			f = 1;
+		i++;
+	}
+	if(f == 0)
+		syntax_error();
+}
+
+
+void parse_pipe(char *line)
+{
+	int i = 0;
+	while (line[i] <= 32)
+		i++;
+	if (line[i] == '|')
+		syntax_error();
+	while (line[i] )
+	{
+		if (line[i] == '|')
+		{
+			i++;
+			check_next(line + i);
+		}
+		i++;
+	}
+}
+
 int main(int ac, char **av, char **env)
 {
 	((void)ac, (void)av);
 
+	 (void)env;	
 	
-	init_env(env);
+	// init_env(env);
 	// t_sep *cmd = NULL;
 	// t_sep *tmp= NULL;
 	// char **str;
@@ -72,7 +112,7 @@ int main(int ac, char **av, char **env)
 		{
 			if (!line)
 			    break;
-				rl_on_new_line();
+			parse_pipe(line);
 			nbr_quotes(line);
 			/***********************************History*/
 			add_history(line);
