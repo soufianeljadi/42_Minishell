@@ -6,16 +6,18 @@
 /*   By: sdiouane <sdiouane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 23:52:10 by sdiouane          #+#    #+#             */
-/*   Updated: 2024/03/16 00:14:59 by sdiouane         ###   ########.fr       */
+/*   Updated: 2024/03/16 00:58:37 by sdiouane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
 void init_env(char **env)
 {
 	s_env *lst = NULL;
 	lst->env = env;
 }
+
 int only_spaces(char *str)
 {
 	int i = 0;
@@ -58,14 +60,13 @@ void syntax_error()
 	printf("syntax error \n");
 }
 
-
 void check_next(char *line)
 {
 	int i = 0;
 	int f = 0;
 	while (line[i] != '\0')
 	{
-		if(line[i] != ' ' && line[i] != '\t')
+		if(line[i] != ' ' && line[i] != '\t' && line[i] != '\0' )
 			f = 1;
 		i++;
 	}
@@ -73,13 +74,12 @@ void check_next(char *line)
 		syntax_error();
 }
 
-
 void parse_pipe(char *line)
 {
 	int i = 0;
 	while (line[i] <= 32)
 		i++;
-	if (line[i] == '|')
+	if (line[i] == '|' )
 		syntax_error();
 	while (line[i] )
 	{
@@ -91,6 +91,60 @@ void parse_pipe(char *line)
 		i++;
 	}
 }
+void parse_single_and(char *line)
+{
+	int i = 0;
+	while (line[i] <= 32)
+		i++;
+	if (line[i] == '&' )
+		syntax_error();
+	while (line[i] )
+	{
+		if (line[i] == '&')
+		{
+			i++;
+			check_next(line + i);
+		}
+		i++;
+	}
+}
+
+void parse_or(char *line)
+{
+	int i = 0;
+	while (line[i] <= 32)
+		i++;
+	if (line[i] == '|' && line[i + 1] == '|')
+		syntax_error();
+	while (line[i])
+	{
+		if (line[i] == '|' && line[i + 1] == '|')
+		{
+			i = i + 2;
+			check_next(line + i + 2);
+		}
+		i++;
+	}
+}
+
+void parse_and(char *line)
+{
+	int i = 0;
+	while (line[i] <= 32)
+		i++;
+	if (line[i] == '&' && line[i + 1] == '&')
+		syntax_error();
+	while (line[i])
+	{
+		if (line[i] == '&' && line[i + 1] == '&')
+		{
+			i = i + 2;
+			check_next(line + i + 2);
+		}
+		i++;
+	}
+}
+
 
 int main(int ac, char **av, char **env)
 {
@@ -107,23 +161,27 @@ int main(int ac, char **av, char **env)
 	char *line = NULL;
 	while (1)
 	{  
-		/***********************************Read line*/
+		// Read line :
 		if((line = readline("Minishell :$ "))!= NULL  && only_spaces(line) == 0)
 		{
 			if (!line)
 			    break;
+			// parsing :
 			parse_pipe(line);
+			parse_or(line);
+			parse_and(line);
+			parse_single_and(line);
 			nbr_quotes(line);
-			/***********************************History*/
+			// History :
 			add_history(line);
-			/***********************************Check for exit cmd*/
+			// Check for exit cmd :
 			if (strncmp(line, "exit", 4) == 0)
 			{
 				printf("exit\n");
 			   free(line);
 				break;
 			 }
-			/***********************************Execute the cmd*/
+			// Execute the cmd :
 			// pid_t pid = fork();
 			// if (pid == -1) {
 			// 	perror("fork"); 
@@ -155,8 +213,6 @@ int main(int ac, char **av, char **env)
 		// }
 		// print_list(tmp);
 		// add_history(line);
-
-
 		free(line);
 	}
 	return 0;
