@@ -6,7 +6,7 @@
 /*   By: sdiouane <sdiouane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 23:51:44 by sdiouane          #+#    #+#             */
-/*   Updated: 2024/03/16 21:16:48 by sdiouane         ###   ########.fr       */
+/*   Updated: 2024/03/16 23:28:44 by sdiouane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,6 @@ int handle_char();
 void nbr_quotes(char *str);
 void syntax_error();
 int check_next(char *line);
-int parse_double_input(char *line, char c);
 int parse_single_input(char *line, char c);
 int parsing(char *lineint );
 

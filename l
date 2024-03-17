@@ -1,0 +1,13 @@
+Makefile
+f
+ft_split.c
+l
+lsts.c
+main.c
+main2.c
+minishell
+minishell.h
+parsing.c
+test.c
+token.c
+tokenizer_2_1.tldr
