@@ -6,14 +6,43 @@
 /*   By: sdiouane <sdiouane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/14 22:01:48 by sdiouane          #+#    #+#             */
-/*   Updated: 2024/03/14 23:24:09 by sdiouane         ###   ########.fr       */
+/*   Updated: 2024/03/17 22:33:55 by sdiouane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int handle_char()
+Token* create_token(char *value)
 {
-    // token_char *lst;
-    return (0);
+    Token *token = malloc(sizeof(Token));
+    if (token == NULL)
+    {
+        fprintf(stderr, "Erreur lors de l'allocation de mémoire pour le jeton\n");
+        exit(EXIT_FAILURE);
+    }
+    token->value = strdup(value);
+    return token;
+}
+
+void free_token(Token *token)
+{
+    free(token->value);
+    free(token);
+}
+
+void print_tokens(Token **tokens)
+{
+    for (int i = 0; tokens[i] != NULL; i++)
+    {
+        printf("%s\n", tokens[i]->value);
+    }
+}
+
+void free_tokens(Token **tokens)
+{
+    for (int i = 0; tokens[i] != NULL; i++)
+    {
+        free_token(tokens[i]);
+    }
+    free(tokens);
 }

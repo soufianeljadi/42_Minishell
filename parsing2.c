@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parsing.c                                          :+:      :+:    :+:   */
+/*   parsing2.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: sdiouane <sdiouane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/16 15:55:13 by sdiouane          #+#    #+#             */
-/*   Updated: 2024/03/18 01:43:49 by sdiouane         ###   ########.fr       */
+/*   Updated: 2024/03/18 00:51:40 by sdiouane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,16 +41,18 @@ void syntax_error()
 	printf("syntax error \n");
 }
 
-int check__next_for_second_pipe(char *prompte)
+
+int check_next_second(char *line)
 {
 	int i = 0;
-	int f = 0;
-	if(prompte[i] == '|')
+	int f = 1;
+	if(line[i] == '|')
 		return(1);
-	while (prompte[i] != '\0')
+	while (line[i] != '\0')
 	{
-		if(prompte[i] != ' ' && prompte[i] != '\t' && prompte[i] != '\0')
-			f = 1;
+		if(line[i] != ' ' && line[i] != '\t' && line[i] != '\0')
+			f = 0;
+
 		i++;
 	}
 	if(f == 0)
@@ -58,31 +60,49 @@ int check__next_for_second_pipe(char *prompte)
 	return(0);
 }
 
+int parse_second_readline(char *line, char c)
+{
+	int i = 0;
+	int r = 0;
+	while (line[i] <= 32)
+		i++;
+	if (line[i] == c)
+		return(1);
+	while (line[i])
+	{
+		if (line[i] == c)
+		{
+			i++;
+			r = check_next_second(line + i);
+		}
+		i++;
+	}
+	if(r == 0)
+		return(0);
+	return(1);
+}
+
 int check_next(char *line)
 {
 	int i = 0;
-	int j = 0;
 	int f = 0;
 	char *prompt = NULL;
 	if(line[i] == '|')
 		return(1);
 	while (line[i] != '\0')
 	{
-		if(line[i] != ' ' && line[i] != '\t' && line[i] != '\0')
-		{
+		if((line[i] == ' ' && line[i] == '\t') && line[i] != '\0')
 			f = 1;
-			j = i++;
-		}
 		i++;
 	}
-	// if(f == 0)
-	// 	return(1);
-	if (f == 0)
+	if(f == 0)
+		return(1);
+	if (f == 1)
 	{
 		prompt = readline("pipe > ");
-		// printf("%s\n", prompt);
-		// parse_single_input(prompt, '|');
-		// check__next_for_second_pipe(prompt);
+		if (parse_second_readline(prompt, '|'))
+			printf("error is heeere!!\n");
+			// syntax_error();
 		
 	}
 	return(0);
@@ -110,13 +130,7 @@ int parse_single_input(char *line, char c)
 	return(1);
 }
 
-// void check_pipe(char *line)
-// {
-// 	while (line[i])
-// 	{
-		
-// 	}
-// }
+
 
 int check_next_r(char *line)
 {
@@ -135,15 +149,6 @@ int check_next_r(char *line)
 	return(0);
 }
 
-// void next_is_file(char *line)
-// {
-// 	int i = 0;
-	
-// 	while (line[i])
-// 	{
-		
-// 	}
-// }
 
 int parse_redirection(char *line)
 {

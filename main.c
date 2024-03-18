@@ -6,7 +6,7 @@
 /*   By: sdiouane <sdiouane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 23:52:10 by sdiouane          #+#    #+#             */
-/*   Updated: 2024/03/16 23:43:28 by sdiouane         ###   ########.fr       */
+/*   Updated: 2024/03/17 22:43:04 by sdiouane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,9 +37,7 @@ int main(int ac, char **av, char **env)
 	((void)ac, (void)av);
 	(void)env;	
 	char *line = NULL;
-	char **buff;
-
-	
+	Token **token;
 	while (1)
 	{  
 		if((line = readline("Minishell :$ "))!= NULL  && only_spaces(line) == 0)
@@ -51,10 +49,8 @@ int main(int ac, char **av, char **env)
 				syntax_error();
 			else
 			{
-				buff = ft_split(line, '|');
-				int i = 0;
-				while (buff[i])
-					printf("%s\n", buff[i++]);
+				token = parse_command(line);
+				print_tokens(token);
 			}
 			if (strncmp(line, "exit", 4) == 0)
 			{
@@ -67,4 +63,3 @@ int main(int ac, char **av, char **env)
 	}
 	return 0;
 }
-
