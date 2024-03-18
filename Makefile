@@ -6,7 +6,7 @@
 #    By: sdiouane <sdiouane@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/03/12 23:52:42 by sdiouane          #+#    #+#              #
-#    Updated: 2024/03/17 22:37:05 by sdiouane         ###   ########.fr        #
+#    Updated: 2024/03/18 23:14:10 by sdiouane         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -21,6 +21,8 @@ SRC = main.c \
 	  token.c \
 	  parsing.c \
 	  ft_strtock.c \
+	  parse_pipe.c \
+	  parse_redirection.c \
 
 OBJ = $(SRC:.c=.o)
 
