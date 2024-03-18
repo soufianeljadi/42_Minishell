@@ -6,11 +6,33 @@
 /*   By: sdiouane <sdiouane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/16 15:55:13 by sdiouane          #+#    #+#             */
-/*   Updated: 2024/03/18 01:43:49 by sdiouane         ###   ########.fr       */
+/*   Updated: 2024/03/18 23:04:47 by sdiouane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+Token** parse_command(char *command)
+{
+    Token **tokens = malloc(sizeof(Token*) * strlen(command));
+    if (tokens == NULL)
+    {
+        fprintf(stderr, "Erreur lors de l'allocation de mémoire pour les jetons\n");
+        exit(EXIT_FAILURE);
+    }
+
+    char *token_str = ft_strtok(command, " ");
+    int token_count = 0;
+
+    while (token_str != NULL)
+    {
+        tokens[token_count++] = create_token(token_str);
+        token_str = ft_strtok(NULL, " ");
+    }
+    tokens[token_count] = NULL;
+
+    return tokens;
+}
 
 void nbr_quotes(char *str)
 {
@@ -41,21 +63,45 @@ void syntax_error()
 	printf("syntax error \n");
 }
 
-int check__next_for_second_pipe(char *prompte)
+void check_next__(char *line)
 {
 	int i = 0;
 	int f = 0;
-	if(prompte[i] == '|')
-		return(1);
-	while (prompte[i] != '\0')
+		
+	if(line[i] == '|')
 	{
-		if(prompte[i] != ' ' && prompte[i] != '\t' && prompte[i] != '\0')
+		syntax_error();
+		return ;
+	}
+	while (line[i] != '\0')
+	{
+		if((line[i] == ' ' || line[i] == '\t') && line[i] != '\0')
 			f = 1;
 		i++;
 	}
-	if(f == 0)
-		return(1);
-	return(0);
+	if (f == 0)
+	{
+		syntax_error();
+		return ;
+	}
+}
+
+static void parse_after_pipe(char *line)
+{
+	int i = 0;
+	while (line[i] <= 32)
+		i++;
+	if (line[i] == '|')
+		syntax_error();
+	while (line[i])
+	{
+		if (line[i] == '|')
+		{
+			i++;
+			check_next__(line + i);
+		}
+		i++;
+	}
 }
 
 int check_next(char *line)
@@ -64,26 +110,27 @@ int check_next(char *line)
 	int j = 0;
 	int f = 0;
 	char *prompt = NULL;
+		
 	if(line[i] == '|')
 		return(1);
+	if(!line[i])
+	{
+		prompt = readline("pipe > ");
+		parse_after_pipe(prompt + j);
+	}
 	while (line[i] != '\0')
 	{
-		if(line[i] != ' ' && line[i] != '\t' && line[i] != '\0')
+		if((line[i] == ' ' || line[i] == '\t') && line[i] != '\0')
 		{
 			f = 1;
-			j = i++;
+			j = i;
 		}
 		i++;
 	}
-	// if(f == 0)
-	// 	return(1);
-	if (f == 0)
+	if (f == 1)
 	{
 		prompt = readline("pipe > ");
-		// printf("%s\n", prompt);
-		// parse_single_input(prompt, '|');
-		// check__next_for_second_pipe(prompt);
-		
+		parse_after_pipe(prompt + j);
 	}
 	return(0);
 }
@@ -105,18 +152,10 @@ int parse_single_input(char *line, char c)
 		}
 		i++;
 	}
-	if(r == 0)
-		return(0);
-	return(1);
+	if(r == 1)
+		return(1);
+	return(0);
 }
-
-// void check_pipe(char *line)
-// {
-// 	while (line[i])
-// 	{
-		
-// 	}
-// }
 
 int check_next_r(char *line)
 {
@@ -134,16 +173,6 @@ int check_next_r(char *line)
 		return(1);
 	return(0);
 }
-
-// void next_is_file(char *line)
-// {
-// 	int i = 0;
-	
-// 	while (line[i])
-// 	{
-		
-// 	}
-// }
 
 int parse_redirection(char *line)
 {
@@ -163,35 +192,11 @@ int parse_redirection(char *line)
 			i++;
 			r = check_next_r(line + i);
 		}
-		// if (line[i] == '>')
-		// 	next_is_file(line + i);
 		i++;
 	}
 	if(r == 0)
 		return(0);
 	return(1);
-}
-
-Token** parse_command(char *command)
-{
-    Token **tokens = malloc(sizeof(Token*) * strlen(command));
-    if (tokens == NULL)
-    {
-        fprintf(stderr, "Erreur lors de l'allocation de mémoire pour les jetons\n");
-        exit(EXIT_FAILURE);
-    }
-
-    char *token_str = ft_strtok(command, " ");
-    int token_count = 0;
-
-    while (token_str != NULL)
-    {
-        tokens[token_count++] = create_token(token_str);
-        token_str = ft_strtok(NULL, " ");
-    }
-    tokens[token_count] = NULL;
-
-    return tokens;
 }
 
 int parsing(char *line)
