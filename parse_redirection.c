@@ -6,7 +6,7 @@
 /*   By: sdiouane <sdiouane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/18 23:09:54 by sdiouane          #+#    #+#             */
-/*   Updated: 2024/03/18 23:11:03 by sdiouane         ###   ########.fr       */
+/*   Updated: 2024/03/19 01:44:32 by sdiouane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,14 +29,34 @@ int check_next_r(char *line)
 	return(0);
 }
 
+int check_after(char *line)
+{
+	int i = 0;
+	int f = 0;
+
+	while (line[i])
+	{
+		if (line[i] != ' ' && line[i] != '\t')
+			f = 1;
+		i++;
+	}
+	if (f == 0)
+		return (1);
+	return (0);
+}
+
 int parse_redirection(char *line)
 {
 	int i = 0;
 	int r = 0;
 	while (line[i] <= 32)
 		i++;
-	if (line[i] == '>'|| line[i] == '<')
-		return(1);
+	if (line[i] == '>' || line[i] == '<')
+	{
+		i++;
+		if (check_after(line + i) == 1)
+			return (1);	
+	}
 	while(line[i])
 	{
 
