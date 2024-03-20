@@ -6,7 +6,7 @@
 /*   By: sdiouane <sdiouane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/17 22:28:09 by sdiouane          #+#    #+#             */
-/*   Updated: 2024/03/17 22:38:42 by sdiouane         ###   ########.fr       */
+/*   Updated: 2024/03/19 02:36:17 by sdiouane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,29 +14,25 @@
 
 char *ft_strtok(char *str, const char *delim)
 {
-    static char *last_str = NULL;  
-    char *token_start;
-    // const char *delim_ptr;
+    static char	*remainder;
+	char		*ret;
+	int			len;
 
-    if (str == NULL)
-        str = last_str;
-
-    while (*str && strchr(delim, *str))
-        str++;
-
-    if (*str == '\0')
-        return NULL;
-
-    token_start = str;
-
-    while (*str && !strchr(delim, *str))
-        str++;
-
-    if (*str != '\0')
-        *str++ = '\0';
-
-    last_str = str;
-
-    return token_start;
+	if (str)
+		remainder = str;
+	if (!remainder)
+		return (NULL);
+	while (*remainder && ft_strchr(delim, *remainder))
+		remainder++;
+	len = 0;
+	while (remainder[len] && !ft_strchr(delim, remainder[len]))
+		len++;
+	if (!len)
+		return (NULL);
+	ret = ft_substr(remainder, 0, len);
+	remainder += len;
+	if (*remainder && ft_strchr(delim, *remainder))
+		remainder++;
+	return (ret);
 }
 

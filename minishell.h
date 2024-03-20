@@ -6,7 +6,7 @@
 /*   By: sdiouane <sdiouane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 23:51:44 by sdiouane          #+#    #+#             */
-/*   Updated: 2024/03/19 01:45:20 by sdiouane         ###   ########.fr       */
+/*   Updated: 2024/03/19 02:36:14 by sdiouane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,6 +56,8 @@ char	**ft_split(char	*s, char c);
 
 // strtock :
 char *ft_strtok(char *str, const char *delim);
+char	*ft_substr(char const *s, unsigned int start, size_t len);
+char	*ft_strchr(const char *str, int c);
 
 // token : 
 Token* create_token(char *value);

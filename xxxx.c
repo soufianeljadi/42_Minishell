@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parsing2.c                                         :+:      :+:    :+:   */
+/*   xxxx.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: sdiouane <sdiouane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/16 15:55:13 by sdiouane          #+#    #+#             */
-/*   Updated: 2024/03/18 00:51:40 by sdiouane         ###   ########.fr       */
+/*   Updated: 2024/03/20 15:26:53 by sdiouane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,19 +91,19 @@ int check_next(char *line)
 		return(1);
 	while (line[i] != '\0')
 	{
-		if((line[i] == ' ' && line[i] == '\t') && line[i] != '\0')
+		if(line[i] != ' ' && line[i] != '\t' && line[i] != '\0')
 			f = 1;
+		else
+			f = 0;
 		i++;
 	}
-	if(f == 0)
+	if(f == 1)
 		return(1);
-	if (f == 1)
+	if (f == 0)
 	{
 		prompt = readline("pipe > ");
 		if (parse_second_readline(prompt, '|'))
 			printf("error is heeere!!\n");
-			// syntax_error();
-		
 	}
 	return(0);
 }
