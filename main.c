@@ -6,7 +6,7 @@
 /*   By: sdiouane <sdiouane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 23:52:10 by sdiouane          #+#    #+#             */
-/*   Updated: 2024/03/18 23:05:39 by sdiouane         ###   ########.fr       */
+/*   Updated: 2024/03/20 23:43:46 by sdiouane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,6 +58,17 @@ int main(int ac, char **av, char **env)
 				free(line);
 				break;
 			}
+	// Execute the cmd :
+			// pid_t pid = fork();
+			// if (pid == -1) {
+			// 	perror("fork"); 
+			// } else if (pid == 0) {  // Child process
+			// 	execlp(line, line, NULL);
+			// 	perror("exec");
+			// 	exit(EXIT_FAILURE);
+			// }
+			// else // Parent process
+			// 	waitpid(pi
 		}
 		free(line);
 	}
