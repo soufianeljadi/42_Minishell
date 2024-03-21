@@ -6,7 +6,7 @@
 /*   By: sdiouane <sdiouane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 23:51:44 by sdiouane          #+#    #+#             */
-/*   Updated: 2024/03/19 02:36:14 by sdiouane         ###   ########.fr       */
+/*   Updated: 2024/03/21 01:12:05 by sdiouane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,9 +70,7 @@ Token** parse_command(char *command);
 void syntax_error();
 int parsing(char *lineint );
 	// pipe :
-void check_next__(char *line);
-void parse_after_pipe(char *line);
-int check_next(char *line);
+int check_next(char *line,int i);
 int parse_single_input(char *line, char c);
 	// redirection :
 int check_next_r(char *line);
