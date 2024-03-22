@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sdiouane <sdiouane@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sel-jadi <sel-jadi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 23:51:44 by sdiouane          #+#    #+#             */
-/*   Updated: 2024/03/21 01:12:05 by sdiouane         ###   ########.fr       */
+/*   Updated: 2024/03/21 23:59:22 by sel-jadi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,9 +73,7 @@ int parsing(char *lineint );
 int check_next(char *line,int i);
 int parse_single_input(char *line, char c);
 	// redirection :
-int check_next_r(char *line);
 int parse_redirection(char *line);
-int check_after(char *line);
 	// quotes :
 void nbr_quotes(char *str);
 

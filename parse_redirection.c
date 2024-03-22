@@ -3,69 +3,57 @@
 /*                                                        :::      ::::::::   */
 /*   parse_redirection.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sdiouane <sdiouane@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sel-jadi <sel-jadi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/18 23:09:54 by sdiouane          #+#    #+#             */
-/*   Updated: 2024/03/19 01:44:32 by sdiouane         ###   ########.fr       */
+/*   Updated: 2024/03/21 23:34:37 by sel-jadi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int check_next_r(char *line)
+static int only_spaces(char *line, int i )
 {
-	int i = 0;
-	int f = 0;
-	if(line[i] == '>' || line[i] == '<')
+	int r = 0;
+
+	while(line[i] == ' ' || line[i] == '\t')
 		i++;
-	while (line[i] != '\0')
-	{
-		if(line[i] != ' ' && line[i] != '\t' && line[i] != '\0')
-			f = 1;
-		i++;
-	}
-	if(f == 0)
-		return(1);
-	return(0);
+	if(line[i] == '\0')
+		r = 1;
+	return(r);
 }
-
-int check_after(char *line)
-{
-	int i = 0;
-	int f = 0;
-
-	while (line[i])
-	{
-		if (line[i] != ' ' && line[i] != '\t')
-			f = 1;
-		i++;
-	}
-	if (f == 0)
-		return (1);
-	return (0);
-}
-
 int parse_redirection(char *line)
 {
 	int i = 0;
 	int r = 0;
+	
 	while (line[i] <= 32)
 		i++;
-	if (line[i] == '>' || line[i] == '<')
-	{
-		i++;
-		if (check_after(line + i) == 1)
-			return (1);	
-	}
 	while(line[i])
 	{
-
-		if (line[i] == '>' && line[i + 1] == '<')
-			return (1);
-		if((line[i] == '>' && line[i - 1] != '\\') || (line[i] == '<' && line[i - 1] != '\\'))
+		if ((line[i] == '>' && line[i + 1] == '>' )|| (line[i] == '<' && line[i + 1] == '<' ))
 		{
-			i++;
-			r = check_next_r(line + i);
+			if(line[i + 2] == '<' || line[i + 2] == '>')
+			{
+				r = 1;
+				break;
+			}
+			i = i + 2;
+			r = only_spaces(line,i);
+		}
+		else if (line[i] == '>' || line[i] == '<')
+		{
+			if(line[i] == '>' && line[i + 1] == '<')
+			{
+				r = 1;
+				break;
+			}
+			if(line[i] == '<' && line[i + 1] == '>')
+			{
+				r = 1;
+				break;
+			}
+			r = only_spaces(line,i + 1);
 		}
 		i++;
 	}
