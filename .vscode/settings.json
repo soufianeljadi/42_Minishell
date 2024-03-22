@@ -4,6 +4,7 @@
         "minishell.h": "c",
         "stdbool.h": "c",
         "string": "c",
-        "string_view": "c"
+        "string_view": "c",
+        "wait.h": "c"
     }
 }
