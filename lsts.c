@@ -6,40 +6,42 @@
 /*   By: sdiouane <sdiouane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/13 00:32:13 by sdiouane          #+#    #+#             */
-/*   Updated: 2024/03/16 17:22:16 by sdiouane         ###   ########.fr       */
+/*   Updated: 2024/03/21 23:08:47 by sdiouane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
 
-s_cmd	*ft_lstnew()
+s_env	*ft_lstnew()
 {
-	s_cmd	*b;
+	s_env	*b;
 
-	b = (s_cmd *)malloc(sizeof(s_cmd));
+	b = (s_env *)malloc(sizeof(s_env));
 	if (!b)
 		exit(EXIT_FAILURE);
-	b ->cmd_sep = NULL;
+	b ->key = NULL;
+	b ->value = NULL;
 	b ->next = NULL;
 	return (b);
 }
 
-s_cmd	*ft_lstnew_data(char *data)
+s_env	*ft_lstnew_data(char *value, char *key)
 {
-	s_cmd	*b;
+	s_env	*b;
 
-	b = (s_cmd *)malloc(sizeof(s_cmd));
+	b = (s_env *)malloc(sizeof(s_env));
 	if (!b)
 		exit(EXIT_FAILURE);
-	b ->cmd_sep = data;
+	b ->key = key;
+	b ->value = value;
 	b ->next = NULL;
 	return (b);
 }
 
-void	ft_lstadd_back(s_cmd **lst, s_cmd *new)
+void	ft_lstadd_back(s_env **lst, s_env *new)
 {
-	s_cmd	*tmp;
+	s_env	*tmp;
 
 	if (!lst || !new)
 		return ;
@@ -56,13 +58,13 @@ void	ft_lstadd_back(s_cmd **lst, s_cmd *new)
 
 }
 
-void	print_list(s_cmd *list)
+void	print_list(s_env *list)
 {
 	int i = 1;
   while (list)
   {
-	printf("%d\t\t", i);
-  	printf("%s\n", list->cmd_sep);
+  	printf("KEY --->%s\n", list->key);
+  	printf("VALUE ->%s\n", list->value);
   	list = list->next;
 	i++;
   }

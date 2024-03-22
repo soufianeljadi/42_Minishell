@@ -2,6 +2,8 @@
     "files.associations": {
         "minishell": "c",
         "minishell.h": "c",
-        "stdbool.h": "c"
+        "stdbool.h": "c",
+        "string": "c",
+        "string_view": "c"
     }
 }

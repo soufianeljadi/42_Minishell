@@ -6,7 +6,7 @@
 /*   By: sdiouane <sdiouane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 23:51:44 by sdiouane          #+#    #+#             */
-/*   Updated: 2024/03/21 01:12:05 by sdiouane         ###   ########.fr       */
+/*   Updated: 2024/03/21 22:53:19 by sdiouane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,9 @@ typedef	struct			s_cmd
 
 typedef struct s_env
 {
-	char **env;
+	char				*key;
+	char				*value;
+	struct s_env		*next;
 } s_env;
 
 typedef struct {
@@ -40,14 +42,14 @@ typedef struct {
 } Token;
 // init env :
 
-void init_env(char **env);
+char **init_env(char **env);
 
 
 // lst :
-s_cmd	*ft_lstnew();
-void	ft_lstadd_back(s_cmd **lst, s_cmd *new);
-void	print_list(s_cmd *list);
-s_cmd	*ft_lstnew_data(char *data);
+s_env	*ft_lstnew();
+void	ft_lstadd_back(s_env **lst, s_env *new);
+void	print_list(s_env *list);
+s_env	*ft_lstnew_data(char *value, char*key);
 
 
 // split :

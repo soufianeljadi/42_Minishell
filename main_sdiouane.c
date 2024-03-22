@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   main_sdiouane.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: sdiouane <sdiouane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 23:52:10 by sdiouane          #+#    #+#             */
-/*   Updated: 2024/03/21 23:35:26 by sdiouane         ###   ########.fr       */
+/*   Updated: 2024/03/21 23:23:04 by sdiouane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,8 +49,6 @@ void check_variables(char *line, s_env	*lst)
 		i++;
 	while (line[i])
 	{
-		if (line[i] == '"')
-		{
 		if (line[i] == '$' && line[i + 1] != ' ' && line[i + 1] != '\t')
 		{
 			i++;
@@ -62,7 +60,6 @@ void check_variables(char *line, s_env	*lst)
 				}
 				lst = lst->next;
 			}
-		}
 		}
 		i++;
 	}
@@ -89,6 +86,7 @@ int main(int ac, char **av, char **env)
 	((void)ac, (void)av);
 	(void)env;	
 	char *line = NULL;
+	// Token **token;
 	char **new_env;
 
 	new_env = env;
@@ -107,6 +105,8 @@ int main(int ac, char **av, char **env)
 			{
 				lst = split_env(new_env);
 				check_variables(line, lst);
+				// token = parse_command(line);
+				// print_tokens(token);
 			}
 			if (strncmp(line, "exit", 4) == 0)
 			{
@@ -114,6 +114,17 @@ int main(int ac, char **av, char **env)
 				free(line);
 				break;
 			}
+	// Execute the cmd :
+			// pid_t pid = fork();
+			// if (pid == -1) {
+			// 	perror("fork"); 
+			// } else if (pid == 0) {  // Child process
+			// 	execlp(line, line, NULL);
+			// 	perror("exec");
+			// 	exit(EXIT_FAILURE);
+			// }
+			// else // Parent process
+			// 	waitpid(pi
 		}
 		free(line);
 	}
