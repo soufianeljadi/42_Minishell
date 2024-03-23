@@ -6,7 +6,7 @@
 #    By: sdiouane <sdiouane@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/03/12 23:52:42 by sdiouane          #+#    #+#              #
-#    Updated: 2024/03/23 16:54:59 by sdiouane         ###   ########.fr        #
+#    Updated: 2024/03/23 22:38:54 by sdiouane         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,7 +14,7 @@ NAME = minishell
 
 CC = cc -g -fsanitize=address 
 CFLAGS = -Wall -Wextra -Werror 
-RDFLAGS = -lreadline
+RDFLAGS =  -L $(shell brew --prefix readline)/lib -lreadline
 SRC = main.c \
       ft_split.c \
 	  lsts.c \
@@ -29,6 +29,7 @@ SRC = main.c \
 	  pwd.c \
 	  unset.c \
 	  echo.c \
+      signal.c \
 
 OBJ = $(SRC:.c=.o)
 
@@ -38,8 +39,8 @@ $(NAME): $(OBJ)
 all: $(NAME)
 
 %.o : %.c minishell.h
-	@$(CC) $(CFLAGS) -c $< -o $@
-
+	@$(CC) $(CFLAGS) -I $(shell brew --prefix readline)/include -c $< -o $@
+	
 clean:
 	@rm -rf $(OBJ)
 

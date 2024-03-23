@@ -6,7 +6,7 @@
 /*   By: sdiouane <sdiouane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 23:52:10 by sdiouane          #+#    #+#             */
-/*   Updated: 2024/03/23 22:05:22 by sdiouane         ###   ########.fr       */
+/*   Updated: 2024/03/23 22:44:58 by sdiouane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -120,7 +120,14 @@ s_env *split_env(char **env)
 // void add_space(char *line) // ls>file
 // {
 // 	int i = 0;
-// 	wh
+// 	while (line[i] == ' ' || line[i] == '\t')
+// 		i++;
+// 	while (line[i] != '>'  && line[i] != '<' && line[i] != '|')
+// 		i++;
+// 	// while (line[i])
+// 	// {
+// 	// }
+// 	printf("%s\n", &line[i]);
 // }
 
 int main(int ac, char **av, char **env)
@@ -133,12 +140,24 @@ int main(int ac, char **av, char **env)
 	s_env *splited_env = NULL;
 	splited_env = split_env(new_env);
 	
+	//signals
+    rl_catch_signals = 0;
+    signal(SIGQUIT, signal_ctrl_c_d);
+    signal(SIGINT, signal_ctrl_c_d);
+	
 	while (1)
 	{  
-		if((line = readline("Minishell :$ "))!= NULL  && only_spaces(line) == 0)
+		//read_line
+        line = readline("Minishell :$ ");
+        if (!line)
+        {
+            printf("exit\n");
+            exit(0);
+        }
+        if(line != NULL && only_spaces(line) == 0)
 		{
-			if (!line)
-			    break;
+			// add spaces :
+			// add_space(line);
 			// history :
 			add_history(line);
 			if(parsing(line) == 1)		
@@ -164,6 +183,7 @@ int main(int ac, char **av, char **env)
 				// $variables :
 				check_variables(line, splited_env);
 			}
+			//exit
 			if (strncmp(line, "exit", 4) == 0)
 			{
 				printf("exit\n");
@@ -172,6 +192,7 @@ int main(int ac, char **av, char **env)
 			}
 		}
 		free(line);
+		signal(SIGINT, signal_ctrl_c_d);
 	}
 	return 0;
 }

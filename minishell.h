@@ -6,7 +6,7 @@
 /*   By: sdiouane <sdiouane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 23:51:44 by sdiouane          #+#    #+#             */
-/*   Updated: 2024/03/23 16:54:30 by sdiouane         ###   ########.fr       */
+/*   Updated: 2024/03/23 22:30:05 by sdiouane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,4 +92,6 @@ s_env   *unset_fct(char *line, s_env *env);
 
 // echo :
 void echo_fct(char *line);
+//signal
+void    signal_ctrl_c_d(int signal);
 #endif
