@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sdiouane <sdiouane@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sel-jadi <sel-jadi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 23:51:44 by sdiouane          #+#    #+#             */
-/*   Updated: 2024/03/22 00:02:07 by sdiouane         ###   ########.fr       */
+/*   Updated: 2024/03/23 00:33:26 by sel-jadi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 
 #include <stdio.h>
 #include <stdlib.h>
+#include <signal.h>
 #include <string.h>
 #include <unistd.h>
 #include <sys/wait.h>
@@ -77,5 +78,9 @@ int parse_single_input(char *line, char c);
 int parse_redirection(char *line);
 	// quotes :
 void nbr_quotes(char *str);
+	//signals
+void	signal_ctrl_d(void);
+void	signal_ctrl_c(int signal);
+
 
 #endif

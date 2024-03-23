@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sdiouane <sdiouane@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sel-jadi <sel-jadi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/03/12 23:52:10 by sdiouane          #+#    #+#             */
-/*   Updated: 2024/03/21 23:35:26 by sdiouane         ###   ########.fr       */
+/*   Created: 2024/03/23 00:02:35 by sel-jadi          #+#    #+#             */
+/*   Updated: 2024/03/23 00:42:24 by sel-jadi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,21 +90,30 @@ int main(int ac, char **av, char **env)
 	(void)env;	
 	char *line = NULL;
 	char **new_env;
+	rl_catch_signals = 0;
 
 	new_env = env;
 	s_env *lst = NULL;
-				print_list(lst);
+    
+    signal(SIGQUIT, SIG_IGN);
+	signal(SIGINT, signal_ctrl_c);
 	while (1)
 	{  
-		if((line = readline("Minishell :$ "))!= NULL  && only_spaces(line) == 0)
+		line = readline("Minishell :$ ");
+		if (!line)
 		{
-			if (!line)
-			    break;
+			printf("exit\n");
+			exit(0);
+		}
+		if(line != NULL && only_spaces(line) == 0)
+		{
+
 			add_history(line);
 			if(parsing(line) == 1)		
 				syntax_error();
 			else
 			{
+				signal(SIGINT, SIG_IGN);
 				lst = split_env(new_env);
 				check_variables(line, lst);
 			}
@@ -116,6 +125,8 @@ int main(int ac, char **av, char **env)
 			}
 		}
 		free(line);
+        signal(SIGINT, signal_ctrl_c);
+
 	}
 	return 0;
 }
