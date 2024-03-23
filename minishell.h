@@ -79,8 +79,7 @@ int parse_redirection(char *line);
 	// quotes :
 void nbr_quotes(char *str);
 	//signals
-void	signal_ctrl_d(void);
-void	signal_ctrl_c(int signal);
+void	signal_ctrl_c_d(int signal);
 
 
 #endif

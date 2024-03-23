@@ -86,47 +86,53 @@ s_env *split_env(char **env)
 
 int main(int ac, char **av, char **env)
 {
-	((void)ac, (void)av);
-	(void)env;	
-	char *line = NULL;
-	char **new_env;
-	rl_catch_signals = 0;
-
-	new_env = env;
-	s_env *lst = NULL;
-    
-    signal(SIGQUIT, SIG_IGN);
-	signal(SIGINT, signal_ctrl_c);
-	while (1)
-	{  
-		line = readline("Minishell :$ ");
-		if (!line)
-		{
-			printf("exit\n");
-			exit(0);
-		}
-		if(line != NULL && only_spaces(line) == 0)
-		{
-
-			add_history(line);
-			if(parsing(line) == 1)		
-				syntax_error();
-			else
-			{
-				signal(SIGINT, SIG_IGN);
-				lst = split_env(new_env);
-				check_variables(line, lst);
-			}
-			if (strncmp(line, "exit", 4) == 0)
+	(void)av;
+	if(ac == 1)
+	{
+		//env bouhdha
+		char **new_env;
+		new_env = env;
+		s_env *lst = NULL;
+		
+		//signals
+		char *line = NULL;
+		rl_catch_signals = 0;
+		signal(SIGQUIT, signal_ctrl_c_d);
+		signal(SIGINT, signal_ctrl_c_d);
+		while (1)
+		{  
+			//read_line
+			line = readline("Minishell :$ ");
+			if (!line)
 			{
 				printf("exit\n");
-				free(line);
-				break;
+				exit(0);
 			}
-		}
-		free(line);
-        signal(SIGINT, signal_ctrl_c);
+			if(line != NULL && only_spaces(line) == 0)
+			{
+				//history
+				add_history(line);
+				//synatax_error
+				if(parsing(line) == 1)		
+					syntax_error();
+				//all_good -> exec
+				else
+				{
+					lst = split_env(new_env);
+					check_variables(line, lst);
+				}
+				//exit_cmd
+				if (strncmp(line, "exit", 4) == 0)
+				{
+					printf("exit\n");
+					free(line);
+					break;
+				}
+			}
+			free(line);
+			signal(SIGINT, signal_ctrl_c_d);
 
+		}
 	}
 	return 0;
 }

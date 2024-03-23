@@ -12,21 +12,12 @@
 
 #include "minishell.h"
 
-
-void	signal_ctrl_d(void)
+void signal_ctrl_c_d(int signal)
 {
-	printf("exit\n");
-	exit(0);
-}
-
-void	signal_ctrl_c(int signal)
-{
-
-	if (signal == SIGINT)
-	{
-		rl_on_new_line();
-		printf("\n");
-		rl_replace_line("", 0);
-		rl_redisplay();
-	}
+    if (signal == SIGINT || signal == SIGQUIT) {
+        rl_on_new_line();
+        printf("\n");
+        rl_replace_line("", 0);
+        rl_redisplay();
+    }
 }
