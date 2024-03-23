@@ -6,7 +6,7 @@
 /*   By: sdiouane <sdiouane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 23:51:44 by sdiouane          #+#    #+#             */
-/*   Updated: 2024/03/23 01:50:36 by sdiouane         ###   ########.fr       */
+/*   Updated: 2024/03/23 16:54:30 by sdiouane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <unistd.h>
+#include <stdbool.h>
 #include <sys/wait.h>
 #include <readline/readline.h>
 #include <readline/history.h>
@@ -82,4 +83,13 @@ void nbr_quotes(char *str);
 
 // export :
 s_env	*export_fct(char *line, s_env   *env);
+
+//pwd :
+void pwd_without_options(char *line);
+
+// unset :
+s_env   *unset_fct(char *line, s_env *env);
+
+// echo :
+void echo_fct(char *line);
 #endif

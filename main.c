@@ -6,7 +6,7 @@
 /*   By: sdiouane <sdiouane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 23:52:10 by sdiouane          #+#    #+#             */
-/*   Updated: 2024/03/23 13:47:03 by sdiouane         ###   ########.fr       */
+/*   Updated: 2024/03/23 16:54:50 by sdiouane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -124,19 +124,29 @@ int main(int ac, char **av, char **env)
 		{
 			if (!line)
 			    break;
+			// history :
 			add_history(line);
 			if(parsing(line) == 1)		
 				syntax_error();
 			else
 			{
+				// echo :
+				echo_fct(line);
+				// pwd :
+				pwd_without_options(line);
+				// unset :
+				splited_env = unset_fct(line, splited_env);
+				// export :
 				if (!strcmp(line, "export"))
 					print_export(splited_env);
 				else
 				{
 					splited_env = export_fct(line, splited_env);
+					// env :
 					if (!strcmp(line, "env"))
 						print_list(splited_env);
-				}	
+				}
+				// $variables :
 				check_variables(line, splited_env);
 			}
 			if (strncmp(line, "exit", 4) == 0)
