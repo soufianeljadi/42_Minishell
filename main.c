@@ -6,7 +6,7 @@
 /*   By: sdiouane <sdiouane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 23:52:10 by sdiouane          #+#    #+#             */
-/*   Updated: 2024/03/21 23:35:26 by sdiouane         ###   ########.fr       */
+/*   Updated: 2024/03/23 13:47:03 by sdiouane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,32 @@ int get_len_env(char **env)
 	return (i);	
 }
 
+void check_var_qu(char *line)
+{
+	int i = 0;
+	
+	while (line[i])
+	{
+		if (line[i] == '"')
+		{
+			while (line[i] != '$')
+			{
+				printf("%c", line[i]);
+				i++;
+			}
+			if (line[i] == '$')
+			{
+				while (line[i] != '$')
+				{
+					printf("%c", line[i]);
+					i++;
+				}
+			}
+		}
+		i++;
+	}
+}
+
 void check_variables(char *line, s_env	*lst)
 {
 	int i = 0;
@@ -49,23 +75,21 @@ void check_variables(char *line, s_env	*lst)
 		i++;
 	while (line[i])
 	{
-		if (line[i] == '"')
-		{
-		if (line[i] == '$' && line[i + 1] != ' ' && line[i + 1] != '\t')
-		{
-			i++;
-			while (lst)
+			if (line[i] == '$' && line[i + 1] != ' ' && line[i + 1] != '\t')
 			{
-				if (strcmp(line + i, lst->key) == 0)
+				i++;
+				while (lst)
 				{
-					printf("%s\n", lst->value);
+					if (strcmp(line + i, lst->key) == 0)
+					{
+						printf("%s\n", lst->value);
+					}
+					lst = lst->next;
 				}
-				lst = lst->next;
 			}
-		}
-		}
+			
 		i++;
-	}
+		}
 }
 
 s_env *split_env(char **env)
@@ -86,14 +110,14 @@ s_env *split_env(char **env)
 
 int main(int ac, char **av, char **env)
 {
-	((void)ac, (void)av);
-	(void)env;	
+	((void)ac, (void)av);	
 	char *line = NULL;
 	char **new_env;
 
 	new_env = env;
-	s_env *lst = NULL;
-				print_list(lst);
+	s_env *splited_env = NULL;
+	splited_env = split_env(new_env);
+	
 	while (1)
 	{  
 		if((line = readline("Minishell :$ "))!= NULL  && only_spaces(line) == 0)
@@ -105,8 +129,15 @@ int main(int ac, char **av, char **env)
 				syntax_error();
 			else
 			{
-				lst = split_env(new_env);
-				check_variables(line, lst);
+				if (!strcmp(line, "export"))
+					print_export(splited_env);
+				else
+				{
+					splited_env = export_fct(line, splited_env);
+					if (!strcmp(line, "env"))
+						print_list(splited_env);
+				}	
+				check_variables(line, splited_env);
 			}
 			if (strncmp(line, "exit", 4) == 0)
 			{

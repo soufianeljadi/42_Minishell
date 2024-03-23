@@ -6,7 +6,7 @@
 /*   By: sdiouane <sdiouane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 23:51:44 by sdiouane          #+#    #+#             */
-/*   Updated: 2024/03/22 00:02:07 by sdiouane         ###   ########.fr       */
+/*   Updated: 2024/03/23 01:50:36 by sdiouane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,7 @@ char **init_env(char **env);
 s_env	*ft_lstnew();
 void	ft_lstadd_back(s_env **lst, s_env *new);
 void	print_list(s_env *list);
+void	print_export(s_env *list);
 s_env	*ft_lstnew_data(char *value, char*key);
 
 
@@ -78,4 +79,7 @@ int parse_redirection(char *line);
 	// quotes :
 void nbr_quotes(char *str);
 
+
+// export :
+s_env	*export_fct(char *line, s_env   *env);
 #endif

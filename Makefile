@@ -6,13 +6,13 @@
 #    By: sdiouane <sdiouane@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/03/12 23:52:42 by sdiouane          #+#    #+#              #
-#    Updated: 2024/03/20 15:30:16 by sdiouane         ###   ########.fr        #
+#    Updated: 2024/03/23 02:22:37 by sdiouane         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = minishell
 
-CC = cc #-g -fsanitize=address 
+CC = cc -g -fsanitize=address 
 CFLAGS = -Wall -Wextra -Werror 
 RDFLAGS = -lreadline
 SRC = main.c \
@@ -25,6 +25,7 @@ SRC = main.c \
 	  parse_redirection.c \
 	  ft_strchr.c \
 	  ft_substr.c \
+	  export.c \
 
 OBJ = $(SRC:.c=.o)
 

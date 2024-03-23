@@ -6,7 +6,7 @@
 /*   By: sdiouane <sdiouane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/13 00:32:13 by sdiouane          #+#    #+#             */
-/*   Updated: 2024/03/21 23:08:47 by sdiouane         ###   ########.fr       */
+/*   Updated: 2024/03/23 01:50:22 by sdiouane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,12 +60,19 @@ void	ft_lstadd_back(s_env **lst, s_env *new)
 
 void	print_list(s_env *list)
 {
-	int i = 1;
   while (list)
   {
-  	printf("KEY --->%s\n", list->key);
-  	printf("VALUE ->%s\n", list->value);
+  	printf("%s=", list->key);
+  	printf("%s\n", list->value);
   	list = list->next;
-	i++;
+  }
+}
+void	print_export(s_env *list)
+{
+  while (list)
+  {
+  	printf("declare -x %s=", list->key);
+  	printf("%s\n", list->value);
+  	list = list->next;
   }
 }
