@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sdiouane <sdiouane@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sel-jadi <sel-jadi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 23:52:10 by sdiouane          #+#    #+#             */
-/*   Updated: 2024/03/23 22:05:22 by sdiouane         ###   ########.fr       */
+/*   Updated: 2024/03/23 22:20:48 by sel-jadi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -123,55 +123,55 @@ s_env *split_env(char **env)
 // 	wh
 // }
 
-int main(int ac, char **av, char **env)
-{
-	((void)ac, (void)av);	
-	char *line = NULL;
-	char **new_env;
+// int main(int ac, char **av, char **env)
+// {
+// 	((void)ac, (void)av);	
+// 	char *line = NULL;
+// 	char **new_env;
 
-	new_env = env;
-	s_env *splited_env = NULL;
-	splited_env = split_env(new_env);
+// 	new_env = env;
+// 	s_env *splited_env = NULL;
+// 	splited_env = split_env(new_env);
 	
-	while (1)
-	{  
-		if((line = readline("Minishell :$ "))!= NULL  && only_spaces(line) == 0)
-		{
-			if (!line)
-			    break;
-			// history :
-			add_history(line);
-			if(parsing(line) == 1)		
-				syntax_error();
-			else
-			{
-				// echo :
-				echo_fct(line);
-				// pwd :
-				pwd_without_options(line);
-				// unset :
-				splited_env = unset_fct(line, splited_env);
-				// export :
-				if (!strcmp(line, "export"))
-					print_export(splited_env);
-				else
-				{
-					splited_env = export_fct(line, splited_env);
-					// env :
-					if (!strcmp(line, "env"))
-						print_list(splited_env);
-				}
-				// $variables :
-				check_variables(line, splited_env);
-			}
-			if (strncmp(line, "exit", 4) == 0)
-			{
-				printf("exit\n");
-				free(line);
-				break;
-			}
-		}
-		free(line);
-	}
-	return 0;
-}
+// 	while (1)
+// 	{  
+// 		if((line = readline("Minishell :$ "))!= NULL  && only_spaces(line) == 0)
+// 		{
+// 			if (!line)
+// 			    break;
+// 			// history :
+// 			add_history(line);
+// 			if(parsing(line) == 1)		
+// 				syntax_error();
+// 			else
+// 			{
+// 				// echo :
+// 				echo_fct(line);
+// 				// pwd :
+// 				pwd_without_options(line);
+// 				// unset :
+// 				splited_env = unset_fct(line, splited_env);
+// 				// export :
+// 				if (!strcmp(line, "export"))
+// 					print_export(splited_env);
+// 				else
+// 				{
+// 					splited_env = export_fct(line, splited_env);
+// 					// env :
+// 					if (!strcmp(line, "env"))
+// 						print_list(splited_env);
+// 				}
+// 				// $variables :
+// 				check_variables(line, splited_env);
+// 			}
+// 			if (strncmp(line, "exit", 4) == 0)
+// 			{
+// 				printf("exit\n");
+// 				free(line);
+// 				break;
+// 			}
+// 		}
+// 		free(line);
+// 	}
+// 	return 0;
+// }
