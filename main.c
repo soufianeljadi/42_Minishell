@@ -6,7 +6,7 @@
 /*   By: sdiouane <sdiouane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 23:52:10 by sdiouane          #+#    #+#             */
-/*   Updated: 2024/03/23 16:54:50 by sdiouane         ###   ########.fr       */
+/*   Updated: 2024/03/23 22:05:22 by sdiouane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,6 +92,15 @@ void check_variables(char *line, s_env	*lst)
 		}
 }
 
+// int global_value(int n)
+// {
+// 	static int i;
+// 	if (n != -1)
+// 		i = n;
+// 	return (i);
+// }
+
+//add non valuable keys 
 s_env *split_env(char **env)
 {
 	int i = 0;
@@ -107,6 +116,12 @@ s_env *split_env(char **env)
 	}
 	return (lst);
 }
+
+// void add_space(char *line) // ls>file
+// {
+// 	int i = 0;
+// 	wh
+// }
 
 int main(int ac, char **av, char **env)
 {
