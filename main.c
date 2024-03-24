@@ -6,7 +6,7 @@
 /*   By: sdiouane <sdiouane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 23:52:10 by sdiouane          #+#    #+#             */
-/*   Updated: 2024/03/23 22:47:24 by sdiouane         ###   ########.fr       */
+/*   Updated: 2024/03/24 00:09:21 by sdiouane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -131,6 +131,20 @@ s_env *split_env(char **env)
 // 	printf("%s\n", &line[i]);
 // }
 
+int only_env(char *line)
+{
+	int i = 0;
+	while (line[i] == ' ' || line[i] == '\t')
+		i++;
+	i +=3;
+	while ((line[i] == ' ' || line[i] == '\t') && line[i] != '\0')
+		i++;
+	if(line[i] == '\0')
+		return(0);
+	else
+	return(1);
+}
+
 int main(int ac, char **av, char **env)
 {
 	((void)ac, (void)av);	
@@ -145,7 +159,7 @@ int main(int ac, char **av, char **env)
     rl_catch_signals = 0;
     signal(SIGQUIT, signal_ctrl_c_d);
     signal(SIGINT, signal_ctrl_c_d);
-	
+
 	while (1)
 	{  
 		//read_line
@@ -179,7 +193,19 @@ int main(int ac, char **av, char **env)
 					splited_env = export_fct(line, splited_env);
 					// env :
 					if (!strcmp(line, "env"))
-						print_list(splited_env);
+					{
+						int i = 0;
+						while (line[i] == ' ' || line[i] == '\t')
+							i++;
+						i +=3;
+						while ((line[i] == ' ' || line[i] == '\t') && line[i] != '\0')
+							i++;
+						if(line[i] == '\0')
+							print_list(splited_env);
+						else
+							syntax_error();
+					}
+					
 				}
 				// $variables :
 				check_variables(line, splited_env);

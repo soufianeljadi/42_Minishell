@@ -6,7 +6,7 @@
 /*   By: sdiouane <sdiouane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/23 14:48:45 by sdiouane          #+#    #+#             */
-/*   Updated: 2024/03/23 15:48:15 by sdiouane         ###   ########.fr       */
+/*   Updated: 2024/03/23 23:40:04 by sdiouane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,8 +21,16 @@ void pwd_without_options(char *line)
 
 	while (line[i] == ' ' || line[i] == '\t')
 		i++;
-	if (strncmp(&line[i], "pwd", 3) == 0)
+	if (strncmp(&line[i], "pwd", 3) == 0 )
 	{
+		i +=3;
+		while (line[i] == ' ' || line[i] == '\t')
+			i++;
+		if(line[i] == '-')
+		{
+			syntax_error();	
+			return ;
+		}
 		if (pwd != NULL)
 		{
 			printf("%s\n", pwd);
