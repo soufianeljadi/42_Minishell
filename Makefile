@@ -6,7 +6,7 @@
 #    By: sdiouane <sdiouane@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/03/12 23:52:42 by sdiouane          #+#    #+#              #
-#    Updated: 2024/03/23 22:38:54 by sdiouane         ###   ########.fr        #
+#    Updated: 2024/03/25 15:20:22 by sdiouane         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -27,6 +27,7 @@ SRC = main.c \
 	  ft_substr.c \
 	  export.c \
 	  pwd.c \
+	  cd.c \
 	  unset.c \
 	  echo.c \
       signal.c \

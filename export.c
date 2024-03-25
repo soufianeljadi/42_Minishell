@@ -6,7 +6,7 @@
 /*   By: sdiouane <sdiouane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/22 22:11:52 by sdiouane          #+#    #+#             */
-/*   Updated: 2024/03/23 23:48:07 by sdiouane         ###   ########.fr       */
+/*   Updated: 2024/03/25 15:16:32 by sdiouane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,5 +88,7 @@ s_env *export_fct(char *line, s_env *env)
 	}
 	return env;
 }
+
+
 
 

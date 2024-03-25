@@ -6,7 +6,7 @@
 /*   By: sdiouane <sdiouane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 23:52:10 by sdiouane          #+#    #+#             */
-/*   Updated: 2024/03/24 00:09:21 by sdiouane         ###   ########.fr       */
+/*   Updated: 2024/03/25 00:21:28 by sdiouane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,13 +93,6 @@ void check_variables(char *line, s_env	*lst)
 		}
 }
 
-// int global_value(int n)
-// {
-// 	static int i;
-// 	if (n != -1)
-// 		i = n;
-// 	return (i);
-// }
 
 //add non valuable keys 
 s_env *split_env(char **env)
@@ -119,31 +112,40 @@ s_env *split_env(char **env)
 }
 
 // void add_space(char *line) // ls>file
-// {
-// 	int i = 0;
-// 	while (line[i] == ' ' || line[i] == '\t')
-// 		i++;
-// 	while (line[i] != '>'  && line[i] != '<' && line[i] != '|')
-// 		i++;
-// 	// while (line[i])
-// 	// {
-// 	// }
-// 	printf("%s\n", &line[i]);
-// }
 
-int only_env(char *line)
+
+int check_env(char *line)
 {
-	int i = 0;
-	while (line[i] == ' ' || line[i] == '\t')
-		i++;
-	i +=3;
-	while ((line[i] == ' ' || line[i] == '\t') && line[i] != '\0')
-		i++;
-	if(line[i] == '\0')
-		return(0);
-	else
-	return(1);
+    int i = 0;
+    while (line[i] == ' ' || line[i] == '\t')
+        i++;
+    if (strncmp(&line[i], "env", 3) == 0)
+	{
+		i += 3;
+    	while ((line[i] == ' ' || line[i] == '\t'))
+        	i++;
+        if (line[i] == '\0')
+            return 0;
+	}
+    return 1;
 }
+
+int check_export(char *line)
+{
+    int i = 0;
+    while (line[i] == ' ' || line[i] == '\t')
+        i++;
+    if (strncmp(&line[i], "export", 5) == 0)
+	{
+		i += 6;
+    	while ((line[i] == ' ' || line[i] == '\t'))
+        	i++;
+        if (line[i] == '\0')
+            return 0;
+    }
+    return 1;
+}
+
 
 int main(int ac, char **av, char **env)
 {
@@ -171,8 +173,6 @@ int main(int ac, char **av, char **env)
         }
         if(line != NULL && only_spaces(line) == 0)
 		{
-			// add spaces :
-			// add_space(line);
 			// history :
 			add_history(line);
 			if(parsing(line) == 1)		
@@ -181,31 +181,22 @@ int main(int ac, char **av, char **env)
 			{
 				// echo :
 				echo_fct(line);
+				
 				// pwd :
 				pwd_without_options(line);
+
 				// unset :
 				splited_env = unset_fct(line, splited_env);
+				
 				// export :
-				if (!strcmp(line, "export"))
+				if (check_export(line) == 0)
 					print_export(splited_env);
 				else
 				{
 					splited_env = export_fct(line, splited_env);
 					// env :
-					if (!strcmp(line, "env"))
-					{
-						int i = 0;
-						while (line[i] == ' ' || line[i] == '\t')
-							i++;
-						i +=3;
-						while ((line[i] == ' ' || line[i] == '\t') && line[i] != '\0')
-							i++;
-						if(line[i] == '\0')
-							print_list(splited_env);
-						else
-							syntax_error();
-					}
-					
+					if (check_env(line) == 0)
+						print_list(splited_env);
 				}
 				// $variables :
 				check_variables(line, splited_env);
@@ -218,8 +209,8 @@ int main(int ac, char **av, char **env)
 				break;
 			}
 		}
-		free(line);
 		signal(SIGINT, signal_ctrl_c_d);
+		free(line);
 	}
 	return 0;
 }
