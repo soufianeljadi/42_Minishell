@@ -6,11 +6,11 @@
 /*   By: sdiouane <sdiouane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/23 14:48:45 by sdiouane          #+#    #+#             */
-/*   Updated: 2024/03/23 23:40:04 by sdiouane         ###   ########.fr       */
+/*   Updated: 2024/03/25 17:00:20 by sdiouane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "../minishell.h"
 
 void pwd_without_options(char *line)
 {

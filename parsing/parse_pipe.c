@@ -6,11 +6,11 @@
 /*   By: sdiouane <sdiouane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/18 23:08:35 by sdiouane          #+#    #+#             */
-/*   Updated: 2024/03/21 01:13:38 by sdiouane         ###   ########.fr       */
+/*   Updated: 2024/03/25 16:59:37 by sdiouane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "../minishell.h"
 
 int check_next(char *line,int i)
 {

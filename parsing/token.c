@@ -6,11 +6,11 @@
 /*   By: sdiouane <sdiouane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/14 22:01:48 by sdiouane          #+#    #+#             */
-/*   Updated: 2024/03/17 22:33:55 by sdiouane         ###   ########.fr       */
+/*   Updated: 2024/03/25 16:59:51 by sdiouane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "../minishell.h"
 
 Token* create_token(char *value)
 {

@@ -6,11 +6,11 @@
 /*   By: sdiouane <sdiouane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/17 22:28:09 by sdiouane          #+#    #+#             */
-/*   Updated: 2024/03/19 02:36:17 by sdiouane         ###   ########.fr       */
+/*   Updated: 2024/03/25 16:59:21 by sdiouane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "../minishell.h"
 
 char *ft_strtok(char *str, const char *delim)
 {

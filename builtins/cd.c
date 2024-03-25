@@ -1,23 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   signal.c                                           :+:      :+:    :+:   */
+/*   cd.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: sdiouane <sdiouane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/03/23 22:30:21 by sdiouane          #+#    #+#             */
-/*   Updated: 2024/03/23 22:30:33 by sdiouane         ###   ########.fr       */
+/*   Created: 2024/03/25 17:00:00 by sdiouane          #+#    #+#             */
+/*   Updated: 2024/03/25 17:00:07 by sdiouane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "../minishell.h"
 
-void signal_ctrl_c_d(int signal)
+void execute_cd(char *path)
 {
-    if (signal == SIGINT || signal == SIGQUIT) {
-        rl_on_new_line();
-        printf("\n");
-        rl_replace_line("", 0);
-        rl_redisplay();
-    }
+    if (chdir(path) != 0)
+        perror("cd");
+}
+
+void execute_command(char *command)
+{
+    if (strncmp(command, "cd ", 3) == 0)
+        execute_cd(command + 3);
+    else if (strcmp(command, "exit") == 0)
+        exit(0);
 }

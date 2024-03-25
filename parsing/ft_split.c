@@ -6,11 +6,11 @@
 /*   By: sdiouane <sdiouane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 23:51:36 by sdiouane          #+#    #+#             */
-/*   Updated: 2024/03/13 00:39:17 by sdiouane         ###   ########.fr       */
+/*   Updated: 2024/03/25 16:58:46 by sdiouane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "../minishell.h"
 
 static int	count_words(char const *s, char c)
 {
