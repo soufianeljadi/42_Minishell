@@ -6,7 +6,7 @@
 /*   By: sdiouane <sdiouane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 23:52:10 by sdiouane          #+#    #+#             */
-/*   Updated: 2024/03/27 16:04:09 by sdiouane         ###   ########.fr       */
+/*   Updated: 2024/03/27 23:31:55 by sdiouane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,23 +48,27 @@ s_env *split_env(char **env)
 		j = 0;
 		while (env[i][j] != '=')
 			j++;
-		ft_lstadd_back(&lst, ft_lstnew_data(ft_substr(env[i] ,j + 1 ,strlen(env[i])) ,ft_substr(env[i] ,0 , j)));
+		ft_lstadd_back(&lst, ft_lstnew_data(ft_substr(env[i] ,j + 1 ,ft_strlen(env[i])) ,ft_substr(env[i] ,0 , j)));
 		i++;
 	}
 	return (lst);
 }
 
+
+
+
 void	main_loop(char *line,s_env *s_env)
 {
 	(void)s_env;
-	char **args;
+	char **args = NULL;
+	noued_cmd *cmd = NULL;
 	while (42)
 	{ 
 		//read_line
-        line = readline("Minishell :$ ");
-        if (!line)
-            (printf("exit\n"),exit(0));
-        if(line != NULL && only_spaces(line) == 0)
+		line = readline("Minishell :$ ");
+		if (!line)
+			(printf("exit\n"),exit(0));
+		if(line != NULL && only_spaces(line) == 0)
 		{
 			// history :
 			add_history(line);
@@ -74,6 +78,9 @@ void	main_loop(char *line,s_env *s_env)
 			{
 				// split_line_into_arguments :
 				args = line_to_args(line);
+				// split_args_by_pipe :
+				cmd = split_args_by_pipe(args);
+				print_command_list(cmd);
 				// Builtins :
 				builtins(args, s_env);
 			}
@@ -93,16 +100,15 @@ int main(int ac, char **av, char **env)
 	(void)av;
 	char *line = NULL;
 	s_env *splited_env = NULL;
-	
+
 	if (ac != 1)
 		(printf("Args not allowed !\n"),exit(EXIT_FAILURE));
 	
 	splited_env = split_env(env);
 	//signals
-    rl_catch_signals = 0;
-    signal(SIGQUIT, signal_ctrl_c_d);
-    signal(SIGINT, signal_ctrl_c_d);
-
+	rl_catch_signals = 0;
+	signal(SIGQUIT, signal_ctrl_c_d);
+	signal(SIGINT, signal_ctrl_c_d);
 	main_loop(line, splited_env);
 	free(line);
 	return 0;

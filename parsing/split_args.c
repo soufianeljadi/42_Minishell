@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   split_args.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sel-jadi <sel-jadi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sdiouane <sdiouane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/26 00:12:06 by sel-jadi          #+#    #+#             */
-/*   Updated: 2024/03/27 00:25:21 by sel-jadi         ###   ########.fr       */
+/*   Updated: 2024/03/27 17:06:18 by sdiouane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -196,10 +196,10 @@ char **line_to_args(char *line)
     line = ft_add_sep(line, d);
     cmds = split_args(line);
     // affii
-	int i = 0;
-	while(cmds[i])
-	{
-		printf("%s\n",cmds[i++]);
-	}
+	// int i = 0;
+	// while(cmds[i])
+	// {
+	// 	printf("%s\n",cmds[i++]);
+	// }
 	return(cmds);
 }

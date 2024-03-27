@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: sel-jadi <sel-jadi@student.42.fr>          +#+  +:+       +#+         #
+#    By: sdiouane <sdiouane@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/03/12 23:52:42 by sdiouane          #+#    #+#              #
-#    Updated: 2024/03/26 01:14:06 by sel-jadi         ###   ########.fr        #
+#    Updated: 2024/03/27 23:30:38 by sdiouane         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -22,6 +22,7 @@ SRC = minishell.c \
 	  parsing/parsing.c \
 	  parsing/ft_strtock.c \
 	  parsing/split_args.c \
+	  parsing/split_by_pipe.c \
 	  parsing/add_sep.c \
 	  parsing/parse_pipe.c \
 	  parsing/parse_redirection.c \

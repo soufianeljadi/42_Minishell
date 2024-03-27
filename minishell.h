@@ -6,7 +6,7 @@
 /*   By: sdiouane <sdiouane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 23:51:44 by sdiouane          #+#    #+#             */
-/*   Updated: 2024/03/27 16:03:02 by sdiouane         ###   ########.fr       */
+/*   Updated: 2024/03/27 23:31:24 by sdiouane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,11 @@ typedef struct {
     char *value;
 } Token;
 
-
+typedef struct noeud_cmd
+{
+	char				*cmd;
+	struct noeud_cmd	*next;
+} noued_cmd;
 
 typedef struct s_parse
 {
@@ -92,6 +96,7 @@ void 	syntax_error();
 int		parsing(char *lineint );
 	// utils :
 size_t	ft_strlen(char *s);
+char	*ft_strjoin(const char *s1, const char *s2);
 	// split_args : 
 char 	**line_to_args(char *line);
 char	**split_args(char *inp);
@@ -103,6 +108,11 @@ int		check_quots(char *inp);
 int		get_end_space(char *inp);
 void	ft_free(char **s);
 int		ft_count_cmd(char *inp);
+	// split_by_pipe :
+noued_cmd	*new_noued_cmd(char *commande);
+void 		add_back_noued_cmd(noued_cmd **tete, char *commande);
+void 		print_command_list(noued_cmd *head);
+noued_cmd	*split_args_by_pipe(char **args);
 	//add_sep :
 char	*ft_add(char c, char *s, int index);
 int		ft_sep_red(char **s, int *i);
