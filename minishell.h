@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sel-jadi <sel-jadi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sdiouane <sdiouane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 23:51:44 by sdiouane          #+#    #+#             */
-/*   Updated: 2024/03/27 00:42:51 by sel-jadi         ###   ########.fr       */
+/*   Updated: 2024/03/27 16:03:02 by sdiouane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -118,13 +118,13 @@ void nbr_quotes(char *str);
 
 
 /**********************BUILTINS***********************************/
-void builtins(char *line,char ** args, s_env *s_env);
+void builtins(char ** args, s_env *s_env);
 // export :
 s_env	*export_fct(char **args, s_env   *env);
 //pwd :
-void pwd_without_options(char *line);
+void pwd_without_options(char **args);
 // unset :
-s_env   *unset_fct(char *line, s_env *env);
+s_env   *unset_fct(char **args, s_env *env);
 // cd :
 void execute_command(char *command);
 // echo :

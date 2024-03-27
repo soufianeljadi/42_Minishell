@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sel-jadi <sel-jadi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sdiouane <sdiouane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/22 22:11:52 by sdiouane          #+#    #+#             */
-/*   Updated: 2024/03/27 01:09:10 by sel-jadi         ###   ########.fr       */
+/*   Updated: 2024/03/27 15:40:35 by sdiouane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,36 +91,36 @@
 
 char *ft_strjoin(const char *s1, const char *s2)
 {
-    size_t len_s1 = 0;
-    size_t len_s2 = 0;
-    size_t i = 0;
-    size_t j = 0;
-    char *result;
+	size_t len_s1 = 0;
+	size_t len_s2 = 0;
+	size_t i = 0;
+	size_t j = 0;
+	char *result;
 
-    if (s1)
-        while (s1[len_s1])
-            len_s1++;
-    if (s2)
-        while (s2[len_s2])
-            len_s2++;
+	if (s1)
+		while (s1[len_s1])
+			len_s1++;
+	if (s2)
+		while (s2[len_s2])
+			len_s2++;
 
-    result = (char *)malloc(sizeof(char) * (len_s1 + len_s2 + 1));
-    if (!result)
-        return NULL;
+	result = (char *)malloc(sizeof(char) * (len_s1 + len_s2 + 1));
+	if (!result)
+		return NULL;
 
-    while (i < len_s1)
-    {
-        result[i] = s1[i];
-        i++;
-    }
-    while (j < len_s2)
-    {
-        result[i + j] = s2[j];
-        j++;
-    }
-    result[i + j] = '\0';
+	while (i < len_s1)
+	{
+		result[i] = s1[i];
+		i++;
+	}
+	while (j < len_s2)
+	{
+		result[i + j] = s2[j];
+		j++;
+	}
+	result[i + j] = '\0';
 
-    return result;
+	return result;
 }
  
 
@@ -133,51 +133,31 @@ s_env	*export_fct(char **args, s_env   *env)
 	char *value;
 	s_env *current;
 	if (!strcmp(args[0], "export") && !args[1])
-	    print_export(env);
-	else
+		print_export(env);
+	else if (!strcmp(args[0], "export"))
 	{
 		while(args[i])
 		{
 			j = 0;
-			while (args[i][j] != '=' || args[i][j] == '\0')
+			while (args[i][j] != '='|| args[i][j] == '\0')
 				j++;
 			key = ft_substr(args[i], 0, j);
 			if(args[i][j] == '\0')
 				ft_lstadd_back(&env, ft_lstnew_data(strdup(""), key));
 			else
 			{
+				j++;
+				start = j;
+				while (args[i][j])
 					j++;
-					start = j;
-					while (args[i][j])
-						j++;
 				value = ft_substr(args[i], start, j - start);
-				if (args[i][j - 1] == '+')
+				printf("\n\n---------------VALUE :%s---------------\n\n", value);
+				if (value[0])
 				{
 					current = env;
-					char *old_value = value;
-					printf("\n----------old : %s --------\n\n", old_value);
-					while (current != NULL)
+					while (current != NULL && current->value)
 					{
-						if (strcmp(current->key, key) == 0)
-						{
-							old_value = current->value;
-							current->value = ft_strjoin(old_value, value);
-							break;
-						}
-						current = current->next;
-					}
-				}
-				else
-				{
-					// j++;
-					// start = j;
-					// while (args[i][j])
-					// 	j++;
-					// value = ft_substr(args[i], start, j - start);
-					current = env;
-					while (current != NULL)
-					{
-						if (strcmp(current->key, key) == 0)
+						if (strcmp(current->key, key) == 0 )
 						{
 							free(current->value);
 							current->value = value;
@@ -185,15 +165,27 @@ s_env	*export_fct(char **args, s_env   *env)
 						}
 						current = current->next;
 					}
+						if (current == NULL && key[0])
+							ft_lstadd_back(&env, ft_lstnew_data(value, key));
+				}
+				else
+				{
+					current = env;
+					while (current != NULL && current->value)
+					{
+						if (strcmp(current->key, key) == 0 )
+						{
+							break;
+						}
+						current = current->next;
+					}
 					if (current == NULL && key[0])
-						ft_lstadd_back(&env, ft_lstnew_data(value, key));	
-				}									
+						ft_lstadd_back(&env, ft_lstnew_data(value, key));
+				}
 			}
 			i++;
 		}
 	}
 	return env;
 }
-
-
 

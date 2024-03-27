@@ -6,7 +6,7 @@
 /*   By: sdiouane <sdiouane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/23 15:04:54 by sdiouane          #+#    #+#             */
-/*   Updated: 2024/03/25 17:00:25 by sdiouane         ###   ########.fr       */
+/*   Updated: 2024/03/27 15:45:53 by sdiouane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,29 +46,29 @@ void	remove_key(s_env **begin_list, void *data_ref, int (*cmp)())
 	}
 }
 
-s_env *unset_fct(char *line, s_env *env)
+s_env *unset_fct(char **args, s_env *env)
 {
-	int i = 0;
+	int i = 1;
+	int j;
 	int start;
 	char *key;
-
-	while (line[i] == ' ' || line[i] == '\t')
-		i++;
-	if (strncmp(&line[i], "unset", 5) == 0)
+	if (!strcmp(args[0] ,"unset"))
 	{
-		i = i + 5;
-		while (line[i] == ' ' || line[i] == '\t')
-			i++;
-		while (line[i] != '\0')
+		while (args[i])
 		{
-			start = i;
-			while (line[i] != ' ' && line[i] != '\t' && line[i] != '\0')
-				i++;
-			key = strndup(&line[start], i - start);
-			remove_key(&env, key, cmp);
-			free(key);
-			while (line[i] == ' ' || line[i] == '\t')
-				i++;
+			j = 0;
+			while (args[i][j] != '\0')
+			{
+				start = j;
+				while (args[i][j] != ' ' && args[i][j] != '\t' && args[i][j] != '\0')
+					j++;
+				key = strndup(&args[i][start], i - start);
+				remove_key(&env, key, cmp);
+				free(key);
+				while (args[i][j] == ' ' || args[i][j] == '\t')
+					j++;
+			}
+			i++;
 		}
 	}
 	return env;

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sel-jadi <sel-jadi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sdiouane <sdiouane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 23:52:10 by sdiouane          #+#    #+#             */
-/*   Updated: 2024/03/27 00:07:31 by sel-jadi         ###   ########.fr       */
+/*   Updated: 2024/03/27 16:04:09 by sdiouane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,10 +54,6 @@ s_env *split_env(char **env)
 	return (lst);
 }
 
-// void add_space(char *line) // ls>file
-
-
-
 void	main_loop(char *line,s_env *s_env)
 {
 	(void)s_env;
@@ -79,7 +75,7 @@ void	main_loop(char *line,s_env *s_env)
 				// split_line_into_arguments :
 				args = line_to_args(line);
 				// Builtins :
-				builtins(line, args, s_env);
+				builtins(args, s_env);
 			}
 			//exit
 			if (strncmp(line, "exit", 4) == 0)
