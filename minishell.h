@@ -6,7 +6,7 @@
 /*   By: sel-jadi <sel-jadi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 23:51:44 by sdiouane          #+#    #+#             */
-/*   Updated: 2024/03/26 01:12:04 by sel-jadi         ###   ########.fr       */
+/*   Updated: 2024/03/27 00:42:51 by sel-jadi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,7 +93,7 @@ int		parsing(char *lineint );
 	// utils :
 size_t	ft_strlen(char *s);
 	// split_args : 
-void 	line_to_args(char *line);
+char 	**line_to_args(char *line);
 char	**split_args(char *inp);
 char	**ft_allocation(char *inp, t_points *p);
 int		is_white_space(char c);
@@ -118,9 +118,9 @@ void nbr_quotes(char *str);
 
 
 /**********************BUILTINS***********************************/
-void builtins(char *line, s_env *s_env);
+void builtins(char *line,char ** args, s_env *s_env);
 // export :
-s_env	*export_fct(char *line, s_env   *env);
+s_env	*export_fct(char **args, s_env   *env);
 //pwd :
 void pwd_without_options(char *line);
 // unset :
@@ -128,7 +128,7 @@ s_env   *unset_fct(char *line, s_env *env);
 // cd :
 void execute_command(char *command);
 // echo :
-void echo_fct(char *line);
+void echo_fct(char **args);
 
 /**********************signals***********************************/
 void    signal_ctrl_c_d(int signal);

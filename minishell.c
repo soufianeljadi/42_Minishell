@@ -6,7 +6,7 @@
 /*   By: sel-jadi <sel-jadi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 23:52:10 by sdiouane          #+#    #+#             */
-/*   Updated: 2024/03/26 01:17:44 by sel-jadi         ###   ########.fr       */
+/*   Updated: 2024/03/27 00:07:31 by sel-jadi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,6 +61,7 @@ s_env *split_env(char **env)
 void	main_loop(char *line,s_env *s_env)
 {
 	(void)s_env;
+	char **args;
 	while (42)
 	{ 
 		//read_line
@@ -76,9 +77,9 @@ void	main_loop(char *line,s_env *s_env)
 			else
 			{
 				// split_line_into_arguments :
-				line_to_args(line);
+				args = line_to_args(line);
 				// Builtins :
-				builtins(line,s_env);
+				builtins(line, args, s_env);
 			}
 			//exit
 			if (strncmp(line, "exit", 4) == 0)

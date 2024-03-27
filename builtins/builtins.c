@@ -6,7 +6,7 @@
 /*   By: sel-jadi <sel-jadi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/26 01:07:33 by sel-jadi          #+#    #+#             */
-/*   Updated: 2024/03/26 01:13:46 by sel-jadi         ###   ########.fr       */
+/*   Updated: 2024/03/27 00:23:19 by sel-jadi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,24 +102,20 @@ int check_export(char *line)
     }
     return 1;
 }
-void builtins(char *line, s_env *s_env)
+void builtins(char *line,char ** args, s_env *s_env)
 {
     //ECHO
-    echo_fct(line);
+    echo_fct(args);
 	// pwd :
 	pwd_without_options(line);
 	// unset :
 	s_env = unset_fct(line, s_env);
 	// export :
-	if (check_export(line) == 0)
-	    print_export(s_env);
-	else
-	{
-		s_env = export_fct(line, s_env);
-		// env :
-		if (check_env(line) == 0)
+	export_fct(args ,s_env);
+
+	//env
+	if (!strcmp(args[0], "env") && !args[1])
         	print_list(s_env);
-    }
 	// $variables :
 	check_variables(line, s_env);
 }

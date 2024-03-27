@@ -6,7 +6,7 @@
 /*   By: sel-jadi <sel-jadi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/26 00:12:06 by sel-jadi          #+#    #+#             */
-/*   Updated: 2024/03/26 00:55:25 by sel-jadi         ###   ########.fr       */
+/*   Updated: 2024/03/27 00:25:21 by sel-jadi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -186,7 +186,7 @@ int	ft_count_cmd(char *inp)
 }
 
 
-void line_to_args(char *line)
+char **line_to_args(char *line)
 {
     char **cmds;
     t_parse d = {0};
@@ -195,10 +195,11 @@ void line_to_args(char *line)
 
     line = ft_add_sep(line, d);
     cmds = split_args(line);
-    //  affii
+    // affii
 	int i = 0;
 	while(cmds[i])
 	{
 		printf("%s\n",cmds[i++]);
 	}
+	return(cmds);
 }
