@@ -6,21 +6,12 @@
 /*   By: sdiouane <sdiouane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 23:52:10 by sdiouane          #+#    #+#             */
-/*   Updated: 2024/03/27 23:31:55 by sdiouane         ###   ########.fr       */
+/*   Updated: 2024/03/27 23:33:18 by sdiouane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 
 #include "minishell.h"
-
-char **init_env(char **env)
-{
-	if (!env || !(*env))
-		return (NULL);
-	char **new_env = NULL;
-	new_env = env;
-	return (new_env);
-}
 
 int only_spaces(char *str)
 {
@@ -35,9 +26,6 @@ int only_spaces(char *str)
 	return(1);
 }
 
-
-
-//add non valuable keys 
 s_env *split_env(char **env)
 {
 	int i = 0;
@@ -53,9 +41,6 @@ s_env *split_env(char **env)
 	}
 	return (lst);
 }
-
-
-
 
 void	main_loop(char *line,s_env *s_env)
 {

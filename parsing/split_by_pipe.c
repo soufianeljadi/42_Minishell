@@ -6,7 +6,7 @@
 /*   By: sdiouane <sdiouane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/27 23:28:30 by sdiouane          #+#    #+#             */
-/*   Updated: 2024/03/27 23:31:10 by sdiouane         ###   ########.fr       */
+/*   Updated: 2024/03/28 00:10:15 by sdiouane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,7 +89,10 @@ noued_cmd *split_args_by_pipe(char **args)
             s = NULL;
         }
 		else
+		{
+            s = ft_strjoin(s, strdup(" "));
             s = ft_strjoin(s, args[i]);
+		}
         i++;
     }
     if (s != NULL)
