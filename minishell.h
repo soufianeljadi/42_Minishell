@@ -6,7 +6,7 @@
 /*   By: sdiouane <sdiouane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 23:51:44 by sdiouane          #+#    #+#             */
-/*   Updated: 2024/03/27 23:31:24 by sdiouane         ###   ########.fr       */
+/*   Updated: 2024/03/29 22:00:27 by sdiouane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,7 @@ typedef struct {
 
 typedef struct noeud_cmd
 {
+	char				*redirection;
 	char				*cmd;
 	struct noeud_cmd	*next;
 } noued_cmd;
@@ -65,7 +66,6 @@ typedef struct s_points
 	int	end;
 }	t_points;
 
-
 /**********************MAIN***********************************/
 	// init_env
 char **init_env(char **env);
@@ -85,6 +85,11 @@ char *ft_strtok(char *str, const char *delim);
 char	*ft_substr(char const *s, unsigned int start, size_t len);
 char	*ft_substr2(const char *inp, int start, int end);
 char	*ft_strchr(const char *str, int c);
+	// quotes :
+int		ft_quots(char **line);
+int		ft_next_quote(char *s, char c);
+char		ft_first_quote(char *s);
+int 		line_has_quotes(char **line);
 	// token : 
 Token*	create_token(char *value);
 void 	free_token(Token *token);
@@ -109,8 +114,8 @@ int		get_end_space(char *inp);
 void	ft_free(char **s);
 int		ft_count_cmd(char *inp);
 	// split_by_pipe :
-noued_cmd	*new_noued_cmd(char *commande);
-void 		add_back_noued_cmd(noued_cmd **tete, char *commande);
+noued_cmd	*new_noued_cmd(char *commande, char	*redirection);
+void		add_back_noued_cmd(noued_cmd **tete, char *commande, char	*redirection);
 void 		print_command_list(noued_cmd *head);
 noued_cmd	*split_args_by_pipe(char **args);
 	//add_sep :

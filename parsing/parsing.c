@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sel-jadi <sel-jadi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sdiouane <sdiouane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/16 15:55:13 by sdiouane          #+#    #+#             */
-/*   Updated: 2024/03/27 00:15:49 by sel-jadi         ###   ########.fr       */
+/*   Updated: 2024/03/29 22:00:39 by sdiouane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,13 +63,12 @@ void nbr_quotes(char *str)
 		syntax_error();
 }
 
-
-
 int parsing(char *line)
 {
     if (parse_single_input(line, '|'))
 		return (1);
-	// nbr_quotes(line);
+    if (ft_quots(&line))
+		return (1);
 	if(parse_redirection(line))
 		return (1);
 	return(0);

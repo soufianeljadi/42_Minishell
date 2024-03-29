@@ -6,7 +6,7 @@
 #    By: sdiouane <sdiouane@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/03/12 23:52:42 by sdiouane          #+#    #+#              #
-#    Updated: 2024/03/27 23:30:38 by sdiouane         ###   ########.fr        #
+#    Updated: 2024/03/29 22:01:16 by sdiouane         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -27,6 +27,7 @@ SRC = minishell.c \
 	  parsing/parse_pipe.c \
 	  parsing/parse_redirection.c \
 	  parsing/ft_strchr.c \
+	  parsing/quotes.c \
 	  parsing/ft_substr.c \
 	  parsing/ft_strlen.c \
 	  builtins/builtins.c \

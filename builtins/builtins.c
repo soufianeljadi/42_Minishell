@@ -6,7 +6,7 @@
 /*   By: sdiouane <sdiouane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/26 01:07:33 by sel-jadi          #+#    #+#             */
-/*   Updated: 2024/03/28 00:11:09 by sdiouane         ###   ########.fr       */
+/*   Updated: 2024/03/28 16:02:03 by sdiouane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,41 +59,9 @@ void check_variables(char **args, s_env *lst)
     }
 }
 
-
-int check_env(char *line)
-{
-	int i = 0;
-	while (line[i] == ' ' || line[i] == '\t')
-		i++;
-	if (strncmp(&line[i], "env", 3) == 0)
-	{
-		i += 3;
-		while ((line[i] == ' ' || line[i] == '\t'))
-			i++;
-		if (line[i] == '\0')
-			return 0;
-	}
-	return 1;
-}
-
-int check_export(char *line)
-{
-	int i = 0;
-	while (line[i] == ' ' || line[i] == '\t')
-		i++;
-	if (strncmp(&line[i], "export", 5) == 0)
-	{
-		i += 6;
-		while ((line[i] == ' ' || line[i] == '\t'))
-			i++;
-		if (line[i] == '\0')
-			return 0;
-	}
-	return 1;
-}
 void builtins(char ** args, s_env *s_env)
 {
-	//ECHO
+	// echo :
 	echo_fct(args);
 	// pwd :
 	pwd_without_options(args);
@@ -107,3 +75,4 @@ void builtins(char ** args, s_env *s_env)
 	// $variables :
 	check_variables(args, s_env);
 }
+  

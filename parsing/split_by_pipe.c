@@ -6,7 +6,7 @@
 /*   By: sdiouane <sdiouane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/27 23:28:30 by sdiouane          #+#    #+#             */
-/*   Updated: 2024/03/28 00:10:15 by sdiouane         ###   ########.fr       */
+/*   Updated: 2024/03/29 21:55:21 by sdiouane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,61 +46,143 @@ char *ft_strjoin(const char *s1, const char *s2)
 	return result;
 }
 
-noued_cmd *new_noued_cmd(char *commande)
+// noued_cmd *new_noued_cmd(char *commande, char	*redirection)
+// {
+//     noued_cmd *nouveau_noeud = (noued_cmd *)malloc(sizeof(noued_cmd));
+//     if (nouveau_noeud == NULL)
+// 	{
+//         printf("Erreur d'allocation de mémoire\n");
+//         exit(EXIT_FAILURE);
+//     }
+//     nouveau_noeud->cmd = strdup(commande);
+//     nouveau_noeud->redirection = strdup(redirection);
+//     return nouveau_noeud;
+// }
+
+
+// void add_back_noued_cmd(noued_cmd **tete, char *commande, char	*redirection)
+// {
+//     if (*tete == NULL)
+//         *tete = new_noued_cmd(commande, redirection);
+//     else
+// 	{
+//         noued_cmd *courant = *tete;
+//         while (courant->next != NULL)
+//             courant = courant->next;
+//         courant->next = new_noued_cmd(commande, redirection);
+//     }
+// }
+
+// ls >file < hello | hh =>  cmd = hh , rederection = ls >file < hello
+
+// noued_cmd *split_args_by_pipe(char **args)
+// {
+// 	noued_cmd *cmd = NULL;
+//     char *s = NULL;
+//     char *redirection = NULL;
+//     int i = 0;
+
+//     while (args[i])
+// 	{
+//         if (strcmp(args[i], "|") == 0)
+// 		{
+// 			add_back_noued_cmd(&cmd, s, redirection);
+//             free(s);
+//             s = NULL;
+//         }
+// 		else
+// 		{
+// 			if (!strcmp(args[i], ">") || !strcmp(args[i], "<"))
+// 			{
+				
+// 			}
+				
+//             s = ft_strjoin(s, strdup(" "));
+//             s = ft_strjoin(s, args[i]);
+// 		}
+//         i++;
+//     }
+//     if (s != NULL)
+// 	{
+// 		add_back_noued_cmd(&cmd, s, redirection);
+//         free(s);
+//     }
+// 	return (cmd);
+// }
+
+noued_cmd *new_noued_cmd(char *commande, char *redirection)
 {
-    noued_cmd *nouveau_noeud = (noued_cmd *)malloc(sizeof(noued_cmd));
-    if (nouveau_noeud == NULL)
+	noued_cmd *nouveau_noeud = (noued_cmd *)malloc(sizeof(noued_cmd));
+	if (!nouveau_noeud)
 	{
-        printf("Erreur d'allocation de mémoire\n");
-        exit(EXIT_FAILURE);
-    }
-    nouveau_noeud->cmd = strdup(commande);
-    nouveau_noeud->next = NULL;
-    return nouveau_noeud;
+		printf("Erreur d'allocation de mémoire\n");
+		exit(EXIT_FAILURE);
+	}
+	nouveau_noeud->cmd = strdup(commande);
+	nouveau_noeud->redirection = (redirection) ? strdup(redirection) : NULL;
+	nouveau_noeud->next = NULL;
+	return nouveau_noeud;
 }
 
-
-void add_back_noued_cmd(noued_cmd **tete, char *commande)
+void add_back_noued_cmd(noued_cmd **tete, char *commande, char *redirection)
 {
-    if (*tete == NULL)
-        *tete = new_noued_cmd(commande);
-    else
+	if (!*tete)
+		*tete = new_noued_cmd(commande, redirection);
+	else
 	{
-        noued_cmd *courant = *tete;
-        while (courant->next != NULL)
-            courant = courant->next;
-        courant->next = new_noued_cmd(commande);
-    }
+		noued_cmd *courant = *tete;
+		while (courant->next)
+			courant = courant->next;
+		courant->next = new_noued_cmd(commande, redirection);
+	}
 }
-
 
 noued_cmd *split_args_by_pipe(char **args)
 {
 	noued_cmd *cmd = NULL;
-    char *s = NULL;
-    int i = 0;
+	char *s = NULL;
+	char *redirection = NULL;
+	int i = 0;
 
-    while (args[i])
+	while (args[i])
 	{
-        if (strcmp(args[i], "|") == 0)
+		if (strcmp(args[i], "|") == 0)
 		{
-			add_back_noued_cmd(&cmd, s);
-            free(s);
-            s = NULL;
-        }
+			add_back_noued_cmd(&cmd, s, redirection);
+			free(s);
+			s = NULL;
+			redirection = NULL;
+		}
+		else if (strcmp(args[i], ">") == 0 || strcmp(args[i], "<") == 0)
+		{
+			if (args[i + 1])
+			{
+				redirection = ft_strjoin(args[i], args[i + 1]);
+				i++;
+			}
+			// else
+			// {
+			// 	printf("Erreur : Fichier de redirection manquant après l'opérateur.\n");
+			// 	exit(EXIT_FAILURE);
+			// }
+		}
 		else
 		{
-            s = ft_strjoin(s, strdup(" "));
-            s = ft_strjoin(s, args[i]);
+			if (!s)
+				s = strdup(args[i]);
+			else
+			{
+				char *temp = ft_strjoin(s, " ");
+				free(s);
+				s = ft_strjoin(temp, args[i]);
+				free(temp);
+			}
 		}
-        i++;
-    }
-    if (s != NULL)
-	{
-		add_back_noued_cmd(&cmd, s);
-        free(s);
-    }
-	return (cmd);
+		i++;
+	}
+	if (s)
+		add_back_noued_cmd(&cmd, s, redirection);
+	return cmd;
 }
 
 
@@ -110,7 +192,8 @@ void print_command_list(noued_cmd *head)
 	
 	while (current != NULL)
 	{
-		printf("noeud : %s\n", current->cmd);
+		printf("cmd : %s\nrederection : %s \n\n\n", current->cmd, current->redirection);
 		current = current->next;
 	}
 }
+
