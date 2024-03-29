@@ -6,7 +6,7 @@
 /*   By: sdiouane <sdiouane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/27 23:28:30 by sdiouane          #+#    #+#             */
-/*   Updated: 2024/03/29 21:55:21 by sdiouane         ###   ########.fr       */
+/*   Updated: 2024/03/29 22:49:34 by sdiouane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,70 +46,6 @@ char *ft_strjoin(const char *s1, const char *s2)
 	return result;
 }
 
-// noued_cmd *new_noued_cmd(char *commande, char	*redirection)
-// {
-//     noued_cmd *nouveau_noeud = (noued_cmd *)malloc(sizeof(noued_cmd));
-//     if (nouveau_noeud == NULL)
-// 	{
-//         printf("Erreur d'allocation de mémoire\n");
-//         exit(EXIT_FAILURE);
-//     }
-//     nouveau_noeud->cmd = strdup(commande);
-//     nouveau_noeud->redirection = strdup(redirection);
-//     return nouveau_noeud;
-// }
-
-
-// void add_back_noued_cmd(noued_cmd **tete, char *commande, char	*redirection)
-// {
-//     if (*tete == NULL)
-//         *tete = new_noued_cmd(commande, redirection);
-//     else
-// 	{
-//         noued_cmd *courant = *tete;
-//         while (courant->next != NULL)
-//             courant = courant->next;
-//         courant->next = new_noued_cmd(commande, redirection);
-//     }
-// }
-
-// ls >file < hello | hh =>  cmd = hh , rederection = ls >file < hello
-
-// noued_cmd *split_args_by_pipe(char **args)
-// {
-// 	noued_cmd *cmd = NULL;
-//     char *s = NULL;
-//     char *redirection = NULL;
-//     int i = 0;
-
-//     while (args[i])
-// 	{
-//         if (strcmp(args[i], "|") == 0)
-// 		{
-// 			add_back_noued_cmd(&cmd, s, redirection);
-//             free(s);
-//             s = NULL;
-//         }
-// 		else
-// 		{
-// 			if (!strcmp(args[i], ">") || !strcmp(args[i], "<"))
-// 			{
-				
-// 			}
-				
-//             s = ft_strjoin(s, strdup(" "));
-//             s = ft_strjoin(s, args[i]);
-// 		}
-//         i++;
-//     }
-//     if (s != NULL)
-// 	{
-// 		add_back_noued_cmd(&cmd, s, redirection);
-//         free(s);
-//     }
-// 	return (cmd);
-// }
-
 noued_cmd *new_noued_cmd(char *commande, char *redirection)
 {
 	noued_cmd *nouveau_noeud = (noued_cmd *)malloc(sizeof(noued_cmd));
@@ -139,61 +75,63 @@ void add_back_noued_cmd(noued_cmd **tete, char *commande, char *redirection)
 
 noued_cmd *split_args_by_pipe(char **args)
 {
-	noued_cmd *cmd = NULL;
-	char *s = NULL;
-	char *redirection = NULL;
-	int i = 0;
+    noued_cmd *cmd = NULL;
+    char *s = NULL;
+    char *redirection = NULL;
+    int i = 0;
 
-	while (args[i])
-	{
-		if (strcmp(args[i], "|") == 0)
-		{
-			add_back_noued_cmd(&cmd, s, redirection);
-			free(s);
-			s = NULL;
-			redirection = NULL;
-		}
-		else if (strcmp(args[i], ">") == 0 || strcmp(args[i], "<") == 0)
-		{
-			if (args[i + 1])
-			{
-				redirection = ft_strjoin(args[i], args[i + 1]);
-				i++;
-			}
-			// else
-			// {
-			// 	printf("Erreur : Fichier de redirection manquant après l'opérateur.\n");
-			// 	exit(EXIT_FAILURE);
-			// }
-		}
-		else
-		{
-			if (!s)
-				s = strdup(args[i]);
-			else
-			{
-				char *temp = ft_strjoin(s, " ");
-				free(s);
-				s = ft_strjoin(temp, args[i]);
-				free(temp);
-			}
-		}
-		i++;
-	}
-	if (s)
-		add_back_noued_cmd(&cmd, s, redirection);
-	return cmd;
+    while (args[i])
+    {
+        if (strcmp(args[i], "|") == 0)
+        {
+            add_back_noued_cmd(&cmd, s, redirection);
+            free(s);
+            s = NULL;
+            redirection = NULL;
+        }
+        else if (strcmp(args[i], ">") == 0 || strcmp(args[i], "<") == 0)
+        {
+            char *op_and_filename = strdup(args[i]);
+            int j = i + 1;
+            while (args[j] && (strcmp(args[j], "|") != 0)) {
+                op_and_filename = ft_strjoin(op_and_filename, args[j]);
+                j++;
+            }
+            redirection = op_and_filename;
+            // printf("%d :-----%s-----\n", i, redirection);
+            i = j - 1; // Update i to skip processed tokens
+        }
+        else
+        {
+            if (!s)
+                s = strdup(args[i]);
+            else
+            {
+                char *temp = ft_strjoin(s, " ");
+                free(s);
+                s = ft_strjoin(temp, args[i]);
+                free(temp);
+            }
+        }
+        i++;
+    }
+    if (s)
+        add_back_noued_cmd(&cmd, s, redirection);
+    return cmd;
 }
+
 
 
 void print_command_list(noued_cmd *head)
 {
-	noued_cmd *current = head;
+	// noued_cmd *current = head;
+
+	(void)head;
 	
-	while (current != NULL)
-	{
-		printf("cmd : %s\nrederection : %s \n\n\n", current->cmd, current->redirection);
-		current = current->next;
-	}
+	// while (current != NULL)
+	// {
+	// 	printf("cmd : %s\nrederection : %s \n\n\n", current->cmd, current->redirection);
+	// 	current = current->next;
+	// }
 }
 
