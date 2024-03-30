@@ -6,7 +6,7 @@
 /*   By: sdiouane <sdiouane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/27 23:28:30 by sdiouane          #+#    #+#             */
-/*   Updated: 2024/03/29 22:49:34 by sdiouane         ###   ########.fr       */
+/*   Updated: 2024/03/30 14:42:13 by sdiouane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,13 +73,25 @@ void add_back_noued_cmd(noued_cmd **tete, char *commande, char *redirection)
 	}
 }
 
+void free_noued_cmd(noued_cmd *node) {
+    if (node == NULL) {
+        return;
+    }
+    free_noued_cmd(node->next); // Free the next node recursively
+    free(node->cmd); // Free the command string
+    free(node->redirection); // Free the redirection string
+    free(node); // Free the node itself
+}
+
+
 noued_cmd *split_args_by_pipe(char **args)
 {
     noued_cmd *cmd = NULL;
     char *s = NULL;
     char *redirection = NULL;
     int i = 0;
-
+	char *op_and_filename;
+	char *tmp;
     while (args[i])
     {
         if (strcmp(args[i], "|") == 0)
@@ -91,14 +103,15 @@ noued_cmd *split_args_by_pipe(char **args)
         }
         else if (strcmp(args[i], ">") == 0 || strcmp(args[i], "<") == 0)
         {
-            char *op_and_filename = strdup(args[i]);
+            tmp = strdup(args[i]);
             int j = i + 1;
-            while (args[j] && (strcmp(args[j], "|") != 0)) {
-                op_and_filename = ft_strjoin(op_and_filename, args[j]);
-                j++;
-            }
+            while (args[j] && (strcmp(args[j], "|") != 0))
+			{
+                op_and_filename = ft_strjoin(tmp, args[j++]);
+				free(tmp);
+				tmp = op_and_filename;
+			}
             redirection = op_and_filename;
-            // printf("%d :-----%s-----\n", i, redirection);
             i = j - 1; // Update i to skip processed tokens
         }
         else
@@ -117,21 +130,28 @@ noued_cmd *split_args_by_pipe(char **args)
     }
     if (s)
         add_back_noued_cmd(&cmd, s, redirection);
-    return cmd;
+    if (s)
+		free(s);
+	// if (op_and_filename)
+	// 	free (op_and_filename);
+	if (redirection)
+		free(redirection);
+    return (cmd);
 }
-
-
 
 void print_command_list(noued_cmd *head)
 {
-	// noued_cmd *current = head;
+	noued_cmd *current = head;
+	int i = 0;
 
 	(void)head;
 	
-	// while (current != NULL)
-	// {
-	// 	printf("cmd : %s\nrederection : %s \n\n\n", current->cmd, current->redirection);
-	// 	current = current->next;
-	// }
+	while (current != NULL)
+	{
+		printf("Noeud : %d\n", i);
+		printf("->cmd : %s\n->rederection : %s \n\n", current->cmd, current->redirection);
+		current = current->next;
+		i++;
+	}
 }
 

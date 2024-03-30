@@ -6,7 +6,7 @@
 /*   By: sdiouane <sdiouane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/18 23:09:54 by sdiouane          #+#    #+#             */
-/*   Updated: 2024/03/25 16:59:41 by sdiouane         ###   ########.fr       */
+/*   Updated: 2024/03/30 00:05:50 by sdiouane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ static int only_spaces(char *line, int i )
 
 	while(line[i] == ' ' || line[i] == '\t')
 		i++;
-	if(line[i] == '\0')
+	if(line[i] == '\0' || line[i] == '|')
 		r = 1;
 	return(r);
 }

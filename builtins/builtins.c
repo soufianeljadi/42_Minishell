@@ -6,7 +6,7 @@
 /*   By: sdiouane <sdiouane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/26 01:07:33 by sel-jadi          #+#    #+#             */
-/*   Updated: 2024/03/28 16:02:03 by sdiouane         ###   ########.fr       */
+/*   Updated: 2024/03/30 00:18:59 by sdiouane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,8 @@ void check_variables(char **args, s_env *lst)
                 while (args[i][j] && args[i][j] != ' ' && args[i][j] != '\t')
                     j++;
                 key = (char *)malloc(((j - key_start) + 1) * sizeof(char));
+                if (!key)
+                    exit(EXIT_FAILURE);
                 strncpy(key, &args[i][key_start], j - key_start);
                 key[j - key_start] = '\0';
                 current = lst;

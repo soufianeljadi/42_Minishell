@@ -6,7 +6,7 @@
 /*   By: sdiouane <sdiouane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/23 14:48:45 by sdiouane          #+#    #+#             */
-/*   Updated: 2024/03/27 15:38:48 by sdiouane         ###   ########.fr       */
+/*   Updated: 2024/03/30 00:00:52 by sdiouane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,4 +29,5 @@ void pwd_without_options(char **args)
 		else
 			perror("getcwd() error");
 	}
+	free (pwd);
 }

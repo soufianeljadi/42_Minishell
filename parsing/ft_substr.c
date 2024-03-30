@@ -3,14 +3,34 @@
 /*                                                        :::      ::::::::   */
 /*   ft_substr.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sel-jadi <sel-jadi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sdiouane <sdiouane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/25 16:59:26 by sdiouane          #+#    #+#             */
-/*   Updated: 2024/03/26 00:38:39 by sel-jadi         ###   ########.fr       */
+/*   Updated: 2024/03/30 00:26:27 by sdiouane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
+
+char	*ft_strdup(char *s1)
+{
+	char	*s2;
+	int		i;
+	int		len;
+
+	i = 0;
+	len = ft_strlen(s1);
+	s2 = (char *)malloc(sizeof(char) * (len + 1));
+	if (!s2)
+		return (NULL);
+	while (s1[i] != '\0')
+	{
+		s2[i] = s1[i];
+		i++;
+	}
+	s2[i] = '\0';
+	return (s2);
+}
 
 char	*ft_substr(char const *s, unsigned int start, size_t len)
 {
@@ -20,7 +40,7 @@ char	*ft_substr(char const *s, unsigned int start, size_t len)
 	if (!s)
 		return (NULL);
 	if (!len || start >= strlen(s))
-		return (strdup(""));
+		return (ft_strdup(""));
 	i = strlen(s) - start ;
 	if (i > len)
 		i = len;

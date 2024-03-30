@@ -6,7 +6,7 @@
 /*   By: sdiouane <sdiouane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/26 00:12:06 by sel-jadi          #+#    #+#             */
-/*   Updated: 2024/03/29 23:28:44 by sdiouane         ###   ########.fr       */
+/*   Updated: 2024/03/30 00:32:34 by sdiouane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -189,17 +189,19 @@ int	ft_count_cmd(char *inp)
 char **line_to_args(char *line)
 {
     char **cmds;
+	char *sp_line;
     t_parse d = {0};
 
     
 
-    line = ft_add_sep(line, d);
-    cmds = split_args(line);
+    sp_line = ft_add_sep(line, d);
+    cmds = split_args(sp_line);
     // affii
 	// int i = 0;
 	// while(cmds[i])
 	// {
 	// 	printf("%s\n",cmds[i++]);
 	// }
+	free (sp_line);
 	return(cmds);
 }

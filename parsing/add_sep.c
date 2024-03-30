@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   add_sep.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sel-jadi <sel-jadi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sdiouane <sdiouane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/25 23:56:31 by sel-jadi          #+#    #+#             */
-/*   Updated: 2024/03/26 00:12:55 by sel-jadi         ###   ########.fr       */
+/*   Updated: 2024/03/30 00:19:20 by sdiouane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@
 	len = strlen(s);
 	tmp = (char *)malloc(sizeof(char) * (len + 2));
 	if (!tmp)
-		return (free(s), syntax_error(), NULL);
+		return (free(s), NULL);
 	i = 0;
 	j = 0;
 	while (s[i])

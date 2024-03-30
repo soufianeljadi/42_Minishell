@@ -6,7 +6,7 @@
 /*   By: sdiouane <sdiouane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 23:52:10 by sdiouane          #+#    #+#             */
-/*   Updated: 2024/03/29 22:25:59 by sdiouane         ###   ########.fr       */
+/*   Updated: 2024/03/30 00:30:27 by sdiouane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,11 +78,21 @@ void	main_loop(char *line,s_env *s_env)
 			}
 		}
 	}
+	clear_history();
+	free_noued_cmd(cmd);
+	ft_free_tab(args);
+}
+
+void	f(void)
+{
+	// system("lsof minishell > file");
+	system("leaks minishell");
 }
 
 int main(int ac, char **av, char **env)
 {
 	(void)av;
+	atexit(f);
 	char *line = NULL;
 	s_env *splited_env = NULL;
 

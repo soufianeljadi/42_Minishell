@@ -6,7 +6,7 @@
 /*   By: sdiouane <sdiouane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 23:51:44 by sdiouane          #+#    #+#             */
-/*   Updated: 2024/03/29 22:00:27 by sdiouane         ###   ########.fr       */
+/*   Updated: 2024/03/30 14:47:18 by sdiouane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,16 @@ typedef struct noeud_cmd
 	struct noeud_cmd	*next;
 } noued_cmd;
 
+typedef struct  s_pars
+{
+    int         p_1[2];
+    int         p_2[2];
+    char        *input;
+    char        **tab;
+    char        **envp;
+    t_cmd       *lst;
+}               t_pars;
+
 typedef struct s_parse
 {
 	int		i;
@@ -77,6 +87,7 @@ void	ft_lstadd_back(s_env **lst, s_env *new);
 void	print_list(s_env *list);
 void	print_export(s_env *list);
 s_env	*ft_lstnew_data(char *value, char*key);
+void	free_noued_cmd(noued_cmd *node);
 	// split :
 void	ft_free_tab(char **tab);
 char	**ft_split(char	*s, char c);
