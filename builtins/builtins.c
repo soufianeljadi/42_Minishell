@@ -6,7 +6,7 @@
 /*   By: sdiouane <sdiouane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/26 01:07:33 by sel-jadi          #+#    #+#             */
-/*   Updated: 2024/03/30 00:18:59 by sdiouane         ###   ########.fr       */
+/*   Updated: 2024/03/31 01:30:53 by sdiouane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,7 @@ void check_variables(char **args, s_env *lst)
     }
 }
 
-void builtins(char ** args, s_env *s_env)
+void builtins(char **args, s_env *s_env)
 {
 	// echo :
 	echo_fct(args);

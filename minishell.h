@@ -6,7 +6,7 @@
 /*   By: sdiouane <sdiouane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 23:51:44 by sdiouane          #+#    #+#             */
-/*   Updated: 2024/03/30 14:47:18 by sdiouane         ###   ########.fr       */
+/*   Updated: 2024/03/31 01:22:49 by sdiouane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <unistd.h>
+#include <fcntl.h>
 #include <stdbool.h>
 #include <sys/wait.h>
 #include <readline/readline.h>
@@ -48,15 +49,15 @@ typedef struct noeud_cmd
 	struct noeud_cmd	*next;
 } noued_cmd;
 
-typedef struct  s_pars
-{
-    int         p_1[2];
-    int         p_2[2];
-    char        *input;
-    char        **tab;
-    char        **envp;
-    t_cmd       *lst;
-}               t_pars;
+// typedef struct  s_pars
+// {
+//     int         p_1[2];
+//     int         p_2[2];
+//     char        *input;
+//     char        **tab;
+//     char        **envp;
+//     t_cmd       *lst;
+// }               t_pars;
 
 typedef struct s_parse
 {
@@ -78,8 +79,7 @@ typedef struct s_points
 
 /**********************MAIN***********************************/
 	// init_env
-char **init_env(char **env);
-void	main_loop(char *line,s_env *s_env);
+void	main_loop(char *line, s_env *s_env, char **env);
 /**********************PARSING***********************************/
 	// lst :
 s_env	*ft_lstnew();
@@ -88,6 +88,7 @@ void	print_list(s_env *list);
 void	print_export(s_env *list);
 s_env	*ft_lstnew_data(char *value, char*key);
 void	free_noued_cmd(noued_cmd *node);
+void	free_s_env(s_env *head);
 	// split :
 void	ft_free_tab(char **tab);
 char	**ft_split(char	*s, char c);
@@ -142,7 +143,6 @@ int parse_redirection(char *line);
 	// quotes :
 void nbr_quotes(char *str);
 
-
 /**********************BUILTINS***********************************/
 void builtins(char ** args, s_env *s_env);
 // export :
@@ -158,5 +158,14 @@ void echo_fct(char **args);
 
 /**********************signals***********************************/
 void    signal_ctrl_c_d(int signal);
+
+/***********************execution********************************/
+int		ft_strncmp(const char *s1, const char *s2, size_t n);
+char	*get_env(char *s, char **env);
+char	*get_path(char *cmd, char **env);
+void	execute(char *s, char **env);
+void	ft_execution(noued_cmd *lst, char **args, s_env *s_env, char **env);
+void	ft_putstr_fd(char *s, int fd);
+void	ft_putendl_fd(char *s, int fd);
 
 #endif

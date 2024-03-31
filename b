@@ -1,0 +1,14 @@
+Makefile
+a
+builtins
+execute_fct.c
+execution
+minishell
+minishell.c
+minishell.h
+parsing
+salah
+signals
+splt_|_.c
+test.c
+tokenizer_2_1.tldr

@@ -6,7 +6,7 @@
 #    By: sdiouane <sdiouane@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/03/12 23:52:42 by sdiouane          #+#    #+#              #
-#    Updated: 2024/03/30 14:45:48 by sdiouane         ###   ########.fr        #
+#    Updated: 2024/03/30 22:34:09 by sdiouane         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -37,7 +37,8 @@ SRC = minishell.c \
 	  builtins/unset.c \
 	  builtins/echo.c \
       signals/signal.c \
-	  execute_fct.c \
+	  execution/find_path.c
+	#   execute_fct.c \
 
 OBJ = $(SRC:.c=.o)
 

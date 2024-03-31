@@ -6,7 +6,7 @@
 /*   By: sdiouane <sdiouane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/13 00:32:13 by sdiouane          #+#    #+#             */
-/*   Updated: 2024/03/28 16:13:28 by sdiouane         ###   ########.fr       */
+/*   Updated: 2024/03/31 01:22:26 by sdiouane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,6 +56,21 @@ void	ft_lstadd_back(s_env **lst, s_env *new)
 	tmp->next = new;
     
 
+}
+
+void free_s_env(s_env *head)
+{
+    s_env *current = head;
+    s_env *next;
+
+    while (current != NULL)
+	{
+        next = current->next;
+        free(current->key);
+        free(current->value);
+        free(current);
+        current = next;
+    }
 }
 
 void	print_list(s_env *list)
