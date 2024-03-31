@@ -6,7 +6,7 @@
 /*   By: sdiouane <sdiouane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/26 01:07:33 by sel-jadi          #+#    #+#             */
-/*   Updated: 2024/03/31 01:30:53 by sdiouane         ###   ########.fr       */
+/*   Updated: 2024/03/31 21:44:46 by sdiouane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,15 +65,27 @@ void builtins(char **args, s_env *s_env)
 {
 	// echo :
 	echo_fct(args);
+
 	// pwd :
 	pwd_without_options(args);
+
 	// unset :
 	s_env = unset_fct(args, s_env);
+    
 	// export :
 	export_fct(args ,s_env); // += 
-	//env
+    
+	// env
 	if (!strcmp(args[0], "env") && !args[1])
 			print_list(s_env);
+            
+    // cd :
+    // if (!strcmp(args[0], "cd")  && args[1])
+    // {
+    //     printf("1111111111111\n");
+        execute_cd(args);
+    // }
+        
 	// $variables :
 	check_variables(args, s_env);
 }

@@ -6,7 +6,7 @@
 /*   By: sdiouane <sdiouane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 23:51:44 by sdiouane          #+#    #+#             */
-/*   Updated: 2024/03/31 01:22:49 by sdiouane         ###   ########.fr       */
+/*   Updated: 2024/03/31 22:16:05 by sdiouane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,16 +49,6 @@ typedef struct noeud_cmd
 	struct noeud_cmd	*next;
 } noued_cmd;
 
-// typedef struct  s_pars
-// {
-//     int         p_1[2];
-//     int         p_2[2];
-//     char        *input;
-//     char        **tab;
-//     char        **envp;
-//     t_cmd       *lst;
-// }               t_pars;
-
 typedef struct s_parse
 {
 	int		i;
@@ -67,7 +57,6 @@ typedef struct s_parse
 	int		sq;
 
 }			t_parse;
-
 
 typedef struct s_points
 {
@@ -152,7 +141,7 @@ void pwd_without_options(char **args);
 // unset :
 s_env   *unset_fct(char **args, s_env *env);
 // cd :
-void execute_command(char *command);
+void execute_cd(char **args);
 // echo :
 void echo_fct(char **args);
 
@@ -163,7 +152,6 @@ void    signal_ctrl_c_d(int signal);
 int		ft_strncmp(const char *s1, const char *s2, size_t n);
 char	*get_env(char *s, char **env);
 char	*get_path(char *cmd, char **env);
-void	execute(char *s, char **env);
 void	ft_execution(noued_cmd *lst, char **args, s_env *s_env, char **env);
 void	ft_putstr_fd(char *s, int fd);
 void	ft_putendl_fd(char *s, int fd);
