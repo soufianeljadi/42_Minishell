@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   quotes.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sdiouane <sdiouane@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sel-jadi <sel-jadi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/27 01:25:30 by sel-jadi          #+#    #+#             */
-/*   Updated: 2024/03/29 21:59:37 by sdiouane         ###   ########.fr       */
+/*   Updated: 2024/04/01 21:19:24 by sel-jadi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ char	ft_first_quote(char *s)
 	i = 0;
 	while (s[i])
 	{
-		if ((s[i] == '\'' || s[i] == '"') && s[i - 1] != 92)
+		if ((s[i] == '\'' || s[i] == '"'))
 			return (s[i]);
 		i++;
 	}
@@ -35,7 +35,7 @@ int	ft_next_quote(char *s, char c)
 	count = 0;
 	while (s[i])
 	{
-		if (s[i] == c && s[i - 1] != 92 )
+		if (s[i] == c)
 			count++;
 		if (count == 2)
 			return (i);

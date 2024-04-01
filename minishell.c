@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sdiouane <sdiouane@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sel-jadi <sel-jadi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 23:52:10 by sdiouane          #+#    #+#             */
-/*   Updated: 2024/03/31 22:17:33 by sdiouane         ###   ########.fr       */
+/*   Updated: 2024/04/01 21:26:50 by sel-jadi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,7 +105,7 @@ int main(int ac, char **av, char **env)
 		(printf("Args not allowed !\n"),exit(EXIT_FAILURE));
 	splited_env = split_env(env);
 	//signals
-	// rl_catch_signals = 0;
+	rl_catch_signals = 0;
 	signal(SIGQUIT, signal_ctrl_c_d);
 	signal(SIGINT, signal_ctrl_c_d);
 	main_loop(line, splited_env, env);

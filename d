@@ -1,0 +1,23 @@
+total 688
+drwxr-xr-x  22 sel-jadi  candidate     748 Apr  1 20:31 .
+drwxr-xr-x  12 sel-jadi  candidate     408 Mar 24 20:53 ..
+-rw-r--r--   1 sel-jadi  candidate    6148 Mar 29 23:29 .DS_Store
+drwxr-xr-x  15 sel-jadi  candidate     510 Apr  1 20:28 .git
+drwxr-xr-x   3 sel-jadi  candidate     102 Mar 29 23:29 .vscode
+-rw-r--r--   1 sel-jadi  candidate    1872 Apr  1 20:28 Makefile
+-rw-r--r--   1 sel-jadi  candidate       0 Apr  1 20:28 a
+-rw-r--r--   1 sel-jadi  candidate       0 Apr  1 20:31 aa
+-rw-r--r--   1 sel-jadi  candidate       0 Apr  1 20:28 b
+drwxr-xr-x   9 sel-jadi  candidate     306 Apr  1 20:28 builtins
+-rw-r--r--   1 sel-jadi  candidate     118 Apr  1 20:28 c
+drwxr-xr-x   4 sel-jadi  candidate     136 Apr  1 20:28 execution
+-rw-r--r--   1 sel-jadi  candidate     116 Apr  1 20:28 l
+-rwxr-xr-x   1 sel-jadi  candidate   71320 Apr  1 20:28 minishell
+-rw-r--r--   1 sel-jadi  candidate    2696 Apr  1 20:28 minishell.c
+-rw-r--r--   1 sel-jadi  candidate    4630 Apr  1 20:28 minishell.h
+drwxr-xr-x  18 sel-jadi  candidate     612 Apr  1 20:28 parsing
+drwxr-xr-x   4 sel-jadi  candidate     136 Apr  1 20:28 repo
+drwxr-xr-x   3 sel-jadi  candidate     102 Apr  1 20:28 signals
+drwxr-xr-x   3 sel-jadi  candidate     102 Apr  1 20:28 tests
+-rw-r--r--   1 sel-jadi  candidate  244083 Mar 23 22:24 tokenizer_2_1.tldr
+-rw-r--r--   1 sel-jadi  candidate       0 Apr  1 20:28 v

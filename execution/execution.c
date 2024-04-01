@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execution.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sdiouane <sdiouane@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sel-jadi <sel-jadi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/31 22:14:48 by sdiouane          #+#    #+#             */
-/*   Updated: 2024/04/01 00:43:36 by sdiouane         ###   ########.fr       */
+/*   Updated: 2024/04/01 21:16:53 by sel-jadi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -133,7 +133,7 @@ void ft_execution(noued_cmd *lst, char **args, s_env *s_env, char **env)
 	int fd_in = 0;
 	pid_t pid;
 
-	if (!strcmp(args[0], "export") || !strcmp(args[0], "unset") /*|| !strcmp(args[0], "echo") */|| !strcmp(args[0], "cd") || !strcmp(args[0], "env"))
+	if (!strcmp(args[0], "export") || !strcmp(args[0], "unset") || !strcmp(args[0], "echo") || !strcmp(args[0], "cd") || !strcmp(args[0], "env"))
 		builtins(args, s_env);
 	else
 	{
