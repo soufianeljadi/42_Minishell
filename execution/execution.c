@@ -6,7 +6,7 @@
 /*   By: sdiouane <sdiouane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/31 22:14:48 by sdiouane          #+#    #+#             */
-/*   Updated: 2024/03/31 22:23:55 by sdiouane         ###   ########.fr       */
+/*   Updated: 2024/04/01 00:43:36 by sdiouane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,53 @@ static void	execute(char *s, char **env)
 	}
 }
 
+// static void execute_with_redirection(char *cmd, char **env, char *redirection)
+// {
+// 	char *chemin;
+// 	char **args;
+
+// 	args = ft_split(cmd, ' ');
+// 	chemin = get_path(args[0], env);
+	
+// 	if (chemin != NULL)
+// 	{
+// 		int fd = -1;
+
+// 		if (redirection != NULL) 
+// 		{
+// 			if (redirection[0] == '>')
+// 			{
+// 				fd = open(redirection + 1, O_WRONLY | O_CREAT | O_TRUNC, 0666);
+// 				if (fd < 0)
+// 				{
+// 					perror("Cannot open file for writing");
+// 					exit(EXIT_FAILURE);
+// 				}
+// 				dup2(fd, STDOUT_FILENO);
+// 			}
+// 			else if (redirection[0] == '<')
+// 			{
+// 				fd = open(redirection + 1, O_RDONLY);
+// 				if (fd < 0)
+// 				{
+// 					perror("Cannot open file for reading");
+// 					exit(EXIT_FAILURE);
+// 				}
+// 				dup2(fd, STDIN_FILENO);
+// 			}
+// 			close(fd);
+// 		}
+// 		execve(chemin, args, env);
+// 		perror("Command execution failed");
+// 		exit(EXIT_FAILURE);
+// 	}
+// 	else if (!chemin)
+// 	{
+// 		fprintf(stderr, "Command not found: [->%s<-]\n", args[0]);
+// 		exit(EXIT_FAILURE);
+// 	}
+// }
+
 static void execute_with_redirection(char *cmd, char **env, char *redirection)
 {
     char *chemin;
@@ -35,54 +82,56 @@ static void execute_with_redirection(char *cmd, char **env, char *redirection)
 
     args = ft_split(cmd, ' ');
     chemin = get_path(args[0], env);
-	
+    
     if (chemin != NULL)
-	{
+    {
         int fd = -1;
 
         if (redirection != NULL) 
-		{
-            if (redirection[0] == '>')
-			{
-                fd = open(redirection + 1, O_WRONLY | O_CREAT | O_TRUNC, 0666);
-                if (fd < 0)
-				{
-                    perror("Cannot open file for writing");
-                    exit(EXIT_FAILURE);
+        {
+            // Parse the redirection string to handle multiple redirections
+            char *token = strtok(redirection, ">");
+            while (token != NULL)
+            {
+                // Skip leading spaces
+                while (*token && *token == ' ')
+                    token++;
+                
+                if (*token != '\0')
+                {
+                    // Open the file for writing
+                    fd = open(token, O_WRONLY | O_CREAT | O_TRUNC, 0666);
+                    if (fd < 0)
+                    {
+                        perror("Cannot open file for writing");
+                        exit(EXIT_FAILURE);
+                    }
+                    // Redirect stdout to the file
+                    dup2(fd, STDOUT_FILENO);
+                    close(fd); // Close the file descriptor after redirection
                 }
-                dup2(fd, STDOUT_FILENO);
+                token = strtok(NULL, ">");
             }
-			else if (redirection[0] == '<')
-			{
-                fd = open(redirection + 1, O_RDONLY);
-                if (fd < 0)
-				{
-                    perror("Cannot open file for reading");
-                    exit(EXIT_FAILURE);
-                }
-                dup2(fd, STDIN_FILENO);
-            }
-            close(fd);
         }
+        // Execute the command
         execve(chemin, args, env);
         perror("Command execution failed");
         exit(EXIT_FAILURE);
     }
-	else if (!chemin)
-	{
+    else if (!chemin)
+    {
         fprintf(stderr, "Command not found: [->%s<-]\n", args[0]);
         exit(EXIT_FAILURE);
     }
-	
 }
 
 void ft_execution(noued_cmd *lst, char **args, s_env *s_env, char **env)
 {
-    (void)s_env;
-    (void)args;
-    int pipefd[2];
-    int fd_in = 0;
-    pid_t pid;
+	(void)s_env;
+	(void)args;
+	int pipefd[2];
+	int fd_in = 0;
+	pid_t pid;
 
 	if (!strcmp(args[0], "export") || !strcmp(args[0], "unset") /*|| !strcmp(args[0], "echo") */|| !strcmp(args[0], "cd") || !strcmp(args[0], "env"))
 		builtins(args, s_env);
