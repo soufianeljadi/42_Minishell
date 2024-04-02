@@ -6,7 +6,7 @@
 /*   By: sel-jadi <sel-jadi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 23:52:10 by sdiouane          #+#    #+#             */
-/*   Updated: 2024/04/01 21:26:50 by sel-jadi         ###   ########.fr       */
+/*   Updated: 2024/04/02 22:30:41 by sel-jadi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,7 @@ s_env *split_env(char **env)
 	int i = 0;
 	int j = 0;
 	s_env	*lst = NULL;
+	s_env	*tmp = NULL;
 	while (env[i])
 	{
 		j = 0;
@@ -39,6 +40,18 @@ s_env *split_env(char **env)
 		ft_lstadd_back(&lst, ft_lstnew_data(ft_substr(env[i] ,j + 1 ,ft_strlen(env[i])) ,ft_substr(env[i] ,0 , j)));
 		i++;
 	}
+	tmp = lst;
+	while(lst)
+	{
+		if(!strcmp(lst->key, "_"))
+		{
+			free(lst->value);
+			lst->value = strdup("/usr/bin/env");
+		}
+		lst = lst->next;
+	}
+	lst = tmp;
+	// free_s_env(tmp);
 	return (lst);
 }
 
