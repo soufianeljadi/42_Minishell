@@ -3,91 +3,97 @@
 /*                                                        :::      ::::::::   */
 /*   echo.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sel-jadi <sel-jadi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sdiouane <sdiouane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/23 16:50:26 by sdiouane          #+#    #+#             */
-/*   Updated: 2024/04/01 22:01:31 by sel-jadi         ###   ########.fr       */
+/*   Updated: 2024/04/01 23:05:08 by sdiouane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-static void echo_with_option(char **args)
+static void echo_with_option(char **args, s_env *s_env)
 {
 	int i;
 	int j;
 	
 	i = 2;
-	while(args[i])
+	if (check_variables(args, s_env) == 1)
 	{
-		j = 0;
-		while(args[i][j] != '\0')
+		while(args[i])
 		{
-			if(args[i][j] == '"')
+			j = 0;
+			while(args[i][j] != '\0')
 			{
-				j++;
-				while(args[i][j] != '"')
+				if(args[i][j] == '"')
 				{
-					printf("%c",args[i][j]);
 					j++;
+					while(args[i][j] != '"')
+					{
+						printf("%c",args[i][j]);
+						j++;
+					}
 				}
-			}
-			else if(args[i][j] == '\'')
-			{
-				j++;
-				while(args[i][j] != '\'')
+				else if(args[i][j] == '\'')
 				{
-					printf("%c",args[i][j]);
 					j++;
+					while(args[i][j] != '\'')
+					{
+						printf("%c",args[i][j]);
+						j++;
+					}
 				}
+				else
+					printf("%c",args[i][j]);  //normal
+				j++;
 			}
-			else
-				printf("%c",args[i][j]);  //normal
-			j++;
+			if(args[i + 1])
+				printf(" ");
+			i++;
 		}
-		if(args[i + 1])
-			printf(" ");
-		i++;
 	}
 }
-static void echo_no_option(char **args)
+static void echo_no_option(char **args, s_env *s_env)
 {
 	int i;
 	int j;
 	
 	i = 1;
-	while(args[i])
+	if (check_variables(args, s_env) == 1)
 	{
-		j = 0;
-		while(args[i][j] != '\0')
+		while(args[i])
 		{
-			if(args[i][j] == '"')
+			j = 0;
+			while(args[i][j] != '\0')
 			{
-				j++;
-				while(args[i][j] != '"')
+				if(args[i][j] == '"')
 				{
-					printf("%c",args[i][j]);
 					j++;
+					while(args[i][j] != '"')
+					{
+						printf("%c",args[i][j]);
+						j++;
+					}
 				}
-			}
-			else if(args[i][j] == '\'')
-			{
-				j++;
-				while(args[i][j] != '\'')
+				else if(args[i][j] == '\'')
 				{
-					printf("%c",args[i][j]);
 					j++;
+					while(args[i][j] != '\'')
+					{
+						printf("%c",args[i][j]);
+						j++;
+					}
 				}
+				else
+					printf("%c",args[i][j]);  //normal
+				j++;
 			}
-			else
-				printf("%c",args[i][j]);  //normal
-			j++;
+			if(args[i + 1])
+				printf(" ");				
+			i++;
 		}
-		if(args[i + 1])
-			printf(" ");				
-		i++;
 	}
-	printf("\n");
+		printf("\n");
 }
 
 static int only_n(char *s)
@@ -105,15 +111,15 @@ static int only_n(char *s)
 	return(0);
 }
 
-void echo_fct(char **args)
+void echo_fct(char **args, s_env *s_env)
 {
 	
 	if(!strcmp(args[0],"echo") && args[1])
 	{
 		if(only_n(args[1]))
-			echo_with_option(args);
+			echo_with_option(args, s_env);
 		else
-			echo_no_option(args);
+			echo_no_option(args, s_env);
 	}
 	else if(!strcmp(args[0],"echo") && !args[1])
 		printf("\n");

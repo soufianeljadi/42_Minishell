@@ -6,7 +6,7 @@
 /*   By: sdiouane <sdiouane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/26 01:07:33 by sel-jadi          #+#    #+#             */
-/*   Updated: 2024/03/31 21:44:46 by sdiouane         ###   ########.fr       */
+/*   Updated: 2024/04/01 23:05:15 by sdiouane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,12 +21,13 @@ int get_len_env(char **env)
 	return (i);	
 }
 
-void check_variables(char **args, s_env *lst)
+int check_variables(char **args, s_env *lst)
 {
     char *key;
     s_env *current;
     int i = 0;
     int j;
+    int flag = 1;
     while (args[i])
 	{
         j = 0;
@@ -47,7 +48,8 @@ void check_variables(char **args, s_env *lst)
 				{
                     if (strcmp(current->key, key) == 0)
 					{
-                        printf("%s\n", current->value);
+                        printf("%s", current->value);
+                        flag = 0;
                         break;
                     }
                     current = current->next;
@@ -59,12 +61,23 @@ void check_variables(char **args, s_env *lst)
         }
         i++;
     }
+    if (flag == 1)
+        return (1);
+    return (0);
 }
 
 void builtins(char **args, s_env *s_env)
 {
+
+	//exit
+	if (!strncmp(args[0], "exit", 4))
+	{
+		printf("exit\n");
+		exit(EXIT_SUCCESS);
+	}
+
 	// echo :
-	echo_fct(args);
+	echo_fct(args, s_env);
 
 	// pwd :
 	pwd_without_options(args);
@@ -80,13 +93,9 @@ void builtins(char **args, s_env *s_env)
 			print_list(s_env);
             
     // cd :
-    // if (!strcmp(args[0], "cd")  && args[1])
-    // {
-    //     printf("1111111111111\n");
         execute_cd(args);
-    // }
         
-	// $variables :
-	check_variables(args, s_env);
+	// // $variables :
+	// check_variables(args, s_env);
 }
   
