@@ -6,7 +6,7 @@
 /*   By: sel-jadi <sel-jadi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 23:52:10 by sdiouane          #+#    #+#             */
-/*   Updated: 2024/04/02 22:30:41 by sel-jadi         ###   ########.fr       */
+/*   Updated: 2024/04/02 22:37:07 by sel-jadi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,15 +82,6 @@ void	main_loop(char *line, s_env *s_env, char **env)
 				ft_execution(cmd, args, s_env, env);
 				free (args);
 				free_noued_cmd(cmd);
-			}
-			//exit
-			if (strncmp(line, "exit", 4) == 0)
-			{
-				printf("exit\n");
-				free(line);
-				free(args);
-				free_noued_cmd(cmd);
-				break;
 			}
 		}
 	}

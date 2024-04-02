@@ -6,7 +6,7 @@
 /*   By: sdiouane <sdiouane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/26 00:12:06 by sel-jadi          #+#    #+#             */
-/*   Updated: 2024/03/31 21:43:55 by sdiouane         ###   ########.fr       */
+/*   Updated: 2024/04/02 00:17:47 by sdiouane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -191,8 +191,6 @@ char **line_to_args(char *line)
     char **cmds;
 	char *sp_line;
     t_parse d = {0};
-
-    
 
     sp_line = ft_add_sep(line, d);
     cmds = split_args(sp_line);

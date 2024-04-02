@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execution.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sel-jadi <sel-jadi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sdiouane <sdiouane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/31 22:14:48 by sdiouane          #+#    #+#             */
-/*   Updated: 2024/04/01 21:16:53 by sel-jadi         ###   ########.fr       */
+/*   Updated: 2024/04/02 00:58:13 by sdiouane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,13 +75,95 @@ static void	execute(char *s, char **env)
 // 	}
 // }
 
+// char *file_nc(char *s)
+// {
+// 	char * f = NULL;
+// 	int i = 0;
+// 	int x = 0;
+// 				printf("\n++++jjjj");
+// 	while(s[i] != '\0')
+// 	{
+// 		if(s[i] == '"')
+// 		{
+// 			i++;
+// 			while(s[i] != '"')
+// 			{
+// 				f[x] = s[i];
+// 				i++;
+// 				x++;
+// 			}
+// 		}
+// 		else if(s[i] == '\'')
+// 		{
+// 			i++;
+// 			while(s[i] != '\'')
+// 			{
+// 				f[x] = s[i];
+// 				i++;
+// 				x++;
+// 			}
+// 		}
+// 		else
+// 		{
+// 			f[x] = s[i];
+// 			x++;
+// 		} //normal
+// 		i++;
+// 	}
+// 		f[x] = '\0';
+// 				printf("\n++++9AAAAALWAAAA\n");
+// 	return(f);
+// }
+
+char *file_nc(char *s)
+{
+    char *f = (char *)malloc(sizeof(char) * (strlen(s) + 1)); // Allouer de la mémoire pour f
+    if (f == NULL)
+	{
+        printf("Erreur d'allocation de mémoire\n");
+        exit(EXIT_FAILURE);
+    }
+
+    int i = 0;
+    int x = 0;
+    
+    while (s[i] != '\0')
+	{
+        if (s[i] == '"' || s[i] == '\'')
+		{
+            char quote = s[i];
+            i++;
+            while (s[i] != '\0' && s[i] != quote) {
+                f[x] = s[i];
+                i++;
+                x++;
+            }
+            if (s[i] == '\0') { // Gérer le cas où la citation n'est pas terminée
+                printf("Erreur : la citation n'est pas fermée\n");
+                exit(EXIT_FAILURE);
+            }
+        } else {
+            f[x] = s[i];
+            x++;
+        }
+        i++;
+    }
+    
+    f[x] = '\0';
+    return f;
+}
+
+
 static void execute_with_redirection(char *cmd, char **env, char *redirection)
 {
     char *chemin;
     char **args;
-
+	// int i = 0;
+	// int x = 0;
+	
     args = ft_split(cmd, ' ');
     chemin = get_path(args[0], env);
+	
     
     if (chemin != NULL)
     {
@@ -96,11 +178,12 @@ static void execute_with_redirection(char *cmd, char **env, char *redirection)
                 // Skip leading spaces
                 while (*token && *token == ' ')
                     token++;
-                
-                if (*token != '\0')
+				// printf("TOKEN : %s\n\n\n", token);
+				// printf("++++++++%s++++++++++\n" ,file_nc(token));
+                if (*token != '\0')//file "a"
                 {
                     // Open the file for writing
-                    fd = open(token, O_WRONLY | O_CREAT | O_TRUNC, 0666);
+                    fd = open(file_nc(token), O_WRONLY | O_CREAT | O_TRUNC, 0666);
                     if (fd < 0)
                     {
                         perror("Cannot open file for writing");
@@ -133,32 +216,38 @@ void ft_execution(noued_cmd *lst, char **args, s_env *s_env, char **env)
 	int fd_in = 0;
 	pid_t pid;
 
-	if (!strcmp(args[0], "export") || !strcmp(args[0], "unset") || !strcmp(args[0], "echo") || !strcmp(args[0], "cd") || !strcmp(args[0], "env"))
+	if (!strcmp(args[0], "export") || !strcmp(args[0], "unset") || !strcmp(args[0], "echo") || !strcmp(args[0], "cd") || !strcmp(args[0], "exit"))
 		builtins(args, s_env);
 	else
 	{
 		while (lst)
 		{
-			if (pipe(pipefd) == -1 || (pid = fork()) == -1)
-				exit(EXIT_FAILURE);
-			else if (pid == 0)
+				// $variables :
+			if (check_variables(args, s_env) == 1)
 			{
-				dup2(fd_in, STDIN_FILENO);
-				if (lst->next != NULL)
-					dup2(pipefd[1], STDOUT_FILENO);
-				close(pipefd[0]);
-				if (lst->redirection != NULL)
-					execute_with_redirection(lst->cmd, env, lst->redirection);
+				if (pipe(pipefd) == -1 || (pid = fork()) == -1)
+					exit(EXIT_FAILURE);
+				else if (pid == 0)
+				{
+					dup2(fd_in, STDIN_FILENO);
+					if (lst->next != NULL)
+						dup2(pipefd[1], STDOUT_FILENO);
+					close(pipefd[0]);
+					if (lst->redirection != NULL)
+						execute_with_redirection(lst->cmd, env, lst->redirection);
+					else
+						execute(lst->cmd, env);
+				}
 				else
-					execute(lst->cmd, env);
+				{
+					// waitpid(pid, NULL, 0);
+					close(pipefd[1]);
+					fd_in = pipefd[0];
+				}
 			}
 			else
-			{
-				// waitpid(pid, NULL, 0);
-				close(pipefd[1]);
-				fd_in = pipefd[0];
-			}
-				lst = lst->next;
+				printf("\n");
+			lst = lst->next;
 		}
 	}
 	while (0 < wait(NULL))
