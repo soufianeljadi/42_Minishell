@@ -6,7 +6,7 @@
 /*   By: sdiouane <sdiouane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/26 00:12:06 by sel-jadi          #+#    #+#             */
-/*   Updated: 2024/04/02 00:17:47 by sdiouane         ###   ########.fr       */
+/*   Updated: 2024/04/03 00:22:06 by sdiouane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -198,7 +198,8 @@ char **line_to_args(char *line)
 	// int i = 0;
 	// while(cmds[i])
 	// {
-	// 	printf("%s\n",cmds[i++]);
+	// 	printf("%d : %s\n",i, cmds[i]);
+	// 	i++;
 	// }
 	free (sp_line);
 	return(cmds);

@@ -6,7 +6,7 @@
 /*   By: sdiouane <sdiouane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 23:51:44 by sdiouane          #+#    #+#             */
-/*   Updated: 2024/04/01 23:02:36 by sdiouane         ###   ########.fr       */
+/*   Updated: 2024/04/05 23:10:22 by sdiouane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,21 +68,24 @@ typedef struct s_points
 
 /**********************MAIN***********************************/
 	// init_env
-void	main_loop(char *line, s_env *s_env, char **env);
+void	main_loop(char *line, s_env *env_, char **env, s_env *env_i);
 /**********************PARSING***********************************/
 	// lst :
 s_env	*ft_lstnew();
 void	ft_lstadd_back(s_env **lst, s_env *new);
 void	print_list(s_env *list);
 void	print_export(s_env *list);
+void	print_env_i(s_env *lst);
 s_env	*ft_lstnew_data(char *value, char*key);
 void	free_noued_cmd(noued_cmd *node);
 void	free_s_env(s_env *head);
 	// split :
 void	ft_free_tab(char **tab);
 char	**ft_split(char	*s, char c);
+	// strdup :
+char	*ft_strdup(char *s1);
 	// strtock :
-char *ft_strtok(char *str, const char *delim);
+char	*ft_strtok(char *str, const char *delim);
 char	*ft_substr(char const *s, unsigned int start, size_t len);
 char	*ft_substr2(const char *inp, int start, int end);
 char	*ft_strchr(const char *str, int c);
@@ -133,13 +136,15 @@ int parse_redirection(char *line);
 void nbr_quotes(char *str);
 
 /**********************BUILTINS***********************************/
-void builtins(char ** args, s_env *s_env);
+void builtins(char **args, s_env *lst, s_env *env_i, char **env);
 // export :
 s_env	*export_fct(char **args, s_env   *env);
 //pwd :
 void pwd_without_options(char **args);
 // unset :
 s_env   *unset_fct(char **args, s_env *env);
+void	remove_key(s_env **begin_list, void *data_ref, int (*cmp)());
+int cmp(void *data1, void *data2);
 // cd :
 void execute_cd(char **args);
 // echo :
@@ -154,8 +159,16 @@ void    signal_ctrl_c_d(int signal);
 int		ft_strncmp(const char *s1, const char *s2, size_t n);
 char	*get_env(char *s, char **env);
 char	*get_path(char *cmd, char **env);
-void	ft_execution(noued_cmd *lst, char **args, s_env *s_env, char **env);
+void	ft_execution(noued_cmd *lst, char **args, s_env *env_, char **env, s_env *env_i);
 void	ft_putstr_fd(char *s, int fd);
 void	ft_putendl_fd(char *s, int fd);
+	// redirections :
+char	*file_nc(char *s);
+void	execute_with_redirection(char *cmd, char **env, char *redirection);
+int		only_spaces(char *str);
+s_env	*split_env(char **env);
+s_env	*split_env_i();
+s_env	*add_env_entry(s_env *head, char *key, char *value);
+
 
 #endif

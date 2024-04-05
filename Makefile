@@ -6,7 +6,7 @@
 #    By: sdiouane <sdiouane@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/03/12 23:52:42 by sdiouane          #+#    #+#              #
-#    Updated: 2024/03/31 22:17:12 by sdiouane         ###   ########.fr        #
+#    Updated: 2024/04/05 23:13:31 by sdiouane         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -39,6 +39,8 @@ SRC = minishell.c \
       signals/signal.c \
 	  execution/find_path.c \
 	  execution/execution.c \
+	  execution/redirections.c \
+	  execution/helper.c \
 
 OBJ = $(SRC:.c=.o)
 

@@ -6,13 +6,13 @@
 /*   By: sdiouane <sdiouane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/18 23:09:54 by sdiouane          #+#    #+#             */
-/*   Updated: 2024/03/30 00:05:50 by sdiouane         ###   ########.fr       */
+/*   Updated: 2024/04/05 23:12:40 by sdiouane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-static int only_spaces(char *line, int i )
+static int only_spaces__(char *line, int i )
 {
 	int r = 0;
 
@@ -22,6 +22,7 @@ static int only_spaces(char *line, int i )
 		r = 1;
 	return(r);
 }
+
 int parse_redirection(char *line)
 {
 	int i = 0;
@@ -39,7 +40,7 @@ int parse_redirection(char *line)
 				break;
 			}
 			i = i + 2;
-			r = only_spaces(line,i);
+			r = only_spaces__(line,i);
 		}
 		else if (line[i] == '>' || line[i] == '<')
 		{
@@ -53,7 +54,7 @@ int parse_redirection(char *line)
 				r = 1;
 				break;
 			}
-			r = only_spaces(line,i + 1);
+			r = only_spaces__(line,i + 1);
 		}
 		i++;
 	}

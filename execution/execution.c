@@ -6,7 +6,7 @@
 /*   By: sdiouane <sdiouane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/31 22:14:48 by sdiouane          #+#    #+#             */
-/*   Updated: 2024/04/02 00:58:13 by sdiouane         ###   ########.fr       */
+/*   Updated: 2024/04/05 23:00:30 by sdiouane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,8 @@ static void	execute(char *s, char **env)
 {
 	char	*chemin;
 	char	**cmd;
-
+	if (*env)
+	{
 	cmd = ft_split(s, ' '); // ls -la 
 	chemin = get_path(cmd[0], env); // /bin/kkk/ls
 	if (execve(chemin, cmd, env) == -1)
@@ -26,212 +27,35 @@ static void	execute(char *s, char **env)
 		ft_free_tab(cmd);
 		exit(EXIT_FAILURE);
 	}
+	}
 }
 
-// static void execute_with_redirection(char *cmd, char **env, char *redirection)
-// {
-// 	char *chemin;
-// 	char **args;
-
-// 	args = ft_split(cmd, ' ');
-// 	chemin = get_path(args[0], env);
-	
-// 	if (chemin != NULL)
-// 	{
-// 		int fd = -1;
-
-// 		if (redirection != NULL) 
-// 		{
-// 			if (redirection[0] == '>')
-// 			{
-// 				fd = open(redirection + 1, O_WRONLY | O_CREAT | O_TRUNC, 0666);
-// 				if (fd < 0)
-// 				{
-// 					perror("Cannot open file for writing");
-// 					exit(EXIT_FAILURE);
-// 				}
-// 				dup2(fd, STDOUT_FILENO);
-// 			}
-// 			else if (redirection[0] == '<')
-// 			{
-// 				fd = open(redirection + 1, O_RDONLY);
-// 				if (fd < 0)
-// 				{
-// 					perror("Cannot open file for reading");
-// 					exit(EXIT_FAILURE);
-// 				}
-// 				dup2(fd, STDIN_FILENO);
-// 			}
-// 			close(fd);
-// 		}
-// 		execve(chemin, args, env);
-// 		perror("Command execution failed");
-// 		exit(EXIT_FAILURE);
-// 	}
-// 	else if (!chemin)
-// 	{
-// 		fprintf(stderr, "Command not found: [->%s<-]\n", args[0]);
-// 		exit(EXIT_FAILURE);
-// 	}
-// }
-
-// char *file_nc(char *s)
-// {
-// 	char * f = NULL;
-// 	int i = 0;
-// 	int x = 0;
-// 				printf("\n++++jjjj");
-// 	while(s[i] != '\0')
-// 	{
-// 		if(s[i] == '"')
-// 		{
-// 			i++;
-// 			while(s[i] != '"')
-// 			{
-// 				f[x] = s[i];
-// 				i++;
-// 				x++;
-// 			}
-// 		}
-// 		else if(s[i] == '\'')
-// 		{
-// 			i++;
-// 			while(s[i] != '\'')
-// 			{
-// 				f[x] = s[i];
-// 				i++;
-// 				x++;
-// 			}
-// 		}
-// 		else
-// 		{
-// 			f[x] = s[i];
-// 			x++;
-// 		} //normal
-// 		i++;
-// 	}
-// 		f[x] = '\0';
-// 				printf("\n++++9AAAAALWAAAA\n");
-// 	return(f);
-// }
-
-char *file_nc(char *s)
+void ft_execution(noued_cmd *lst, char **args, s_env *env_, char **env, s_env *env_i)
 {
-    char *f = (char *)malloc(sizeof(char) * (strlen(s) + 1)); // Allouer de la mémoire pour f
-    if (f == NULL)
-	{
-        printf("Erreur d'allocation de mémoire\n");
-        exit(EXIT_FAILURE);
-    }
-
-    int i = 0;
-    int x = 0;
-    
-    while (s[i] != '\0')
-	{
-        if (s[i] == '"' || s[i] == '\'')
-		{
-            char quote = s[i];
-            i++;
-            while (s[i] != '\0' && s[i] != quote) {
-                f[x] = s[i];
-                i++;
-                x++;
-            }
-            if (s[i] == '\0') { // Gérer le cas où la citation n'est pas terminée
-                printf("Erreur : la citation n'est pas fermée\n");
-                exit(EXIT_FAILURE);
-            }
-        } else {
-            f[x] = s[i];
-            x++;
-        }
-        i++;
-    }
-    
-    f[x] = '\0';
-    return f;
-}
-
-
-static void execute_with_redirection(char *cmd, char **env, char *redirection)
-{
-    char *chemin;
-    char **args;
-	// int i = 0;
-	// int x = 0;
-	
-    args = ft_split(cmd, ' ');
-    chemin = get_path(args[0], env);
-	
-    
-    if (chemin != NULL)
-    {
-        int fd = -1;
-
-        if (redirection != NULL) 
-        {
-            // Parse the redirection string to handle multiple redirections
-            char *token = strtok(redirection, ">");
-            while (token != NULL)
-            {
-                // Skip leading spaces
-                while (*token && *token == ' ')
-                    token++;
-				// printf("TOKEN : %s\n\n\n", token);
-				// printf("++++++++%s++++++++++\n" ,file_nc(token));
-                if (*token != '\0')//file "a"
-                {
-                    // Open the file for writing
-                    fd = open(file_nc(token), O_WRONLY | O_CREAT | O_TRUNC, 0666);
-                    if (fd < 0)
-                    {
-                        perror("Cannot open file for writing");
-                        exit(EXIT_FAILURE);
-                    }
-                    // Redirect stdout to the file
-                    dup2(fd, STDOUT_FILENO);
-                    close(fd); // Close the file descriptor after redirection
-                }
-                token = strtok(NULL, ">");
-            }
-        }
-        // Execute the command
-        execve(chemin, args, env);
-        perror("Command execution failed");
-        exit(EXIT_FAILURE);
-    }
-    else if (!chemin)
-    {
-        fprintf(stderr, "Command not found: [->%s<-]\n", args[0]);
-        exit(EXIT_FAILURE);
-    }
-}
-
-void ft_execution(noued_cmd *lst, char **args, s_env *s_env, char **env)
-{
-	(void)s_env;
+	(void)env_;
 	(void)args;
 	int pipefd[2];
 	int fd_in = 0;
 	pid_t pid;
 
-	if (!strcmp(args[0], "export") || !strcmp(args[0], "unset") || !strcmp(args[0], "echo") || !strcmp(args[0], "cd") || !strcmp(args[0], "exit"))
-		builtins(args, s_env);
+	if (!strcmp(args[0], "export") || !strcmp(args[0], "unset") || !strcmp(args[0], "env") || !strcmp(args[0], "cd") || !strcmp(args[0], "exit") || !strcmp(args[0], "pwd"))
+		builtins(args, env_, env_i, env);
 	else
 	{
 		while (lst)
 		{
-				// $variables :
-			if (check_variables(args, s_env) == 1)
+			// $variables :
+			if (check_variables(args, env_) == 1)
 			{
 				if (pipe(pipefd) == -1 || (pid = fork()) == -1)
 					exit(EXIT_FAILURE);
 				else if (pid == 0)
 				{
-					dup2(fd_in, STDIN_FILENO);
 					if (lst->next != NULL)
+					{
 						dup2(pipefd[1], STDOUT_FILENO);
+						close(pipefd[1]);
+					}
 					close(pipefd[0]);
 					if (lst->redirection != NULL)
 						execute_with_redirection(lst->cmd, env, lst->redirection);
@@ -240,9 +64,9 @@ void ft_execution(noued_cmd *lst, char **args, s_env *s_env, char **env)
 				}
 				else
 				{
-					// waitpid(pid, NULL, 0);
 					close(pipefd[1]);
 					fd_in = pipefd[0];
+					close(pipefd[0]);
 				}
 			}
 			else
