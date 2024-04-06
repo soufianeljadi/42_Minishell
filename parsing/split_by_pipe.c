@@ -6,7 +6,7 @@
 /*   By: sdiouane <sdiouane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/27 23:28:30 by sdiouane          #+#    #+#             */
-/*   Updated: 2024/03/30 14:42:13 by sdiouane         ###   ########.fr       */
+/*   Updated: 2024/04/05 23:56:38 by sdiouane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,10 +73,10 @@ void add_back_noued_cmd(noued_cmd **tete, char *commande, char *redirection)
 	}
 }
 
-void free_noued_cmd(noued_cmd *node) {
-    if (node == NULL) {
+void free_noued_cmd(noued_cmd *node)
+{
+    if (node == NULL)
         return;
-    }
     free_noued_cmd(node->next); // Free the next node recursively
     free(node->cmd); // Free the command string
     free(node->redirection); // Free the redirection string
@@ -90,36 +90,47 @@ noued_cmd *split_args_by_pipe(char **args)
     char *s = NULL;
     char *redirection = NULL;
     int i = 0;
-	char *op_and_filename;
-	char *tmp;
+    char *op_and_filename;
+    char *tmp;
     while (args[i])
-    {
-        if (strcmp(args[i], "|") == 0)
-        {
+	{
+        if (strcmp(args[i], "|") == 0) 
+		{
             add_back_noued_cmd(&cmd, s, redirection);
             free(s);
             s = NULL;
             redirection = NULL;
         }
-        else if (strcmp(args[i], ">") == 0 || strcmp(args[i], "<") == 0)
-        {
-            tmp = strdup(args[i]);
-            int j = i + 1;
-            while (args[j] && (strcmp(args[j], "|") != 0))
+		else if (strcmp(args[i], ">") == 0 || strcmp(args[i], "<") == 0)
+		{
+            // Handle redirection in the beginning
+            if (i == 0)
 			{
-                op_and_filename = ft_strjoin(tmp, args[j++]);
-				free(tmp);
-				tmp = op_and_filename;
-			}
-            redirection = op_and_filename;
-            i = j - 1; // Update i to skip processed tokens
+                // Assume redirection is in the format "<file" or ">file"
+                redirection = strdup(args[i]); // Store the redirection symbol
+                redirection = ft_strjoin(redirection, args[i + 1]); // Append the filename
+                i++; // Skip the filename as it's processed here
+            }
+			else
+			{
+                tmp = strdup(args[i]);
+                int j = i + 1;
+                while (args[j] && (strcmp(args[j], "|") != 0))
+				{
+                    op_and_filename = ft_strjoin(tmp, args[j++]);
+                    free(tmp);
+                    tmp = op_and_filename;
+                }
+                redirection = op_and_filename;
+                i = j - 1; // Update i to skip processed tokens
+            }
         }
-        else
-        {
+		else
+		{
             if (!s)
                 s = strdup(args[i]);
             else
-            {
+			{
                 char *temp = ft_strjoin(s, " ");
                 free(s);
                 s = ft_strjoin(temp, args[i]);
@@ -131,13 +142,12 @@ noued_cmd *split_args_by_pipe(char **args)
     if (s)
         add_back_noued_cmd(&cmd, s, redirection);
     if (s)
-		free(s);
-	// if (op_and_filename)
-	// 	free (op_and_filename);
-	if (redirection)
-		free(redirection);
+        free(s);
+    // if (redirection) // Remove this line to avoid freeing redirection prematurely
+    //     free(redirection); // Remove this line to avoid freeing redirection prematurely
     return (cmd);
 }
+
 
 void print_command_list(noued_cmd *head)
 {
