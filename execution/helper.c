@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   helper.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sdiouane <sdiouane@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sel-jadi <sel-jadi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/05 23:07:50 by sdiouane          #+#    #+#             */
-/*   Updated: 2024/04/05 23:08:28 by sdiouane         ###   ########.fr       */
+/*   Updated: 2024/04/07 23:30:09 by sel-jadi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,32 +25,44 @@ int only_spaces(char *str)
 	return(1);
 }
 
+static char	*ft_value_of_shlvl(char *str)
+{
+	g_flags.shlvl = ft_atoi(str);
+	free(str);
+	++g_flags.shlvl;
+	return (ft_itoa(g_flags.shlvl++));
+}
 s_env *split_env(char **env)
 {
 	int i = 0;
 	int j = 0;
 	s_env	*lst = NULL;
-	s_env	*tmp = NULL;
+	char 	*key;
+	char 	*value;
+	char 	*str;
+	
 	while (env[i])
 	{
 		j = 0;
 		while (env[i][j] != '=')
 			j++;
-		ft_lstadd_back(&lst, ft_lstnew_data(ft_substr(env[i] ,j + 1 ,ft_strlen(env[i])) ,ft_substr(env[i] ,0 , j)));
-		i++;
-	}
-	tmp = lst;
-	while(lst)
-	{
-		if(!strcmp(lst->key, "_"))
+		key = ft_substr(env[i] ,0 , j);
+		if (!strcmp(key, "SHLVL"))
 		{
-			free(lst->value);
-			lst->value = strdup("/usr/bin/env");
+			str = ft_substr(env[i] ,j + 1 ,ft_strlen(env[i]));
+			value = ft_value_of_shlvl(str);
 		}
-		lst = lst->next;
+		else if(!strcmp(key, "_"))
+			value = strdup("/usr/bin/env");
+		else
+			value = ft_substr(env[i] ,j + 1 ,ft_strlen(env[i]));
+		ft_lstadd_back(&lst, ft_lstnew_data(value ,key));
+		i++;
+		if(!key)
+			free(key);
+		if(!value)
+			free(value);
 	}
-	lst = tmp;
-	// free_s_env(tmp);
 	return (lst);
 }
 

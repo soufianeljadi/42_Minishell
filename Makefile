@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: sdiouane <sdiouane@student.42.fr>          +#+  +:+       +#+         #
+#    By: sel-jadi <sel-jadi@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/03/12 23:52:42 by sdiouane          #+#    #+#              #
-#    Updated: 2024/04/05 23:13:31 by sdiouane         ###   ########.fr        #
+#    Updated: 2024/04/07 20:56:12 by sel-jadi         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,6 +16,7 @@ CC = cc #-g -fsanitize=address
 CFLAGS = -Wall -Wextra -Werror 
 RDFLAGS =  -L $(shell brew --prefix readline)/lib -lreadline
 SRC = minishell.c \
+		ft_itoa.c \
       parsing/ft_split.c \
 	  parsing/lsts.c \
 	  parsing/token.c \

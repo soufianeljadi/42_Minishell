@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sdiouane <sdiouane@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sel-jadi <sel-jadi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 23:51:44 by sdiouane          #+#    #+#             */
-/*   Updated: 2024/04/05 23:10:22 by sdiouane         ###   ########.fr       */
+/*   Updated: 2024/04/07 23:22:33 by sel-jadi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,6 +65,12 @@ typedef struct s_points
 	int	start;
 	int	end;
 }	t_points;
+
+
+typedef struct g_variables
+{
+	int			shlvl;
+}					t_var;
 
 /**********************MAIN***********************************/
 	// init_env
@@ -171,4 +177,7 @@ s_env	*split_env_i();
 s_env	*add_env_entry(s_env *head, char *key, char *value);
 
 
+char	*ft_itoa(unsigned int n);
+int	ft_atoi(const char *str);
+t_var	g_flags;
 #endif
