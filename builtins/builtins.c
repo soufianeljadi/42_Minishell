@@ -6,7 +6,7 @@
 /*   By: sdiouane <sdiouane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/26 01:07:33 by sel-jadi          #+#    #+#             */
-/*   Updated: 2024/04/05 20:41:12 by sdiouane         ###   ########.fr       */
+/*   Updated: 2024/04/17 16:09:52 by sdiouane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -120,6 +120,7 @@ void builtins(char **args, s_env *lst, s_env *env_i, char **env)
 {
 	// (void)env_i;
 	(void)env;
+	char *pwd;
 
 	//exit
 	if (!strncmp(args[0], "exit", 4))
@@ -131,8 +132,12 @@ void builtins(char **args, s_env *lst, s_env *env_i, char **env)
 	// echo :
 	echo_fct(args, lst);
 
+	pwd = getcwd(NULL, 0);
 	// pwd :
-	pwd_without_options(args);
+	pwd_without_options(args, pwd);
+	// printf("***********%s***********\n", pwd);
+
+	
 
 	// unset :
 	lst = unset_fct(args, lst);
@@ -152,7 +157,7 @@ void builtins(char **args, s_env *lst, s_env *env_i, char **env)
 			print_list(env_i);	
 	}
 	// cd :
-		execute_cd(args);
+		execute_cd(args, lst);
 		
 	// $variables :
 	check_variables(args, lst);

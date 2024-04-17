@@ -6,17 +6,17 @@
 /*   By: sdiouane <sdiouane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/23 14:48:45 by sdiouane          #+#    #+#             */
-/*   Updated: 2024/03/30 22:14:58 by sdiouane         ###   ########.fr       */
+/*   Updated: 2024/04/17 15:23:52 by sdiouane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-void pwd_without_options(char **args)
+char *pwd_without_options(char **args, char *pwd)
 {
-	char *pwd;
+	// char *pwd;
 	
-	pwd = getcwd(NULL, 0);
+	// pwd = getcwd(NULL, 0);
 
 
 	if (!strcmp(args[0], "pwd"))
@@ -33,4 +33,5 @@ void pwd_without_options(char **args)
 		}
 	}
 	//free (pwd);
+	return (pwd);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sel-jadi <sel-jadi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sdiouane <sdiouane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 23:51:44 by sdiouane          #+#    #+#             */
-/*   Updated: 2024/04/07 23:22:33 by sel-jadi         ###   ########.fr       */
+/*   Updated: 2024/04/17 16:04:55 by sdiouane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -146,13 +146,13 @@ void builtins(char **args, s_env *lst, s_env *env_i, char **env);
 // export :
 s_env	*export_fct(char **args, s_env   *env);
 //pwd :
-void pwd_without_options(char **args);
+char *pwd_without_options(char **args, char *pwd);
 // unset :
 s_env   *unset_fct(char **args, s_env *env);
 void	remove_key(s_env **begin_list, void *data_ref, int (*cmp)());
 int cmp(void *data1, void *data2);
 // cd :
-void execute_cd(char **args);
+void execute_cd(char **args, s_env *lst);
 // echo :
 void echo_fct(char **args, s_env *s_env);
 // $var :
