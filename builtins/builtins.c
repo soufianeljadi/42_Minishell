@@ -6,12 +6,11 @@
 /*   By: sdiouane <sdiouane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/26 01:07:33 by sel-jadi          #+#    #+#             */
-/*   Updated: 2024/04/17 16:09:52 by sdiouane         ###   ########.fr       */
+/*   Updated: 2024/04/18 15:12:36 by sdiouane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
-
 
 int get_len_env(char **env)
 {
@@ -66,42 +65,6 @@ int check_variables(char **args, s_env *lst)
 	return (0);
 }
 
-
-
-// Renvoie la valeur d'une variable d'environnement donnée
-// char *get_env_value(const char *key, s_env *lst) {
-//     s_env *current = lst;
-//     while (current) {
-//         if (strcmp(current->key, key) == 0) {
-//             return current->value;
-//         }
-//         current = current->next;
-//     }
-//     return NULL;
-// }
-
-// // Vérifie et remplace les variables d'environnement dans une chaîne d'arguments
-// void check_variables(char **args, s_env *lst) {
-//     int i = 0;
-//     int f = 0;
-//     while (args[i]) {
-//         if (args[i][0] == '$') {
-//             char *key = &args[i][1]; // Ignorer le '$' initial
-//             char *value = get_env_value(key, lst);
-//             if (value != NULL) {
-//                 printf("%s", value);
-//             } else {
-//                 printf("$%s", key); // Si la variable n'est pas définie, imprimer tel quel
-//             }
-//         } else {
-//             printf("%s", args[i]);
-//         }
-//         printf(" ");
-//         i++;
-//     }
-// }
-
-
 void print_env_i(s_env *lst)
 {
 	while (lst)
@@ -119,7 +82,7 @@ void print_env_i(s_env *lst)
 void builtins(char **args, s_env *lst, s_env *env_i, char **env)
 {
 	// (void)env_i;
-	(void)env;
+	(void)env;    
 	char *pwd;
 
 	//exit
@@ -135,16 +98,11 @@ void builtins(char **args, s_env *lst, s_env *env_i, char **env)
 	pwd = getcwd(NULL, 0);
 	// pwd :
 	pwd_without_options(args, pwd);
-	// printf("***********%s***********\n", pwd);
-
-	
-
 	// unset :
 	lst = unset_fct(args, lst);
 	
 	// export :
 	export_fct(args ,lst); // += 
-
 	// env
 	if (*env)
 	{
@@ -157,8 +115,7 @@ void builtins(char **args, s_env *lst, s_env *env_i, char **env)
 			print_list(env_i);	
 	}
 	// cd :
-		execute_cd(args, lst);
-		
+	execute_cd(args, lst);		
 	// $variables :
 	check_variables(args, lst);
 }
