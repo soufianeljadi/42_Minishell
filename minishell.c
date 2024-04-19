@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sel-jadi <sel-jadi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sdiouane <sdiouane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 23:52:10 by sdiouane          #+#    #+#             */
-/*   Updated: 2024/04/07 21:26:30 by sel-jadi         ###   ########.fr       */
+/*   Updated: 2024/04/19 17:50:50 by sdiouane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,6 +62,7 @@ int main(int ac, char **av, char **env)
 {
 	(void)av;
 	// atexit(f);
+	
 	char *line = NULL;
 	s_env *splited_env = NULL;
 	s_env *env_i = NULL;
@@ -75,12 +76,9 @@ int main(int ac, char **av, char **env)
 	signal(SIGQUIT, signal_ctrl_c_d);
 	signal(SIGINT, signal_ctrl_c_d);
 	main_loop(line, splited_env, env, env_i);
-
 	// free(line);
 	free_s_env(splited_env);
 	close(3);
 	close(4);
 	return 0;
 }
-
-

@@ -24,6 +24,9 @@
         "system_error": "c",
         "tuple": "c",
         "type_traits": "c",
-        "vector": "c"
+        "vector": "c",
+        "__hash_table": "c",
+        "__split_buffer": "c",
+        "unordered_map": "c"
     }
 }

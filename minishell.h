@@ -6,7 +6,7 @@
 /*   By: sdiouane <sdiouane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 23:51:44 by sdiouane          #+#    #+#             */
-/*   Updated: 2024/04/17 16:04:55 by sdiouane         ###   ########.fr       */
+/*   Updated: 2024/04/19 15:46:10 by sdiouane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,11 @@
 #include <readline/history.h>
 
 #define MAX_COMMAND_LENGTH 100
+
+# ifndef BUFFER_SIZE
+#  define BUFFER_SIZE 1042
+# endif
+
 
 typedef	struct			s_cmd
 {
@@ -160,6 +165,14 @@ int check_variables(char **args, s_env *lst);
 
 /**********************signals***********************************/
 void    signal_ctrl_c_d(int signal);
+
+/**********************get_next_line*****************************/
+char	*get_next_line(int fd);
+char	*ft_join(char *dest, char *s1, char *s2);
+int		find(char *s, char c);
+char	*ft_strjoin_gnl(char *start, char *buff);
+int		ft_strlen_gnl(char *s);
+char	*ft_strdup_gnl(char *s1);
 
 /***********************execution********************************/
 int		ft_strncmp(const char *s1, const char *s2, size_t n);
