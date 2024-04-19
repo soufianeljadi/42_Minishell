@@ -6,7 +6,7 @@
 /*   By: sdiouane <sdiouane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/22 22:11:52 by sdiouane          #+#    #+#             */
-/*   Updated: 2024/04/19 21:18:26 by sdiouane         ###   ########.fr       */
+/*   Updated: 2024/04/19 22:53:41 by sdiouane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,23 +28,18 @@ int	verif_export(char *str)
 	return (0);
 }
 
-char *remove_quotes(char *input) {
-    // Vérification de la validité de la chaîne d'entrée
-    if (input == NULL || strlen(input) < 2 || input[0] != '"' || input[strlen(input) - 1] != '"') {
-        return NULL; // Chaîne invalide
-    }
-
-    // Allouer de la mémoire pour la nouvelle chaîne
-    char *result = malloc(strlen(input) - 1);
-    if (result == NULL) {
-        return NULL; // Échec de l'allocation mémoire
-    }
-
-    // Copier les caractères sans les guillemets
+char *remove_quotes(char *input)
+{
+	char *result;
+    if (input == NULL || strlen(input) < 2 || input[0] != '"' || input[strlen(input) - 1] != '"')
+        return NULL;
+    result = malloc(strlen(input) - 1);
+    if (result == NULL)
+        return NULL;
     strncpy(result, input + 1, strlen(input) - 2);
-    result[strlen(input) - 2] = '\0'; // Terminer la chaîne
-
-    return result;
+    result[strlen(input) - 2] = '\0';
+	
+    return (result);
 }
 
 s_env *export_fct(char **args, s_env *env)
