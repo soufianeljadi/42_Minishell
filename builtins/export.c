@@ -6,7 +6,7 @@
 /*   By: sdiouane <sdiouane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/22 22:11:52 by sdiouane          #+#    #+#             */
-/*   Updated: 2024/04/18 16:55:54 by sdiouane         ###   ########.fr       */
+/*   Updated: 2024/04/19 21:18:26 by sdiouane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,25 @@ int	verif_export(char *str)
 		i++;
 	}
 	return (0);
+}
+
+char *remove_quotes(char *input) {
+    // Vérification de la validité de la chaîne d'entrée
+    if (input == NULL || strlen(input) < 2 || input[0] != '"' || input[strlen(input) - 1] != '"') {
+        return NULL; // Chaîne invalide
+    }
+
+    // Allouer de la mémoire pour la nouvelle chaîne
+    char *result = malloc(strlen(input) - 1);
+    if (result == NULL) {
+        return NULL; // Échec de l'allocation mémoire
+    }
+
+    // Copier les caractères sans les guillemets
+    strncpy(result, input + 1, strlen(input) - 2);
+    result[strlen(input) - 2] = '\0'; // Terminer la chaîne
+
+    return result;
 }
 
 s_env *export_fct(char **args, s_env *env)
@@ -61,19 +80,39 @@ s_env *export_fct(char **args, s_env *env)
 						while (args[i][j] != ' ')
 							j++;
 						value = ft_substr(args[i], start, j - start);
-						current = env;
-						while (current != NULL && current->value)
+						if (value[0] != '\"')
 						{
-							if (strcmp(current->key, key) == 0)
+							current = env;
+							while (current != NULL && current->value)
 							{
-								free(current->value);
-								current->value = value;
-								break;
+								if (strcmp(current->key, key) == 0)
+								{
+									free(current->value);
+									current->value = value;
+									break;
+								}
+								current = current->next;
 							}
-							current = current->next;
+							if (current == NULL)
+								ft_lstadd_back(&env, ft_lstnew_data(value, key));
 						}
-						if (current == NULL)
-							ft_lstadd_back(&env, ft_lstnew_data(value, key));
+						else
+						{
+							value = remove_quotes(value);
+							current = env;
+							while (current != NULL && current->value)
+							{
+								if (strcmp(current->key, key) == 0)
+								{
+									free(current->value);
+									current->value = value;
+									break;
+								}
+								current = current->next;
+							}
+							if (current == NULL)
+								ft_lstadd_back(&env, ft_lstnew_data(value, key));
+						}
 					}
 					else if (args[i][j] == '+' && args[i][j + 1] == '=')
 					{
@@ -83,17 +122,37 @@ s_env *export_fct(char **args, s_env *env)
 						while (args[i][j] != ' ')
 							j++;
 						value = ft_substr(args[i], start, j - start);
-						current = env;
-						while (current != NULL && current->value)
+						if (value[0] != '\"')
 						{
-							if (strcmp(current->key, key) == 0)
+							current = env;
+							while (current != NULL && current->value)
 							{
-								current->value = ft_strjoin(current->value, value);
-								break ;
+								if (strcmp(current->key, key) == 0)
+								{
+									current->value = ft_strjoin(current->value, value);
+									break ;
+								}
+								current = current->next;
+								if (current == NULL)
+									ft_lstadd_back(&env, ft_lstnew_data(value, key));						
 							}
-							current = current->next;
-							if (current == NULL)
-								ft_lstadd_back(&env, ft_lstnew_data(value, key));						
+						}
+						else
+						{
+							value = remove_quotes(value);
+							current = env;
+							while (current != NULL && current->value)
+							{
+								if (strcmp(current->key, key) == 0)
+								{
+									current->value = ft_strjoin(current->value, value);
+									break ;
+								}
+								current = current->next;
+								if (current == NULL)
+									ft_lstadd_back(&env, ft_lstnew_data(value, key));						
+							}
+							
 						}
 					}
 				}
