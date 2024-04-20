@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lsts.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sel-jadi <sel-jadi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sdiouane <sdiouane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/13 00:32:13 by sdiouane          #+#    #+#             */
-/*   Updated: 2024/04/07 21:04:33 by sel-jadi         ###   ########.fr       */
+/*   Updated: 2024/04/20 08:03:27 by sdiouane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,10 +94,12 @@ void	print_export(s_env *list)
 	else
 	{
 		if (!strcmp(&list->value[0], ""))
-			printf("declare -x %s=", list->key);
+			printf("declare -x %s\n", list->key);
 		else
+		{
 			printf("declare -x %s=", list->key);
-		printf("\"%s\"\n", list->value);
+			printf("\"%s\"\n", list->value);
+		}
 		list = list->next;
 	}
   }

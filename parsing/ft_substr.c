@@ -6,7 +6,7 @@
 /*   By: sdiouane <sdiouane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/25 16:59:26 by sdiouane          #+#    #+#             */
-/*   Updated: 2024/03/30 00:26:27 by sdiouane         ###   ########.fr       */
+/*   Updated: 2024/04/20 08:26:39 by sdiouane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,6 @@ char	*ft_substr(char const *s, unsigned int start, size_t len)
 	return (str);
 }
 
-
 char	*ft_substr2(const char *inp, int start, int end)
 {
 	int		len;
@@ -64,7 +63,7 @@ char	*ft_substr2(const char *inp, int start, int end)
 	s = (char *)malloc(len + 2);
 	if (!s)
 		return (syntax_error(),  NULL);
-	while (start + i <= end)
+	while (end >= start + i)
 	{
 		s[i] = inp[i + start];
 		i++;

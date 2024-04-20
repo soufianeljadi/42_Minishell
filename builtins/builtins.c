@@ -6,7 +6,7 @@
 /*   By: sdiouane <sdiouane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/26 01:07:33 by sel-jadi          #+#    #+#             */
-/*   Updated: 2024/04/18 15:12:36 by sdiouane         ###   ########.fr       */
+/*   Updated: 2024/04/20 07:53:00 by sdiouane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@ int get_len_env(char **env)
 	return (i);	
 }
 
+
 int check_variables(char **args, s_env *lst)
 {
 	char *key;
@@ -32,31 +33,70 @@ int check_variables(char **args, s_env *lst)
 		j = 0;
 		while (args[i][j])
 		{
-			if (args[i][j] == '$')
+		
+			if (args[i][j] == '"')
 			{
-				int key_start = j + 1;
-				while (args[i][j] && args[i][j] != ' ' && args[i][j] != '\t')
-					j++;
-				key = (char *)malloc(((j - key_start) + 1) * sizeof(char));
-				if (!key)
-					exit(EXIT_FAILURE);
-				strncpy(key, &args[i][key_start], j - key_start);
-				key[j - key_start] = '\0';
-				current = lst;
-				while (current)
+				j++;
+				while(args[i][j] == ' ')
+					printf("%c", args[i][j++]);
+				if (args[i][j] == '$')
 				{
-					if (strcmp(current->key, key) == 0)
+					int key_start = j + 1;
+					while (args[i][j] && args[i][j] != ' ' && args[i][j] != '\t')
+						j++;
+					key = (char *)malloc(((j - key_start) + 1) * sizeof(char));
+					if (!key)
+						exit(EXIT_FAILURE);
+					strncpy(key, &args[i][key_start], j - key_start);
+					key[j - key_start] = '\0';
+					printf("key : %s\n", key);
+					current = lst;
+					while (current)
 					{
-						printf("%s", current->value);
-						flag = 0;
-						break;
+						if (strcmp(current->key, key) == 0)
+						{
+							printf("%s", current->value);
+							flag = 0;
+							break;
+						}
+						current = current->next;
 					}
-					current = current->next;
+					free(key);
+					while(args[i][j] != '"')
+						printf("%c", args[i][j++]);
+					printf("\n--->%s\n\n", key);
 				}
-				free(key);
+				else
+					j++;
 			}
 			else
-				j++;
+			{
+				if (args[i][j] == '$')
+				{
+					int key_start = j + 1;
+					while (args[i][j] && args[i][j] != ' ' && args[i][j] != '\t')
+						j++;
+					key = (char *)malloc(((j - key_start) + 1) * sizeof(char));
+					if (!key)
+						exit(EXIT_FAILURE);
+					strncpy(key, &args[i][key_start], j - key_start);
+					key[j - key_start] = '\0';
+					current = lst;
+					while (current)
+					{
+						if (strcmp(current->key, key) == 0)
+						{
+							printf("%s", current->value);
+							flag = 0;
+							break;
+						}
+						current = current->next;
+					}
+					free(key);
+				}
+				else
+					j++;
+			}
 		}
 		i++;
 	}
@@ -102,7 +142,7 @@ void builtins(char **args, s_env *lst, s_env *env_i, char **env)
 	lst = unset_fct(args, lst);
 	
 	// export :
-	export_fct(args ,lst); // += 
+	export_fct(args ,lst);
 	// env
 	if (*env)
 	{

@@ -6,7 +6,7 @@
 /*   By: sdiouane <sdiouane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/22 22:11:52 by sdiouane          #+#    #+#             */
-/*   Updated: 2024/04/19 22:53:41 by sdiouane         ###   ########.fr       */
+/*   Updated: 2024/04/20 08:31:36 by sdiouane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,6 @@ s_env *export_fct(char **args, s_env *env)
 			while (args[i][j] != '=' && args[i][j] != '+')
 				j++;
 			key = ft_substr(args[i], 0, j);
-			printf("KEY : %s\n", key);
 			if (verif_export(key) == 0)
 			{
 				if (args[i][j] == '\0')
