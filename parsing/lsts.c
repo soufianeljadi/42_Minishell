@@ -6,12 +6,11 @@
 /*   By: sdiouane <sdiouane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/13 00:32:13 by sdiouane          #+#    #+#             */
-/*   Updated: 2024/04/20 08:03:27 by sdiouane         ###   ########.fr       */
+/*   Updated: 2024/04/23 15:35:38 by sdiouane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
-
 
 s_env	*ft_lstnew()
 {
@@ -77,14 +76,15 @@ void	print_list(s_env *list)
 {
   while (list)
   {
-	// if (list->key && list->value)
-	// {
-		printf("%s=", list->key);
-		printf("%s\n", list->value);
-	// }
+	if (list->value[0])
+	{
+		printf("%s", list->key);
+		printf("=%s\n", list->value);
+	}
   	list = list->next;
   }
 }
+
 void	print_export(s_env *list)
 {
   while (list)
@@ -93,7 +93,7 @@ void	print_export(s_env *list)
 		list = list->next;
 	else
 	{
-		if (!strcmp(&list->value[0], ""))
+		if (!list->value[0])
 			printf("declare -x %s\n", list->key);
 		else
 		{

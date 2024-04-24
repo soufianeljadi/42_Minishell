@@ -6,7 +6,7 @@
 /*   By: sdiouane <sdiouane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/05 23:07:50 by sdiouane          #+#    #+#             */
-/*   Updated: 2024/04/18 19:59:22 by sdiouane         ###   ########.fr       */
+/*   Updated: 2024/04/23 15:47:45 by sdiouane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,20 +76,29 @@ s_env *add_env_entry(s_env *head, char *key, char *value)
         exit(EXIT_FAILURE);
 		
     lst->key = ft_strdup(key);
-    lst->value = ft_strdup(value);
-    if (lst->key == NULL || lst->value == NULL)
+	if (value)
+	{
+    	lst->value = ft_strdup(value);
+	}
+    if (lst->key == NULL)
         exit(EXIT_FAILURE);
     lst->next = head;
 
     return (lst);
 }
 
-s_env *split_env_i()
+s_env *split_env_i(s_env *lst)
 {
-    s_env *lst = NULL;
-
     lst = add_env_entry(lst, "_", "/usr/bin/env");
     lst = add_env_entry(lst, "SHLVL", "1");
     lst = add_env_entry(lst, "PWD", "/Users/sdiouane/Desktop/our_big_shell");
+    return (lst);
+}
+
+s_env *split_export_i(s_env *lst)
+{
+    lst = add_env_entry(lst, "OLDPWD", "");
+    lst = add_env_entry(lst, "PWD", "/Users/sdiouane/Desktop/our_big_shell");
+    lst = add_env_entry(lst, "SHLVL", "1");
     return (lst);
 }

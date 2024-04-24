@@ -6,7 +6,7 @@
 /*   By: sdiouane <sdiouane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/23 15:04:54 by sdiouane          #+#    #+#             */
-/*   Updated: 2024/03/27 15:45:53 by sdiouane         ###   ########.fr       */
+/*   Updated: 2024/04/23 19:26:11 by sdiouane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ s_env *unset_fct(char **args, s_env *env)
 		while (args[i])
 		{
 			j = 0;
-			while (args[i][j] != '\0')
+			while (args[i][j])
 			{
 				start = j;
 				while (args[i][j] != ' ' && args[i][j] != '\t' && args[i][j] != '\0')

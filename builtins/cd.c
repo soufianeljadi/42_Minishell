@@ -6,7 +6,7 @@
 /*   By: sdiouane <sdiouane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/25 17:00:00 by sdiouane          #+#    #+#             */
-/*   Updated: 2024/04/20 07:02:01 by sdiouane         ###   ########.fr       */
+/*   Updated: 2024/04/23 10:26:07 by sdiouane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ void	execute_cd(char **args, s_env *lst)
 			if (chdir(args[1]) != 0)
 				perror("cd");
 			new_pwd = getcwd(NULL, 0);
-			while (lst->next != NULL)
+			while (lst && lst->next != NULL)
 			{
 				if (!strcmp(lst->key, "PWD"))
 					old_pwd = ft_strdup(lst->value);
@@ -45,7 +45,7 @@ void	execute_cd(char **args, s_env *lst)
 			if (chdir(getenv("HOME")) == -1)
 				perror("HOME");
 			new_pwd = getcwd(NULL, 0);
-			while (lst->next != NULL)
+			while (lst && lst->next != NULL)
 			{
 				if (!strcmp(lst->key, "PWD"))
 					lst->value = ft_strdup(new_pwd);

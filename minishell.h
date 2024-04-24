@@ -6,7 +6,7 @@
 /*   By: sdiouane <sdiouane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 23:51:44 by sdiouane          #+#    #+#             */
-/*   Updated: 2024/04/19 15:46:10 by sdiouane         ###   ########.fr       */
+/*   Updated: 2024/04/23 15:48:33 by sdiouane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@
 #include <sys/wait.h>
 #include <readline/readline.h>
 #include <readline/history.h>
+#include <errno.h>
 
 #define MAX_COMMAND_LENGTH 100
 
@@ -79,7 +80,7 @@ typedef struct g_variables
 
 /**********************MAIN***********************************/
 	// init_env
-void	main_loop(char *line, s_env *env_, char **env, s_env *env_i);
+void	main_loop(char *line, s_env *env_, char **env, s_env *env_i, s_env *export_i);
 /**********************PARSING***********************************/
 	// lst :
 s_env	*ft_lstnew();
@@ -147,9 +148,9 @@ int parse_redirection(char *line);
 void nbr_quotes(char *str);
 
 /**********************BUILTINS***********************************/
-void builtins(char **args, s_env *lst, s_env *env_i, char **env);
+void builtins(char **args, s_env *lst, s_env *env_i, s_env *export_i, char **env);
 // export :
-s_env	*export_fct(char **args, s_env   *env);
+s_env *export_fct(char **args, s_env *env, s_env *split_export_i, char **eenv);
 //pwd :
 char *pwd_without_options(char **args, char *pwd);
 // unset :
@@ -175,10 +176,10 @@ int		ft_strlen_gnl(char *s);
 char	*ft_strdup_gnl(char *s1);
 
 /***********************execution********************************/
+void	ft_execution(noued_cmd *lst, char **args, s_env *env_, char **env, s_env *env_i, s_env *export_i);
 int		ft_strncmp(const char *s1, const char *s2, size_t n);
 char	*get_env(char *s, char **env);
 char	*get_path(char *cmd, char **env);
-void	ft_execution(noued_cmd *lst, char **args, s_env *env_, char **env, s_env *env_i);
 void	ft_putstr_fd(char *s, int fd);
 void	ft_putendl_fd(char *s, int fd);
 	// redirections :
@@ -186,7 +187,8 @@ char	*file_nc(char *s);
 void	execute_with_redirection(char *cmd, char **env, char *redirection);
 int		only_spaces(char *str);
 s_env	*split_env(char **env);
-s_env	*split_env_i();
+s_env	*split_env_i(s_env *lst);
+s_env	*split_export_i(s_env *lst);
 s_env	*add_env_entry(s_env *head, char *key, char *value);
 
 

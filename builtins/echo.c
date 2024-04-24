@@ -6,7 +6,7 @@
 /*   By: sdiouane <sdiouane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/23 16:50:26 by sdiouane          #+#    #+#             */
-/*   Updated: 2024/04/01 23:05:08 by sdiouane         ###   ########.fr       */
+/*   Updated: 2024/04/23 15:32:20 by sdiouane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -123,5 +123,4 @@ void echo_fct(char **args, s_env *s_env)
 	}
 	else if(!strcmp(args[0],"echo") && !args[1])
 		printf("\n");
-	
 }

@@ -1,39 +1,168 @@
-SECURITYSESSIONID=186a5
-USER=sdiouane
-MallocNanoZone=0
-COMMAND_MODE=unix2003
-PATH=/Users/sdiouane/.brew/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/munki:/Library/Apple/usr/bin:/Users/sdiouane/.brew/bin
-HOME=/Users/sdiouane
-SHELL=/bin/zsh
-LaunchInstanceID=9CF9E4FD-B199-4458-8D45-72CA8636A8AE
-__CF_USER_TEXT_ENCODING=0x194A1:0x0:0x0
-XPC_SERVICE_NAME=0
-SSH_AUTH_SOCK=/private/tmp/com.apple.launchd.g31GyTDM51/Listeners
-XPC_FLAGS=0x0
-LOGNAME=sdiouane
-TMPDIR=/var/folders/zz/zyxvpxvq6csfxvn_n000cmm4003551/T/
-ORIGINAL_XDG_CURRENT_DESKTOP=undefined
-SHLVL=2
-PWD=/Users/sdiouane/Desktop/our_big_shell
-OLDPWD=/Users/sdiouane/Desktop/our_big_shell
-ZSH=/Users/sdiouane/.oh-my-zsh
-PAGER=less
-LESS=-R
-LSCOLORS=Gxfxcxdxbxegedabagacad
-LS_COLORS=di=1;36:ln=35:so=32:pi=33:ex=31:bd=34;46:cd=34;43:su=30;41:sg=30;46:tw=30;42:ow=30;43
-HOMEBREW_CACHE=/tmp/sdiouane/Homebrew/Caches
-HOMEBREW_TEMP=/tmp/sdiouane/Homebrew/Temp
-TERM_PROGRAM=vscode
-TERM_PROGRAM_VERSION=1.83.1
-LANG=en_US.UTF-8
-COLORTERM=truecolor
-GIT_ASKPASS=/Applications/Visual Studio Code.app/Contents/Resources/app/extensions/git/dist/askpass.sh
-VSCODE_GIT_ASKPASS_NODE=/Applications/Visual Studio Code.app/Contents/Frameworks/Code Helper (Plugin).app/Contents/MacOS/Code Helper (Plugin)
-VSCODE_GIT_ASKPASS_EXTRA_ARGS=--ms-enable-electron-run-as-node
-VSCODE_GIT_ASKPASS_MAIN=/Applications/Visual Studio Code.app/Contents/Resources/app/extensions/git/dist/askpass-main.js
-VSCODE_GIT_IPC_HANDLE=/var/folders/zz/zyxvpxvq6csfxvn_n000cmm4003551/T/vscode-git-9c9844fdba.sock
-VSCODE_INJECTION=1
-ZDOTDIR=/Users/sdiouane
-USER_ZDOTDIR=/Users/sdiouane
-TERM=xterm-256color
-_=/usr/bin/env
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+
+typedef struct noued_cmd {
+    char *cmd;
+    char *redirection;
+    struct noued_cmd *next;
+} noued_cmd;
+
+char *ft_strjoin(const char *s1, const char *s2)
+{
+    size_t len_s1 = 0;
+    size_t len_s2 = 0;
+    size_t i = 0;
+    size_t j = 0;
+    char *result;
+
+    if (s1)
+        while (s1[len_s1])
+            len_s1++;
+    if (s2)
+        while (s2[len_s2])
+            len_s2++;
+
+    result = (char *)malloc(sizeof(char) * (len_s1 + len_s2 + 1));
+    if (!result)
+        return NULL;
+
+    while (i < len_s1)
+    {
+        result[i] = s1[i];
+        i++;
+    }
+    while (j < len_s2)
+    {
+        result[i + j] = s2[j];
+        j++;
+    }
+    result[i + j] = '\0';
+
+    return result;
+}
+
+noued_cmd *new_noued_cmd(char *commande, char *redirection)
+{
+    noued_cmd *nouveau_noeud = (noued_cmd *)malloc(sizeof(noued_cmd));
+    if (!nouveau_noeud)
+    {
+        printf("Erreur d'allocation de mémoire\n");
+        exit(EXIT_FAILURE);
+    }
+    if (!commande)
+        nouveau_noeud->cmd = NULL;
+    else
+        nouveau_noeud->cmd = strdup(commande);
+    nouveau_noeud->redirection = (redirection) ? strdup(redirection) : NULL;
+    nouveau_noeud->next = NULL;
+    return nouveau_noeud;
+}
+
+void add_back_noued_cmd(noued_cmd **tete, char *commande, char *redirection)
+{
+    if (!*tete)
+        *tete = new_noued_cmd(commande, redirection);
+    else if (!commande)
+    {
+        noued_cmd *courant = *tete;
+        while (courant->next)
+            courant = courant->next;
+        courant->next = new_noued_cmd(commande, redirection);
+    }
+    else
+    {
+        noued_cmd *courant = *tete;
+        while (courant->next)
+            courant = courant->next;
+        courant->next = new_noued_cmd(commande, redirection);
+    }
+}
+
+void free_noued_cmd(noued_cmd *node)
+{
+    if (node == NULL)
+        return;
+    free_noued_cmd(node->next); // Free the next node recursively
+    free(node->cmd); // Free the command string
+    free(node->redirection); // Free the redirection string
+    free(node); // Free the node itself
+}
+
+noued_cmd *split_args_by_pipe(char **args)
+{
+    noued_cmd *cmd = NULL;
+    char *s = NULL;
+    char *redirection = NULL;
+    int i = 0;
+    char *op_and_filename;
+    char *tmp;
+    
+    while (args[i])
+    {
+        if (strcmp(args[i], "|") == 0) 
+        {
+            add_back_noued_cmd(&cmd, s, redirection);
+            free(s);
+            s = NULL;
+            redirection = NULL;
+        }
+        else if (strcmp(args[i], "<") == 0 || strcmp(args[i], ">") == 0 || strcmp(args[i], ">>") == 0)
+        {
+            if (i == 0)
+            {
+                redirection = strdup(args[i]);
+                i++;
+            }
+            else
+            {
+                tmp = strdup(args[i]);
+                int j = i + 1;
+                while (args[j] && (strcmp(args[j], "|") != 0))
+                {
+                    // Concaténer les noms de fichiers pour les redirections multiples
+                    op_and_filename = ft_strjoin(tmp, args[j]);
+                    free(tmp);
+                    tmp = op_and_filename;
+                    j++;
+                }
+                redirection = tmp;
+                i = j - 1;
+            }
+        }
+        else
+        {
+            if (!s)
+                s = strdup(args[i]);
+            else
+            {
+                char *temp = ft_strjoin(s, " ");
+                free(s);
+                s = ft_strjoin(temp, args[i]);
+                free(temp);
+            }
+        }
+        i++;
+    }
+    
+    add_back_noued_cmd(&cmd, s, redirection);
+    free(s);
+    //redirection = NULL;
+    
+    return cmd;
+}
+
+int main() {
+    char *args[] = {">", "jj", "|", ">", "salah", NULL};
+    noued_cmd *result = split_args_by_pipe(args);
+    noued_cmd *current = result;
+    while (current) {
+        printf("Commande: %s\n", current->cmd);
+        printf("Redirection: %s\n", current->redirection ? current->redirection : "(pas de redirection)");
+        printf("\n");
+        current = current->next;
+    }
+    // Libérer la mémoire des nœuds de la liste chaînée
+    free_noued_cmd(result);
+    return 0;
+}

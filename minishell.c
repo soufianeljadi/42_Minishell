@@ -6,13 +6,13 @@
 /*   By: sdiouane <sdiouane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 23:52:10 by sdiouane          #+#    #+#             */
-/*   Updated: 2024/04/20 10:17:33 by sdiouane         ###   ########.fr       */
+/*   Updated: 2024/04/23 15:49:08 by sdiouane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	main_loop(char *line, s_env *env_, char **env, s_env *env_i)
+void	main_loop(char *line, s_env *env_, char **env, s_env *env_i, s_env *export_i)
 {
 	(void)env_;
 	char **args = NULL;
@@ -38,16 +38,16 @@ void	main_loop(char *line, s_env *env_, char **env, s_env *env_i)
 				// split_args_by_pipe :
 				cmd = split_args_by_pipe(args);
 				// print_command_list(cmd);
-				ft_execution(cmd, args, env_, env, env_i);
+				ft_execution(cmd, args, env_, env, env_i, export_i);
 				free (args);
 				free_noued_cmd(cmd);
 			}
 		}
 		dup2(3, 0);
 		dup2(4, 1);
-	} 
+	}
 	free(line);
-	// clear_history();
+	clear_history();
 	free_noued_cmd(cmd);
 	ft_free_tab(args);
 }
@@ -61,21 +61,23 @@ void	f(void)
 int main(int ac, char **av, char **env)
 {
 	(void)av;
-	// atexit(f);
+	// atext(f);
 	
 	char *line = NULL;
 	s_env *splited_env = NULL;
 	s_env *env_i = NULL;
+	s_env *export_i = NULL;
 
 	if (ac != 1)
 		(printf("Args not allowed !\n"),exit(EXIT_FAILURE));
 	splited_env = split_env(env);
-	env_i = split_env_i();
+	env_i = split_env_i(env_i);
+	export_i = split_export_i(export_i);
 	//signals
 	rl_catch_signals = 0;
 	signal(SIGQUIT, signal_ctrl_c_d);
 	signal(SIGINT, signal_ctrl_c_d);
-	main_loop(line, splited_env, env, env_i);
+	main_loop(line, splited_env, env, env_i, export_i);
 	// free(line);
 	free_s_env(splited_env);
 	close(3);
