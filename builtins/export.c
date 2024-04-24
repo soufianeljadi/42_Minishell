@@ -6,7 +6,7 @@
 /*   By: sdiouane <sdiouane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/22 22:11:52 by sdiouane          #+#    #+#             */
-/*   Updated: 2024/04/23 16:07:36 by sdiouane         ###   ########.fr       */
+/*   Updated: 2024/04/24 15:08:20 by sdiouane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,9 +66,130 @@ s_env *export_fct(char **args, s_env *env, s_env *export_i, char **eenv)
 	char *value;
 	s_env *current;
 
-	// if (!eenv[0] && !strcmp(args[0], "export") && !args[1])
-	// 	print_export(export_i);
-	// else if (!strcmp(args[0], "export") && !args[1])
+if (!eenv[0])
+{
+	if (!strcmp(args[0], "export") && !args[1])
+		print_export(env);
+	else if (!strcmp(args[0], "export") && args[1])	
+	{
+		while (args[i])
+		{
+			j = 0;
+			while (args[i][j] &&  args[i][j] != '=' && args[i][j] != '+')
+				j++;
+			key = ft_substr(args[i], 0, j);
+			if (verif_export(key) == 0)
+			{
+				if (args[i][j] == '\0')
+				{					
+					if (!existe_deja(key, export_i))
+					{
+						printf("+++++++++++++++++++|%s|++++++++++++++++++\n", key);
+						ft_lstadd_back(&export_i, ft_lstnew_data(strdup(""), key));
+					}
+				}
+				else
+				{
+					if (args[i][j] == '=')
+					{
+						j++;
+						int start;
+						start = j;
+						if (args[i][j] == '"')
+						{
+							j++;
+							while (args[i][j] && args[i][j] != '"')
+								j++;
+						}
+						else
+							while (args[i][j] && args[i][j] != ' ')
+								j++;
+						value = ft_substr(args[i], start, j - start);
+						if (value[0] != '\"')
+						{
+							current = export_i;
+							while (current != NULL && current->value)
+							{
+								if (strcmp(current->key, key) == 0)
+								{
+									free(current->value);
+									current->value = value;
+									break;
+								}
+								current = current->next;
+							}
+							if (current == NULL)
+								ft_lstadd_back(&export_i, ft_lstnew_data(value, key));
+						}
+						else
+						{
+							value = remove_quotes(value);
+							current = export_i;
+							while (current != NULL && current->value)
+							{
+								if (strcmp(current->key, key) == 0)
+								{
+									free(current->value);
+									current->value = value;
+									break;
+								}
+								current = current->next;
+							}
+							if (current == NULL)
+								ft_lstadd_back(&export_i, ft_lstnew_data(value, key));
+						}
+					}
+					else if (args[i][j] == '+' && args[i][j + 1] == '=')
+					{
+						j = j + 2;
+						int start;
+						start = j;
+						while (args[i][j] && args[i][j] != ' ')
+							j++;
+						value = ft_substr(args[i], start, j - start);
+						if (value[0] != '\"')
+						{
+							current = export_i;
+							while (current != NULL && current->value)
+							{
+								if (strcmp(current->key, key) == 0)
+								{
+									current->value = ft_strjoin(current->value, value);
+									break ;
+								}
+								current = current->next;
+								if (current == NULL)
+									ft_lstadd_back(&export_i, ft_lstnew_data(value, key));						
+							}
+						}
+						else
+						{
+							value = remove_quotes(value);
+							current = export_i;
+							while (current != NULL && current->value)
+							{
+								if (strcmp(current->key, key) == 0)
+								{
+									current->value = ft_strjoin(current->value, value);
+									break ;
+								}
+								current = current->next;
+								if (current == NULL)
+									ft_lstadd_back(&export_i, ft_lstnew_data(value, key));						
+							}
+							
+						}
+					}
+				}
+			}
+			else
+				syntax_error();
+			i++;
+		}
+	}
+}
+else if (eenv[0])
+{
 	if (!strcmp(args[0], "export") && !args[1])
 		print_export(env);
 	else if (!strcmp(args[0], "export") && args[1])	
@@ -84,10 +205,7 @@ s_env *export_fct(char **args, s_env *env, s_env *export_i, char **eenv)
 				if (args[i][j] == '\0')
 				{					
 					if (!existe_deja(key, env))
-					{
-						printf("+++++++++++++++++++|%s|++++++++++++++++++\n", key);
 						ft_lstadd_back(&env, ft_lstnew_data(strdup(""), key));
-					}
 				}
 				else
 				{
@@ -188,8 +306,10 @@ s_env *export_fct(char **args, s_env *env, s_env *export_i, char **eenv)
 			i++;
 		}
 	}
+	return (env);
+}
 	if (!eenv[0] && !strcmp(args[0], "export") && !args[1])
 		print_export(export_i);
 	
-	return (env);
+	return (export_i);
 }

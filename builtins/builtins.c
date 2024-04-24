@@ -6,7 +6,7 @@
 /*   By: sdiouane <sdiouane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/26 01:07:33 by sel-jadi          #+#    #+#             */
-/*   Updated: 2024/04/23 15:30:28 by sdiouane         ###   ########.fr       */
+/*   Updated: 2024/04/24 15:09:19 by sdiouane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -153,16 +153,16 @@ void builtins(char **args, s_env *lst, s_env *env_i, s_env *export_i, char **env
 	pwd = getcwd(NULL, 0);
 	// pwd :
 	pwd_without_options(args, pwd);
-	// unset :
-	lst = unset_fct(args, lst);
-	
 	// export :
-	export_fct(args ,lst, export_i, env);
+	env_i = export_fct(args ,lst, export_i, env);
+	// unset :
+	lst = unset_fct(args, env_i);
+	
 	// env
 	if (*env)
 	{
 		if (!strcmp(args[0], "env") && !args[1])
-			print_list(lst);
+			print_list(env_i);
 	}
 	else if (!*env)
 	{

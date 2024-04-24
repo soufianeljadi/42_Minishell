@@ -6,7 +6,7 @@
 /*   By: sdiouane <sdiouane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/31 22:14:48 by sdiouane          #+#    #+#             */
-/*   Updated: 2024/04/24 11:09:11 by sdiouane         ###   ########.fr       */
+/*   Updated: 2024/04/24 15:15:55 by sdiouane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -121,7 +121,7 @@ void ft_execution(noued_cmd *lst, char **args, s_env *env_, char **env, s_env *e
 	else
 	{
 		while (lst)
-		{
+		{  
 			// $variables :
 			if (check_variables(args, env_) == 1)
 			{
