@@ -6,7 +6,7 @@
 /*   By: sdiouane <sdiouane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 23:51:44 by sdiouane          #+#    #+#             */
-/*   Updated: 2024/04/23 15:48:33 by sdiouane         ###   ########.fr       */
+/*   Updated: 2024/04/24 22:01:54 by sdiouane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -151,6 +151,16 @@ void nbr_quotes(char *str);
 void builtins(char **args, s_env *lst, s_env *env_i, s_env *export_i, char **env);
 // export :
 s_env *export_fct(char **args, s_env *env, s_env *split_export_i, char **eenv);
+int existe_deja(char *key, s_env *env);
+char *remove_quotes(char *input);
+int	verif_export(char *str);
+void is_null(char **args, s_env *env, s_env *export_i);
+void concatenation(char **args, s_env *export_i, char *key, int i, int j);
+void is_equal(char **args, s_env *export_i, char *key, int i, int j);
+s_env *not_null(char **args, s_env *env);
+void fct_equal(char **args, s_env *env, char *key, int j);
+void ftc_concatination(char **args, s_env *env, char *key, int j);
+
 //pwd :
 char *pwd_without_options(char **args, char *pwd);
 // unset :
