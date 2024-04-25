@@ -6,7 +6,7 @@
 /*   By: sdiouane <sdiouane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/31 22:14:48 by sdiouane          #+#    #+#             */
-/*   Updated: 2024/04/24 15:15:55 by sdiouane         ###   ########.fr       */
+/*   Updated: 2024/04/25 18:36:13 by sdiouane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,22 +108,21 @@ static void	execute(char *s, char **env)
 	}
 }
 
-void ft_execution(noued_cmd *lst, char **args, s_env *env_, char **env, s_env *env_i, s_env *export_i)
+void ft_execution(noued_cmd *lst, char **args, char **env, s_env *export_i)
 {
-	(void)env_;
 	(void)args;
 	int pipefd[2];
 	int fd_in = 0;
 	pid_t pid;
 
 	if (!strcmp(args[0], "export") || !strcmp(args[0], "unset") || !strcmp(args[0], "env") || !strcmp(args[0], "echo") || !strcmp(args[0], "cd") || !strcmp(args[0], "exit") || !strcmp(args[0], "pwd"))
-		builtins(args, env_, env_i, export_i, env);
+		builtins(args, export_i, env);
 	else
 	{
 		while (lst)
-		{  
+		{
 			// $variables :
-			if (check_variables(args, env_) == 1)
+			if (check_variables(args, export_i) == 1)
 			{
 				if (pipe(pipefd) == -1 || (pid = fork()) == -1)
 					exit(EXIT_FAILURE);

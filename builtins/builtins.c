@@ -6,7 +6,7 @@
 /*   By: sdiouane <sdiouane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/26 01:07:33 by sel-jadi          #+#    #+#             */
-/*   Updated: 2024/04/24 15:45:56 by sdiouane         ###   ########.fr       */
+/*   Updated: 2024/04/25 18:36:31 by sdiouane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -135,9 +135,8 @@ void print_env_i(s_env *lst)
 	}
 }
 
-void builtins(char **args, s_env *lst, s_env *env_i, s_env *export_i, char **env)
+void builtins(char **args, s_env *export_i, char **env)
 {
-	// (void)env_i;
 	(void)env;    
 	char *pwd;
 
@@ -148,29 +147,29 @@ void builtins(char **args, s_env *lst, s_env *env_i, s_env *export_i, char **env
 		exit(EXIT_SUCCESS);
 	}
 	// echo :
-	echo_fct(args, lst);
+	echo_fct(args, export_i);
 
 	pwd = getcwd(NULL, 0);
 	// pwd :
 	pwd_without_options(args, pwd);
 	// export :
-	env_i = export_fct(args ,lst, export_i, env);
+	export_i = export_fct(args, export_i, export_i, env);
 	// unset :
-	env_i = unset_fct(args, env_i);
-	
+	export_i = unset_fct(args, export_i);
+
 	// env
 	if (*env)
 	{
 		if (!strcmp(args[0], "env") && !args[1])
-			print_list(env_i);
+			print_list(export_i);
 	}
 	else if (!*env)
 	{
 		if (!strcmp(args[0], "env") && !args[1])
 		{
-			print_list(env_i);
+			print_list(export_i);
 		}
 	}
 	// cd :
-	execute_cd(args, lst);		
+	execute_cd(args, export_i);		
 }

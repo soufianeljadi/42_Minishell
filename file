@@ -1,17 +1,12 @@
 Makefile
 a
-a.out
-acat
 builtins
 execution
-f
 file
 file.txt
 ft_itoa.c
 gnl
 hh.c
-ipdij
-kcs
 minishell
 minishell.c
 minishell.h

@@ -6,15 +6,15 @@
 /*   By: sdiouane <sdiouane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/24 21:25:42 by sdiouane          #+#    #+#             */
-/*   Updated: 2024/04/24 22:02:29 by sdiouane         ###   ########.fr       */
+/*   Updated: 2024/04/25 18:45:42 by sdiouane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-void fct_equal(char **args, s_env *env, char *key, int j)
+void fct_equal(char **args, s_env *env, char *key, int j, int i)
 {
-	int i = 1;
+	//int i = 1;
 	char *value;
 	int start;
 	s_env *current;
@@ -23,7 +23,7 @@ void fct_equal(char **args, s_env *env, char *key, int j)
 	start = j;
 	if (args[i][j] == '"')
 	{
-		j++;
+		// j++;
 		while (args[i][j] && args[i][j] != '"')
 			j++;
 	}
@@ -66,9 +66,9 @@ void fct_equal(char **args, s_env *env, char *key, int j)
 	}
 }
 
-void ftc_concatination(char **args, s_env *env, char *key, int j)
+void ftc_concatination(char **args, s_env *env, char *key, int j, int i)
 {
-	int i = 1;
+	// int i = 1;
 	char *value;
 	int start;
 	s_env *current;
@@ -138,9 +138,12 @@ s_env *not_null(char **args, s_env *env)
 				else
 				{
 					if (args[i][j] == '=')
-						fct_equal(args, env, key, j);
+					{
+						// key = ft_strjoin(key, "=");
+						fct_equal(args, env, key, j, i);
+					}
 					else if (args[i][j] == '+' && args[i][j + 1] == '=')
-						ftc_concatination(args, env, key, j);
+						ftc_concatination(args, env, key, j, i);
 				}
 			}
 			else

@@ -6,9 +6,10 @@
 /*   By: sdiouane <sdiouane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 23:51:44 by sdiouane          #+#    #+#             */
-/*   Updated: 2024/04/24 22:01:54 by sdiouane         ###   ########.fr       */
+/*   Updated: 2024/04/25 18:41:18 by sdiouane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
 
 #ifndef MINISHELL_H
 # define MINISHELL_H
@@ -80,7 +81,7 @@ typedef struct g_variables
 
 /**********************MAIN***********************************/
 	// init_env
-void	main_loop(char *line, s_env *env_, char **env, s_env *env_i, s_env *export_i);
+void	main_loop(char *line, char **env, s_env *export_i);
 /**********************PARSING***********************************/
 	// lst :
 s_env	*ft_lstnew();
@@ -148,7 +149,7 @@ int parse_redirection(char *line);
 void nbr_quotes(char *str);
 
 /**********************BUILTINS***********************************/
-void builtins(char **args, s_env *lst, s_env *env_i, s_env *export_i, char **env);
+void builtins(char **args, s_env *export_i, char **env);
 // export :
 s_env *export_fct(char **args, s_env *env, s_env *split_export_i, char **eenv);
 int existe_deja(char *key, s_env *env);
@@ -158,8 +159,8 @@ void is_null(char **args, s_env *env, s_env *export_i);
 void concatenation(char **args, s_env *export_i, char *key, int i, int j);
 void is_equal(char **args, s_env *export_i, char *key, int i, int j);
 s_env *not_null(char **args, s_env *env);
-void fct_equal(char **args, s_env *env, char *key, int j);
-void ftc_concatination(char **args, s_env *env, char *key, int j);
+void fct_equal(char **args, s_env *env, char *key, int j, int i);
+void ftc_concatination(char **args, s_env *env, char *key, int j, int i);
 
 //pwd :
 char *pwd_without_options(char **args, char *pwd);
@@ -186,7 +187,7 @@ int		ft_strlen_gnl(char *s);
 char	*ft_strdup_gnl(char *s1);
 
 /***********************execution********************************/
-void	ft_execution(noued_cmd *lst, char **args, s_env *env_, char **env, s_env *env_i, s_env *export_i);
+void	ft_execution(noued_cmd *lst, char **args, char **env, s_env *export_i);
 int		ft_strncmp(const char *s1, const char *s2, size_t n);
 char	*get_env(char *s, char **env);
 char	*get_path(char *cmd, char **env);
