@@ -6,7 +6,7 @@
 /*   By: sdiouane <sdiouane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/31 22:14:48 by sdiouane          #+#    #+#             */
-/*   Updated: 2024/04/25 18:36:13 by sdiouane         ###   ########.fr       */
+/*   Updated: 2024/04/25 19:25:31 by sdiouane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,7 +108,7 @@ static void	execute(char *s, char **env)
 	}
 }
 
-void ft_execution(noued_cmd *lst, char **args, char **env, s_env *export_i)
+void ft_execution(noued_cmd *lst, char **args, char **env, s_env *export_i, char **null_env)
 {
 	(void)args;
 	int pipefd[2];
@@ -136,12 +136,19 @@ void ft_execution(noued_cmd *lst, char **args, char **env, s_env *export_i)
 					close(pipefd[0]);
 					if (lst->redirection != NULL)
 					{
-						execute_with_redirection(lst->cmd, env, lst->redirection);
+						if (!env[0])
+							execute_with_redirection(lst->cmd, null_env, lst->redirection);
+						else
+							execute_with_redirection(lst->cmd, env, lst->redirection);
 					}
 					else
 					{
 						//ft_pipex();
-						execute(lst->cmd, env);
+						if (env[0])
+							execute(lst->cmd, env);
+						else if (!env[0])
+							execute(lst->cmd, null_env);
+							
 					}
 				}
 				else

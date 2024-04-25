@@ -6,7 +6,7 @@
 /*   By: sdiouane <sdiouane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 23:51:44 by sdiouane          #+#    #+#             */
-/*   Updated: 2024/04/25 18:41:18 by sdiouane         ###   ########.fr       */
+/*   Updated: 2024/04/25 19:25:09 by sdiouane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,7 +81,7 @@ typedef struct g_variables
 
 /**********************MAIN***********************************/
 	// init_env
-void	main_loop(char *line, char **env, s_env *export_i);
+void	main_loop(char *line, char **env, s_env *export_i, char **null_env);
 /**********************PARSING***********************************/
 	// lst :
 s_env	*ft_lstnew();
@@ -187,7 +187,7 @@ int		ft_strlen_gnl(char *s);
 char	*ft_strdup_gnl(char *s1);
 
 /***********************execution********************************/
-void	ft_execution(noued_cmd *lst, char **args, char **env, s_env *export_i);
+void ft_execution(noued_cmd *lst, char **args, char **env, s_env *export_i, char **null_env);
 int		ft_strncmp(const char *s1, const char *s2, size_t n);
 char	*get_env(char *s, char **env);
 char	*get_path(char *cmd, char **env);
@@ -195,7 +195,7 @@ void	ft_putstr_fd(char *s, int fd);
 void	ft_putendl_fd(char *s, int fd);
 	// redirections :
 char	*file_nc(char *s);
-void	execute_with_redirection(char *cmd, char **env, char *redirection);
+void execute_with_redirection(char *cmd, char **env, char *redirection);
 int		only_spaces(char *str);
 s_env	*split_env(char **env);
 s_env	*split_env_i(s_env *lst);

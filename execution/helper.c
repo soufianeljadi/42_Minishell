@@ -6,7 +6,7 @@
 /*   By: sdiouane <sdiouane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/05 23:07:50 by sdiouane          #+#    #+#             */
-/*   Updated: 2024/04/23 15:47:45 by sdiouane         ###   ########.fr       */
+/*   Updated: 2024/04/25 20:31:37 by sdiouane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,8 +97,10 @@ s_env *split_env_i(s_env *lst)
 
 s_env *split_export_i(s_env *lst)
 {
+    lst = add_env_entry(lst, "_", "/usr/bin/env");
     lst = add_env_entry(lst, "OLDPWD", "");
-    lst = add_env_entry(lst, "PWD", "/Users/sdiouane/Desktop/our_big_shell");
     lst = add_env_entry(lst, "SHLVL", "1");
+    lst = add_env_entry(lst, "PWD", "/Users/sdiouane/Desktop/our_big_shell");
+    // lst = add_env_entry(lst, "PATH", "/usr/gnu/bin:/usr/local/bin:/bin:/usr/bin:.");
     return (lst);
 }
