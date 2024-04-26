@@ -1,0 +1,17 @@
+Makefile
+a
+builtins
+execution
+file.txt
+ft_itoa.c
+gnl
+hh.c
+minishell
+minishell.c
+minishell.h
+parsing
+pipex
+repo
+signals
+test.c
+tokenizer_2_1.tldr

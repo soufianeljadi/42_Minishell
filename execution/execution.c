@@ -6,7 +6,7 @@
 /*   By: sdiouane <sdiouane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/31 22:14:48 by sdiouane          #+#    #+#             */
-/*   Updated: 2024/04/26 14:56:56 by sdiouane         ###   ########.fr       */
+/*   Updated: 2024/04/26 20:04:35 by sdiouane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,6 @@ char *here_doc_fct(char *s)
 	args = line_to_args(s);
 	if (args[1][0] == '<' && args[1][1] == '<')
 	{
-			printf("CMD   : %s\n", args[0]);
 		fd1 = open("file.txt",O_CREAT | O_RDWR | O_TRUNC, 0666);
 		fd2 = open("file.txt",O_CREAT | O_RDWR | O_TRUNC, 0666);
 		
@@ -41,7 +40,7 @@ char *here_doc_fct(char *s)
 			write(fd1, line, strlen(line));		
 			free(line);
 		}
-		if (args[3][0] != '\0')
+		if (args[3])
 		{
 			printf("%s: %s: No such file or directory\n", args[0], args[3]);
 			exit(EXIT_FAILURE);
@@ -70,7 +69,7 @@ char *here_doc_fct(char *s)
 			write(fd1, line, strlen(line));		
 			free(line);
 		}
-		if (args[2][0] != '\0')
+		if (args[2])
 		{
 			printf("%s: %s: No such file or directory\n", args[0], args[2]);
 			exit(EXIT_FAILURE);
@@ -84,29 +83,134 @@ char *here_doc_fct(char *s)
 	free(args[1]);
 	res = ft_strjoin(args[0], " ");
 	res = ft_strjoin(res, args[2]);
-	printf("RES   : %s\n", res);
 	return (res);
 }
 
 static void	execute(char *s, char **env)
 {
 	char	*chemin;
-	char	**cmd = NULL;
+	char	**cmd;
 	char	*res = NULL;
 	if (*env)
 	{
 		if (strstr(s, "<<"))
 			res = here_doc_fct(s);
-		cmd = ft_split(s, ' '); // ls -la 
-		chemin = get_path(cmd[0], env); // /bin/kkk/ls
-		if (execve(chemin, cmd, env) == -1)
+		if (res[0] != '<')
 		{
-			fprintf(stderr,"Command not found !\n");
-			ft_free_tab(cmd);
-			exit(EXIT_FAILURE);
+			cmd = ft_split(res, ' '); // ls -la 
+			chemin = get_path(cmd[0], env); // /bin/kkk/ls
+			if (execve(chemin, cmd, env) == -1)
+			{
+				ft_putstr_fd("Command not found!! : ", 2);
+				ft_putendl_fd(cmd[0], 2);
+				ft_free_tab(cmd);
+				exit(EXIT_FAILURE);
+			}
 		}
+		else
+			exit(0) ;
 	}
 }
+
+// char *here_doc_fct(char *s)
+// {
+// 	int fd1;
+// 	int fd2;
+// 	char *line;
+// 	char *cmp;
+// 	char **args;
+// 	char *res;
+
+// 	args = line_to_args(s);
+// 	if (args[1][0] == '<' && args[1][1] == '<')
+// 	{
+// 			// printf("CMD   : %s\n", args[0]);
+// 		fd1 = open("file.txt",O_CREAT | O_RDWR | O_TRUNC, 0666);
+// 		fd2 = open("file.txt",O_CREAT | O_RDWR | O_TRUNC, 0666);
+		
+// 		if (fd1 < 0 && fd2 < 0)
+// 			return (NULL);
+// 		cmp = ft_strjoin(args[2], "\n");
+// 		while ((line = get_next_line(0)))
+// 		{
+// 			if (!strcmp(line, cmp))
+// 			{
+// 				free(line);
+// 				break;
+// 			}
+// 			write(fd1, line, strlen(line));		
+// 			free(line);
+// 		}
+// 		if (args[3][0] != '\0')
+// 		{
+// 			printf("%s: %s: No such file or directory\n", args[0], args[3]);
+// 			exit(EXIT_FAILURE);
+// 		}
+// 		else
+// 		{
+// 			dup2(fd2, 0);
+// 			return (args[0]);
+// 		}
+// 	}
+// 	else if (args[0][0] == '<' && args[0][1] == '<')
+// 	{
+// 		fd1 = open("file.txt",O_CREAT | O_RDWR | O_TRUNC, 0666);
+// 		fd2 = open("file.txt",O_CREAT | O_RDWR | O_TRUNC, 0666);
+		
+// 		if (fd1 < 0 && fd2 < 0)
+// 			return (NULL);
+// 		cmp = ft_strjoin(args[1], "\n");
+// 		while ((line = get_next_line(0)))
+// 		{
+// 			if (!strcmp(line, cmp))
+// 			{
+// 				free(line);
+// 				break;
+// 			}
+// 			write(fd1, line, strlen(line));		
+// 			free(line);
+// 		}
+// 		if (args[2][0] != '\0')
+// 		{
+// 			printf("%s: %s: No such file or directory\n", args[0], args[2]);
+// 			exit(EXIT_FAILURE);
+// 		}
+// 		else
+// 		{
+// 			dup2(fd2, 0);
+// 			return (args[0]);
+// 		}
+// 	}
+// 	free(args[1]);
+// 	res = ft_strjoin(args[0], " ");
+// 	res = ft_strjoin(res, args[2]);
+// 	printf("RES   : %s\n", res);
+// 	return (res);
+// }
+
+// static void	execute(char *s, char **env)
+// {
+// 	char	*chemin;
+// 	char	**cmd = NULL;
+// 	char	*res = NULL;
+// 	if (*env)
+// 	{
+// 		// if (strstr(s, "<<"))
+// 		if (strstr(s, "<<"))
+// 		{
+// 			printf("HERE_DOC\n");
+// 			res = here_doc_fct(s);
+// 		}
+// 		cmd = ft_split(s, ' '); // ls -la 
+// 		chemin = get_path(cmd[0], env); // /bin/kkk/ls
+// 		if (execve(chemin, cmd, env) == -1)
+// 		{
+// 			fprintf(stderr,"Command not found !\n");
+// 			ft_free_tab(cmd);
+// 			exit(EXIT_FAILURE);
+// 		}
+// 	}
+// }
 
 void supprimerGuillemets(char *chaine)
 {
@@ -115,7 +219,7 @@ void supprimerGuillemets(char *chaine)
 
     while (chaine[i])
 	{
-        if (chaine[i] != '"')
+        if (chaine[i] != '"' && chaine[i] != '\'')
             chaine[j++] = chaine[i];
         i++;
     }
@@ -158,6 +262,10 @@ void ft_execution(noued_cmd *lst, char **args, char **env, s_env *export_i, char
 					}
 					else
 					{
+						// if (env[0])
+						// 	pipeline(&lst->cmd);
+						// else if (!env[0])
+						// 	pipeline(lst->cmd);
 						//ft_pipex();
 						if (env[0])
 							execute(lst->cmd, env);
@@ -165,7 +273,6 @@ void ft_execution(noued_cmd *lst, char **args, char **env, s_env *export_i, char
 						{
 							execute(lst->cmd, null_env);
 						}
-							
 					}
 				}
 				else

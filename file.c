@@ -1,16 +1,23 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   split_args.c                                       :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: sdiouane <sdiouane@student.42.fr>          +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/03/26 00:12:06 by sel-jadi          #+#    #+#             */
-/*   Updated: 2024/04/26 19:46:48 by sdiouane         ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
 
-#include "../minishell.h"
+
+
+typedef struct s_parse
+{
+	int		i;
+	int		count;
+	int		dq;
+	int		sq;
+
+}			t_parse;
+
+typedef struct s_points
+{
+	int	i;
+	int	j;
+	int	start;
+	int	end;
+}	t_points;
+
 
 void	ft_free(char **s)
 {
@@ -185,7 +192,6 @@ int	ft_count_cmd(char *inp)
 	return (strs);
 }
 
-
 char **line_to_args(char *line)
 {
     char **cmds;
@@ -195,12 +201,12 @@ char **line_to_args(char *line)
     sp_line = ft_add_sep(line, d);
     cmds = split_args(sp_line);
     // affii
-	// int i = 0;
-	// while(cmds[i])
-	// {
-	// 	printf("%d : %s\n",i, cmds[i]);
-	// 	i++;
-	// }
+	int i = 0;
+	while(cmds[i])
+	{
+		printf("%d : %s\n",i, cmds[i]);
+		i++;
+	}
 	free (sp_line);
 	return(cmds);
 }

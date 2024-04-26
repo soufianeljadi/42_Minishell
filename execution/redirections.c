@@ -6,7 +6,7 @@
 /*   By: sdiouane <sdiouane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/05 23:00:01 by sdiouane          #+#    #+#             */
-/*   Updated: 2024/04/25 19:24:58 by sdiouane         ###   ########.fr       */
+/*   Updated: 2024/04/26 20:02:16 by sdiouane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -145,10 +145,7 @@ void execute_with_redirection(char *cmd, char **env, char *redirection)
 				redirection_out(redirection, &fd_out);
 			}
 			if (redirection[0] == '>' && redirection[1] == '>')
-			{
-				printf("redirection : %c     %c \n", redirection[0], redirection[1]);
 				redirection_double_out(redirection, &fd_out);
-			}
 		}
 		execve(chemin, args, env);
 		exit(EXIT_FAILURE);

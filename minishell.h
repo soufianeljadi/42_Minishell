@@ -6,7 +6,7 @@
 /*   By: sdiouane <sdiouane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 23:51:44 by sdiouane          #+#    #+#             */
-/*   Updated: 2024/04/25 19:25:09 by sdiouane         ###   ########.fr       */
+/*   Updated: 2024/04/26 17:03:05 by sdiouane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -188,6 +188,9 @@ char	*ft_strdup_gnl(char *s1);
 
 /***********************execution********************************/
 void ft_execution(noued_cmd *lst, char **args, char **env, s_env *export_i, char **null_env);
+
+void pipeline(char ***cmd);
+
 int		ft_strncmp(const char *s1, const char *s2, size_t n);
 char	*get_env(char *s, char **env);
 char	*get_path(char *cmd, char **env);
@@ -198,7 +201,6 @@ char	*file_nc(char *s);
 void execute_with_redirection(char *cmd, char **env, char *redirection);
 int		only_spaces(char *str);
 s_env	*split_env(char **env);
-s_env	*split_env_i(s_env *lst);
 s_env	*split_export_i(s_env *lst);
 s_env	*add_env_entry(s_env *head, char *key, char *value);
 
