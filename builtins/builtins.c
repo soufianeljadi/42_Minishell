@@ -6,7 +6,7 @@
 /*   By: sdiouane <sdiouane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/26 01:07:33 by sel-jadi          #+#    #+#             */
-/*   Updated: 2024/04/25 18:36:31 by sdiouane         ###   ########.fr       */
+/*   Updated: 2024/04/26 14:57:25 by sdiouane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ int get_len_env(char **env)
 	return (i);	
 }
 
-int check_variables(char **args, s_env *lst)
+int   check_variables(char **args, s_env *lst)
 {
 	char *key;
 	s_env *current;
@@ -28,9 +28,10 @@ int check_variables(char **args, s_env *lst)
 	int j;
 	int flag = 1;
 	int flag2 = 1;
-	while (args[i])
+	while (args[i] && strstr(*args, "$"))
 	{
 		j = 0;
+		// printf("++++++++++args[%d] = %s++++++++++\n", i, args[i]);
 		while (args[i][j])
 		{
 			while (args[i][j])
@@ -51,7 +52,7 @@ int check_variables(char **args, s_env *lst)
 				else
 					break;
 			}
-			if (args[i][j] == '"')
+			if (args[i][j] == '"' && strstr(args[i], "$"))
 			{
 				j++;
 				while (args[i][j] && args[i][j] != '"')

@@ -6,7 +6,7 @@
 /*   By: sdiouane <sdiouane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/05 23:07:50 by sdiouane          #+#    #+#             */
-/*   Updated: 2024/04/25 20:31:37 by sdiouane         ###   ########.fr       */
+/*   Updated: 2024/04/25 21:28:55 by sdiouane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,13 +25,6 @@ int only_spaces(char *str)
 	return(1);
 }
 
-// static char	*ft_value_of_shlvl(char *str)
-// {
-// 	g_flags.shlvl = ft_atoi(str);
-// 	free(str);
-// 	++g_flags.shlvl;
-// 	return (ft_itoa(g_flags.shlvl++));
-// }
 s_env *split_env(char **env)
 {
 	int i = 0;
@@ -47,11 +40,6 @@ s_env *split_env(char **env)
 		while (env[i][j] != '=')
 			j++;
 		key = ft_substr(env[i] ,0 , j);
-		// if (!strcmp(key, "SHLVL"))
-		// {
-		// 	str = ft_substr(env[i] ,j + 1 ,ft_strlen(env[i]));
-		// 	value = ft_value_of_shlvl(str);
-		// }
 		if(!strcmp(key, "_"))
 			value = strdup("/usr/bin/env");
 		else
@@ -87,20 +75,11 @@ s_env *add_env_entry(s_env *head, char *key, char *value)
     return (lst);
 }
 
-s_env *split_env_i(s_env *lst)
-{
-    lst = add_env_entry(lst, "_", "/usr/bin/env");
-    lst = add_env_entry(lst, "SHLVL", "1");
-    lst = add_env_entry(lst, "PWD", "/Users/sdiouane/Desktop/our_big_shell");
-    return (lst);
-}
-
 s_env *split_export_i(s_env *lst)
 {
     lst = add_env_entry(lst, "_", "/usr/bin/env");
     lst = add_env_entry(lst, "OLDPWD", "");
     lst = add_env_entry(lst, "SHLVL", "1");
     lst = add_env_entry(lst, "PWD", "/Users/sdiouane/Desktop/our_big_shell");
-    // lst = add_env_entry(lst, "PATH", "/usr/gnu/bin:/usr/local/bin:/bin:/usr/bin:.");
     return (lst);
 }

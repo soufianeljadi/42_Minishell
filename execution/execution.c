@@ -6,7 +6,7 @@
 /*   By: sdiouane <sdiouane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/31 22:14:48 by sdiouane          #+#    #+#             */
-/*   Updated: 2024/04/25 19:25:31 by sdiouane         ###   ########.fr       */
+/*   Updated: 2024/04/26 14:56:56 by sdiouane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,6 +108,20 @@ static void	execute(char *s, char **env)
 	}
 }
 
+void supprimerGuillemets(char *chaine)
+{
+    int i = 0;
+	int j = 0;
+
+    while (chaine[i])
+	{
+        if (chaine[i] != '"')
+            chaine[j++] = chaine[i];
+        i++;
+    }
+    chaine[j] = '\0';
+}
+
 void ft_execution(noued_cmd *lst, char **args, char **env, s_env *export_i, char **null_env)
 {
 	(void)args;
@@ -134,6 +148,7 @@ void ft_execution(noued_cmd *lst, char **args, char **env, s_env *export_i, char
 						close(pipefd[1]);
 					}
 					close(pipefd[0]);
+					supprimerGuillemets(lst->cmd);
 					if (lst->redirection != NULL)
 					{
 						if (!env[0])
@@ -147,7 +162,9 @@ void ft_execution(noued_cmd *lst, char **args, char **env, s_env *export_i, char
 						if (env[0])
 							execute(lst->cmd, env);
 						else if (!env[0])
+						{
 							execute(lst->cmd, null_env);
+						}
 							
 					}
 				}
