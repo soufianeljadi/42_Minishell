@@ -6,7 +6,7 @@
 /*   By: sdiouane <sdiouane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/13 00:32:13 by sdiouane          #+#    #+#             */
-/*   Updated: 2024/04/25 20:50:52 by sdiouane         ###   ########.fr       */
+/*   Updated: 2024/04/27 10:47:33 by sdiouane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,6 +74,8 @@ void free_s_env(s_env *head)
 
 void	print_list(s_env *list)
 {
+	// printf("************************VALUE : %s*******************\n", list->value);
+	// printf("-------------------------VALUE : %s------------------------\n", list->value);
   while (list)
   {
 	if (list->value[0] && strcmp(list->key, "OLDPWD") != 0)

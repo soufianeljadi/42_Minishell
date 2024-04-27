@@ -6,7 +6,7 @@
 /*   By: sdiouane <sdiouane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 23:51:44 by sdiouane          #+#    #+#             */
-/*   Updated: 2024/04/26 17:03:05 by sdiouane         ###   ########.fr       */
+/*   Updated: 2024/04/27 10:21:00 by sdiouane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,8 @@ typedef struct {
 
 typedef struct noeud_cmd
 {
+	int 				in;
+	int 				out;
 	char				*redirection;
 	char				*cmd;
 	struct noeud_cmd	*next;
@@ -190,7 +192,7 @@ char	*ft_strdup_gnl(char *s1);
 void ft_execution(noued_cmd *lst, char **args, char **env, s_env *export_i, char **null_env);
 
 void pipeline(char ***cmd);
-
+void supprimerGuillemets(char *chaine);
 int		ft_strncmp(const char *s1, const char *s2, size_t n);
 char	*get_env(char *s, char **env);
 char	*get_path(char *cmd, char **env);
@@ -207,5 +209,7 @@ s_env	*add_env_entry(s_env *head, char *key, char *value);
 
 char	*ft_itoa(unsigned int n);
 int	ft_atoi(const char *str);
+
+
 t_var	g_flags;
 #endif

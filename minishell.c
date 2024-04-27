@@ -6,7 +6,7 @@
 /*   By: sdiouane <sdiouane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 23:52:10 by sdiouane          #+#    #+#             */
-/*   Updated: 2024/04/26 17:46:02 by sdiouane         ###   ########.fr       */
+/*   Updated: 2024/04/27 10:48:10 by sdiouane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,6 +75,9 @@ int main(int ac, char **av, char **env)
 	}
 	else
 		export_i = split_env(env);
+		// print_list(export_i);
+	// printf("VALUE : %s\n", export_i->value);
+	//printf("***********%s\n", getenv("_"));
 	//signals
 	rl_catch_signals = 0;
 	signal(SIGQUIT, signal_ctrl_c_d);

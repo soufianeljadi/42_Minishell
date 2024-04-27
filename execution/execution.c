@@ -6,7 +6,7 @@
 /*   By: sdiouane <sdiouane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/31 22:14:48 by sdiouane          #+#    #+#             */
-/*   Updated: 2024/04/26 20:04:35 by sdiouane         ###   ########.fr       */
+/*   Updated: 2024/04/27 11:13:58 by sdiouane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ char *here_doc_fct(char *s)
 	char *res;
 
 	args = line_to_args(s);
-	if (args[1][0] == '<' && args[1][1] == '<')
+	if (args[1][0] == '<' && args[1][1] == '<' && args)
 	{
 		fd1 = open("file.txt",O_CREAT | O_RDWR | O_TRUNC, 0666);
 		fd2 = open("file.txt",O_CREAT | O_RDWR | O_TRUNC, 0666);
@@ -40,18 +40,18 @@ char *here_doc_fct(char *s)
 			write(fd1, line, strlen(line));		
 			free(line);
 		}
-		if (args[3])
-		{
-			printf("%s: %s: No such file or directory\n", args[0], args[3]);
-			exit(EXIT_FAILURE);
-		}
-		else
-		{
+		// if (args[3])
+		// {
+		// 	printf("%s: %s: No such file or directory\n", args[0], args[3]);
+		// 	exit(EXIT_FAILURE);
+		// }
+		// else
+		// {
 			dup2(fd2, 0);
 			return (args[0]);
-		}
+		// }
 	}
-	else if (args[0][0] == '<' && args[0][1] == '<')
+	else if (args[0][0] == '<' && args[0][1] == '<' && args)
 	{
 		fd1 = open("file.txt",O_CREAT | O_RDWR | O_TRUNC, 0666);
 		fd2 = open("file.txt",O_CREAT | O_RDWR | O_TRUNC, 0666);
@@ -69,16 +69,16 @@ char *here_doc_fct(char *s)
 			write(fd1, line, strlen(line));		
 			free(line);
 		}
-		if (args[2])
-		{
-			printf("%s: %s: No such file or directory\n", args[0], args[2]);
-			exit(EXIT_FAILURE);
-		}
-		else
-		{
+		// if (args[2])
+		// {
+		// 	printf("%s: %s: No such file or directory\n", args[0], args[2]);
+		// 	exit(EXIT_FAILURE);
+		// }
+		// else
+		// {
 			dup2(fd2, 0);
 			return (args[0]);
-		}
+		// }
 	}
 	free(args[1]);
 	res = ft_strjoin(args[0], " ");
@@ -86,131 +86,25 @@ char *here_doc_fct(char *s)
 	return (res);
 }
 
-static void	execute(char *s, char **env)
+static void	execute(char *s, char **env, s_env **export_i)
 {
 	char	*chemin;
-	char	**cmd;
-	char	*res = NULL;
+	char	**cmd = NULL;
+	(void)export_i;
 	if (*env)
 	{
 		if (strstr(s, "<<"))
-			res = here_doc_fct(s);
-		if (res[0] != '<')
+			s = here_doc_fct(s);
+		cmd = ft_split(s, ' '); // ls -la 
+		chemin = get_path(cmd[0], env); // /bin/kkk/ls
+		if (execve(chemin, cmd, env) == -1)
 		{
-			cmd = ft_split(res, ' '); // ls -la 
-			chemin = get_path(cmd[0], env); // /bin/kkk/ls
-			if (execve(chemin, cmd, env) == -1)
-			{
-				ft_putstr_fd("Command not found!! : ", 2);
-				ft_putendl_fd(cmd[0], 2);
-				ft_free_tab(cmd);
-				exit(EXIT_FAILURE);
-			}
+			fprintf(stderr,"Command not found !\n");
+			ft_free_tab(cmd);
+			exit(EXIT_FAILURE);
 		}
-		else
-			exit(0) ;
 	}
 }
-
-// char *here_doc_fct(char *s)
-// {
-// 	int fd1;
-// 	int fd2;
-// 	char *line;
-// 	char *cmp;
-// 	char **args;
-// 	char *res;
-
-// 	args = line_to_args(s);
-// 	if (args[1][0] == '<' && args[1][1] == '<')
-// 	{
-// 			// printf("CMD   : %s\n", args[0]);
-// 		fd1 = open("file.txt",O_CREAT | O_RDWR | O_TRUNC, 0666);
-// 		fd2 = open("file.txt",O_CREAT | O_RDWR | O_TRUNC, 0666);
-		
-// 		if (fd1 < 0 && fd2 < 0)
-// 			return (NULL);
-// 		cmp = ft_strjoin(args[2], "\n");
-// 		while ((line = get_next_line(0)))
-// 		{
-// 			if (!strcmp(line, cmp))
-// 			{
-// 				free(line);
-// 				break;
-// 			}
-// 			write(fd1, line, strlen(line));		
-// 			free(line);
-// 		}
-// 		if (args[3][0] != '\0')
-// 		{
-// 			printf("%s: %s: No such file or directory\n", args[0], args[3]);
-// 			exit(EXIT_FAILURE);
-// 		}
-// 		else
-// 		{
-// 			dup2(fd2, 0);
-// 			return (args[0]);
-// 		}
-// 	}
-// 	else if (args[0][0] == '<' && args[0][1] == '<')
-// 	{
-// 		fd1 = open("file.txt",O_CREAT | O_RDWR | O_TRUNC, 0666);
-// 		fd2 = open("file.txt",O_CREAT | O_RDWR | O_TRUNC, 0666);
-		
-// 		if (fd1 < 0 && fd2 < 0)
-// 			return (NULL);
-// 		cmp = ft_strjoin(args[1], "\n");
-// 		while ((line = get_next_line(0)))
-// 		{
-// 			if (!strcmp(line, cmp))
-// 			{
-// 				free(line);
-// 				break;
-// 			}
-// 			write(fd1, line, strlen(line));		
-// 			free(line);
-// 		}
-// 		if (args[2][0] != '\0')
-// 		{
-// 			printf("%s: %s: No such file or directory\n", args[0], args[2]);
-// 			exit(EXIT_FAILURE);
-// 		}
-// 		else
-// 		{
-// 			dup2(fd2, 0);
-// 			return (args[0]);
-// 		}
-// 	}
-// 	free(args[1]);
-// 	res = ft_strjoin(args[0], " ");
-// 	res = ft_strjoin(res, args[2]);
-// 	printf("RES   : %s\n", res);
-// 	return (res);
-// }
-
-// static void	execute(char *s, char **env)
-// {
-// 	char	*chemin;
-// 	char	**cmd = NULL;
-// 	char	*res = NULL;
-// 	if (*env)
-// 	{
-// 		// if (strstr(s, "<<"))
-// 		if (strstr(s, "<<"))
-// 		{
-// 			printf("HERE_DOC\n");
-// 			res = here_doc_fct(s);
-// 		}
-// 		cmd = ft_split(s, ' '); // ls -la 
-// 		chemin = get_path(cmd[0], env); // /bin/kkk/ls
-// 		if (execve(chemin, cmd, env) == -1)
-// 		{
-// 			fprintf(stderr,"Command not found !\n");
-// 			ft_free_tab(cmd);
-// 			exit(EXIT_FAILURE);
-// 		}
-// 	}
-// }
 
 void supprimerGuillemets(char *chaine)
 {
@@ -226,6 +120,27 @@ void supprimerGuillemets(char *chaine)
     chaine[j] = '\0';
 }
 
+void add_last_cmd(s_env **lst, char **args)
+{
+	int i;
+	s_env *tmp;
+	
+	i = 0;
+	tmp = *lst;
+	while (args[i])
+		i++;
+	while (tmp)
+	{
+		if (!strcmp(tmp->key, "_"))
+		{
+			printf("BEFORE -----> KEY : %s\tVALUE : %s\n",tmp->key, tmp->value);
+			tmp->value = strdup(args[i - 1]);
+			printf("AFTER  -----> KEY : %s\tVALUE : %s\n",tmp->key, tmp->value);
+		}
+		tmp = tmp->next;
+	}
+}
+
 void ft_execution(noued_cmd *lst, char **args, char **env, s_env *export_i, char **null_env)
 {
 	(void)args;
@@ -233,8 +148,12 @@ void ft_execution(noued_cmd *lst, char **args, char **env, s_env *export_i, char
 	int fd_in = 0;
 	pid_t pid;
 
+	add_last_cmd(&export_i, args);
 	if (!strcmp(args[0], "export") || !strcmp(args[0], "unset") || !strcmp(args[0], "env") || !strcmp(args[0], "echo") || !strcmp(args[0], "cd") || !strcmp(args[0], "exit") || !strcmp(args[0], "pwd"))
+	{
 		builtins(args, export_i, env);
+		
+	}
 	else
 	{
 		while (lst)
@@ -268,11 +187,9 @@ void ft_execution(noued_cmd *lst, char **args, char **env, s_env *export_i, char
 						// 	pipeline(lst->cmd);
 						//ft_pipex();
 						if (env[0])
-							execute(lst->cmd, env);
+							execute(lst->cmd, env, &export_i);
 						else if (!env[0])
-						{
-							execute(lst->cmd, null_env);
-						}
+							execute(lst->cmd, null_env, &export_i);
 					}
 				}
 				else

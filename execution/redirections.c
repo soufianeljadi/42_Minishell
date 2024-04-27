@@ -6,7 +6,7 @@
 /*   By: sdiouane <sdiouane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/05 23:00:01 by sdiouane          #+#    #+#             */
-/*   Updated: 2024/04/26 20:02:16 by sdiouane         ###   ########.fr       */
+/*   Updated: 2024/04/26 21:01:51 by sdiouane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,6 +104,7 @@ static void redirection_in(char *redirection, int *fd)
 		}
 		token_in = strtok(NULL, "<");
 	}
+	
 }
 
 static void redirection_out(char *redirection, int *fd)
@@ -141,9 +142,7 @@ void execute_with_redirection(char *cmd, char **env, char *redirection)
 			if (strstr(redirection, "<") != NULL)
 				redirection_in(redirection, &fd_in);
 			if (redirection[0] == '>' && redirection[1] != '>')
-			{
 				redirection_out(redirection, &fd_out);
-			}
 			if (redirection[0] == '>' && redirection[1] == '>')
 				redirection_double_out(redirection, &fd_out);
 		}

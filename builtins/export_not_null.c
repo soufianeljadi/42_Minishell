@@ -6,7 +6,7 @@
 /*   By: sdiouane <sdiouane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/24 21:25:42 by sdiouane          #+#    #+#             */
-/*   Updated: 2024/04/25 21:29:52 by sdiouane         ###   ########.fr       */
+/*   Updated: 2024/04/26 22:47:30 by sdiouane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -122,6 +122,7 @@ s_env *not_null(char **args, s_env *env)
 		print_export(env);
 	else if (!strcmp(args[0], "export") && args[1])	
 	{
+		supprimerGuillemets(args[1]);
 		while (args[i])
 		{
 			j = 0;

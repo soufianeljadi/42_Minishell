@@ -6,7 +6,7 @@
 /*   By: sdiouane <sdiouane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/22 22:11:52 by sdiouane          #+#    #+#             */
-/*   Updated: 2024/04/25 18:38:29 by sdiouane         ###   ########.fr       */
+/*   Updated: 2024/04/26 22:44:56 by sdiouane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,6 +59,7 @@ int existe_deja(char *key, s_env *env)
 
 s_env *export_fct(char **args, s_env *env, s_env *export_i, char **eenv)
 {
+	
 	if (!eenv[0])
 		is_null(args, env, export_i);
 	else if (eenv[0])

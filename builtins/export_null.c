@@ -6,7 +6,7 @@
 /*   By: sdiouane <sdiouane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/24 21:24:00 by sdiouane          #+#    #+#             */
-/*   Updated: 2024/04/25 18:40:50 by sdiouane         ###   ########.fr       */
+/*   Updated: 2024/04/27 10:37:19 by sdiouane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -114,11 +114,13 @@ void is_null(char **args, s_env *env, s_env *export_i)
 	int i = 1;
 	int j;
 	char *key;
+	(void)export_i;
 
 	if (!strcmp(args[0], "export") && !args[1])
 		print_export(env);
 	else if (!strcmp(args[0], "export") && args[1])	
 	{
+		supprimerGuillemets(args[1]);
 		while (args[i])
 		{
 			j = 0;
@@ -129,15 +131,15 @@ void is_null(char **args, s_env *env, s_env *export_i)
 			{
 				if (args[i][j] == '\0')
 				{		
-					if (!existe_deja(key, export_i))
-						ft_lstadd_back(&export_i, ft_lstnew_data(strdup(""), key));
+					if (!existe_deja(key, env))
+						ft_lstadd_back(&env, ft_lstnew_data(strdup(""), key));
 				}
 				else
 				{
 					if (args[i][j] == '=')
-						is_equal(args, export_i, key, i, j);
+						is_equal(args, env, key, i, j);
 					else if (args[i][j] == '+' && args[i][j + 1] == '=')
-						concatenation(args, export_i, key, i, j);
+						concatenation(args, env, key, i, j);
 				}
 			}
 			else
