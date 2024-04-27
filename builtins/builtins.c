@@ -6,7 +6,7 @@
 /*   By: sdiouane <sdiouane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/26 01:07:33 by sel-jadi          #+#    #+#             */
-/*   Updated: 2024/04/26 14:57:25 by sdiouane         ###   ########.fr       */
+/*   Updated: 2024/04/27 17:52:43 by sdiouane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,31 +23,31 @@ int get_len_env(char **env)
 int   check_variables(char **args, s_env *lst)
 {
 	char *key;
-	s_env *current;
 	int i = 0;
 	int j;
 	int flag = 1;
 	int flag2 = 1;
+	int c = 0;
+
+// print_list(lst);
+	if (strstr(*args, "$"))
+		fprintf(stderr, "minishel: ");
 	while (args[i] && strstr(*args, "$"))
 	{
 		j = 0;
-		// printf("++++++++++args[%d] = %s++++++++++\n", i, args[i]);
 		while (args[i][j])
 		{
 			while (args[i][j])
 			{
 				if (strstr(args[i], "$") || strstr(args[i], "\""))
 				{
-					if (args[i][j] == '$' || args[i][j] == '"')
+					if (args[i][j] == '$' || args[i][j] == '\"')
 					{
 						flag2 = 0;
 						break;
 					}
 					else
-					{
-						printf("%c", args[i][j]);
-						j++;
-					}
+						fprintf(stderr, "%c", args[i][j++]);
 				}
 				else
 					break;
@@ -57,7 +57,7 @@ int   check_variables(char **args, s_env *lst)
 				j++;
 				while (args[i][j] && args[i][j] != '"')
 				{
-					if (args[i][j] == '$')
+					if (args[i][j] == '$' && args[i][j + 1] != '_')
 					{
 						j++;
 						int key_start = j;
@@ -68,21 +68,34 @@ int   check_variables(char **args, s_env *lst)
 							exit(EXIT_FAILURE);
 						strncpy(key, &args[i][key_start], j - key_start);
 						key[j - key_start] = '\0';
-						current = lst;
-						while (current)
+						//lst = lst;
+						while (lst)
 						{
-							if (strcmp(current->key, key) == 0)
+							if (strcmp(lst->key, key) == 0)
 							{
-								printf("%s", current->value);
+								fprintf(stderr, "%s", lst->value);
 								flag = 0;
 								break;
 							}
-							current = current->next;
+							lst = lst->next;
 						}
 						free(key);
 					}
 					else if (args[i][j] != '"')
-						printf("%c", args[i][j++]);
+					{
+						c = 1;
+						fprintf(stderr, "%c", args[i][j++]);
+					}
+				}
+				if(c == 0)
+				{
+					fprintf(stderr, " : is a directory");
+					return (0);
+				}
+				else
+				{
+					fprintf(stderr, ": No such file or directory");
+					return (0);
 				}
 			}
 			else if (args[i][j] == '$' && flag2 == 0)
@@ -96,20 +109,34 @@ int   check_variables(char **args, s_env *lst)
 						exit(EXIT_FAILURE);
 					strncpy(key, &args[i][key_start], j - key_start);
 					key[j - key_start] = '\0';
-					current = lst;
-					while (current)
+					//lst = lst;
+					while (lst)
 					{
-						if (strcmp(current->key, key) == 0)
+						if (strcmp(lst->key, key) == 0)
 						{
-							printf("%s", current->value);
+							printf("\nKEY : %s\tVALUE : %s\n", key, lst->value);
+							fprintf(stderr, "%s", lst->value);
 							flag = 0;
 							break;
 						}
-						current = current->next;
+						lst = lst->next;
 					}
 					free(key);
 				while (args[i][j] != '\0')
-					printf("%c", args[i][j++]);
+				{
+					fprintf(stderr, "%c", args[i][j++]);
+					c = 1;
+				}
+				if(c == 0)
+				{
+					fprintf(stderr, " : is a directory");
+					return (0);
+				}
+				else
+				{
+					fprintf(stderr, ": No such file or directory");
+					return (0);
+				}
 			}
 			else
 				j++;

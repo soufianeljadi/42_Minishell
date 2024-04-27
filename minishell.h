@@ -6,7 +6,7 @@
 /*   By: sdiouane <sdiouane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 23:51:44 by sdiouane          #+#    #+#             */
-/*   Updated: 2024/04/27 10:21:00 by sdiouane         ###   ########.fr       */
+/*   Updated: 2024/04/27 17:17:45 by sdiouane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -175,7 +175,7 @@ void execute_cd(char **args, s_env *lst);
 // echo :
 void echo_fct(char **args, s_env *s_env);
 // $var :
-int check_variables(char **args, s_env *lst);
+int   check_variables(char **args, s_env *lst);
 
 /**********************signals***********************************/
 void    signal_ctrl_c_d(int signal);

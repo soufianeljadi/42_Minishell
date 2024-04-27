@@ -6,7 +6,7 @@
 /*   By: sdiouane <sdiouane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/31 22:14:48 by sdiouane          #+#    #+#             */
-/*   Updated: 2024/04/27 13:15:31 by sdiouane         ###   ########.fr       */
+/*   Updated: 2024/04/27 17:50:15 by sdiouane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -136,6 +136,7 @@ void add_last_cmd(s_env **lst, char **args)
 		if (!strcmp(tmp->key, "_"))
 		{
 			// printf("BEFORE -----> KEY : %s\tVALUE : %s\n",tmp->key, tmp->value);
+			// if ()
 			tmp->value = strdup(args[i - 1]);
 			// printf("AFTER  -----> KEY : %s\tVALUE : %s\n",tmp->key, tmp->value);
 		}
@@ -152,10 +153,7 @@ void ft_execution(noued_cmd *lst, char **args, char **env, s_env *export_i, char
 
 	add_last_cmd(&export_i, args);
 	if (!strcmp(args[0], "export") || !strcmp(args[0], "unset") || !strcmp(args[0], "env") || !strcmp(args[0], "echo") || !strcmp(args[0], "cd") || !strcmp(args[0], "exit") || !strcmp(args[0], "pwd"))
-	{
 		builtins(args, export_i, env);
-		
-	}
 	else
 	{
 		while (lst)
