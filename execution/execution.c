@@ -6,7 +6,7 @@
 /*   By: sdiouane <sdiouane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/31 22:14:48 by sdiouane          #+#    #+#             */
-/*   Updated: 2024/04/27 11:13:58 by sdiouane         ###   ########.fr       */
+/*   Updated: 2024/04/27 13:15:31 by sdiouane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,10 +96,12 @@ static void	execute(char *s, char **env, s_env **export_i)
 		if (strstr(s, "<<"))
 			s = here_doc_fct(s);
 		cmd = ft_split(s, ' '); // ls -la 
+		supprimerGuillemets(cmd[0]);
 		chemin = get_path(cmd[0], env); // /bin/kkk/ls
 		if (execve(chemin, cmd, env) == -1)
 		{
-			fprintf(stderr,"Command not found !\n");
+			// fprintf(stderr,"Command not found !\n");
+			fprintf(stderr, "minishell : %s: command not found\n", cmd[0]);
 			ft_free_tab(cmd);
 			exit(EXIT_FAILURE);
 		}
@@ -133,9 +135,9 @@ void add_last_cmd(s_env **lst, char **args)
 	{
 		if (!strcmp(tmp->key, "_"))
 		{
-			printf("BEFORE -----> KEY : %s\tVALUE : %s\n",tmp->key, tmp->value);
+			// printf("BEFORE -----> KEY : %s\tVALUE : %s\n",tmp->key, tmp->value);
 			tmp->value = strdup(args[i - 1]);
-			printf("AFTER  -----> KEY : %s\tVALUE : %s\n",tmp->key, tmp->value);
+			// printf("AFTER  -----> KEY : %s\tVALUE : %s\n",tmp->key, tmp->value);
 		}
 		tmp = tmp->next;
 	}
@@ -171,7 +173,7 @@ void ft_execution(noued_cmd *lst, char **args, char **env, s_env *export_i, char
 						close(pipefd[1]);
 					}
 					close(pipefd[0]);
-					supprimerGuillemets(lst->cmd);
+					//supprimerGuillemets(lst->cmd);
 					if (lst->redirection != NULL)
 					{
 						if (!env[0])

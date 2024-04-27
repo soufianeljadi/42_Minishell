@@ -6,7 +6,7 @@
 /*   By: sdiouane <sdiouane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/24 21:25:42 by sdiouane          #+#    #+#             */
-/*   Updated: 2024/04/26 22:47:30 by sdiouane         ###   ########.fr       */
+/*   Updated: 2024/04/27 15:52:49 by sdiouane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,12 +23,12 @@ void fct_equal(char **args, s_env *env, char *key, int j, int i)
 	start = j;
 	if (args[i][j] == '"')
 	{
-		// j++;
+		j++;
 		while (args[i][j] && args[i][j] != '"')
 			j++;
 	}
 	else
-		while (args[i][j] && args[i][j] != ' ')
+		while (args[i][j] && args[i][j] != '\"')
 			j++;
 	value = ft_substr(args[i], start, j - start);
 	if (value[0] != '\"')
@@ -148,7 +148,7 @@ s_env *not_null(char **args, s_env *env)
 				}
 			}
 			else
-				syntax_error();
+				fprintf(stderr, "minishell: export: `%s': not a valid identifier\n", args[i]);
 			i++;
 		}
 	}

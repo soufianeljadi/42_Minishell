@@ -6,7 +6,7 @@
 /*   By: sdiouane <sdiouane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/24 21:24:00 by sdiouane          #+#    #+#             */
-/*   Updated: 2024/04/27 10:37:19 by sdiouane         ###   ########.fr       */
+/*   Updated: 2024/04/27 12:57:02 by sdiouane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -143,7 +143,7 @@ void is_null(char **args, s_env *env, s_env *export_i)
 				}
 			}
 			else
-				syntax_error();
+				fprintf(stderr, "minishell: export: `%s': not a valid identifier\n", args[i]);
 			i++;
 		}
 	}

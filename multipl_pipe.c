@@ -71,7 +71,7 @@ void pipeline(char ***cmd) {
 }
 
 int main(int argc, char *argv[]) {
-  char *ls[] = {"ls", NULL};
+  char *ls[] = {"ls", "-ls",NULL};
   char *rev[] = {"rev", NULL};
   char *nl[] = {"nl", NULL};
   char *cat[] = {"cat", NULL};
@@ -81,7 +81,7 @@ int main(int argc, char *argv[]) {
   char *time[] = {"time", "-p", "sleep", "3", NULL};
   char *echo[] = {"echo", "toto", NULL};
 
-  char **cmd[] = {ls, cat, wc,  NULL};
+  char **cmd[] = {ls, wc,  NULL};
 
   pipeline(cmd);
   return (0);

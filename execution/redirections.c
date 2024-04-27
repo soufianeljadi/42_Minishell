@@ -6,7 +6,7 @@
 /*   By: sdiouane <sdiouane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/05 23:00:01 by sdiouane          #+#    #+#             */
-/*   Updated: 2024/04/26 21:01:51 by sdiouane         ###   ########.fr       */
+/*   Updated: 2024/04/27 15:40:03 by sdiouane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -126,12 +126,13 @@ static void redirection_out(char *redirection, int *fd)
 	}
 }
 
-void execute_with_redirection(char *cmd, char **env, char *redirection)
+void  execute_with_redirection(char *cmd, char **env, char *redirection)
 {
 	char *chemin;
 	char **args;
 
 	args = ft_split(cmd, ' ');
+	supprimerGuillemets(args[0]);
 	chemin = get_path(args[0], env);
 	if (chemin != NULL)
 	{
