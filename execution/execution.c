@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execution.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sdiouane <sdiouane@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sel-jadi <sel-jadi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/31 22:14:48 by sdiouane          #+#    #+#             */
-/*   Updated: 2024/04/27 17:50:15 by sdiouane         ###   ########.fr       */
+/*   Updated: 2024/04/28 20:42:44 by sel-jadi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,7 +98,7 @@ static void	execute(char *s, char **env, s_env **export_i)
 		cmd = ft_split(s, ' '); // ls -la 
 		supprimerGuillemets(cmd[0]);
 		chemin = get_path(cmd[0], env); // /bin/kkk/ls
-		if (execve(chemin, cmd, env) == -1)
+		if (execve(chemin, cmd, g_flags.envire) == -1)
 		{
 			// fprintf(stderr,"Command not found !\n");
 			fprintf(stderr, "minishell : %s: command not found\n", cmd[0]);
@@ -143,7 +143,47 @@ void add_last_cmd(s_env **lst, char **args)
 		tmp = tmp->next;
 	}
 }
+static int	ft_lstsize(s_env *lst)
+{
+	int		c;
+	s_env	*p;
 
+	c = 0;
+	p = lst;
+	while (p)
+	{
+		p = p -> next;
+		c++;
+	}
+	return (c);
+}
+static char	**ft_merge_envr(s_env *export_i)
+{
+	char	**str;
+	int		len;
+	int		i;
+
+	i = 0;
+	len = ft_lstsize(export_i);
+	str = NULL;
+	str = malloc(sizeof(char *) * len + 1);
+	if (!str)
+		return (NULL);
+	while (export_i)
+	{
+		str[i] = ft_strdup("");
+		str[i] = ft_strjoin(str[i], export_i->key);
+		if (export_i->value)
+		{
+			str[i] = ft_strjoin(str[i], "=");
+			str[i] = ft_strjoin(str[i], export_i->value);
+		}
+		export_i = export_i->next;
+		i++;
+	}
+	str[i] = NULL;
+	return (str);
+}
 void ft_execution(noued_cmd *lst, char **args, char **env, s_env *export_i, char **null_env)
 {
 	(void)args;
@@ -151,6 +191,7 @@ void ft_execution(noued_cmd *lst, char **args, char **env, s_env *export_i, char
 	int fd_in = 0;
 	pid_t pid;
 
+	g_flags.envire = NULL;
 	add_last_cmd(&export_i, args);
 	if (!strcmp(args[0], "export") || !strcmp(args[0], "unset") || !strcmp(args[0], "env") || !strcmp(args[0], "echo") || !strcmp(args[0], "cd") || !strcmp(args[0], "exit") || !strcmp(args[0], "pwd"))
 		builtins(args, export_i, env);
@@ -161,6 +202,7 @@ void ft_execution(noued_cmd *lst, char **args, char **env, s_env *export_i, char
 			// $variables :
 			if (check_variables(args, export_i) == 1)
 			{
+				g_flags.envire = ft_merge_envr(export_i);
 				if (pipe(pipefd) == -1 || (pid = fork()) == -1)
 					exit(EXIT_FAILURE);
 				else if (pid == 0)

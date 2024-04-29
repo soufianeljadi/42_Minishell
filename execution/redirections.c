@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redirections.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sdiouane <sdiouane@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sel-jadi <sel-jadi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/05 23:00:01 by sdiouane          #+#    #+#             */
-/*   Updated: 2024/04/27 15:40:03 by sdiouane         ###   ########.fr       */
+/*   Updated: 2024/04/28 20:38:10 by sel-jadi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -147,7 +147,7 @@ void  execute_with_redirection(char *cmd, char **env, char *redirection)
 			if (redirection[0] == '>' && redirection[1] == '>')
 				redirection_double_out(redirection, &fd_out);
 		}
-		execve(chemin, args, env);
+		execve(chemin, args, g_flags.envire);
 		exit(EXIT_FAILURE);
 	}
 	else if (!chemin)

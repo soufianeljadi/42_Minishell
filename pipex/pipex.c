@@ -3,14 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   pipex.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sdiouane <sdiouane@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sel-jadi <sel-jadi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/26 21:54:40 by sdiouane          #+#    #+#             */
-/*   Updated: 2024/04/23 11:50:56 by sdiouane         ###   ########.fr       */
+/*   Updated: 2024/04/28 20:39:52 by sel-jadi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex.h"
+#include "../minishell.h"
 
 void	execute(char *s, char **env)
 {
@@ -19,7 +20,7 @@ void	execute(char *s, char **env)
 
 	cmd = ft_split(s, ' '); // ls -la 
 	chemin = get_path(cmd[0], env); // /bin/kkk/ls
-	if (execve(chemin, cmd, env) == -1)
+	if (execve(chemin, cmd, g_flags.envire) == -1)
 	{
 		ft_putstr_fd("Command not found!!", 2);
 		ft_putendl_fd(cmd[0], 2);

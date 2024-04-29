@@ -28,5 +28,6 @@
         "__hash_table": "c",
         "__split_buffer": "c",
         "unordered_map": "c"
-    }
+    },
+    "C_Cpp.errorSquiggles": "disabled"
 }

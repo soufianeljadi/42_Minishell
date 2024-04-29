@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   helper.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sdiouane <sdiouane@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sel-jadi <sel-jadi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/05 23:07:50 by sdiouane          #+#    #+#             */
-/*   Updated: 2024/04/25 21:28:55 by sdiouane         ###   ########.fr       */
+/*   Updated: 2024/04/29 19:15:32 by sel-jadi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,13 @@ int only_spaces(char *str)
 	}
 	return(1);
 }
-
+static char	*ft_value_of_shlvl(char *str)
+{
+	g_flags.shlvl = ft_atoi(str);
+	free(str);
+	++g_flags.shlvl;
+	return (ft_itoa(g_flags.shlvl++));
+}
 s_env *split_env(char **env)
 {
 	int i = 0;
@@ -32,7 +38,7 @@ s_env *split_env(char **env)
 	s_env	*lst = NULL;
 	char 	*key;
 	char 	*value;
-	// char 	*str;
+	char 	*str;
 	
 	while (env[i])
 	{
@@ -42,6 +48,11 @@ s_env *split_env(char **env)
 		key = ft_substr(env[i] ,0 , j);
 		if(!strcmp(key, "_"))
 			value = strdup("/usr/bin/env");
+		if (!strcmp(key, "SHLVL"))
+		{
+			str = ft_substr(env[i] ,j + 1 ,ft_strlen(env[i]));
+			value = ft_value_of_shlvl(str);
+		}
 		else
 			value = ft_substr(env[i] ,j + 1 ,ft_strlen(env[i]));
 		ft_lstadd_back(&lst, ft_lstnew_data(value ,key));
@@ -79,7 +90,7 @@ s_env *split_export_i(s_env *lst)
 {
     lst = add_env_entry(lst, "_", "/usr/bin/env");
     lst = add_env_entry(lst, "OLDPWD", "");
-    lst = add_env_entry(lst, "SHLVL", "1");
+    lst = add_env_entry(lst, "SHLVL", "2");
     lst = add_env_entry(lst, "PWD", "/Users/sdiouane/Desktop/our_big_shell");
     return (lst);
 }
