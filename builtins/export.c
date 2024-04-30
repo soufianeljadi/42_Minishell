@@ -6,7 +6,7 @@
 /*   By: sdiouane <sdiouane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/22 22:11:52 by sdiouane          #+#    #+#             */
-/*   Updated: 2024/04/26 22:44:56 by sdiouane         ###   ########.fr       */
+/*   Updated: 2024/04/30 15:16:55 by sdiouane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ int	verif_export(char *str)
 		return (1);
 	while (str[i])
 	{
-		if (str[i] != '_' && !(str[i] >= 'a' && str[i] <= 'z') && !(str[i] >= 'A' && str[i] <= 'Z'))
+		if (str[i] != '_' && !(str[i] >= 'a' && str[i] <= 'z') && !(str[i] >= 'A' && str[i] <= 'Z') && !(str[i] >= '0' && str[i] <= '9'))
 			return (1);
 		i++;
 	}

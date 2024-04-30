@@ -6,7 +6,7 @@
 /*   By: sdiouane <sdiouane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/23 15:04:54 by sdiouane          #+#    #+#             */
-/*   Updated: 2024/04/23 19:26:11 by sdiouane         ###   ########.fr       */
+/*   Updated: 2024/04/30 15:23:15 by sdiouane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,6 @@ s_env *unset_fct(char **args, s_env *env)
 {
 	int i = 1;
 	int j;
-	int start;
 	char *key;
 	if (!strcmp(args[0] ,"unset"))
 	{
@@ -59,11 +58,13 @@ s_env *unset_fct(char **args, s_env *env)
 			j = 0;
 			while (args[i][j])
 			{
-				start = j;
-				while (args[i][j] != ' ' && args[i][j] != '\t' && args[i][j] != '\0')
+				while (args[i] && args[i][j] != ' ' && args[i][j] != '\t' && args[i][j] != '\0')
 					j++;
-				key = strndup(&args[i][start], i - start);
-				remove_key(&env, key, cmp);
+				key = ft_substr2(args[i], 0, j);
+				if (verif_export(key) == 0)
+					remove_key(&env, key, cmp);
+				else
+					fprintf(stderr, "minishell: unset: `%s': not a valid identifier\n", args[i]);
 				free(key);
 				while (args[i][j] == ' ' || args[i][j] == '\t')
 					j++;

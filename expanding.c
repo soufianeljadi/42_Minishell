@@ -6,7 +6,7 @@
 /*   By: sdiouane <sdiouane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/27 19:58:08 by sdiouane          #+#    #+#             */
-/*   Updated: 2024/04/30 13:32:50 by sdiouane         ###   ########.fr       */
+/*   Updated: 2024/04/30 15:01:42 by sdiouane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -117,7 +117,7 @@ void ft_expanding(char **args, s_env *export_i)
                     args[i] = expanded_cmd;
                     args[i] = ft_substr(args[i], 0, strlen(args[i]));
                     free(key);
-                        ree(value);
+                    free(value);
                 }
                 else
                 {
