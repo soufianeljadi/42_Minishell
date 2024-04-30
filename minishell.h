@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sel-jadi <sel-jadi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sdiouane <sdiouane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 23:51:44 by sdiouane          #+#    #+#             */
-/*   Updated: 2024/04/28 20:30:35 by sel-jadi         ###   ########.fr       */
+/*   Updated: 2024/04/30 09:56:48 by sdiouane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -210,6 +210,12 @@ s_env	*add_env_entry(s_env *head, char *key, char *value);
 
 char	*ft_itoa(unsigned int n);
 int	ft_atoi(const char *str);
+
+// expanding :
+void ft_expanding(char **args, s_env *export_i);
+char *get_env_key(char *s, int j);
+char *get_env_value(char *key, s_env *export_i);
+char *ft_str_replace(char *s, char *key, char *value);
 
 
 t_var	g_flags;

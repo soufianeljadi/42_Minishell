@@ -6,11 +6,25 @@
 /*   By: sdiouane <sdiouane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 23:52:10 by sdiouane          #+#    #+#             */
-/*   Updated: 2024/04/27 15:47:22 by sdiouane         ###   ########.fr       */
+/*   Updated: 2024/04/30 12:56:35 by sdiouane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+void supprimerGuillemets__(char *chaine)
+{
+    int i = 0;
+	int j = 0;
+
+    while (chaine[i])
+	{
+        if (chaine[i] != '\'')
+            chaine[j++] = chaine[i];
+        i++;
+    }
+    chaine[j] = '\0';
+}
 
 void	main_loop(char *line, char **env, s_env *export_i, char **null_env)
 {
@@ -21,7 +35,7 @@ void	main_loop(char *line, char **env, s_env *export_i, char **null_env)
 	while (42)
 	{
 		//read_line
-		line = readline("Minishell :$ ");
+		line = readline("Minishell --> ");
 		if (!line)
 			(printf("exit\n"),exit(0));
 		if(line != NULL && only_spaces(line) == 0)
@@ -37,6 +51,23 @@ void	main_loop(char *line, char **env, s_env *export_i, char **null_env)
 				// split_args_by_pipe :
 				cmd = split_args_by_pipe(args);
 				// print_command_list(cmd);
+				// if (strstr(cmd->cmd, "$"))
+				// supprimerGuillemets__(*args);
+				ft_expanding(args, export_i);
+				int i = 0;
+				while (args[i])
+				{
+					if (args[i][0] == '$')
+						args[i] = ft_substr(args[i], 1, strlen(args[i]));
+					i++;
+				}
+				i = 0;
+				printf("l'affichage de args apres expanding\n");
+				while(args[i])
+				{
+					printf("%d : %s\n",i, args[i]);
+					i++;
+				}
 				ft_execution(cmd, args, env, export_i, null_env);
 				free (args);
 				free_noued_cmd(cmd);

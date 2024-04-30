@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execution.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sel-jadi <sel-jadi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sdiouane <sdiouane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/31 22:14:48 by sdiouane          #+#    #+#             */
-/*   Updated: 2024/04/28 20:42:44 by sel-jadi         ###   ########.fr       */
+/*   Updated: 2024/04/30 09:59:22 by sdiouane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -200,7 +200,8 @@ void ft_execution(noued_cmd *lst, char **args, char **env, s_env *export_i, char
 		while (lst)
 		{
 			// $variables :
-			if (check_variables(args, export_i) == 1)
+			// if (check_variables(args, export_i) == 1)
+			if (!strstr(lst->cmd, "$"))
 			{
 				g_flags.envire = ft_merge_envr(export_i);
 				if (pipe(pipefd) == -1 || (pid = fork()) == -1)

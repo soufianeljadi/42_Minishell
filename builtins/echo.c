@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   echo.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sel-jadi <sel-jadi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sdiouane <sdiouane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/23 16:50:26 by sdiouane          #+#    #+#             */
-/*   Updated: 2024/04/29 18:16:58 by sel-jadi         ###   ########.fr       */
+/*   Updated: 2024/04/30 12:58:05 by sdiouane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -184,6 +184,24 @@ static int all__args_n(char **args)
 	}
 	return(1);
 }
+
+// int all__args_n(char **s1)
+// {
+//     int i = 0;
+
+//     if(s1[i] == '-' && s1[i + 1] == 'n')
+//     {
+//         i++;
+//         while(s1[i])
+//         {
+//             if(s1[i] != 'n')
+//                 return (1);
+//             i++;
+//         }
+//         return (0);
+//     }
+//     return (1);
+// }
 
 void echo_fct(char **args, s_env *s_env)
 {

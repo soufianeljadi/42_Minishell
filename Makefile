@@ -6,7 +6,7 @@
 #    By: sdiouane <sdiouane@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/03/12 23:52:42 by sdiouane          #+#    #+#              #
-#    Updated: 2024/04/24 21:57:31 by sdiouane         ###   ########.fr        #
+#    Updated: 2024/04/30 09:57:28 by sdiouane         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -17,6 +17,7 @@ CFLAGS = -Wall -Wextra -Werror
 RDFLAGS =  -L $(shell brew --prefix readline)/lib -lreadline
 SRC =	minishell.c \
 		ft_itoa.c \
+		expanding.c \
     	parsing/ft_split.c \
 		parsing/lsts.c \
 		parsing/token.c \
