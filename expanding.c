@@ -6,7 +6,7 @@
 /*   By: sdiouane <sdiouane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/27 19:58:08 by sdiouane          #+#    #+#             */
-/*   Updated: 2024/04/30 15:01:42 by sdiouane         ###   ########.fr       */
+/*   Updated: 2024/04/30 18:47:36 by sdiouane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,9 +40,9 @@ char *get_env_key(char *str, int i)
     {
         i++;
         int key_start = i;
-        while ((str[i] >= 'a' && str[i] <= 'z') || (str[i] >= 'A' && str[i] <= 'Z') || (str[i] >= '0' && str[i] <= '9') || str[i] == '_')
+        while (str[i] && ((str[i] >= 'a' && str[i] <= 'z') || (str[i] >= 'A' && str[i] <= 'Z') || (str[i] >= '0' && str[i] <= '9') || str[i] == '_'))
             i++;
-        key = (char *)malloc((i - key_start) * sizeof(char)); // Exclude the last '$' from the key length
+        key = (char *)malloc((i - key_start + 1) * sizeof(char)); // Exclude the last '$' from the key length
         if (!key)
             exit(EXIT_FAILURE);
         strncpy(key, &str[key_start], i - key_start);
@@ -89,6 +89,25 @@ void supprimerDoll(char *chaine)
     chaine[j] = '\0';
 }
 
+void fct(char *s)
+{
+    int i;
+
+    i = 0;
+    while (s[i])
+    {
+        if (s[i] == '\'')
+        {
+            i++;
+            while (s[i] != '\'')
+                i++;
+        }
+        else
+            printf("%c", s[i]);
+    }
+    
+}
+
 void ft_expanding(char **args, s_env *export_i)
 {
 	int i = 0;
@@ -102,32 +121,41 @@ void ft_expanding(char **args, s_env *export_i)
         j = 0;
         while (args[i] && args[i][j])
         {
-            if (args[i][j] == '$')
-            {
-                // j++;
-                printf("args[i] : %s\n", (args[i] + j));
-                key = get_env_key(args[i], j);
-                printf("key : %s\n", key);
-                value = get_env_value(key, export_i);
-                if (value)
+                // if (args[i][j] == '\'') // fct supprimerGuillemets
+                //     j++;
+            // else if (strstr(args[i], "\""))
+            // {
+                if (args[i][j] == '\'' && args[i][j + 1] == '$' && args[i][j - 1] == '"')
+                    return ;
+                if (args[i][j] == '$')
                 {
-                    expanded_cmd = ft_str_replace(args[i], key, value);
-                    // expanded_cmd = ft_substr(expanded_cmd, 0, strlen(expanded_cmd));
-                    free(args[i]);
-                    args[i] = expanded_cmd;
-                    args[i] = ft_substr(args[i], 0, strlen(args[i]));
-                    free(key);
-                    free(value);
-                }
-                else
-                {
-                    expanded_cmd = ft_str_replace(args[i], key, strdup(""));
-                    expanded_cmd = ft_substr(expanded_cmd, 0, strlen(expanded_cmd) - 1);
-                    args[i] = ft_str_replace(args[i], key, strdup(""));
+                    // j++;
+                    key = get_env_key(args[i], j);
+                    if (!key)
+                    {
+                        exit(EXIT_FAILURE);
+                    }
+                    value = get_env_value(key, export_i);
+                    if (value)
+                    {
+                        expanded_cmd = ft_str_replace(args[i], key, value);
+                        // expanded_cmd = ft_substr(expanded_cmd, 0, strlen(expanded_cmd));
+                        free(args[i]);
+                        args[i] = expanded_cmd;
+                        args[i] = ft_substr(args[i], 0, strlen(args[i]));
+                        free(key);
+                        free(value);
+                    }
+                    else
+                    {
+                        expanded_cmd = ft_str_replace(args[i], key, strdup(""));
+                        expanded_cmd = ft_substr(expanded_cmd, 0, strlen(expanded_cmd) - 1);
+                        args[i] = ft_str_replace(args[i], key, strdup(""));
 
-                    args[i] = ft_substr(args[i], 0, strlen(args[i]));
+                        args[i] = ft_substr(args[i], 0, strlen(args[i]));
+                    }
                 }
-            }
+            // }
             j++;
         }
         i++;

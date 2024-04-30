@@ -6,7 +6,7 @@
 /*   By: sdiouane <sdiouane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/31 22:14:48 by sdiouane          #+#    #+#             */
-/*   Updated: 2024/04/30 09:59:22 by sdiouane         ###   ########.fr       */
+/*   Updated: 2024/04/30 17:42:40 by sdiouane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,13 +91,16 @@ static void	execute(char *s, char **env, s_env **export_i)
 	char	*chemin;
 	char	**cmd = NULL;
 	(void)export_i;
+	int i = 0;
 	if (*env)
 	{
 		if (strstr(s, "<<"))
 			s = here_doc_fct(s);
 		cmd = ft_split(s, ' '); // ls -la 
-		supprimerGuillemets(cmd[0]);
+		while (cmd[i])
+			supprimerGuillemets(cmd[i++]);
 		chemin = get_path(cmd[0], env); // /bin/kkk/ls
+		printf("cmd : %s\n", cmd[0]);
 		if (execve(chemin, cmd, g_flags.envire) == -1)
 		{
 			// fprintf(stderr,"Command not found !\n");
@@ -166,7 +169,7 @@ static char	**ft_merge_envr(s_env *export_i)
 	i = 0;
 	len = ft_lstsize(export_i);
 	str = NULL;
-	str = malloc(sizeof(char *) * len + 1);
+	str = malloc(sizeof(char *) * (len + 1));
 	if (!str)
 		return (NULL);
 	while (export_i)
@@ -201,7 +204,7 @@ void ft_execution(noued_cmd *lst, char **args, char **env, s_env *export_i, char
 		{
 			// $variables :
 			// if (check_variables(args, export_i) == 1)
-			if (!strstr(lst->cmd, "$"))
+			if (strstr(lst->cmd, "$"))
 			{
 				g_flags.envire = ft_merge_envr(export_i);
 				if (pipe(pipefd) == -1 || (pid = fork()) == -1)
