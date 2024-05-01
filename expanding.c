@@ -6,7 +6,7 @@
 /*   By: sdiouane <sdiouane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/27 19:58:08 by sdiouane          #+#    #+#             */
-/*   Updated: 2024/05/01 15:56:52 by sdiouane         ###   ########.fr       */
+/*   Updated: 2024/05/01 21:19:10 by sdiouane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,6 @@ char *get_env_value(char *key, s_env *export_i)
     }
     return (NULL);
 }
-
 
 char *ft_str_replace(char *source, char *pattern, char *replacement)
 {
@@ -70,20 +69,19 @@ void supprimerDoll(char *chaine)
     chaine[j] = '\0';
 }
 
+// void supprimerquotes(char *chaine)
+// {
+//     int i = 0;
+// 	int j = 0;
 
-void supprimerquotes(char *chaine)
-{
-    int i = 0;
-	int j = 0;
-
-    while (chaine[i])
-	{
-        if (chaine[i] != '\'')
-            chaine[j++] = chaine[i];
-        i++;
-    }
-    chaine[j] = '\0';
-}
+//     while (chaine[i])
+// 	{
+//         if (chaine[i] != '\'')
+//             chaine[j++] = chaine[i];
+//         i++;
+//     }
+//     chaine[j] = '\0';
+// }
 
 char *get_env_key(char *str, int i)
 {
@@ -105,7 +103,6 @@ char *get_env_key(char *str, int i)
     return (key);
 }
 
-
 void ft_expanding(char **args, s_env *export_i)
 {
 	int i = 0;
@@ -118,6 +115,8 @@ void ft_expanding(char **args, s_env *export_i)
     
     while (args[i])
     {
+        if (is_single(args[i]) == 1)
+            return ;
         j = 0;
         while (args[i] && args[i][j])
         {
@@ -129,9 +128,9 @@ void ft_expanding(char **args, s_env *export_i)
                         exit(EXIT_FAILURE);
                     printf("KEY : %s\n", key);
                     value = get_env_value(key, export_i);
-                    key = ft_strjoin("$", key);
                     if (value)
                     {
+                        // key = ft_strjoin("$", key);
                         expanded_cmd = ft_str_replace(args[i], key, value);
                         // expanded_cmd = ft_substr(expanded_cmd, 0, strlen(expanded_cmd));
                         free(args[i]);
@@ -142,6 +141,8 @@ void ft_expanding(char **args, s_env *export_i)
                     }
                     else
                     {
+                        // key = ft_strjoin("$", key);
+                        printf("---> %s\n", key);
                         expanded_cmd = ft_str_replace(args[i], key, strdup(""));
                         expanded_cmd = ft_substr(expanded_cmd, 0, strlen(expanded_cmd) - 1);
                         args[i] = ft_str_replace(args[i], key, strdup(""));
@@ -156,3 +157,107 @@ void ft_expanding(char **args, s_env *export_i)
     // printf("%s", expanded_cmd);
 }
 
+
+// static char *remove_$(char *tab, int check)
+// {
+//     int i = 0;
+//     int k = 0;
+
+//     while (tab && tab[i])
+//     {
+//         if (tab && tab[i] == '\'' && check == 0)
+//         {
+//             i++;
+//             while (tab && tab[i] && tab[i] != '\'')
+//                 i++;
+//             k = i;
+//         }
+//         if (tab && tab[i] == '$')
+//             i++;
+//         tab[k] = tab[i];
+//         if (tab[i])
+//         {
+//             i++;
+//             k++;
+//         }
+//         else
+//             break;
+//     }
+//     if (tab[i])
+//         tab[k] = '\0';
+//     return tab;
+// }
+
+
+// void ft_expanding(char **args, s_env *export_i)
+// {
+//     // (void)env_list;
+//     int i = 0;
+//     int j = 0;
+    
+//     char *key = NULL;
+//     char *value = NULL;
+//     while (args && args[i])
+//     {
+//         j = 0;
+//         while (args && args[i][j])
+//         {
+//             if (args && args[i] && args[i][j] == '\"')
+//             {
+//                 j++;
+//                 while (args && args[i] && args[i][j] && args[i][j] != '\"')
+//                 {
+//                     if (args && args[i] && args[i][j] == '$')
+//                     {
+//                         key = get_env_key(args[i], j);
+//                         // printf("%s\n", key);
+//                         // printf("%s\n", value);
+//                         value = get_env_value(key, export_i);
+//                         if (key && value)
+//                         {
+//                             args[i] = ft_str_replace(args[i], key, value);
+//                             args[i] = remove_$(args[i], 1);
+//                         }
+//                         else
+//                         {
+//                             args[i] = ft_str_replace(args[i], key, "");
+//                             args[i] = remove_$(args[i], 1);
+//                         }
+//                     }
+//                     j++;
+//                 }
+//             }
+//             if (args && args[i] && args[i][j] == '\'')
+//             {
+//                 j++;
+//                 while (args && args[i] && args[i][j] && args[i][j] != '\'')
+//                     j++;
+//             }
+//             if (args && args[i] && args[i][j] == '$')
+//             {
+//                 if (args[i][j + 1] == '\"' || args[i][j + 1] == '\'' )
+//                 {
+//                     // args[i] = remove_$(args[i], 1);
+//                     break;
+//                 }
+//                 // while ()
+//                 key = get_env_key(args[i], j);
+//                 value = get_env_value(key, export_i);
+//                 if (key && value)
+//                 {
+//                     args[i] = ft_str_replace(args[i], key, value);
+//                     args[i] = remove_$(args[i], 1);
+//                 }
+//                 else
+//                 {
+//                     args[i] = ft_str_replace(args[i], key, "");
+//                     args[i] = remove_$(args[i], 1);
+//                 }
+//             }
+//             if (args && args[i] && args[i][j])
+//                 j++;
+//         }
+//         i++;   
+//     }
+    
+// }

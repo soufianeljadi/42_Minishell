@@ -6,7 +6,7 @@
 /*   By: sdiouane <sdiouane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/31 22:14:48 by sdiouane          #+#    #+#             */
-/*   Updated: 2024/05/01 13:36:38 by sdiouane         ###   ########.fr       */
+/*   Updated: 2024/05/01 22:15:09 by sdiouane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -204,7 +204,7 @@ void ft_execution(noued_cmd *lst, char **args, char **env, s_env *export_i, char
 		{
 			// $variables :
 			// if (check_variables(args, export_i) == 1)
-			if (strstr(lst->cmd, "$"))
+			if (!strstr(lst->cmd, "$"))
 			{
 				g_flags.envire = ft_merge_envr(export_i);
 				if (pipe(pipefd) == -1 || (pid = fork()) == -1)

@@ -1,49 +1,40 @@
 #include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
 
-
-char	*ft_substr(char const *s, unsigned int start, size_t len)
+int is_single(char *str)
 {
-	char	*str;
-	size_t	i;
+	int s;
+	int d;
+	int i;
 
-	if (!s)
-		return (NULL);
-	if (!len || start >= strlen(s))
-		return (strdup(""));
-	i = strlen(s) - start ;
-	if (i > len)
-		i = len;
-	str = (char *)malloc(sizeof(char) * (i + 1));
-	if (!str)
-		return (0);
-	strlcpy(str, s + start, i + 1);
-	return (str);
-}
-
-void sera_expander(char *s)
-{
-	int i = 0;
-	char *tmp;
-	printf("s = %s\n", s);
-	while (s[i])
+	i = 0;
+	s = d = 0;
+	int j = 0;
+	while (str[i])
 	{
-        printf("hrfgjehrgjehrgjfhj\n");
-      if (s[i] == '\'')
-	  {
-		  i++;
-		  while (s[i] != '\'')
-			  i++;
-		tmp = ft_substr(s, 1, i - 1);
-	  }
-	  i++;			
+		if (str[i] == '\'' && d == 0)
+			s = s + 1;
+		else if (str[i] == '"' && s == 0)
+			d = d + 1;
+		if (d == 2)
+			d = 0;
+		if (s == 2)
+			s = 0;
+		if (str[i] == '$')
+			break;
+		i++;
 	}
-		printf("tmp = %s\n", tmp);
+	if (s == 1)
+		return (1);
+	else
+		return (0);
+
+	return (0);
 }
 
 int main()
 {
-    sera_expander("hello 'world' 'hello' 'world'");
-    return 0;
+	// char *str = "  \"'\"'$PWD'\"'\"   ";
+	char *str = "  'PWD'   ";
+	printf("%d\n", is_single(str));
+	return (0);
 }

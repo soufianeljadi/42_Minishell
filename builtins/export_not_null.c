@@ -6,7 +6,7 @@
 /*   By: sdiouane <sdiouane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/24 21:25:42 by sdiouane          #+#    #+#             */
-/*   Updated: 2024/04/27 15:52:49 by sdiouane         ###   ########.fr       */
+/*   Updated: 2024/05/01 17:42:15 by sdiouane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,7 @@ void fct_equal(char **args, s_env *env, char *key, int j, int i)
 	else
 	{
 		value = remove_quotes(value);
+		// printf("----> value = %s\n", value);
 		current = env;
 		while (current != NULL && current->value)
 		{
@@ -95,7 +96,7 @@ void ftc_concatination(char **args, s_env *env, char *key, int j, int i)
 	}
 	else
 	{
-		value = remove_quotes(value);
+		// value = remove_quotes(value);
 		current = env;
 		while (current != NULL && current->value)
 		{

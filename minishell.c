@@ -6,7 +6,7 @@
 /*   By: sdiouane <sdiouane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 23:52:10 by sdiouane          #+#    #+#             */
-/*   Updated: 2024/05/01 15:48:24 by sdiouane         ###   ########.fr       */
+/*   Updated: 2024/05/01 21:20:28 by sdiouane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,24 +46,49 @@ void before_expanding(char **args)
 	}
 }
 
-// void sera_expander(char *s)
-// {
-// 	int i = 0;
-// 	char *tmp;
-// 	printf("s = %s\n", s);
-// 	while (s[i])
-// 	{
-//       if (s[i] == '\'')
-// 	  {
-// 		  i++;
-// 		  while (s[i] != '\'')
-// 			  i++;
-// 		tmp = ft_substr(s, 1, i - 1);
-// 		printf("tmp = %s\n", tmp);
-// 	  }
-	  			
-// 	}
-// }
+void supprimerGuillemetsdoll(char *chaine)
+{
+    int i = 0;
+	int j = 0;
+
+    while (chaine[i])
+	{
+        if (chaine[i] != '$')
+            chaine[j++] = chaine[i];
+        i++;
+    }
+    chaine[j] = '\0';
+}
+
+int is_single(char *str)
+{
+	int s;
+	int d;
+	int i;
+
+	i = 0;
+	s = d = 0;
+	while (str[i])
+	{
+		if (str[i] == '\'' && d == 0)
+			s = s + 1;
+		else if (str[i] == '"' && s == 0)
+			d = d + 1;
+		if (d == 2)
+			d = 0;
+		if (s == 2)
+			s = 0;
+		if (str[i] == '$')
+			break;
+		i++;
+	}
+	if (s == 1)
+		return (1);
+	else
+		return (0);
+
+	return (0);
+}
 
 void	main_loop(char *line, char **env, s_env *export_i, char **null_env)
 {
@@ -90,20 +115,8 @@ void	main_loop(char *line, char **env, s_env *export_i, char **null_env)
 				// split_args_by_pipe :
 				// before_expanding(args);
 				ft_expanding(args, export_i);
-				// int i = 0;
 				// while (args[i])
-				// {
-				// 	if (args[i][0] == '$')
-				// 		args[i] = ft_substr(args[i], 1, strlen(args[i]));
-				// 	i++;
-				// }
-				// i = 0;
-				// printf("l'affichage de args apres expanding\n");
-				// while(args[i])
-				// {
-				// 	printf("%d : %s\n",i, args[i]);
-				// 	i++;
-				// }
+				// 	supprimerGuillemetsdoll(args[i++]);
 				cmd = split_args_by_pipe(args);
 				print_command_list(cmd);
 				ft_execution(cmd, args, env, export_i, null_env);
@@ -121,7 +134,7 @@ void	main_loop(char *line, char **env, s_env *export_i, char **null_env)
 }
 
 void	f(void)
-{
+{     
 	// system("lsof minishell > file");
 	system("leaks minishell");
 }
