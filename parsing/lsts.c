@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lsts.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sel-jadi <sel-jadi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sdiouane <sdiouane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/13 00:32:13 by sdiouane          #+#    #+#             */
-/*   Updated: 2024/04/29 17:57:35 by sel-jadi         ###   ########.fr       */
+/*   Updated: 2024/05/01 16:08:32 by sdiouane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,7 +79,7 @@ void	print_list(s_env *list)
 //   printf("+++++++++++++\n");
   while (list)
   {
-	if (list->value[0] && strcmp(list->key, "OLDPWD") != 0)
+	if (list->value[0] /*&& strcmp(list->key, "OLDPWD") != 0*/)
 	{
 		printf("%s", list->key);
 		printf("=%s\n", list->value);

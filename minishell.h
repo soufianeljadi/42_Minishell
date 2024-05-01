@@ -6,7 +6,7 @@
 /*   By: sdiouane <sdiouane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 23:51:44 by sdiouane          #+#    #+#             */
-/*   Updated: 2024/05/01 13:23:05 by sdiouane         ###   ########.fr       */
+/*   Updated: 2024/05/01 16:07:01 by sdiouane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -172,7 +172,7 @@ s_env   *unset_fct(char **args, s_env *env);
 void	remove_key(s_env **begin_list, void *data_ref, int (*cmp)());
 int cmp(void *data1, void *data2);
 // cd :
-void execute_cd(char **args, s_env *lst);
+s_env *execute_cd(char **args, s_env *lst);
 // echo :
 void echo_fct(char **args, s_env *s_env);
 // $var :

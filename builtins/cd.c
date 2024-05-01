@@ -6,13 +6,13 @@
 /*   By: sdiouane <sdiouane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/25 17:00:00 by sdiouane          #+#    #+#             */
-/*   Updated: 2024/05/01 13:29:34 by sdiouane         ###   ########.fr       */
+/*   Updated: 2024/05/01 16:11:37 by sdiouane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-void	execute_cd(char **args, s_env *lst)
+s_env	*execute_cd(char **args, s_env *lst)
 {
 	int i = 0;
 	char *new_pwd;
@@ -53,4 +53,5 @@ void	execute_cd(char **args, s_env *lst)
 			}
 		}
 	}
+	return (lst);
 }

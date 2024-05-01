@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   helper.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sel-jadi <sel-jadi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sdiouane <sdiouane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/05 23:07:50 by sdiouane          #+#    #+#             */
-/*   Updated: 2024/04/29 19:15:32 by sel-jadi         ###   ########.fr       */
+/*   Updated: 2024/05/01 16:13:01 by sdiouane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,6 +53,8 @@ s_env *split_env(char **env)
 			str = ft_substr(env[i] ,j + 1 ,ft_strlen(env[i]));
 			value = ft_value_of_shlvl(str);
 		}
+		else if (!strcmp(key, "OLDPWD"))
+			value = strdup("");
 		else
 			value = ft_substr(env[i] ,j + 1 ,ft_strlen(env[i]));
 		ft_lstadd_back(&lst, ft_lstnew_data(value ,key));
