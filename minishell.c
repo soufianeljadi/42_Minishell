@@ -6,7 +6,7 @@
 /*   By: sdiouane <sdiouane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 23:52:10 by sdiouane          #+#    #+#             */
-/*   Updated: 2024/04/30 17:42:54 by sdiouane         ###   ########.fr       */
+/*   Updated: 2024/05/01 15:48:24 by sdiouane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,45 @@ void supprimerGuillemets__(char *chaine)
     }
     chaine[j] = '\0';
 }
+
+void before_expanding(char **args)
+{
+	// char *tmp;
+	int i = 0;
+	int j = 0;
+	while (args[i])
+	{
+		j = 0;
+		if (args[i][j] == '"')
+		{
+			while (args[i][j] != '"')
+				i++;
+			args[i] = ft_substr2(args[i], 1, strlen(args[i]) - 1);
+			supprimerGuillemets(args[i]);
+			printf("tmp = %s\n", args[i]);
+		}
+		i++;
+	}
+}
+
+// void sera_expander(char *s)
+// {
+// 	int i = 0;
+// 	char *tmp;
+// 	printf("s = %s\n", s);
+// 	while (s[i])
+// 	{
+//       if (s[i] == '\'')
+// 	  {
+// 		  i++;
+// 		  while (s[i] != '\'')
+// 			  i++;
+// 		tmp = ft_substr(s, 1, i - 1);
+// 		printf("tmp = %s\n", tmp);
+// 	  }
+	  			
+// 	}
+// }
 
 void	main_loop(char *line, char **env, s_env *export_i, char **null_env)
 {
@@ -49,17 +88,16 @@ void	main_loop(char *line, char **env, s_env *export_i, char **null_env)
 				// split_line_into_arguments :
 				args = line_to_args(line);
 				// split_args_by_pipe :
-				// if (strstr(cmd->cmd, "$"))
-				// supprimerGuillemets__(*args);
+				// before_expanding(args);
 				ft_expanding(args, export_i);
-				int i = 0;
-				while (args[i])
-				{
-					if (args[i][0] == '$')
-						args[i] = ft_substr(args[i], 1, strlen(args[i]));
-					i++;
-				}
-				i = 0;
+				// int i = 0;
+				// while (args[i])
+				// {
+				// 	if (args[i][0] == '$')
+				// 		args[i] = ft_substr(args[i], 1, strlen(args[i]));
+				// 	i++;
+				// }
+				// i = 0;
 				// printf("l'affichage de args apres expanding\n");
 				// while(args[i])
 				// {
@@ -67,7 +105,7 @@ void	main_loop(char *line, char **env, s_env *export_i, char **null_env)
 				// 	i++;
 				// }
 				cmd = split_args_by_pipe(args);
-				// print_command_list(cmd);
+				print_command_list(cmd);
 				ft_execution(cmd, args, env, export_i, null_env);
 				free (args);
 				free_noued_cmd(cmd);

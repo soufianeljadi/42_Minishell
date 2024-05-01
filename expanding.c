@@ -6,7 +6,7 @@
 /*   By: sdiouane <sdiouane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/27 19:58:08 by sdiouane          #+#    #+#             */
-/*   Updated: 2024/04/30 19:30:07 by sdiouane         ###   ########.fr       */
+/*   Updated: 2024/05/01 15:56:52 by sdiouane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,25 +31,6 @@ char *get_env_value(char *key, s_env *export_i)
     return (NULL);
 }
 
-char *get_env_key(char *str, int i)
-{
-    char *key = NULL;
-    while (str[i] && str[i] != '$')
-        i++;
-    if (str[i] == '$')
-    {
-        i++;
-        int key_start = i;
-        while (str[i] && ((str[i] >= 'a' && str[i] <= 'z') || (str[i] >= 'A' && str[i] <= 'Z') || (str[i] >= '0' && str[i] <= '9') || str[i] == '_'))
-            i++;
-        key = (char *)malloc((i - key_start + 1) * sizeof(char)); // Exclude the last '$' from the key length
-        if (!key)
-            exit(EXIT_FAILURE);
-        strncpy(key, &str[key_start], i - key_start);
-        key[i - key_start] = '\0';
-    }
-    return (key);
-}
 
 char *ft_str_replace(char *source, char *pattern, char *replacement)
 {
@@ -89,40 +70,6 @@ void supprimerDoll(char *chaine)
     chaine[j] = '\0';
 }
 
-void fct(char *s)
-{
-    int i;
-
-    i = 0;
-    while (s[i])
-    {
-        if (s[i] == '\'')
-        {
-            i++;
-            while (s[i] != '\'')
-                i++;
-        }
-        else
-            printf("%c", s[i]);
-    }
-    
-}
-
-void skip_quotes(char *s, int *i)
-{
-    if (s[*i] == '"')
-    {
-        (*i)++;
-        while (s[*i] != '"')
-            (*i)++;
-    }
-    else if (s[*i] == '\'')
-    {
-        (*i)++;
-        while (s[*i] != '\'')
-            (*i)++;
-    }
-}
 
 void supprimerquotes(char *chaine)
 {
@@ -138,6 +85,27 @@ void supprimerquotes(char *chaine)
     chaine[j] = '\0';
 }
 
+char *get_env_key(char *str, int i)
+{
+    char *key = NULL;
+    while (str[i] && str[i] != '$')
+        i++;
+    if (str[i] == '$')
+    {
+        i++;
+        int key_start = i;
+        while (str[i] && ((str[i] >= 'a' && str[i] <= 'z') || (str[i] >= 'A' && str[i] <= 'Z') || (str[i] >= '0' && str[i] <= '9') || str[i] == '_'))
+            i++;
+        key = (char *)malloc((i - key_start + 1) * sizeof(char)); // Exclude the last '$' from the key length
+        if (!key)
+            exit(EXIT_FAILURE);
+        strncpy(key, &str[key_start], i - key_start);
+        key[i - key_start] = '\0';
+    }
+    return (key);
+}
+
+
 void ft_expanding(char **args, s_env *export_i)
 {
 	int i = 0;
@@ -145,24 +113,23 @@ void ft_expanding(char **args, s_env *export_i)
     char *expanded_cmd;
     char *key;
     char *value;
+    i = j = 0;
 
+    
     while (args[i])
     {
         j = 0;
         while (args[i] && args[i][j])
         {
-            // supprimerquotes(args[i]);
-            if (args[i][0] == '\'')
-                return ;
                 if (args[i][j] == '$')
                 {
                     // j++;
                     key = get_env_key(args[i], j);
                     if (!key)
-                    {
                         exit(EXIT_FAILURE);
-                    }
+                    printf("KEY : %s\n", key);
                     value = get_env_value(key, export_i);
+                    key = ft_strjoin("$", key);
                     if (value)
                     {
                         expanded_cmd = ft_str_replace(args[i], key, value);
@@ -181,20 +148,11 @@ void ft_expanding(char **args, s_env *export_i)
                         args[i] = ft_substr(args[i], 0, strlen(args[i]));
                     }
                 }
-            // }
             j++;
         }
         i++;
     }
     i = 0;
-    while (args[i])
-    {
-        if (strstr(args[i], "$"))
-            supprimerDoll(args[i]);
-        i++;
-    }
-    // }
     // printf("%s", expanded_cmd);
 }
-
 
