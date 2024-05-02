@@ -6,7 +6,7 @@
 /*   By: sdiouane <sdiouane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 23:52:10 by sdiouane          #+#    #+#             */
-/*   Updated: 2024/05/01 21:20:28 by sdiouane         ###   ########.fr       */
+/*   Updated: 2024/05/02 10:43:31 by sdiouane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -113,12 +113,9 @@ void	main_loop(char *line, char **env, s_env *export_i, char **null_env)
 				// split_line_into_arguments :
 				args = line_to_args(line);
 				// split_args_by_pipe :
-				// before_expanding(args);
 				ft_expanding(args, export_i);
-				// while (args[i])
-				// 	supprimerGuillemetsdoll(args[i++]);
 				cmd = split_args_by_pipe(args);
-				print_command_list(cmd);
+				// print_command_list(cmd);
 				ft_execution(cmd, args, env, export_i, null_env);
 				free (args);
 				free_noued_cmd(cmd);

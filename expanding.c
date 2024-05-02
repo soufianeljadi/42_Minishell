@@ -6,7 +6,7 @@
 /*   By: sdiouane <sdiouane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/27 19:58:08 by sdiouane          #+#    #+#             */
-/*   Updated: 2024/05/01 21:19:10 by sdiouane         ###   ########.fr       */
+/*   Updated: 2024/05/02 11:07:38 by sdiouane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -116,23 +116,26 @@ void ft_expanding(char **args, s_env *export_i)
     while (args[i])
     {
         if (is_single(args[i]) == 1)
+        {
+            printf("ne sera pas expandu\n");
             return ;
+        }
         j = 0;
         while (args[i] && args[i][j])
         {
                 if (args[i][j] == '$')
                 {
-                    // j++;
                     key = get_env_key(args[i], j);
                     if (!key)
                         exit(EXIT_FAILURE);
-                    printf("KEY : %s\n", key);
+                    printf("---> %c\n", args[i][j]);
                     value = get_env_value(key, export_i);
+                 
                     if (value)
                     {
-                        // key = ft_strjoin("$", key);
+                        key = ft_strjoin("$", key);
                         expanded_cmd = ft_str_replace(args[i], key, value);
-                        // expanded_cmd = ft_substr(expanded_cmd, 0, strlen(expanded_cmd));
+                        expanded_cmd = ft_substr(expanded_cmd, 0, strlen(expanded_cmd));
                         free(args[i]);
                         args[i] = expanded_cmd;
                         args[i] = ft_substr(args[i], 0, strlen(args[i]));
@@ -141,8 +144,7 @@ void ft_expanding(char **args, s_env *export_i)
                     }
                     else
                     {
-                        // key = ft_strjoin("$", key);
-                        printf("---> %s\n", key);
+                        // printf("---> %s\n", key);
                         expanded_cmd = ft_str_replace(args[i], key, strdup(""));
                         expanded_cmd = ft_substr(expanded_cmd, 0, strlen(expanded_cmd) - 1);
                         args[i] = ft_str_replace(args[i], key, strdup(""));
@@ -154,110 +156,5 @@ void ft_expanding(char **args, s_env *export_i)
         i++;
     }
     i = 0;
-    // printf("%s", expanded_cmd);
 }
 
-
-// static char *remove_$(char *tab, int check)
-// {
-//     int i = 0;
-//     int k = 0;
-
-//     while (tab && tab[i])
-//     {
-//         if (tab && tab[i] == '\'' && check == 0)
-//         {
-//             i++;
-//             while (tab && tab[i] && tab[i] != '\'')
-//                 i++;
-//             k = i;
-//         }
-//         if (tab && tab[i] == '$')
-//             i++;
-//         tab[k] = tab[i];
-//         if (tab[i])
-//         {
-//             i++;
-//             k++;
-//         }
-//         else
-//             break;
-//     }
-//     if (tab[i])
-//         tab[k] = '\0';
-//     return tab;
-// }
-
-
-// void ft_expanding(char **args, s_env *export_i)
-// {
-//     // (void)env_list;
-//     int i = 0;
-//     int j = 0;
-    
-//     char *key = NULL;
-//     char *value = NULL;
-//     while (args && args[i])
-//     {
-//         j = 0;
-//         while (args && args[i][j])
-//         {
-//             if (args && args[i] && args[i][j] == '\"')
-//             {
-//                 j++;
-//                 while (args && args[i] && args[i][j] && args[i][j] != '\"')
-//                 {
-//                     if (args && args[i] && args[i][j] == '$')
-//                     {
-//                         key = get_env_key(args[i], j);
-//                         // printf("%s\n", key);
-//                         // printf("%s\n", value);
-//                         value = get_env_value(key, export_i);
-//                         if (key && value)
-//                         {
-//                             args[i] = ft_str_replace(args[i], key, value);
-//                             args[i] = remove_$(args[i], 1);
-//                         }
-//                         else
-//                         {
-//                             args[i] = ft_str_replace(args[i], key, "");
-//                             args[i] = remove_$(args[i], 1);
-//                         }
-//                     }
-//                     j++;
-//                 }
-//             }
-//             if (args && args[i] && args[i][j] == '\'')
-//             {
-//                 j++;
-//                 while (args && args[i] && args[i][j] && args[i][j] != '\'')
-//                     j++;
-//             }
-//             if (args && args[i] && args[i][j] == '$')
-//             {
-//                 if (args[i][j + 1] == '\"' || args[i][j + 1] == '\'' )
-//                 {
-//                     // args[i] = remove_$(args[i], 1);
-//                     break;
-//                 }
-//                 // while ()
-//                 key = get_env_key(args[i], j);
-//                 value = get_env_value(key, export_i);
-//                 if (key && value)
-//                 {
-//                     args[i] = ft_str_replace(args[i], key, value);
-//                     args[i] = remove_$(args[i], 1);
-//                 }
-//                 else
-//                 {
-//                     args[i] = ft_str_replace(args[i], key, "");
-//                     args[i] = remove_$(args[i], 1);
-//                 }
-//             }
-//             if (args && args[i] && args[i][j])
-//                 j++;
-//         }
-//         i++;   
-//     }
-    
-// }

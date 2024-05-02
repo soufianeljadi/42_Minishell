@@ -6,7 +6,7 @@
 /*   By: sdiouane <sdiouane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/25 17:00:00 by sdiouane          #+#    #+#             */
-/*   Updated: 2024/05/01 16:11:37 by sdiouane         ###   ########.fr       */
+/*   Updated: 2024/05/02 12:05:52 by sdiouane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,18 @@ s_env	*execute_cd(char **args, s_env *lst)
 		{
 			if (chdir(args[1]) != 0)
 				perror("cd");
-			new_pwd = getcwd(NULL, 0); 
+			new_pwd = getcwd(NULL, 0);
+			if (!new_pwd)
+			{
+				while (lst && lst->next != NULL)
+				{
+					if (!strcmp(lst->key, "PWD"))
+						lst->value = ft_strjoin(lst->value, "/..");
+					lst = lst->next;
+				}
+				ft_putstr_fd("minishell: cd: error retrieving current directory: getcwd: cannot access parent directories: No such file or directory\n", 2);
+				return (lst);
+			}
 			while (lst && lst->next != NULL)
 			{
 				if (!strcmp(lst->key, "PWD"))

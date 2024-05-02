@@ -6,7 +6,7 @@
 /*   By: sdiouane <sdiouane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/31 22:14:48 by sdiouane          #+#    #+#             */
-/*   Updated: 2024/05/01 22:15:09 by sdiouane         ###   ########.fr       */
+/*   Updated: 2024/05/02 12:01:11 by sdiouane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,7 @@ char *here_doc_fct(char *s)
 				free(line);
 				break;
 			}
-			write(fd1, line, strlen(line));		
+			write(fd1, line, strlen(line));
 			free(line);
 		}
 		// if (args[2])
@@ -100,7 +100,6 @@ static void	execute(char *s, char **env, s_env **export_i)
 		while (cmd[i])
 			supprimerGuillemets(cmd[i++]);
 		chemin = get_path(cmd[0], env); // /bin/kkk/ls
-		printf("cmd : %s\n", cmd[0]);
 		if (execve(chemin, cmd, g_flags.envire) == -1)
 		{
 			// fprintf(stderr,"Command not found !\n");
@@ -146,6 +145,7 @@ void add_last_cmd(s_env **lst, char **args)
 		tmp = tmp->next;
 	}
 }
+
 static int	ft_lstsize(s_env *lst)
 {
 	int		c;
