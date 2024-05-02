@@ -6,7 +6,7 @@
 /*   By: sdiouane <sdiouane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/27 19:58:08 by sdiouane          #+#    #+#             */
-/*   Updated: 2024/05/02 13:27:25 by sdiouane         ###   ########.fr       */
+/*   Updated: 2024/05/02 16:42:00 by sdiouane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,25 +36,44 @@ char *ft_str_replace(char *source, char *pattern, char *replacement)
     size_t pattern_len = strlen(pattern);
     size_t replacement_len = strlen(replacement);
 
-    const char *occurrence = strstr(source, pattern); // Recherche de la première occurrence du motif dans la source
+    const char *occurrence = strstr(source, pattern);
 
     if (!occurrence)
         return strdup(source);
-    // Calcule la taille de la nouvelle chaîne
     size_t new_size = strlen(source) - pattern_len + replacement_len + 1;
     char *new_str = (char *)malloc(new_size);
     if (!new_str)
         return NULL;
-    // Copie la partie de la source avant l'occurrence du motif dans la nouvelle chaîne
     memcpy(new_str, source, occurrence - source);
     new_str[occurrence - source] = '\0';
-    // Concatène la chaîne de remplacement à la nouvelle chaîne
     strcat(new_str, replacement);
-    // Concatène la partie de la source après l'occurrence du motif à la nouvelle chaîne
     strcat(new_str, occurrence + pattern_len);
     return new_str;
 }
 
+
+
+
+char *get_env_key(char *str, int i)
+{
+    char *key = NULL;
+    while (str[i] && str[i] != '$')
+        i++;
+    if (str[i] == '$')
+    {
+        i++;
+        int key_start = i;
+        while (str[i] && ((str[i] >= 'a' && str[i] <= 'z') || (str[i] >= 'A' && str[i] <= 'Z') || (str[i] >= '0' && str[i] <= '9') || str[i] == '_'))
+            i++;
+        key = (char *)malloc((i - key_start + 1) * sizeof(char));
+        if (!key)
+            exit(EXIT_FAILURE);
+        strncpy(key, &str[key_start], i - key_start);
+        key[i - key_start] = '\0';
+    }
+    return (key);
+}
+       
 void supprimerDoll(char *chaine)
 {
     int i = 0;
@@ -69,25 +88,29 @@ void supprimerDoll(char *chaine)
     chaine[j] = '\0';
 }
 
-
-char *get_env_key(char *str, int i)
+void rmv(char **str)
 {
-    char *key = NULL;
-    while (str[i] && str[i] != '$')
-        i++;
-    if (str[i] == '$')
-    {
-        i++;
-        int key_start = i;
-        while (str[i] && ((str[i] >= 'a' && str[i] <= 'z') || (str[i] >= 'A' && str[i] <= 'Z') || (str[i] >= '0' && str[i] <= '9') || str[i] == '_'))
-            i++;
-        key = (char *)malloc((i - key_start + 1) * sizeof(char)); // Exclude the last '$' from the key length
-        if (!key)
-            exit(EXIT_FAILURE);
-        strncpy(key, &str[key_start], i - key_start);
-        key[i - key_start] = '\0';
-    }
-    return (key);
+	int i = 0;
+	int j;
+    int f = 0;
+	while(str[i])
+	{
+		j = 0;
+		printf("++++++++++++> last = %c\n", str[i][strlen(str[i]) - 2]);
+        if (str[i][j] == '\'' || str[i][j] == '"')
+            j++;
+		if (str[i][strlen(str[i]) - 2] == '$')
+		{
+			str[i] = ft_substr2(str[i], 1, strlen(str[i]) - 3);
+            f = 1;
+			// printf("str = %s\n", str[i]);
+		}
+		supprimerDoll(str[i]);
+        if (f == 1)
+            str[i] = ft_strjoin(str[i], "$");
+		i++;
+	}
+
 }
 
 void ft_expanding(char **args, s_env *export_i)
@@ -108,6 +131,7 @@ void ft_expanding(char **args, s_env *export_i)
             return ;
         }
         j = 0;
+        
         while (args[i] && args[i][j])
         {
                 if (args[i][j] == '$')
@@ -129,10 +153,7 @@ void ft_expanding(char **args, s_env *export_i)
                     }
                     else
                     {
-                        // expanded_cmd = ft_str_replace(args[i], key, strdup(""));
-                        // expanded_cmd = ft_substr(expanded_cmd, 0, strlen(expanded_cmd));
                         args[i] = ft_str_replace(args[i], key, strdup(""));
-                        // args[i] = expanded_cmd;
                         args[i] = ft_substr(args[i], 0, strlen(args[i]));
                     }
                 }
@@ -140,18 +161,6 @@ void ft_expanding(char **args, s_env *export_i)
         }
         i++;
     }
-    i = 0;
-    while (args[i])
-    {
-        j = 0;
-        while (args[i][j])
-        {
-            if (args[i][j] == '$' && !value)
-            {
-                supprimerDoll(args[i]);
-            }
-            j++;
-        }
-        i++;
-    }
+    // rmv(args);
 }
+

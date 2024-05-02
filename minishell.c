@@ -6,7 +6,7 @@
 /*   By: sdiouane <sdiouane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 23:52:10 by sdiouane          #+#    #+#             */
-/*   Updated: 2024/05/02 10:43:31 by sdiouane         ###   ########.fr       */
+/*   Updated: 2024/05/02 15:09:14 by sdiouane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,6 +90,8 @@ int is_single(char *str)
 	return (0);
 }
 
+
+
 void	main_loop(char *line, char **env, s_env *export_i, char **null_env)
 {
 	char **args = NULL;
@@ -114,6 +116,7 @@ void	main_loop(char *line, char **env, s_env *export_i, char **null_env)
 				args = line_to_args(line);
 				// split_args_by_pipe :
 				ft_expanding(args, export_i);
+				// rmv(args);
 				cmd = split_args_by_pipe(args);
 				// print_command_list(cmd);
 				ft_execution(cmd, args, env, export_i, null_env);
