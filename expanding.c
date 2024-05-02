@@ -6,7 +6,7 @@
 /*   By: sdiouane <sdiouane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/27 19:58:08 by sdiouane          #+#    #+#             */
-/*   Updated: 2024/05/02 11:07:38 by sdiouane         ###   ########.fr       */
+/*   Updated: 2024/05/02 13:27:25 by sdiouane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,19 +69,6 @@ void supprimerDoll(char *chaine)
     chaine[j] = '\0';
 }
 
-// void supprimerquotes(char *chaine)
-// {
-//     int i = 0;
-// 	int j = 0;
-
-//     while (chaine[i])
-// 	{
-//         if (chaine[i] != '\'')
-//             chaine[j++] = chaine[i];
-//         i++;
-//     }
-//     chaine[j] = '\0';
-// }
 
 char *get_env_key(char *str, int i)
 {
@@ -127,10 +114,8 @@ void ft_expanding(char **args, s_env *export_i)
                 {
                     key = get_env_key(args[i], j);
                     if (!key)
-                        exit(EXIT_FAILURE);
-                    printf("---> %c\n", args[i][j]);
+                        exit(EXIT_FAILURE);       
                     value = get_env_value(key, export_i);
-                 
                     if (value)
                     {
                         key = ft_strjoin("$", key);
@@ -144,10 +129,10 @@ void ft_expanding(char **args, s_env *export_i)
                     }
                     else
                     {
-                        // printf("---> %s\n", key);
-                        expanded_cmd = ft_str_replace(args[i], key, strdup(""));
-                        expanded_cmd = ft_substr(expanded_cmd, 0, strlen(expanded_cmd) - 1);
+                        // expanded_cmd = ft_str_replace(args[i], key, strdup(""));
+                        // expanded_cmd = ft_substr(expanded_cmd, 0, strlen(expanded_cmd));
                         args[i] = ft_str_replace(args[i], key, strdup(""));
+                        // args[i] = expanded_cmd;
                         args[i] = ft_substr(args[i], 0, strlen(args[i]));
                     }
                 }
@@ -156,5 +141,17 @@ void ft_expanding(char **args, s_env *export_i)
         i++;
     }
     i = 0;
+    while (args[i])
+    {
+        j = 0;
+        while (args[i][j])
+        {
+            if (args[i][j] == '$' && !value)
+            {
+                supprimerDoll(args[i]);
+            }
+            j++;
+        }
+        i++;
+    }
 }
-

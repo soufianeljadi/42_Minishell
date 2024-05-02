@@ -6,7 +6,7 @@
 /*   By: sdiouane <sdiouane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/27 23:28:30 by sdiouane          #+#    #+#             */
-/*   Updated: 2024/04/22 15:50:40 by sdiouane         ###   ########.fr       */
+/*   Updated: 2024/05/02 13:02:55 by sdiouane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -161,7 +161,7 @@ void print_command_list(noued_cmd *head)
 	while (current != NULL)
 	{
 		printf("Noeud : %d\n", i);
-		printf("->cmd : %s\n->rederection : %s \n\n", current->cmd, current->redirection);
+		printf("->cmd : %s\n->rederection : %s \n", current->cmd, current->redirection);
 		current = current->next;
 		i++;
 	}
