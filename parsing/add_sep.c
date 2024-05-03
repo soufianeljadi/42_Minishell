@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   add_sep.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sdiouane <sdiouane@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sel-jadi <sel-jadi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/25 23:56:31 by sel-jadi          #+#    #+#             */
-/*   Updated: 2024/03/30 00:19:20 by sdiouane         ###   ########.fr       */
+/*   Updated: 2024/05/03 18:45:19 by sel-jadi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
- char	*ft_add(char c, char *s, int index)
+char	*ft_add(char c, char *s, int index)
 {
 	int		i;
 	int		j;
@@ -39,7 +39,7 @@
 	return (tmp);
 }
 
- int	ft_sep_red(char **s, int *i)
+int	ft_sep_red(char **s, int *i)
 {
 	if ((*s)[*i + 1] == (*s)[*i])
 	{
@@ -62,7 +62,7 @@
 	return (1);
 }
 
- void	ft_count_quotes(char *s, int i, t_parse *d)
+void	ft_count_quotes(char *s, int i, t_parse *d)
 {
 	if (s[i] == '\'' && d->dq == 0)
 		(d->sq)++;
@@ -74,7 +74,7 @@
 		(d->dq) = 0;
 }
 
- char	*ft_add_sep(char *s, t_parse d)
+char	*ft_add_sep(char *s, t_parse d)
 {
 	d.i = -1;
 	d.dq = 0;
@@ -101,4 +101,3 @@
 	}
 	return (s);
 }
-

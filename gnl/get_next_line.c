@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sdiouane <sdiouane@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sel-jadi <sel-jadi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/24 16:40:40 by sdiouane          #+#    #+#             */
-/*   Updated: 2024/04/19 15:45:20 by sdiouane         ###   ########.fr       */
+/*   Updated: 2024/05/03 19:29:36 by sel-jadi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,6 @@ char	*reader(int fd, char *reserve)
 
 	line = NULL;
 	rd = 1;
-	//printf("%s",line);
 	line = (char *)malloc((size_t)BUFFER_SIZE + 1);
 	if (!line)
 		return (NULL);
@@ -100,7 +99,7 @@ char	*get_next_line(int fd)
 	static char	*reserve;
 	char		*line;
 
-	if (fd < 0 || fd > 10240 ||  BUFFER_SIZE <= 0)
+	if (fd < 0 || fd > 10240 || BUFFER_SIZE <= 0)
 		return (NULL);
 	reserve = reader(fd, reserve);
 	if (!reserve)
@@ -112,17 +111,3 @@ char	*get_next_line(int fd)
 	reserve = move_s(reserve);
 	return (line);
 }
-
-// #include <stdio.h>
-// int main()
-// {
-// 	char *s;
-// 	int l = 1;
-// 	int fd = open("file.txt",O_RDWR);
-// 	//fprintf(stderr,"%s",s);
-// 	while ((s = get_next_line(fd)))
-// 	{
-// 		printf("%d ->  %s",l,s);
-// 		l++;
-// 	}
-// }

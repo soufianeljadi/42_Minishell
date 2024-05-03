@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line_utils.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sdiouane <sdiouane@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sel-jadi <sel-jadi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/24 20:26:22 by sdiouane          #+#    #+#             */
-/*   Updated: 2024/04/19 15:46:41 by sdiouane         ###   ########.fr       */
+/*   Updated: 2024/05/03 19:29:41 by sel-jadi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,4 +93,3 @@ char	*ft_strjoin_gnl(char *start, char *buff)
 	free(start);
 	return (ptr);
 }
-

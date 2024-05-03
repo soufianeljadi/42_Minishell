@@ -6,7 +6,7 @@
 /*   By: sel-jadi <sel-jadi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/27 01:25:30 by sel-jadi          #+#    #+#             */
-/*   Updated: 2024/04/01 21:19:24 by sel-jadi         ###   ########.fr       */
+/*   Updated: 2024/05/03 19:21:03 by sel-jadi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,21 +44,21 @@ int	ft_next_quote(char *s, char c)
 	return (0);
 }
 
-int 	line_has_quotes(char **line)
+int	line_has_quotes(char **line)
 {
 	int		i;
 	int		has_q;
-	
+
 	i = -1;
 	has_q = 0;
-	while((*line)[++i] !=  '\0')
+	while ((*line)[++i] != '\0')
 	{
-		if((*line)[i] == '\'' || (*line)[i] == '"')
+		if ((*line)[i] == '\'' || (*line)[i] == '"')
 			has_q = 1;
 	}
-	if(has_q == 1)
-		return(1);
-	return(0);
+	if (has_q == 1)
+		return (1);
+	return (0);
 }
 
 int	ft_quots(char **line)
@@ -69,7 +69,7 @@ int	ft_quots(char **line)
 	char	f;
 
 	i = -1;
-	if(line_has_quotes(line))
+	if (line_has_quotes(line))
 	{
 		while ((*line)[++i])
 		{

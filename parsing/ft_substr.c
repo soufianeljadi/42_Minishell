@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_substr.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sdiouane <sdiouane@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sel-jadi <sel-jadi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/25 16:59:26 by sdiouane          #+#    #+#             */
-/*   Updated: 2024/04/20 08:26:39 by sdiouane         ###   ########.fr       */
+/*   Updated: 2024/05/03 18:48:51 by sel-jadi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ char	*ft_substr2(const char *inp, int start, int end)
 	s = NULL;
 	s = (char *)malloc(len + 2);
 	if (!s)
-		return (syntax_error(),  NULL);
+		return (syntax_error(), NULL);
 	while (end >= start + i)
 	{
 		s[i] = inp[i + start];

@@ -3,18 +3,18 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strtock.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sdiouane <sdiouane@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sel-jadi <sel-jadi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/17 22:28:09 by sdiouane          #+#    #+#             */
-/*   Updated: 2024/03/25 16:59:21 by sdiouane         ###   ########.fr       */
+/*   Updated: 2024/05/03 18:48:37 by sel-jadi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-char *ft_strtok(char *str, const char *delim)
+char	*ft_strtok(char *str, const char *delim)
 {
-    static char	*remainder;
+	static char	*remainder;
 	char		*ret;
 	int			len;
 
@@ -35,4 +35,3 @@ char *ft_strtok(char *str, const char *delim)
 		remainder++;
 	return (ret);
 }
-

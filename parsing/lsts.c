@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   lsts.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sdiouane <sdiouane@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sel-jadi <sel-jadi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/13 00:32:13 by sdiouane          #+#    #+#             */
-/*   Updated: 2024/05/01 16:08:32 by sdiouane         ###   ########.fr       */
+/*   Updated: 2024/05/03 18:55:14 by sel-jadi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-s_env	*ft_lstnew()
+s_env	*ft_lstnew(void)
 {
 	s_env	*b;
 
@@ -53,57 +53,53 @@ void	ft_lstadd_back(s_env **lst, s_env *new)
 	while (tmp->next)
 		tmp = tmp->next;
 	tmp->next = new;
-    
-
 }
 
-void free_s_env(s_env *head)
+void	free_s_env(s_env *head)
 {
-    s_env *current = head;
-    s_env *next;
+	s_env	*current;
+	s_env	*next;
 
-    while (current != NULL)
+	current = head;
+	while (current != NULL)
 	{
-        next = current->next;
-        free(current->key);
-        free(current->value);
-        free(current);
-        current = next;
-    }
+		next = current->next;
+		free(current->key);
+		free(current->value);
+		free(current);
+		current = next;
+	}
 }
 
 void	print_list(s_env *list)
 {
-	// printf("************************VALUE : %s*******************\n", list->value);
-	// printf("-------------------------VALUE : %s------------------------\n", list->value);
-//   printf("+++++++++++++\n");
-  while (list)
-  {
-	if (list->value[0] /*&& strcmp(list->key, "OLDPWD") != 0*/)
+	while (list)
 	{
-		printf("%s", list->key);
-		printf("=%s\n", list->value);
+		if (list->value[0])
+		{
+			printf("%s", list->key);
+			printf("=%s\n", list->value);
+		}
+		list = list->next;
 	}
-  	list = list->next;
-  }
 }
 
 void	print_export(s_env *list)
 {
-  while (list)
-  {
-	if (!strcmp(list->key,"_"))
-		list = list->next;
-	else
+	while (list)
 	{
-		if (!list->value[0])
-			printf("declare -x %s\n", list->key);
+		if (!strcmp(list->key, "_"))
+			list = list->next;
 		else
 		{
-			printf("declare -x %s=", list->key);
-			printf("\"%s\"\n", list->value);
+			if (!list->value[0])
+				printf("declare -x %s\n", list->key);
+			else
+			{
+				printf("declare -x %s=", list->key);
+				printf("\"%s\"\n", list->value);
+			}
+			list = list->next;
 		}
-		list = list->next;
 	}
-  }
 }
