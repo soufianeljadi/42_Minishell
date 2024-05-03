@@ -6,7 +6,7 @@
 /*   By: sdiouane <sdiouane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/31 22:14:48 by sdiouane          #+#    #+#             */
-/*   Updated: 2024/05/02 20:18:53 by sdiouane         ###   ########.fr       */
+/*   Updated: 2024/05/03 16:02:21 by sdiouane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,16 +40,8 @@ char *here_doc_fct(char *s)
 			write(fd1, line, strlen(line));		
 			free(line);
 		}
-		// if (args[3])
-		// {
-		// 	printf("%s: %s: No such file or directory\n", args[0], args[3]);
-		// 	exit(EXIT_FAILURE);
-		// }
-		// else
-		// {
-			dup2(fd2, 0);
-			return (args[0]);
-		// }
+		dup2(fd2, 0);
+		return (args[0]);
 	}
 	else if (args[0][0] == '<' && args[0][1] == '<' && args)
 	{
@@ -59,7 +51,7 @@ char *here_doc_fct(char *s)
 		if (fd1 < 0 && fd2 < 0)
 			return (NULL);
 		cmp = ft_strjoin(args[1], "\n");
-		while ((line = get_next_line(0)))
+		while ((line = readline("heredoc ->")))
 		{
 			if (!strcmp(line, cmp))
 			{
@@ -69,16 +61,9 @@ char *here_doc_fct(char *s)
 			write(fd1, line, strlen(line));
 			free(line);
 		}
-		// if (args[2])
-		// {
-		// 	printf("%s: %s: No such file or directory\n", args[0], args[2]);
-		// 	exit(EXIT_FAILURE);
-		// }
-		// else
-		// {
-			dup2(fd2, 0);
-			return (args[0]);
-		// }
+
+		dup2(fd2, 0);
+		return (args[0]);
 	}
 	free(args[1]);
 	res = ft_strjoin(args[0], " ");
@@ -194,6 +179,7 @@ void ft_execution(noued_cmd *lst, char **args, char **env, s_env *export_i, char
     int fd_in = 0;
     pid_t pid;
 
+	add_last_cmd(&export_i, args);
 	if (!strcmp(args[0], "export") || !strcmp(args[0], "unset") || !strcmp(args[0], "echo") || !strcmp(args[0], "cd") || !strcmp(args[0], "env"))
 		builtins(args, export_i, env);
 	else
