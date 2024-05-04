@@ -6,7 +6,7 @@
 /*   By: sdiouane <sdiouane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/31 22:14:48 by sdiouane          #+#    #+#             */
-/*   Updated: 2024/05/04 11:22:12 by sdiouane         ###   ########.fr       */
+/*   Updated: 2024/05/04 11:27:56 by sdiouane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,8 +29,10 @@ char *here_doc_fct(char *s)
 		
 		if (fd1 < 0 && fd2 < 0)
 			return (NULL);
-		cmp = ft_strjoin(args[2], "\n");
-		while ((line = get_next_line(0)))
+		cmp = ft_strdup(args[2]);
+		if (!cmp)
+			return (NULL);
+		while ((line = readline("heredoc ->")))
 		{
 			if (!strcmp(line, cmp))
 			{
@@ -50,7 +52,9 @@ char *here_doc_fct(char *s)
 		
 		if (fd1 < 0 && fd2 < 0)
 			return (NULL);
-		cmp = ft_strjoin(args[1], "\n");
+		cmp = ft_strdup(args[2]);
+		if (!cmp)
+			return (NULL);
 		while ((line = readline("heredoc ->")))
 		{
 			if (!strcmp(line, cmp))

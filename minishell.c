@@ -6,7 +6,7 @@
 /*   By: sdiouane <sdiouane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 23:52:10 by sdiouane          #+#    #+#             */
-/*   Updated: 2024/05/03 23:53:04 by sdiouane         ###   ########.fr       */
+/*   Updated: 2024/05/04 11:38:36 by sdiouane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -125,8 +125,6 @@ void	main_loop(char *line, char **env, s_env *export_i, char **null_env)
 				data.env = env;
 				data.export_i = export_i;
 				data.null_env = null_env;
-
-				// ft_execution(cmd, args, env, export_i, null_env);
 				ft_execution(&data);
 				free (args);
 				free_noued_cmd(cmd);
@@ -134,9 +132,9 @@ void	main_loop(char *line, char **env, s_env *export_i, char **null_env)
 		}
 		dup2(3, 0);
 		dup2(4, 1);
+		close(3);
+		close(4);
 	}
-	close(3);
-	close(4);
 	free(line);
 	clear_history();
 	free_noued_cmd(cmd);
