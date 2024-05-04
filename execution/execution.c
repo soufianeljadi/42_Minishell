@@ -6,74 +6,75 @@
 /*   By: sdiouane <sdiouane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/31 22:14:48 by sdiouane          #+#    #+#             */
-/*   Updated: 2024/05/04 11:27:56 by sdiouane         ###   ########.fr       */
+/*   Updated: 2024/05/04 19:48:51 by sdiouane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-char *here_doc_fct(char *s)
-{
-	int fd1;
-	int fd2;
-	char *line;
-	char *cmp;
-	char **args;
-	char *res;
+// char *here_doc_fct(char *s)
+// {
+// 	int fd1;
+// 	int fd2;
+// 	char *line;
+// 	char *cmp;
+// 	char **args;
+// 	char *res;
 
-	args = line_to_args(s);
-	if (args[1][0] == '<' && args[1][1] == '<' && args)
-	{
-		fd1 = open("file.txt",O_CREAT | O_RDWR | O_TRUNC, 0666);
-		fd2 = open("file.txt",O_CREAT | O_RDWR | O_TRUNC, 0666);
+// 	args = line_to_args(s);
+// 	if (args[1][0] == '<' && args[1][1] == '<' && args)
+// 	{
+// 		fd1 = open("file.txt",O_CREAT | O_RDWR | O_TRUNC, 0666);
+// 		fd2 = open("file.txt",O_CREAT | O_RDWR | O_TRUNC, 0666);
 		
-		if (fd1 < 0 && fd2 < 0)
-			return (NULL);
-		cmp = ft_strdup(args[2]);
-		if (!cmp)
-			return (NULL);
-		while ((line = readline("heredoc ->")))
-		{
-			if (!strcmp(line, cmp))
-			{
-				free(line);
-				break;
-			}
-			write(fd1, line, strlen(line));		
-			free(line);
-		}
-		dup2(fd2, 0);
-		return (args[0]);
-	}
-	else if (args[0][0] == '<' && args[0][1] == '<' && args)
-	{
-		fd1 = open("file.txt",O_CREAT | O_RDWR | O_TRUNC, 0666);
-		fd2 = open("file.txt",O_CREAT | O_RDWR | O_TRUNC, 0666);
+// 		if (fd1 < 0 && fd2 < 0)
+// 			return (NULL);
+// 		cmp = ft_strdup(args[2]);
+// 		if (!cmp)
+// 			return (NULL);
+// 		while ((line = readline("heredoc ->")))
+// 		{
+// 			if (!strcmp(line, cmp))
+// 			{
+// 				free(line);
+// 				break;
+// 			}
+// 			write(fd1, line, strlen(line));		
+// 			free(line);
+// 		}
+// 		dup2(fd2, 0);
+// 		return (args[0]);
+// 	}
+// 	else if (args[0][0] == '<' && args[0][1] == '<' && args)
+// 	{
+// 		fd1 = open("file.txt",O_CREAT | O_RDWR | O_TRUNC, 0666);
+// 		fd2 = open("file.txt",O_CREAT | O_RDWR | O_TRUNC, 0666);
 		
-		if (fd1 < 0 && fd2 < 0)
-			return (NULL);
-		cmp = ft_strdup(args[2]);
-		if (!cmp)
-			return (NULL);
-		while ((line = readline("heredoc ->")))
-		{
-			if (!strcmp(line, cmp))
-			{
-				free(line);
-				break;
-			}
-			write(fd1, line, strlen(line));
-			free(line);
-		}
+// 		if (fd1 < 0 && fd2 < 0)
+// 			return (NULL);
+// 		cmp = ft_strdup(args[1]);
+// 		if (!cmp)
+// 			return (NULL);
+// 		while ((line = readline("heredoc ->")))
+// 		{
+// 			if (!strcmp(line, cmp))
+// 			{
+// 				free(line);
+// 				break;
+// 			}
+// 			write(fd1, line, strlen(line));
+// 			free(line);
+// 		}
 
-		dup2(fd2, 0);
-		return (args[0]);
-	}
-	free(args[1]);
-	res = ft_strjoin(args[0], " ");
-	res = ft_strjoin(res, args[2]);
-	return (res);
-}
+// 		dup2(fd2, 0);
+// 		return (args[0]);
+// 	}
+// 	free(args[1]);
+// 	res = ft_strjoin(args[0], " ");
+// 	res = ft_strjoin(res, args[2]);
+// 	return (res);
+// }
+
 
 void execute(char *s, char **env)
 {
@@ -82,8 +83,8 @@ void execute(char *s, char **env)
 	int i = 0;
 	if (*env)
 	{
-		if (strstr(s, "<<"))
-			s = here_doc_fct(s);
+		// if (strstr(s, "<<"))
+		// 	s = here_doc_fct(s);
 		cmd = ft_split(s, ' '); // ls -la 
 		while (cmd[i])
 			supprimerGuillemets(cmd[i++]);
@@ -172,13 +173,14 @@ static char	**ft_merge_envr(s_env *export_i)
 	return (str);
 }
 
-
-static void handle_child_process(noued_cmd *cmd_node, char **env, char **null_env, int pipefd[])
+static void handle_child_process(noued_cmd *cmd_node, char **env, char **null_env, int pipefd[], char *redirection)
 {
     if (cmd_node->next != NULL)
         dup2(pipefd[1], STDOUT_FILENO);
     close(pipefd[1]);
     close(pipefd[0]);
+
+	(void)redirection;
     if (cmd_node->redirection != NULL)
 	{
         char **environment = env[0] ? env : null_env;
@@ -198,7 +200,7 @@ static void handle_parent_process(int pipefd[])
     close(pipefd[0]);
 }
 
-static void execute_child_process(noued_cmd *cmd_node, char **env, char **null_env)
+static void execute_child_process(noued_cmd *cmd_node, char **env, char **null_env, char *redirection)
 {
     int pipefd[2];
     pid_t pid;
@@ -206,15 +208,15 @@ static void execute_child_process(noued_cmd *cmd_node, char **env, char **null_e
     if (pipe(pipefd) == -1 || (pid = fork()) == -1)
         exit(EXIT_FAILURE);
     else if (pid == 0)
-        handle_child_process(cmd_node, env, null_env, pipefd);
+        handle_child_process(cmd_node, env, null_env, pipefd, redirection);
     else
         handle_parent_process(pipefd);
 }
 
-static void execute_command(noued_cmd *cmd_node, char **env, char **null_env)
+static void execute_command(noued_cmd *cmd_node, char **env, char **null_env, char *redirection)
 {
     if (!strstr(cmd_node->cmd, "$"))
-        execute_child_process(cmd_node, env, null_env);
+        execute_child_process(cmd_node, env, null_env, redirection);
 	else
         printf("\n");
 }
@@ -229,7 +231,7 @@ void ft_execution(ExecutionData *data)
         while (data->lst)
 		{
 			g_flags.envire = ft_merge_envr(data->export_i);
-            execute_command(data->lst, data->env, data->null_env);
+            execute_command(data->lst, data->env, data->null_env, data->lst->redirection);
             data->lst = data->lst->next;
         }
     }
