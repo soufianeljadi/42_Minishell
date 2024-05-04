@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redirections.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sel-jadi <sel-jadi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sdiouane <sdiouane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/05 23:00:01 by sdiouane          #+#    #+#             */
-/*   Updated: 2024/04/28 20:38:10 by sel-jadi         ###   ########.fr       */
+/*   Updated: 2024/05/04 11:00:41 by sdiouane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,10 +14,14 @@
 
 char *file_nc(char *s)
 {
-	int i = 0;
-	int x = 0;
+	int i;
+	int x;
 	char *f;
 	
+	i = 0;
+	x = 0;
+	if (!s)
+		return (NULL);
 	f = (char *)malloc(sizeof(char) * (strlen(s) + 1));
 	if (f == NULL)
 		exit(EXIT_FAILURE);
@@ -49,14 +53,13 @@ char *file_nc(char *s)
 
 char *ft_strsep(char **stringp, const char *delim)
 {
-	char *start = *stringp;
+	char *start;
 	char *end;
 
-	if (start == NULL)
+	if (delim == NULL || *stringp == NULL || **stringp == '\0')
 		return NULL;
-
+	start = *stringp;
 	end = strstr(start, delim);
-
 	if (end)
 	{
 		*end = '\0';
@@ -70,8 +73,13 @@ char *ft_strsep(char **stringp, const char *delim)
 
 static void redirection_double_out(char *redirection, int *fd)
 {
-    char *token_double_out = NULL;
-    char *ptr = redirection;
+    char *token_out;
+    char *ptr;
+	char *token_double_out;
+	
+	token_out = NULL;
+	token_double_out = NULL;
+	ptr = redirection;
     while ((token_double_out = ft_strsep(&ptr, ">>")) != NULL)
     {
         while (*token_double_out && *token_double_out == ' ')
@@ -79,8 +87,11 @@ static void redirection_double_out(char *redirection, int *fd)
         if (*token_double_out != '\0')
         {
             *fd = open(file_nc(token_double_out), O_WRONLY | O_CREAT | O_APPEND, 0666);
-            if (*fd < 0)
-                exit(EXIT_FAILURE);
+			if (*fd < 0)
+			{
+				printf("minishell: %s: No such file or directory\n", token_double_out);
+				exit(EXIT_FAILURE);
+			}
             dup2(*fd, STDOUT_FILENO);
             close(*fd);
         }
@@ -89,7 +100,9 @@ static void redirection_double_out(char *redirection, int *fd)
 
 static void redirection_in(char *redirection, int *fd)
 {
-	char *token_in = strtok(redirection, "<");
+	char *token_in;
+	
+	token_in = strtok(redirection, "<");
 	while (token_in != NULL)
 	{
 		while (*token_in && *token_in == ' ')
@@ -98,7 +111,10 @@ static void redirection_in(char *redirection, int *fd)
 		{
 			*fd = open(file_nc(token_in), O_RDONLY);
 			if (*fd < 0)
+			{
+				printf("minishell: %s: No such file or directory\n", token_in);
 				exit(EXIT_FAILURE);
+			}
 			dup2(*fd, STDIN_FILENO);
 			close(*fd);
 		}
@@ -107,49 +123,51 @@ static void redirection_in(char *redirection, int *fd)
 	
 }
 
-static void redirection_out(char *redirection, int *fd)
+static int redirection_out(char *redirection, int *fd)
 {
-	char *token_out = NULL;
-	char *ptr = redirection;
-	while ((token_out = ft_strsep(&ptr, ">")) != NULL)
+    char *token_out;
+    char *ptr;
+	
+	token_out = NULL;
+	ptr = redirection;
+    while ((token_out = ft_strsep(&ptr, ">")) != NULL)
 	{
-		while (*token_out && *token_out == ' ')
-			token_out++;
-		if (*token_out != '\0')
+        while (*token_out && *token_out == ' ')
+            token_out++;
+        if (*token_out != '\0')
 		{
-			*fd = open(file_nc(token_out), O_WRONLY | O_CREAT | O_TRUNC, 0666);
-			if (*fd < 0)
-				exit(EXIT_FAILURE);
-			dup2(*fd, STDOUT_FILENO);
-			close(*fd);
-		}
-	}
+            *fd = open(file_nc(token_out), O_WRONLY | O_CREAT | O_TRUNC, 0666);
+            if (*fd < 0) {
+                printf("minishell: %s: No such file or directory\n", token_out);
+                exit(EXIT_FAILURE);
+            }
+            dup2(*fd, STDOUT_FILENO);
+            close(*fd);
+            return (1);
+        }
+    }
+    return (0);
 }
 
-void  execute_with_redirection(char *cmd, char **env, char *redirection)
+void execute_with_redirection(char *cmd, char **env, char *redirection)
 {
-	char *chemin;
-	char **args;
-
-	args = ft_split(cmd, ' ');
-	supprimerGuillemets(args[0]);
-	chemin = get_path(args[0], env);
-	if (chemin != NULL)
+    int fd_in;
+    int fd_out;
+	
+	fd_in = -1;
+	fd_out = -1;
+    if (redirection != NULL)
 	{
-		int fd_in = -1;
-		int fd_out = -1;
-		if (redirection != NULL) 
-		{
-			if (strstr(redirection, "<") != NULL)
-				redirection_in(redirection, &fd_in);
-			if (redirection[0] == '>' && redirection[1] != '>')
-				redirection_out(redirection, &fd_out);
-			if (redirection[0] == '>' && redirection[1] == '>')
-				redirection_double_out(redirection, &fd_out);
-		}
-		execve(chemin, args, g_flags.envire);
-		exit(EXIT_FAILURE);
-	}
-	else if (!chemin)
-		exit(EXIT_FAILURE);
+        if (strstr(redirection, "<") != NULL)
+            redirection_in(redirection, &fd_in);
+        if (redirection[0] == '>' && redirection[1] != '>')
+            if (!redirection_out(redirection, &fd_out))
+                return ;
+
+        if (redirection[0] == '>' && redirection[1] == '>')
+            redirection_double_out(redirection, &fd_out);
+    }
+
+    if (cmd != NULL && strspn(cmd, " ") != strlen(cmd))
+        execute(cmd, env);
 }

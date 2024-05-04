@@ -6,7 +6,7 @@
 #    By: sdiouane <sdiouane@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/03/12 23:52:42 by sdiouane          #+#    #+#              #
-#    Updated: 2024/05/02 13:18:03 by sdiouane         ###   ########.fr        #
+#    Updated: 2024/05/03 22:39:51 by sdiouane         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -32,6 +32,7 @@ SRC =	minishell.c \
 		parsing/quotes.c \
 		parsing/ft_substr.c \
 		parsing/ft_strlen.c \
+		parsing/split_args_helper.c \
 		builtins/builtins.c \
 		builtins/export.c \
 		builtins/export_null.c \

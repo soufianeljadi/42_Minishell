@@ -6,7 +6,7 @@
 /*   By: sdiouane <sdiouane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 23:51:44 by sdiouane          #+#    #+#             */
-/*   Updated: 2024/05/01 20:42:30 by sdiouane         ###   ########.fr       */
+/*   Updated: 2024/05/03 23:53:46 by sdiouane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,6 +81,16 @@ typedef struct g_variables
 	int			shlvl;
 	char		**envire;
 }					t_var;
+
+
+
+typedef struct {
+    noued_cmd *lst;      // Liste des commandes
+    char **args;         // Arguments de la commande principale
+    char **env;          // Environnement
+    s_env *export_i;     // Variables d'environnement exportées
+    char **null_env;     // Environnement vide
+} ExecutionData;
 
 /**********************MAIN***********************************/
 	// init_env
@@ -190,8 +200,9 @@ int		ft_strlen_gnl(char *s);
 char	*ft_strdup_gnl(char *s1);
 
 /***********************execution********************************/
-void ft_execution(noued_cmd *lst, char **args, char **env, s_env *export_i, char **null_env);
-
+// void ft_execution(noued_cmd *lst, char **args, char **env, s_env *export_i, char **null_env);
+void ft_execution(ExecutionData *data);
+void execute(char *s, char **env);
 void pipeline(char ***cmd);
 void supprimerGuillemets(char *chaine);
 int		ft_strncmp(const char *s1, const char *s2, size_t n);

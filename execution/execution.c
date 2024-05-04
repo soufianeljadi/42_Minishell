@@ -6,7 +6,7 @@
 /*   By: sdiouane <sdiouane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/31 22:14:48 by sdiouane          #+#    #+#             */
-/*   Updated: 2024/05/03 16:02:21 by sdiouane         ###   ########.fr       */
+/*   Updated: 2024/05/04 11:20:09 by sdiouane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,14 +71,14 @@ char *here_doc_fct(char *s)
 	return (res);
 }
 
-static void	execute(char *s, char **env, s_env **export_i)
+void execute(char *s, char **env)
 {
 	char	*chemin;
 	char	**cmd = NULL;
-	(void)export_i;
 	int i = 0;
 	if (*env)
 	{
+		printf("s : %s\n", s);
 		if (strstr(s, "<<"))
 			s = here_doc_fct(s);
 		cmd = ft_split(s, ' '); // ls -la 
@@ -121,107 +121,86 @@ void add_last_cmd(s_env **lst, char **args)
 	while (tmp)
 	{
 		if (!strcmp(tmp->key, "_"))
-		{
-			// printf("BEFORE -----> KEY : %s\tVALUE : %s\n",tmp->key, tmp->value);
-			// if ()
 			tmp->value = strdup(args[i - 1]);
-			// printf("AFTER  -----> KEY : %s\tVALUE : %s\n",tmp->key, tmp->value);
-		}
 		tmp = tmp->next;
 	}
 }
 
-static int	ft_lstsize(s_env *lst)
-{
-	int		c;
-	s_env	*p;
+// static int	ft_lstsize(s_env *lst)
+// {
+// 	int		c;
+// 	s_env	*p;
 
-	c = 0;
-	p = lst;
-	while (p)
+// 	c = 0;
+// 	p = lst;
+// 	while (p)
+// 	{
+// 		p = p -> next;
+// 		c++;
+// 	}
+// 	return (c);
+// }
+
+static void handle_child_process(noued_cmd *cmd_node, char **env, char **null_env, int pipefd[])
+{
+    if (cmd_node->next != NULL)
+        dup2(pipefd[1], STDOUT_FILENO);
+    close(pipefd[1]);
+    close(pipefd[0]);
+    if (cmd_node->redirection != NULL)
 	{
-		p = p -> next;
-		c++;
-	}
-	return (c);
-}
-static char	**ft_merge_envr(s_env *export_i)
-{
-	char	**str;
-	int		len;
-	int		i;
-
-	i = 0;
-	len = ft_lstsize(export_i);
-	str = NULL;
-	str = malloc(sizeof(char *) * (len + 1));
-	if (!str)
-		return (NULL);
-	while (export_i)
-	{
-		str[i] = ft_strdup("");
-		str[i] = ft_strjoin(str[i], export_i->key);
-		if (export_i->value)
-		{
-			str[i] = ft_strjoin(str[i], "=");
-			str[i] = ft_strjoin(str[i], export_i->value);
-		}
-		export_i = export_i->next;
-		i++;
-	}
-	str[i] = NULL;
-	return (str);
-}
-
-void ft_execution(noued_cmd *lst, char **args, char **env, s_env *export_i, char **null_env)
-{
-    int pipefd[2];
-    int fd_in = 0;
-    pid_t pid;
-
-	add_last_cmd(&export_i, args);
-	if (!strcmp(args[0], "export") || !strcmp(args[0], "unset") || !strcmp(args[0], "echo") || !strcmp(args[0], "cd") || !strcmp(args[0], "env"))
-		builtins(args, export_i, env);
+        char **environment = env[0] ? env : null_env;
+        execute_with_redirection(cmd_node->cmd, environment, cmd_node->redirection);
+    }
 	else
 	{
-		while (lst)
+        char **environment = env[0] ? env : null_env;
+        execute(cmd_node->cmd, environment);
+    }
+}
+
+static void handle_parent_process(int pipefd[])
+{
+    dup2(pipefd[0], STDIN_FILENO);
+    close(pipefd[1]);
+    close(pipefd[0]);
+}
+
+static void execute_child_process(noued_cmd *cmd_node, char **env, char **null_env)
+{
+    int pipefd[2];
+    pid_t pid;
+
+    if (pipe(pipefd) == -1 || (pid = fork()) == -1)
+        exit(EXIT_FAILURE);
+    else if (pid == 0)
+        handle_child_process(cmd_node, env, null_env, pipefd);
+    else
+        handle_parent_process(pipefd);
+}
+
+static void execute_command(noued_cmd *cmd_node, char **env, char **null_env)
+{
+    if (!strstr(cmd_node->cmd, "$"))
+        execute_child_process(cmd_node, env, null_env);
+	else
+        printf("\n");
+}
+
+void ft_execution(ExecutionData *data)
+{
+    add_last_cmd(&data->export_i, data->args);
+    if (strcmp(data->args[0], "export") == 0 || strcmp(data->args[0], "unset") == 0 || strcmp(data->args[0], "echo") == 0 || strcmp(data->args[0], "cd") == 0 || strcmp(data->args[0], "env") == 0)
+        builtins(data->args, data->export_i, data->env);
+	else
+	{
+        while (data->lst)
 		{
-			if (!strstr(lst->cmd, "$"))
-			{
-				g_flags.envire = ft_merge_envr(export_i);
-				if (pipe(pipefd) == -1 || (pid = fork()) == -1)
-					exit(EXIT_FAILURE);
-				else if (pid == 0)
-				{
-					dup2(fd_in, STDIN_FILENO);
-					if (lst->next != NULL)
-						dup2(pipefd[1], STDOUT_FILENO);
-					close(pipefd[0]);
-					if (lst->redirection != NULL)
-					{
-						if (!env[0])
-							execute_with_redirection(lst->cmd, null_env, lst->redirection);
-						else
-							execute_with_redirection(lst->cmd, env, lst->redirection);
-					}
-					else
-						if (env[0])
-							execute(lst->cmd, env, &export_i);
-						else if (!env[0])
-							execute(lst->cmd, null_env, &export_i);
-				}
-				else
-				{
-					// waitpid(pid, NULL, 0);
-					close(pipefd[1]);
-					fd_in = pipefd[0];
-				}
-			}
-			else
-				printf("\n");
-				lst = lst->next;
-		}
-	}
-	while (0 < wait(NULL))
-		;
+			// g_flags.envire = ft_merge_envr();
+			printf("cmd : %s\n", data->lst->cmd);
+            execute_command(data->lst, data->env, data->null_env);
+            data->lst = data->lst->next;
+        }
+    }
+    while (0 < wait(NULL));
 }
