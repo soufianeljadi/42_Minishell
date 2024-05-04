@@ -6,7 +6,7 @@
 /*   By: sdiouane <sdiouane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/31 22:14:48 by sdiouane          #+#    #+#             */
-/*   Updated: 2024/05/04 11:20:09 by sdiouane         ###   ########.fr       */
+/*   Updated: 2024/05/04 11:22:12 by sdiouane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,7 +78,6 @@ void execute(char *s, char **env)
 	int i = 0;
 	if (*env)
 	{
-		printf("s : %s\n", s);
 		if (strstr(s, "<<"))
 			s = here_doc_fct(s);
 		cmd = ft_split(s, ' '); // ls -la 
@@ -126,20 +125,49 @@ void add_last_cmd(s_env **lst, char **args)
 	}
 }
 
-// static int	ft_lstsize(s_env *lst)
-// {
-// 	int		c;
-// 	s_env	*p;
+static int	ft_lstsize(s_env *lst)
+{
+	int		c;
+	s_env	*p;
 
-// 	c = 0;
-// 	p = lst;
-// 	while (p)
-// 	{
-// 		p = p -> next;
-// 		c++;
-// 	}
-// 	return (c);
-// }
+	c = 0;
+	p = lst;
+	while (p)
+	{
+		p = p -> next;
+		c++;
+	}
+	return (c);
+}
+
+static char	**ft_merge_envr(s_env *export_i)
+{
+	char	**str;
+	int		len;
+	int		i;
+
+	i = 0;
+	len = ft_lstsize(export_i);
+	str = NULL;
+	str = malloc(sizeof(char *) * (len + 1));
+	if (!str)
+		return (NULL);
+	while (export_i)
+	{
+		str[i] = ft_strdup("");
+		str[i] = ft_strjoin(str[i], export_i->key);
+		if (export_i->value)
+		{
+			str[i] = ft_strjoin(str[i], "=");
+			str[i] = ft_strjoin(str[i], export_i->value);
+		}
+		export_i = export_i->next;
+		i++;
+	}
+	str[i] = NULL;
+	return (str);
+}
+
 
 static void handle_child_process(noued_cmd *cmd_node, char **env, char **null_env, int pipefd[])
 {
@@ -196,8 +224,7 @@ void ft_execution(ExecutionData *data)
 	{
         while (data->lst)
 		{
-			// g_flags.envire = ft_merge_envr();
-			printf("cmd : %s\n", data->lst->cmd);
+			g_flags.envire = ft_merge_envr(data->export_i);
             execute_command(data->lst, data->env, data->null_env);
             data->lst = data->lst->next;
         }
