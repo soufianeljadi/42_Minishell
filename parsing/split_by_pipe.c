@@ -6,7 +6,7 @@
 /*   By: sdiouane <sdiouane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/27 23:28:30 by sdiouane          #+#    #+#             */
-/*   Updated: 2024/05/06 15:35:54 by sdiouane         ###   ########.fr       */
+/*   Updated: 2024/05/06 19:53:17 by sdiouane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,6 @@ char *ft_strjoin(const char *s1, const char *s2)
 		j++;
 	}
 	result[i + j] = '\0';
-
 	return result;
 }
 
@@ -86,50 +85,48 @@ void free_noued_cmd(noued_cmd *node)
 	free(node); // Free the node itself
 }
 
+char	*fct(char **args, char *temp, char *s, int i)
+{
+	if (!s)
+		s = strdup(args[i]);
+	else
+	{
+		temp = ft_strjoin(s, " ");
+		free(s);
+		s = ft_strjoin(temp, args[i]);
+		free(temp);
+	}
+	return (s);
+}
+
 noued_cmd *split_args_by_pipe(char **args)
 {
-	noued_cmd *cmd = NULL;
-	char *s = NULL;
-	 char *redirection = NULL;
-	int i = 0;
+	noued_cmd	*cmd;
+	char		*s;
+	char		*redirection;
+	int			i;
+	char 		*temp;
+
+	(1) && (i = 0, cmd = NULL, s = NULL, redirection = NULL, temp = NULL);
 	while (args[i])
 	{
 		if (strcmp(args[i], "|") == 0) 
+			(add_back_noued_cmd(&cmd, s, redirection), free(s), s = NULL);
+		else if (strcmp(args[i], "<") == 0 || strcmp(args[i], ">") == 0
+		|| strcmp(args[i], ">>") == 0 || strcmp(args[i], "<<") == 0)
 		{
-			add_back_noued_cmd(&cmd, s, redirection);
-			free(s);
-			s = NULL;
-		}
-		else if (strcmp(args[i], "<") == 0 || strcmp(args[i], ">") == 0 || strcmp(args[i], ">>") == 0 || strcmp(args[i], "<<") == 0)
-		{
-			char *d = strdup(ft_strjoin(args[i], args[i + 1]));
-			redirection = ft_strjoin(redirection, d);
-			redirection = ft_strjoin(redirection, " ");
-			if (!s)
-				s = strdup("");
+			(redirection = ft_strjoin(redirection, strdup(ft_strjoin(args[i], args[i + 1]))),
+			redirection = ft_strjoin(redirection, " "));
+			(!s) && (s = strdup(""));
 			i++;
 		}
 		else
-		{
-			if (!s)
-				s = strdup(args[i]);
-			else
-			{
-				char *temp = ft_strjoin(s, " ");
-				free(s);
-				s = ft_strjoin(temp, args[i]);
-				free(temp);
-			}
-		}
+			s = fct(args, temp, s, i);
 		i++;
 	}
-	add_back_noued_cmd(&cmd, s, redirection);
-	free(s);
-	redirection = NULL;
-
+	(add_back_noued_cmd(&cmd, s, redirection),	free(s));
 	return (cmd);
 }
-
 
 void print_command_list(noued_cmd *head)
 {

@@ -6,74 +6,11 @@
 /*   By: sdiouane <sdiouane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/31 22:14:48 by sdiouane          #+#    #+#             */
-/*   Updated: 2024/05/06 13:02:30 by sdiouane         ###   ########.fr       */
+/*   Updated: 2024/05/06 19:21:24 by sdiouane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
-
-// char *here_doc_fct(char *s)
-// {
-// 	int fd1;
-// 	int fd2;
-// 	char *line;
-// 	char *cmp;
-// 	char **args;
-// 	char *res;
-
-// 	args = line_to_args(s);
-// 	if (args[1][0] == '<' && args[1][1] == '<' && args)
-// 	{
-// 		fd1 = open("file.txt",O_CREAT | O_RDWR | O_TRUNC, 0666);
-// 		fd2 = open("file.txt",O_CREAT | O_RDWR | O_TRUNC, 0666);
-		
-// 		if (fd1 < 0 && fd2 < 0)
-// 			return (NULL);
-// 		cmp = ft_strdup(args[2]);
-// 		if (!cmp)
-// 			return (NULL);
-// 		while ((line = readline("heredoc ->")))
-// 		{
-// 			if (!strcmp(line, cmp))
-// 			{
-// 				free(line);
-// 				break;
-// 			}
-// 			write(fd1, line, strlen(line));		
-// 			free(line);
-// 		}
-// 		dup2(fd2, 0);
-// 		return (args[0]);
-// 	}
-// 	else if (args[0][0] == '<' && args[0][1] == '<' && args)
-// 	{
-// 		fd1 = open("file.txt",O_CREAT | O_RDWR | O_TRUNC, 0666);
-// 		fd2 = open("file.txt",O_CREAT | O_RDWR | O_TRUNC, 0666);
-		
-// 		if (fd1 < 0 && fd2 < 0)
-// 			return (NULL);
-// 		cmp = ft_strdup(args[1]);
-// 		if (!cmp)
-// 			return (NULL);
-// 		while ((line = readline("heredoc ->")))
-// 		{
-// 			if (!strcmp(line, cmp))
-// 			{
-// 				free(line);
-// 				break;
-// 			}
-// 			write(fd1, line, strlen(line));
-// 			free(line);
-// 		}
-
-// 		dup2(fd2, 0);
-// 		return (args[0]);
-// 	}
-// 	free(args[1]);
-// 	res = ft_strjoin(args[0], " ");
-// 	res = ft_strjoin(res, args[2]);
-// 	return (res);
-// }
 
 
 void execute(char *s, char **env)
@@ -83,15 +20,12 @@ void execute(char *s, char **env)
 	int i = 0;
 	if (*env)
 	{
-		// if (strstr(s, "<<"))
-		// 	s = here_doc_fct(s);
-		cmd = ft_split(s, ' '); // ls -la 
+		cmd = ft_split(s, ' ');
 		while (cmd[i])
 			supprimerGuillemets(cmd[i++]);
-		chemin = get_path(cmd[0], env); // /bin/kkk/ls
+		chemin = get_path(cmd[0], env);
 		if (execve(chemin, cmd, g_flags.envire) == -1)
 		{
-			// fprintf(stderr,"Command not found !\n");
 			fprintf(stderr, "minishell : %s: command not found\n", cmd[0]);
 			ft_free_tab(cmd);
 			exit(EXIT_FAILURE);
@@ -173,14 +107,13 @@ static char	**ft_merge_envr(s_env *export_i)
 	return (str);
 }
 
-static void handle_child_process(noued_cmd *cmd_node, char **env, char **null_env, int pipefd[], char *redirection)
+static void handle_child_process(noued_cmd *cmd_node, char **env, char **null_env, int pipefd[])
 {
     if (cmd_node->next != NULL)
         dup2(pipefd[1], STDOUT_FILENO);
     close(pipefd[1]);
     close(pipefd[0]);
 
-	(void)redirection;
     if (cmd_node->redirection != NULL)
 	{
         char **environment = env[0] ? env : null_env;
@@ -189,35 +122,30 @@ static void handle_child_process(noued_cmd *cmd_node, char **env, char **null_en
 	else
 	{
         char **environment = env[0] ? env : null_env;
-		// builtins(data->args, data->export_i, data->env);
         execute(cmd_node->cmd, environment);
     }
 }
 
-static void handle_parent_process(int pipefd[])
-{
-    dup2(pipefd[0], STDIN_FILENO);
-    close(pipefd[1]);
-    close(pipefd[0]);
-}
 
-static void execute_child_process(noued_cmd *cmd_node, char **env, char **null_env, char *redirection)
+static void execute_command(noued_cmd *cmd_node, char **env, char **null_env)
 {
-    int pipefd[2];
+	int pipefd[2];
     pid_t pid;
-
-    if (pipe(pipefd) == -1 || (pid = fork()) == -1)
-        exit(EXIT_FAILURE);
-    else if (pid == 0)
-        handle_child_process(cmd_node, env, null_env, pipefd, redirection);
-    else
-        handle_parent_process(pipefd);
-}
-
-static void execute_command(noued_cmd *cmd_node, char **env, char **null_env, char *redirection)
-{
+	
     if (!strstr(cmd_node->cmd, "$"))
-        execute_child_process(cmd_node, env, null_env, redirection);
+	{
+        // execute_child_process(cmd_node, env, null_env, redirection);
+		if (pipe(pipefd) == -1 || (pid = fork()) == -1)
+			exit(EXIT_FAILURE);
+		else if (pid == 0)
+			handle_child_process(cmd_node, env, null_env, pipefd);
+		else
+		{
+			    dup2(pipefd[0], STDIN_FILENO);
+				close(pipefd[1]);
+				close(pipefd[0]);
+		}
+	}
 	else
         printf("\n");
 }
@@ -231,11 +159,12 @@ void ft_execution(ExecutionData *data)
 	{
         while (data->lst)
 		{
-        	// builtins(data->args, data->export_i, data->env);
 			g_flags.envire = ft_merge_envr(data->export_i);
-            execute_command(data->lst, data->env, data->null_env, data->lst->redirection);
+        	// builtins(data->args, data->export_i, data->env);
+            execute_command(data->lst, data->env, data->null_env);
             data->lst = data->lst->next;
         }
     }
-    while (0 < wait(NULL));
+    while (0 < wait(NULL))
+		;
 }

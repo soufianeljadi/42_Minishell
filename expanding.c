@@ -6,7 +6,7 @@
 /*   By: sdiouane <sdiouane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/27 19:58:08 by sdiouane          #+#    #+#             */
-/*   Updated: 2024/05/02 16:42:00 by sdiouane         ###   ########.fr       */
+/*   Updated: 2024/05/06 17:05:33 by sdiouane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -134,6 +134,7 @@ void ft_expanding(char **args, s_env *export_i)
         
         while (args[i] && args[i][j])
         {
+            // printf("args = %s\n", args[i]);
                 if (args[i][j] == '$')
                 {
                     key = get_env_key(args[i], j);

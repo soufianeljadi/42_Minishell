@@ -6,7 +6,7 @@
 /*   By: sdiouane <sdiouane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/23 16:50:26 by sdiouane          #+#    #+#             */
-/*   Updated: 2024/05/04 22:23:58 by sdiouane         ###   ########.fr       */
+/*   Updated: 2024/05/06 18:52:43 by sdiouane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,7 @@ int echo_dollar(char *args, s_env *s_env)
 static void echo_with_option(char **args, s_env *s_env, int i)
 {
 	int j;
+	// (void)s_env;
 	
 	if (check_variables(args, s_env) == 1)
 	{
