@@ -6,7 +6,7 @@
 /*   By: sdiouane <sdiouane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/27 23:28:30 by sdiouane          #+#    #+#             */
-/*   Updated: 2024/05/06 20:00:06 by sdiouane         ###   ########.fr       */
+/*   Updated: 2024/05/06 20:06:37 by sdiouane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,10 +115,10 @@ noued_cmd *split_args_by_pipe(char **args)
 		else if (strcmp(args[i], "<") == 0 || strcmp(args[i], ">") == 0
 		|| strcmp(args[i], ">>") == 0 || strcmp(args[i], "<<") == 0)
 		{
-			(redirection = ft_strjoin(redirection, strdup(ft_strjoin(args[i], args[i + 1]))),
-			redirection = ft_strjoin(redirection, " "));
 			(!s) && (s = strdup(""));
-			i++;
+			(1) && (redirection = ft_strjoin(redirection,
+			strdup(ft_strjoin(args[i], args[i + 1]))),
+			redirection = ft_strjoin(redirection, " "),	i++);
 		}
 		else
 			s = fct(args, temp, s, i);
