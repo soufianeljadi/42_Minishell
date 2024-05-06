@@ -6,7 +6,7 @@
 /*   By: sdiouane <sdiouane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/05 23:00:01 by sdiouane          #+#    #+#             */
-/*   Updated: 2024/05/04 19:49:18 by sdiouane         ###   ########.fr       */
+/*   Updated: 2024/05/06 15:20:14 by sdiouane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -149,10 +149,10 @@ static int redirection_out(char *redirection, int *fd)
     return (0);
 }
 
-char *here_doc_fct(char **args)
-{
+// char *here_doc_fct(char **args)
+// {
 	
-}
+// }
 
 void execute_with_redirection(char *cmd, char **env, char *redirection)
 {
@@ -161,19 +161,29 @@ void execute_with_redirection(char *cmd, char **env, char *redirection)
 	
 	fd_in = -1;
 	fd_out = -1;
-    if (redirection != NULL)
-	{
-        if (strstr(redirection, "<") != NULL)
-            redirection_in(redirection, &fd_in);
-        if (redirection[0] == '>' && redirection[1] != '>')
-            if (!redirection_out(redirection, &fd_out))
-                return ;
-        if (redirection[0] == '>' && redirection[1] == '>')
-            redirection_double_out(redirection, &fd_out);
-		if (redirection[0] == '<' && redirection[1] == '<')
-			cmd = here_doc_fct(&redirection);
-    }
+	int i = 0;
+	char **red = ft_split(redirection, ' ');
 
-    if (cmd != NULL && strspn(cmd, " ") != strlen(cmd))
-        execute(cmd, env);
+	i = 0;
+
+	while (red[i] && *red != NULL)
+	{
+		if (red[i][0] == '<')
+			redirection_in(red[i], &fd_in);
+		else if (red[i][0] == '>')
+		{
+			if (!redirection_out(red[i], &fd_out))
+				return ;
+		}
+		else if (red[i][0] == '>' && red[i][1] == '>')
+			redirection_double_out(red[i], &fd_out);
+		i++;
+	}
+	if (fd_in != -1)
+		close(fd_in);
+	if (fd_out != -1)
+		close(fd_out);
+
+	if (cmd != NULL && strspn(cmd, " ") != strlen(cmd))
+		execute(cmd, env);
 }

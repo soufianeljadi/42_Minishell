@@ -6,7 +6,7 @@
 /*   By: sdiouane <sdiouane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/23 16:50:26 by sdiouane          #+#    #+#             */
-/*   Updated: 2024/04/30 12:58:05 by sdiouane         ###   ########.fr       */
+/*   Updated: 2024/05/04 22:23:58 by sdiouane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,16 +35,15 @@ int echo_dollar(char *args, s_env *s_env)
 	}
 	return(0);
 }
-static void echo_with_option(char **args, s_env *s_env)
+static void echo_with_option(char **args, s_env *s_env, int i)
 {
-	int i;
 	int j;
 	
-	i = 2;
 	if (check_variables(args, s_env) == 1)
 	{
-		if(!strncmp(args[i],"$",1) && echo_dollar(args[i],s_env))
-		;
+		write(1,"here\n",5);
+		// if(!strncmp(args[i],"$",1) && echo_dollar(args[i],s_env))
+		// 	;
 		while(args[i])
 		{
 			j = 0;
@@ -79,14 +78,12 @@ static void echo_with_option(char **args, s_env *s_env)
 	}
 }
 
-
-
-// $chi sauce !
-static void echo_no_option(char **args, s_env *s_env)
+static void echo_no_option(char **args, s_env *s_env,int q)
 {
 	int i;
 	int j;
 	
+	(void)q;
 	i = 1;
 	if (check_variables(args, s_env) == 1)
 	{
@@ -130,44 +127,61 @@ static void echo_no_option(char **args, s_env *s_env)
 		printf("\n");
 }
 //make it accept char **args  : echo -n -nnn hola -nnnn
-static int only_n(char *s)
+static int only_n(char **args)
 {
 	int i;
 	int j;
-	char *str = malloc(ft_strlen(s));
+	int x;
+	int flag = 0;
+	char *str = NULL; 
 	
-	i = 0;
-	j = 0;
-	if(s[j] == '"')
+	x = 1;
+	while(args[x])
 	{
-		j++;
-		while(s[j]  != '"')
+		i = 0;
+		j = 0;
+		str = malloc(ft_strlen(args[x]) + 1);
+		if(args[x][j] == '"')
 		{
-			str[i] = s[j];
-			i++;
 			j++;
+			while(args[x][j]  != '"')
+			{
+				str[i] = args[x][j];
+				i++;
+				j++;
+			}
 		}
-	}
-	else { 
-		str[i] = s[j];
-		i++;
-		j++;
-	}
-	str[i] = '\0';
-	if (str && str[0] == '-')
-	{
-		i = 1;
-		while (str[i] == 'n')
-			i++;
-		if(str[i] == '\0')
-			return(1);
-	}
-	else if(str && !strncmp(str,"-n",2))
-	{
+		else
+		{ 
+			while(args[x][j]  != '\0')
+			{
+				str[i] = args[x][j];
+				i++;
+				j++;
+			}
+		}
+		str[i] = '\0';
+		if(x == 1 && strncmp(str,"-n",2))
+			return(0);
+		if (str && str[0] == '-')
+		{
+			i = 1;
+			while (str[i] == 'n')
+				i++;
+			if(str[i] == '\0' && args[x + 1])
+				flag = 1;
+			if(str[i] != '\0' && flag == 0)
+				return(0);
+			if(str[i] != '\0' && flag == 1)
+				return(x);
+			if(str[i] == '\0' && !args[x + 1])
+				return(-1);
+		}
+		else
+			return(x);
 		free(str);
-		return(1);
+		x++;
 	}
-	free(str);
 	return(0);
 }
 
@@ -185,33 +199,15 @@ static int all__args_n(char **args)
 	return(1);
 }
 
-// int all__args_n(char **s1)
-// {
-//     int i = 0;
-
-//     if(s1[i] == '-' && s1[i + 1] == 'n')
-//     {
-//         i++;
-//         while(s1[i])
-//         {
-//             if(s1[i] != 'n')
-//                 return (1);
-//             i++;
-//         }
-//         return (0);
-//     }
-//     return (1);
-// }
-
 void echo_fct(char **args, s_env *s_env)
 {
 	if((!strcmp(args[0],"echo") && !args[1] )|| all__args_n(args))
 		printf("\n");
 	else if(!strcmp(args[0],"echo") && args[1])
 	{
-		if(only_n(args[1]))
-			echo_with_option(args, s_env);
+		if(only_n(args))
+			echo_with_option(args, s_env,only_n(args));
 		else
-			echo_no_option(args, s_env);
+			echo_no_option(args, s_env,only_n(args));
 	}
 }

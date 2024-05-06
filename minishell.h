@@ -6,7 +6,7 @@
 /*   By: sdiouane <sdiouane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 23:51:44 by sdiouane          #+#    #+#             */
-/*   Updated: 2024/05/03 23:53:46 by sdiouane         ###   ########.fr       */
+/*   Updated: 2024/05/05 20:01:13 by sdiouane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,19 @@
 #include <readline/readline.h>
 #include <readline/history.h>
 #include <errno.h>
+
+#define ANSI_RESET_ALL          "\x1b[0m"
+#define ANSI_COLOR_RED          "\x1b[31m"
+#define ANSI_COLOR_GREEN        "\x1b[32m"
+#define ANSI_COLOR_YELLOW       "\x1b[33m"
+#define ANSI_BACKGROUND_RED     "\x1b[41m"
+#define ANSI_COLOR_MAGENTA      "\x1b[35m"
+#define ANSI_COLOR_CYAN         "\x1b[36m"
+#define ANSI_COLOR_BLUE         "\x1b[34m"
+#define ANSI_COLOR_WHITE        "\x1b[37m"
+#define ANSI_COLOR_BLACK        "\x1b[30m"
+#define ANSI_BOLD               "\x1b[1m"
+
 
 #define MAX_COMMAND_LENGTH 100
 

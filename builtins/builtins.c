@@ -6,7 +6,7 @@
 /*   By: sdiouane <sdiouane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/26 01:07:33 by sel-jadi          #+#    #+#             */
-/*   Updated: 2024/05/01 16:06:03 by sdiouane         ###   ########.fr       */
+/*   Updated: 2024/05/05 16:21:02 by sdiouane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -169,9 +169,11 @@ void builtins(char **args, s_env *export_i, char **env)
 	char *pwd;
 
 	//exit
-	if (!strncmp(args[0], "exit", 4))
+	if (!strcmp(args[0], "exit"))
 	{
 		printf("exit\n");
+		exit(EXIT_SUCCESS);
+		exit(EXIT_SUCCESS);
 		exit(EXIT_SUCCESS);
 	}
 	// echo :

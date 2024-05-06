@@ -6,7 +6,7 @@
 /*   By: sdiouane <sdiouane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/31 22:14:48 by sdiouane          #+#    #+#             */
-/*   Updated: 2024/05/04 19:48:51 by sdiouane         ###   ########.fr       */
+/*   Updated: 2024/05/06 13:02:30 by sdiouane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -189,6 +189,7 @@ static void handle_child_process(noued_cmd *cmd_node, char **env, char **null_en
 	else
 	{
         char **environment = env[0] ? env : null_env;
+		// builtins(data->args, data->export_i, data->env);
         execute(cmd_node->cmd, environment);
     }
 }
@@ -224,12 +225,13 @@ static void execute_command(noued_cmd *cmd_node, char **env, char **null_env, ch
 void ft_execution(ExecutionData *data)
 {
     add_last_cmd(&data->export_i, data->args);
-    if (strcmp(data->args[0], "export") == 0 || strcmp(data->args[0], "unset") == 0 || strcmp(data->args[0], "echo") == 0 || strcmp(data->args[0], "cd") == 0 || strcmp(data->args[0], "env") == 0)
-        builtins(data->args, data->export_i, data->env);
+    if (strcmp(data->args[0], "export") == 0 || strcmp(data->args[0], "unset") == 0 || strcmp(data->args[0], "echo") == 0 || strcmp(data->args[0], "cd") == 0 || strcmp(data->args[0], "env") == 0  || strcmp(data->args[0], "exit") == 0)
+		builtins(data->args, data->export_i, data->env);
 	else
 	{
         while (data->lst)
 		{
+        	// builtins(data->args, data->export_i, data->env);
 			g_flags.envire = ft_merge_envr(data->export_i);
             execute_command(data->lst, data->env, data->null_env, data->lst->redirection);
             data->lst = data->lst->next;

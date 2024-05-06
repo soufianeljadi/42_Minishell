@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   split_by_pipe.c                                    :+:      :+:    :+:   */
+/*   red_test.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: sdiouane <sdiouane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/27 23:28:30 by sdiouane          #+#    #+#             */
-/*   Updated: 2024/05/06 15:21:13 by sdiouane         ###   ########.fr       */
+/*   Updated: 2024/05/06 15:11:03 by sdiouane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,12 +86,39 @@ void free_noued_cmd(noued_cmd *node)
 	free(node); // Free the node itself
 }
 
+// char *fct(char **ar)
+// {
+// 	// char **ar = ft_split(str, ' ');
+
+// 	int i = 0;
+// 	static char *s = NULL;
+// 	while (ar[i])
+// 	{
+// 		printf("ar[%d] = %s\n", i, ar[i]);
+// 		i++;
+// 	}
+// 	i = 0;
+// 	while (ar[i] != NULL)
+// 	{
+// 		if ((ar[i][0] == '<' && ar[i][1]) || ar[i][0] == '>')
+// 		{
+// 			printf("11111111\n");
+// 			s = ft_strjoin(ar[i], ar[i + 1]);
+// 		}
+// 			i++;
+// 	}
+// 	printf("s = %s\n", s);
+// 	return (s);
+// }
+
 noued_cmd *split_args_by_pipe(char **args)
 {
 	noued_cmd *cmd = NULL;
 	char *s = NULL;
 	 char *redirection = NULL;
 	int i = 0;
+	// char *op_and_filename;
+	// char *tmp;
 	while (args[i])
 	{
 		if (strcmp(args[i], "|") == 0) 
@@ -99,16 +126,57 @@ noued_cmd *split_args_by_pipe(char **args)
 			add_back_noued_cmd(&cmd, s, redirection);
 			free(s);
 			s = NULL;
+			// redirection = NULL;
 		}
 		else if (strcmp(args[i], "<") == 0 || strcmp(args[i], ">") == 0 || strcmp(args[i], ">>") == 0 || strcmp(args[i], "<<") == 0)
 		{
-			char *d = strdup(ft_strjoin(args[i], args[i + 1]));
-			redirection = ft_strjoin(redirection, d);
-			redirection = ft_strjoin(redirection, " ");
-			s = strdup("");
-			i++;
+			// redirection = fct(args);
+			redirection = ft_strjoin(args[i], args[i + 1]);
+			// redirection = ft_strjoin(d, " ");
+			
+			// s = strdup("");
+			// if (i == 0)
+			// {
+			// 	redirection = ft_strjoin(args[i], args[i + 1]);
+			// 	s = strdup("");
+			// 	i++;
+			// }
+			// else
+			// {
+			// 	tmp = strdup(args[i]);
+			// 	// s = strdup("");
+			// 	int j = i + 1;
+			// 	while (args[j] && (strcmp(args[j], "|") != 0))
+			// 	{
+			// 			op_and_filename = ft_strjoin(tmp, args[j++]);
+			// 			op_and_filename = ft_strjoin(op_and_filename, " ");
+						
+			// 			// printf("\n\nop_and_filename = %s\n\n", op_and_filename);
+			// 		free(tmp);
+			// 		tmp = op_and_filename;
+			// 		printf("tmp = %s\n", tmp);
+			// 	}
+			// 	// redirection = op_and_filename;
+			// 	op_and_filename = ft_strjoin(" ", op_and_filename);
+			// 	printf("------> op_and_filename = %s\n", op_and_filename);
+			// 	redirection = ft_strjoin(redirection, op_and_filename);
+				printf("------> redirection = %s\t commande : %s\n", redirection, s);
+			// 	fct(redirection);
+				// i = j - 1;
+// 				=>  minishell => <a  < ss cat > l
+// tmp = <ss 
+// tmp = <ss cat 
+// tmp = <ss cat > 
+// tmp = <ss cat > l 
+// ------> op_and_filename =  <ss cat > l 
+// ------> redirection = <a <ss cat > l 
+// Noeud : 0
+// ->cmd : 
+// ->rederection : <a <ss cat > l  
+// minishell: ss: No such file or directory
+			// }
 		}
-		else
+		else if (strcmp(args[i - 1], ">" ) || strcmp(args[i - 1], ">>" ) || strcmp(args[i - 1], "<" ) || strcmp(args[i - 1], "<<"))
 		{
 			if (!s)
 				s = strdup(args[i]);
@@ -116,6 +184,7 @@ noued_cmd *split_args_by_pipe(char **args)
 			{
 				char *temp = ft_strjoin(s, " ");
 				free(s);
+				printf("+++++++++++++++temp = %s\n", args[i]);
 				s = ft_strjoin(temp, args[i]);
 				free(temp);
 			}
@@ -125,9 +194,13 @@ noued_cmd *split_args_by_pipe(char **args)
 	add_back_noued_cmd(&cmd, s, redirection);
 	free(s);
 	redirection = NULL;
-
+	// if (s)
+	//     free(s);
+	// if (redirection) // Remove this line to avoid freeing redirection prematurely
+	//     free(redirection); // Remove this line to avoid freeing redirection prematurely
 	return (cmd);
 }
+
 
 
 void print_command_list(noued_cmd *head)
