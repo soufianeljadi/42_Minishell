@@ -6,7 +6,7 @@
 /*   By: sdiouane <sdiouane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/26 01:07:33 by sel-jadi          #+#    #+#             */
-/*   Updated: 2024/05/06 18:44:52 by sdiouane         ###   ########.fr       */
+/*   Updated: 2024/05/07 15:07:55 by sdiouane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -196,7 +196,7 @@ void print_env_i(s_env *lst)
 void builtins(char **args, s_env *export_i, char **env)
 {   
     char *pwd;
-
+	// supprimerGuillemets(args);
     if (!strcmp(args[0], "exit"))
     {
         printf("exit\n");

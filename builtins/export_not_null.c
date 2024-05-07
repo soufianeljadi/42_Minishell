@@ -6,31 +6,34 @@
 /*   By: sdiouane <sdiouane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/24 21:25:42 by sdiouane          #+#    #+#             */
-/*   Updated: 2024/05/01 17:42:15 by sdiouane         ###   ########.fr       */
+/*   Updated: 2024/05/07 16:18:39 by sdiouane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-void fct_equal(char **args, s_env *env, char *key, int j, int i)
+void fct_equal(char **args, s_env *env, char *key, int f)
 {
-	//int i = 1;
-	char *value;
-	int start;
-	s_env *current;
+	char	*value;
+	s_env	*current;
+	int		start;
 
-	j++;
-	start = j;
-	if (args[i][j] == '"')
+	value = NULL;
+	current = NULL;
+	env->j++;
+	start = env->j;
+	if (args[env->i][env->j] == '"')
 	{
-		j++;
-		while (args[i][j] && args[i][j] != '"')
-			j++;
+		env->j++;
+		while (args[env->i][env->j] && args[env->i][env->j] != '"')
+			env->j++;
 	}
 	else
-		while (args[i][j] && args[i][j] != '\"')
-			j++;
-	value = ft_substr(args[i], start, j - start);
+		while (args[env->i][env->j] && args[env->i][env->j] != '\"')
+			env->j++;
+	value = ft_substr(args[env->i], start, env->j - start);
+	if (f == 1)
+		value = ft_strdup(" ");
 	if (value[0] != '\"')
 	{
 		current = env;
@@ -50,7 +53,6 @@ void fct_equal(char **args, s_env *env, char *key, int j, int i)
 	else
 	{
 		value = remove_quotes(value);
-		// printf("----> value = %s\n", value);
 		current = env;
 		while (current != NULL && current->value)
 		{
@@ -67,18 +69,17 @@ void fct_equal(char **args, s_env *env, char *key, int j, int i)
 	}
 }
 
-void ftc_concatination(char **args, s_env *env, char *key, int j, int i)
+void ftc_concatination(char **args, s_env *env, char *key)
 {
-	// int i = 1;
 	char *value;
 	int start;
 	s_env *current;
 	
-	j = j + 2;
-	start = j;
-	while (args[i][j] && args[i][j] != ' ')
-		j++;
-	value = ft_substr(args[i], start, j - start);
+	env->j = env->j + 2;
+	start = env->j;
+	while (args[env->i][env->j] && args[env->i][env->j] != ' ')
+		env->j++;
+	value = ft_substr(args[env->i], start, env->j - start);
 	if (value[0] != '\"')
 	{
 		current = env;
@@ -118,6 +119,7 @@ s_env *not_null(char **args, s_env *env)
 	int i = 1;
 	int j;
 	char *key;
+	int f = 0;
 
 	if (!strcmp(args[0], "export") && !args[1])
 		print_export(env);
@@ -130,6 +132,9 @@ s_env *not_null(char **args, s_env *env)
 			while (args[i][j] &&  args[i][j] != '=' && args[i][j] != '+')
 				j++;
 			key = ft_substr(args[i], 0, j);
+			if (args[i][j] == '=' && (args[i][j + 1] == ' ' || args[i][j + 1] == '\t' || args[i][j + 1] == '\0'))
+				f = 1;
+			printf("key = %s\n", key);
 			if (verif_export(key) == 0)
 			{
 				if (args[i][j] == '\0')
@@ -141,11 +146,16 @@ s_env *not_null(char **args, s_env *env)
 				{
 					if (args[i][j] == '=')
 					{
-						// key = ft_strjoin(key, "=");
-						fct_equal(args, env, key, j, i);
-					}
+						env->i = i;
+						env->j = j;
+						fct_equal(args, env, key, f);
+					}             
 					else if (args[i][j] == '+' && args[i][j + 1] == '=')
-						ftc_concatination(args, env, key, j, i);
+					{
+						env->i = i;
+						env->j = j;
+						ftc_concatination(args, env, key);
+					}
 				}
 			}
 			else

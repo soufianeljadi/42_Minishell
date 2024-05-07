@@ -6,7 +6,7 @@
 /*   By: sdiouane <sdiouane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 23:51:44 by sdiouane          #+#    #+#             */
-/*   Updated: 2024/05/05 20:01:13 by sdiouane         ###   ########.fr       */
+/*   Updated: 2024/05/07 16:16:14 by sdiouane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,6 +53,8 @@ typedef	struct			s_cmd
 
 typedef struct s_env
 {
+	int					i;
+	int					j;
 	char				*key;
 	char				*value;
 	struct s_env		*next;
@@ -181,12 +183,12 @@ s_env *export_fct(char **args, s_env *env, s_env *split_export_i, char **eenv);
 int existe_deja(char *key, s_env *env);
 char *remove_quotes(char *input);
 int	verif_export(char *str);
-void is_null(char **args, s_env *env, s_env *export_i);
-void concatenation(char **args, s_env *export_i, char *key, int i, int j);
-void is_equal(char **args, s_env *export_i, char *key, int i, int j);
+void is_null(char **args, s_env *env);
+void concatenation(char **args, s_env *env, char *key);
+void is_equal(char **args, s_env *export_i, char *key);
 s_env *not_null(char **args, s_env *env);
-void fct_equal(char **args, s_env *env, char *key, int j, int i);
-void ftc_concatination(char **args, s_env *env, char *key, int j, int i);
+void fct_equal(char **args, s_env *env, char *key, int f);
+void ftc_concatination(char **args, s_env *env, char *key);
 
 //pwd :
 char *pwd_without_options(char **args, char *pwd);
