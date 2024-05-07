@@ -6,7 +6,7 @@
 /*   By: sdiouane <sdiouane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/24 21:24:00 by sdiouane          #+#    #+#             */
-/*   Updated: 2024/05/07 16:19:08 by sdiouane         ###   ########.fr       */
+/*   Updated: 2024/05/07 22:34:34 by sdiouane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -117,6 +117,7 @@ void is_null(char **args, s_env *env)
 	int i = 1;
 	int j;
 	char *key;
+	int f = 0;
 
 	if (!strcmp(args[0], "export") && !args[1])
 		print_export(env);
@@ -125,10 +126,19 @@ void is_null(char **args, s_env *env)
 		supprimerGuillemets(args[1]);
 		while (args[i])
 		{
+			if ((!strcmp(args[i], ">") || !strcmp(args[i], ">>") || !strcmp(args[i], "<") || !strcmp(args[i], "<<")))
+			{
+				if (args[i + 1])
+					i = i + 2;
+			}
 			j = 0;
+			if (!args[i])
+				break;
 			while (args[i][j] &&  args[i][j] != '=' && args[i][j] != '+')
 				j++;
 			key = ft_substr(args[i], 0, j);
+			if (args[i][j] == '=' && (args[i][j + 1] == ' ' || args[i][j + 1] == '\t' || args[i][j + 1] == '\0'))
+				f = 1;
 			if (verif_export(key) == 0)
 			{
 				if (args[i][j] == '\0')

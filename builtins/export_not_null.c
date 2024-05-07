@@ -6,7 +6,7 @@
 /*   By: sdiouane <sdiouane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/24 21:25:42 by sdiouane          #+#    #+#             */
-/*   Updated: 2024/05/07 16:18:39 by sdiouane         ###   ########.fr       */
+/*   Updated: 2024/05/07 22:33:29 by sdiouane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ void fct_equal(char **args, s_env *env, char *key, int f)
 	int		start;
 
 	value = NULL;
-	current = NULL;
+	current = NULL;	
 	env->j++;
 	start = env->j;
 	if (args[env->i][env->j] == '"')
@@ -116,11 +116,12 @@ void ftc_concatination(char **args, s_env *env, char *key)
 
 s_env *not_null(char **args, s_env *env)
 {
-	int i = 1;
+	int i = 0;
 	int j;
 	char *key;
 	int f = 0;
 
+	i = 1;
 	if (!strcmp(args[0], "export") && !args[1])
 		print_export(env);
 	else if (!strcmp(args[0], "export") && args[1])	
@@ -128,13 +129,19 @@ s_env *not_null(char **args, s_env *env)
 		supprimerGuillemets(args[1]);
 		while (args[i])
 		{
+			if ((!strcmp(args[i], ">") || !strcmp(args[i], ">>") || !strcmp(args[i], "<") || !strcmp(args[i], "<<")))
+			{
+				if (args[i + 1])
+					i = i + 2;
+			}
 			j = 0;
-			while (args[i][j] &&  args[i][j] != '=' && args[i][j] != '+')
+			if (!args[i])
+				break;
+			while (args[i][j] &&  args[i][j] != '=' && args[i][j] != '+')	
 				j++;
 			key = ft_substr(args[i], 0, j);
 			if (args[i][j] == '=' && (args[i][j + 1] == ' ' || args[i][j + 1] == '\t' || args[i][j + 1] == '\0'))
 				f = 1;
-			printf("key = %s\n", key);
 			if (verif_export(key) == 0)
 			{
 				if (args[i][j] == '\0')
@@ -159,7 +166,7 @@ s_env *not_null(char **args, s_env *env)
 				}
 			}
 			else
-				fprintf(stderr, "minishell: export: `%s': not a valid identifier\n", args[i]);
+				fprintf(stderr, "minishell: export: `%s': not a valid identifier\n", args[i]);	
 			i++;
 		}
 	}

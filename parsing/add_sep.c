@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   add_sep.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sel-jadi <sel-jadi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sdiouane <sdiouane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/25 23:56:31 by sel-jadi          #+#    #+#             */
-/*   Updated: 2024/05/03 18:45:19 by sel-jadi         ###   ########.fr       */
+/*   Updated: 2024/05/07 19:34:25 by sdiouane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,6 +79,16 @@ char	*ft_add_sep(char *s, t_parse d)
 	d.i = -1;
 	d.dq = 0;
 	d.sq = 0;
+	int i = 0;
+	while(s[i])
+	{
+		if ((s[i] == '>' || s[i] == '<' || s[i] == '|') && s[i + 1] == '\0')
+		{
+			syntax_error();
+			return (NULL);
+		}
+		i++;
+	}
 	while (s[++(d.i)])
 	{
 		if (s[d.i] == '\'' || s[d.i] == '"')

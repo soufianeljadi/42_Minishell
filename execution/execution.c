@@ -6,32 +6,11 @@
 /*   By: sdiouane <sdiouane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/31 22:14:48 by sdiouane          #+#    #+#             */
-/*   Updated: 2024/05/07 15:08:20 by sdiouane         ###   ########.fr       */
+/*   Updated: 2024/05/07 21:56:21 by sdiouane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
-
-
-void execute(char *s, char **env)
-{
-	char	*chemin;
-	char	**cmd = NULL;
-	int i = 0;
-	if (*env)
-	{
-		cmd = ft_split(s, ' ');
-		while (cmd[i])
-			supprimerGuillemets(cmd[i++]);
-		chemin = get_path(cmd[0], env);
-		if (execve(chemin, cmd, g_flags.envire) == -1)
-		{
-			fprintf(stderr, "minishell : %s: command not found\n", cmd[0]);
-			ft_free_tab(cmd);
-			exit(EXIT_FAILURE);
-		}
-	}
-}
 
 void supprimerGuillemets(char *chaine)
 {
@@ -46,6 +25,28 @@ void supprimerGuillemets(char *chaine)
     }
     chaine[j] = '\0';
 }
+
+void execute(char *s, char **env)
+{
+	char	*chemin;
+	char	**cmd = NULL;
+	int i = 0;
+	if (*env)
+	{
+		printf("s = %s\n", s);
+		cmd = ft_split(s, ' ');
+		while (cmd[i])
+			supprimerGuillemets(cmd[i++]);
+		chemin = get_path(cmd[0], env);
+		if (execve(chemin, cmd, g_flags.envire) == -1)
+		{
+			fprintf(stderr, "minishell : %s: command not found\n", cmd[0]);
+			ft_free_tab(cmd);
+			exit(EXIT_FAILURE);
+		}
+	}
+}
+
 
 void add_last_cmd(s_env **lst, char **args)
 {
@@ -132,8 +133,8 @@ static void execute_command(noued_cmd *cmd_node, char **env, char **null_env)
 	int pipefd[2];
     pid_t pid;
 	
-    if (!strstr(cmd_node->cmd, "$"))
-	{
+    // if (!strstr(cmd_node->cmd, "$"))
+	// {
         // execute_child_process(cmd_node, env, null_env, redirection);
 		if (pipe(pipefd) == -1 || (pid = fork()) == -1)
 			exit(EXIT_FAILURE);
@@ -145,9 +146,9 @@ static void execute_command(noued_cmd *cmd_node, char **env, char **null_env)
 				close(pipefd[1]);
 				close(pipefd[0]);
 		}
-	}
-	else
-        printf("\n");
+	// }
+	// else
+    //     printf("\n");
 }
 
 void ft_execution(ExecutionData *data)

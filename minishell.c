@@ -6,7 +6,7 @@
 /*   By: sdiouane <sdiouane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 23:52:10 by sdiouane          #+#    #+#             */
-/*   Updated: 2024/05/06 15:39:39 by sdiouane         ###   ########.fr       */
+/*   Updated: 2024/05/07 19:21:07 by sdiouane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,24 +100,22 @@ void	main_loop(char *line, char **env, s_env *export_i, char **null_env)
 	dup2(1, 4);
 	while (42)
 	{
-		//read_line
-		line = 		 readline(ANSI_COLOR_CYAN "=>  "ANSI_COLOR_CYAN  "minishell => "   ANSI_RESET_ALL "");
+		line = readline(ANSI_COLOR_CYAN "=>  "ANSI_COLOR_CYAN  "minishell => "   ANSI_RESET_ALL "");
 		if (!line)
 			(printf("exit\n"),exit(0));
 		if(line != NULL && only_spaces(line) == 0)
 		{
-			// history :
 			add_history(line);
 			if(parsing(line) == 1)		
 				syntax_error();
 			else
 			{
-				// split_line_into_arguments :
 				args = line_to_args(line);
-				// split_args_by_pipe :
+				if (!args)
+					continue ;
 				ft_expanding(args, export_i);
 				cmd = split_args_by_pipe(args);
-				print_command_list(cmd);
+				// print_command_list(cmd);
 				ExecutionData data;
 				data.lst = cmd;
 				data.args = args;
@@ -131,8 +129,6 @@ void	main_loop(char *line, char **env, s_env *export_i, char **null_env)
 		}
 		dup2(3, 0);
 		dup2(4, 1);
-		// close(3);
-		// close(4);
 	}
 	free(line);
 	clear_history();
@@ -150,7 +146,6 @@ int main(int ac, char **av, char **env)
 {
 	(void)av;
 	// atexit(f);
-	
 	char *line = NULL;
 	char *null_env = NULL;
 	s_env *export_i = NULL;
