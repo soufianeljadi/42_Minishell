@@ -6,7 +6,7 @@
 /*   By: sdiouane <sdiouane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 23:51:44 by sdiouane          #+#    #+#             */
-/*   Updated: 2024/05/07 21:56:03 by sdiouane         ###   ########.fr       */
+/*   Updated: 2024/05/08 16:02:24 by sdiouane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -123,6 +123,7 @@ void	free_s_env(s_env *head);
 	// split :
 void	ft_free_tab(char **tab);
 char	**ft_split(char	*s, char c);
+char	**split_space_tab(char *s, char c);
 	// strdup :
 char	*ft_strdup(char *s1);
 	// strtock :

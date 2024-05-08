@@ -6,7 +6,7 @@
 /*   By: sdiouane <sdiouane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 23:52:10 by sdiouane          #+#    #+#             */
-/*   Updated: 2024/05/07 19:21:07 by sdiouane         ###   ########.fr       */
+/*   Updated: 2024/05/08 20:39:14 by sdiouane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,7 +115,7 @@ void	main_loop(char *line, char **env, s_env *export_i, char **null_env)
 					continue ;
 				ft_expanding(args, export_i);
 				cmd = split_args_by_pipe(args);
-				// print_command_list(cmd);
+				print_command_list(cmd);
 				ExecutionData data;
 				data.lst = cmd;
 				data.args = args;

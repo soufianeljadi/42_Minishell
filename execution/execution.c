@@ -6,7 +6,7 @@
 /*   By: sdiouane <sdiouane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/31 22:14:48 by sdiouane          #+#    #+#             */
-/*   Updated: 2024/05/07 21:56:21 by sdiouane         ###   ########.fr       */
+/*   Updated: 2024/05/08 22:40:31 by sdiouane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,21 @@ void supprimerGuillemets(char *chaine)
 
     while (chaine[i])
 	{
-        if (chaine[i] != '"' && chaine[i] != '\'')
+        if (chaine[i] != '"')
+            chaine[j++] = chaine[i];
+        i++;
+    }
+    chaine[j] = '\0';
+}
+
+void sup(char *chaine)
+{
+    int i = 0;
+	int j = 0;
+
+    while (chaine[i])
+	{
+        if (chaine[i] != '\'')
             chaine[j++] = chaine[i];
         i++;
     }
@@ -30,23 +44,42 @@ void execute(char *s, char **env)
 {
 	char	*chemin;
 	char	**cmd = NULL;
-	int i = 0;
+	int i = 0; 
+
 	if (*env)
 	{
-		printf("s = %s\n", s);
-		cmd = ft_split(s, ' ');
-		while (cmd[i])
-			supprimerGuillemets(cmd[i++]);
-		chemin = get_path(cmd[0], env);
-		if (execve(chemin, cmd, g_flags.envire) == -1)
+		if ((((s[0] == '"' || s[0] == '\'') && (strstr(s, " ") || strstr(s, "\t")))))
+			cmd = ft_split(s, ' ');
+		else
 		{
-			fprintf(stderr, "minishell : %s: command not found\n", cmd[0]);
+			if (!strcmp(s , ""))
+				cmd[0] = strdup(s);
+			else
+				cmd = split_space_tab(s, ' ');
+			if (cmd[0][0] == '\0')
+				exit(EXIT_FAILURE);
+			if (strstr(cmd[0], "\""))
+			{
+				while (cmd[i])
+					supprimerGuillemets(cmd[i++]);
+			}
+			else if (strstr(cmd[0], "\'"))
+			{
+				i = 0;
+				while (cmd[i])
+					sup(cmd[i++]);
+			}
+		}
+		chemin = get_path(cmd[0], env);
+		if (execve(chemin, cmd, g_flags.envire) == -1 && !strstr(cmd[0], "$"))
+		{
+			// perror(errno);
+			fprintf(stderr, "minishell : %s %s\n", cmd[0], strerror(errno));
 			ft_free_tab(cmd);
 			exit(EXIT_FAILURE);
 		}
 	}
 }
-
 
 void add_last_cmd(s_env **lst, char **args)
 {

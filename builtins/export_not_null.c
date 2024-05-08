@@ -6,11 +6,25 @@
 /*   By: sdiouane <sdiouane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/24 21:25:42 by sdiouane          #+#    #+#             */
-/*   Updated: 2024/05/07 22:33:29 by sdiouane         ###   ########.fr       */
+/*   Updated: 2024/05/08 18:46:05 by sdiouane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
+
+void sp(char *chaine)
+{
+    int i = 0;
+	int j = 0;
+
+    while (chaine[i])
+	{
+        if (chaine[i] != '"')
+            chaine[j++] = chaine[i];
+        i++;
+    }
+    chaine[j] = '\0';
+}
 
 void fct_equal(char **args, s_env *env, char *key, int f)
 {
@@ -53,6 +67,7 @@ void fct_equal(char **args, s_env *env, char *key, int f)
 	else
 	{
 		value = remove_quotes(value);
+		// sp(value);
 		current = env;
 		while (current != NULL && current->value)
 		{
@@ -114,6 +129,7 @@ void ftc_concatination(char **args, s_env *env, char *key)
 	}
 }
 
+
 s_env *not_null(char **args, s_env *env)
 {
 	int i = 0;
@@ -126,9 +142,11 @@ s_env *not_null(char **args, s_env *env)
 		print_export(env);
 	else if (!strcmp(args[0], "export") && args[1])	
 	{
-		supprimerGuillemets(args[1]);
+		// sp(args[1]);
+		// supprimerGuillemets(args[1]);
 		while (args[i])
 		{
+			supprimerGuillemets(args[i]);
 			if ((!strcmp(args[i], ">") || !strcmp(args[i], ">>") || !strcmp(args[i], "<") || !strcmp(args[i], "<<")))
 			{
 				if (args[i + 1])

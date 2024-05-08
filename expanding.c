@@ -6,7 +6,7 @@
 /*   By: sdiouane <sdiouane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/27 19:58:08 by sdiouane          #+#    #+#             */
-/*   Updated: 2024/05/07 18:46:01 by sdiouane         ###   ########.fr       */
+/*   Updated: 2024/05/08 22:42:17 by sdiouane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -136,11 +136,14 @@ void ft_expanding(char **args, s_env *export_i)
                 if (args[i][j] == '$')
                 {
                     key = get_env_key(args[i], j);
+					printf("key = %s\n", key);
                     if (!key)
                         exit(EXIT_FAILURE);       
                     value = get_env_value(key, export_i);
-                    if (value)
+					printf("----------value = |%s|\n", value);
+                    if (strcmp(value, "") && strcmp(value, " "))
                     {
+						printf("is value\n\n");
                         key = ft_strjoin("$", key);
 						// printf("BEFORE MODIFICATION : args[i] = %s\tkey : %s\n", args[i], key);
                         expanded_cmd = ft_str_replace(args[i], key, value);
@@ -154,10 +157,12 @@ void ft_expanding(char **args, s_env *export_i)
                     }
                     else
                     {
+						printf("is value\n\n");
+						printf("key = %s\n", key);
                         // key = ft_strjoin("$", key);
-						// printf("BEFORE MODIFICATION : args[i] = %s\tkey : %s\n", args[i], key);
+						printf("BEFORE MODIFICATION : args[i] = %s\tkey : %s\n", args[i], key);
                         args[i] = ft_str_replace(args[i], key, strdup(""));    
-						// printf("AFTER MODUFICATIO : args[i] = %s\tkey : %s\n", args[i], key);
+						printf("AFTER MODUFICATIO : args[i] = %s\tkey : %s\n", args[i], key);
                         args[i] = ft_substr(args[i], 0, strlen(args[i]));
                     }
                 }

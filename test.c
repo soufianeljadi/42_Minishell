@@ -1,5 +1,5 @@
 #include <stdio.h>
-
+#include <libc.h>
 int is_single(char *str)
 {
 	int s;
@@ -30,11 +30,16 @@ int is_single(char *str)
 
 	return (0);
 }
-
+void f()
+{
+	system("leaks a.out");
+}
 int main()
 {
+	atexit(f);
 	// char *str = "  \"'\"'$PWD'\"'\"   ";
 	char *str = "  'PWD'   ";
 	printf("%d\n", is_single(str));
+	
 	return (0);
 }
