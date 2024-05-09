@@ -6,7 +6,7 @@
 /*   By: sdiouane <sdiouane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/05 23:00:01 by sdiouane          #+#    #+#             */
-/*   Updated: 2024/05/06 17:05:11 by sdiouane         ###   ########.fr       */
+/*   Updated: 2024/05/09 21:37:35 by sdiouane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -137,7 +137,8 @@ static int redirection_out(char *redirection, int *fd)
         if (*token_out != '\0')
 		{
             *fd = open(file_nc(token_out), O_WRONLY | O_CREAT | O_TRUNC, 0666);
-            if (*fd < 0) {
+            if (*fd < 0)
+			{
                 printf("minishell: %s: No such file or directory\n", token_out);
                 exit(EXIT_FAILURE);
             }
@@ -154,11 +155,11 @@ static int redirection_out(char *redirection, int *fd)
 	
 // }
 
-void execute_with_redirection(char *cmd, char **env, char *redirection)
+void execute_with_redirection(char *cmd, char **env, char *redirection, ExecutionData *data)
 {
     int fd_in;
     int fd_out;
-	
+	(void)data;
 	fd_in = -1;
 	fd_out = -1;
 	int i = 0;
@@ -172,8 +173,9 @@ void execute_with_redirection(char *cmd, char **env, char *redirection)
 			redirection_in(red[i], &fd_in);
 		else if (red[i][0] == '>')
 		{
-			if (!redirection_out(red[i], &fd_out))
-				return ;
+			// if (!redirection_out(red[i], &fd_out))
+			// 	return ;
+			redirection_out(red[i], &fd_out);
 		}
 		else if (red[i][0] == '>' && red[i][1] == '>')
 			redirection_double_out(red[i], &fd_out);
@@ -184,6 +186,11 @@ void execute_with_redirection(char *cmd, char **env, char *redirection)
 	if (fd_out != -1)
 		close(fd_out);
 
+		printf("here\n");
 	if (cmd != NULL && strspn(cmd, " ") != strlen(cmd))
-		execute(cmd, env);
+	{
+		// if(builtins(data) == 1)
+       		execute(cmd, env);
+		// exit(EXIT_SUCCESS);;
+	}
 }

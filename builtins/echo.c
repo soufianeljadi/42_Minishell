@@ -6,12 +6,11 @@
 /*   By: sdiouane <sdiouane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/23 16:50:26 by sdiouane          #+#    #+#             */
-/*   Updated: 2024/05/06 18:52:43 by sdiouane         ###   ########.fr       */
+/*   Updated: 2024/05/09 21:47:07 by sdiouane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
-
 int echo_dollar(char *args, s_env *s_env)
 {
 	char *str;
@@ -38,13 +37,17 @@ int echo_dollar(char *args, s_env *s_env)
 static void echo_with_option(char **args, s_env *s_env, int i)
 {
 	int j;
-	// (void)s_env;
 	
+		// (void)i;
+	// if(i == -1)
+	// {
+	// 	printf("\n");
+	// 	return ;
+	// }
 	if (check_variables(args, s_env) == 1)
 	{
-		write(1,"here\n",5);
-		// if(!strncmp(args[i],"$",1) && echo_dollar(args[i],s_env))
-		// 	;
+		if(!strncmp(args[i],"$",1) && echo_dollar(args[i],s_env))
+		;
 		while(args[i])
 		{
 			j = 0;
@@ -85,6 +88,11 @@ static void echo_no_option(char **args, s_env *s_env,int q)
 	int j;
 	
 	(void)q;
+	// if(q == -1)
+	// {
+	// 	printf("\n");
+	// 	return ;
+	// }
 	i = 1;
 	if (check_variables(args, s_env) == 1)
 	{
@@ -128,63 +136,128 @@ static void echo_no_option(char **args, s_env *s_env,int q)
 		printf("\n");
 }
 //make it accept char **args  : echo -n -nnn hola -nnnn
-static int only_n(char **args)
-{
-	int i;
-	int j;
-	int x;
-	int flag = 0;
-	char *str = NULL; 
+// static int only_n(char **args)
+// {
+// 	int i;
+// 	int j;
+// 	int x;
+// 	int flag = 0;
+// 	char *str = NULL; 
 	
-	x = 1;
-	while(args[x])
-	{
-		i = 0;
-		j = 0;
-		str = malloc(ft_strlen(args[x]) + 1);
-		if(args[x][j] == '"')
-		{
-			j++;
-			while(args[x][j]  != '"')
-			{
-				str[i] = args[x][j];
-				i++;
-				j++;
-			}
-		}
-		else
-		{ 
-			while(args[x][j]  != '\0')
-			{
-				str[i] = args[x][j];
-				i++;
-				j++;
-			}
-		}
-		str[i] = '\0';
-		if(x == 1 && strncmp(str,"-n",2))
-			return(0);
-		if (str && str[0] == '-')
-		{
-			i = 1;
-			while (str[i] == 'n')
-				i++;
-			if(str[i] == '\0' && args[x + 1])
-				flag = 1;
-			if(str[i] != '\0' && flag == 0)
-				return(0);
-			if(str[i] != '\0' && flag == 1)
-				return(x);
-			if(str[i] == '\0' && !args[x + 1])
-				return(-1);
-		}
-		else
-			return(x);
-		free(str);
-		x++;
-	}
-	return(0);
+// 	x = 1;
+// 	while(args[x])
+// 	{
+// 		i = 0;
+// 		j = 0;
+// 		str = malloc(ft_strlen(args[x]) + 1);
+// 		if(args[x][j] == '"')
+// 		{
+// 			j++;
+// 			while(args[x][j]  != '"')
+// 			{
+// 				str[i] = args[x][j];
+// 				i++;
+// 				j++;
+// 			}
+// 		}
+// 		else
+// 		{ 
+// 			while(args[x][j]  != '\0')
+// 			{
+// 				str[i] = args[x][j];
+// 				i++;
+// 				j++;
+// 			}
+// 		}
+// 		str[i] = '\0';
+// 		if(x == 1 && strncmp(str,"-n",2))
+// 			return(0);
+// 		if (str && str[0] == '-')
+// 		{
+// 			i = 1;
+// 			while (str[i] == 'n')
+// 				i++;
+// 			if(str[i] == '\0' && args[x + 1])
+// 				flag = 1;
+// 			if(str[i] != '\0' && flag == 0)
+// 				return(0);
+// 			if(str[i] != '\0' && flag == 1)
+// 				return(x);
+// 			if(str[i] == '\0' && !args[x + 1])
+// 				return(-1);
+// 		}
+// 		else
+// 			return(x);
+// 		free(str);
+// 		x++;
+// 	}
+// 	return(0);
+// }
+
+static int only_n(char **args) {
+    int i;
+    int j;
+    int x;
+    int flag = 0;
+    char *str = NULL; 
+    
+    x = 1;
+    while(args[x]) {
+        i = 0;
+        j = 0;
+        str = malloc(ft_strlen(args[x]) + 1);
+        if (str == NULL) {
+            // Gestion de l'échec de l'allocation mémoire
+            perror("malloc");
+            exit(EXIT_FAILURE);
+        }
+        if(args[x][j] == '"') {
+            j++; // Avance au prochain caractère après le guillemet ouvrant
+            while(args[x][j] != '"' && args[x][j] != '\0') {
+                str[i] = args[x][j];
+                i++;
+                j++;
+            }
+            if(args[x][j] == '"') {
+                // Si nous avons rencontré le guillemet de fermeture, avançons jusqu'à la fin de la chaîne
+                j++;
+                while(args[x][j] != '\0') {
+                    str[i] = args[x][j];
+                    i++;
+                    j++;
+                }
+            }
+        } else {
+            // Traitement pour les caractères qui ne sont pas entre guillemets
+            while(args[x][j] != '\0') {
+                str[i] = args[x][j];
+                i++;
+                j++;
+            }
+        }
+        str[i] = '\0'; // Ajout du caractère de fin de chaîne
+        if(x == 1 && strncmp(str,"-n",2))
+            return 0;
+        if (str && str[0] == '-') {
+            i = 1;
+            while (str[i] == 'n')
+                i++;
+            if(str[i] == '\0' && args[x + 1])
+                flag = 1;
+            if(str[i] != '\0' && flag == 0)
+                return 0;
+            if(str[i] != '\0' && flag == 1)
+                return x;
+            if(str[i] == '\0' && !args[x + 1])
+                return -1;
+        } else
+            return x;
+        free(str); // Libération de la mémoire allouée
+        x++;
+    }
+    return 0;
 }
+
 
 static int all__args_n(char **args)
 {

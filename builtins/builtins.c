@@ -6,7 +6,7 @@
 /*   By: sdiouane <sdiouane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/26 01:07:33 by sel-jadi          #+#    #+#             */
-/*   Updated: 2024/05/07 21:55:57 by sdiouane         ###   ########.fr       */
+/*   Updated: 2024/05/09 19:52:40 by sdiouane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -193,21 +193,68 @@ void print_env_i(s_env *lst)
 // 			print_list(export_i);
 // }
 
-void builtins(char **args, s_env *export_i, char **env)
-{   
-	int flag = 0;
-    char *pwd;
-	// supprimerGuillemets(args);
-	// data->lst->cmd
+// void builtins(char **args, s_env *export_i, char **env)
+// {   
+// 	int flag = 0;
+//     char *pwd;
+// 	// supprimerGuillemets(args);
+// 	// data->lst->cmd
 	                            
-    if (!strcmp(args[0], "exit"))
+//     if (!strcmp(args[0], "exit"))
+//     {
+//         printf("exit\n");
+//         exit(EXIT_SUCCESS);
+//     }
+//     else if (!strcmp(args[0], "echo"))
+//     {
+//         echo_fct(args, export_i);
+//     }
+//     else if (!strcmp(args[0], "pwd"))
+//     {
+//         pwd = getcwd(NULL, 0);
+//         pwd_without_options(args, pwd);
+//         free(pwd); // N'oubliez pas de libérer la mémoire allouée par getcwd
+//     }
+//     else if (!strcmp(args[0], "export"))
+//     {
+//         export_i = export_fct(args, export_i, export_i, env);
+//     }
+//     else if (!strcmp(args[0], "unset"))
+//     {
+//         export_i = unset_fct(args, export_i);
+//     }
+//     else if (!strcmp(args[0], "cd"))
+//     {
+//         export_i = execute_cd(args, export_i);        
+//     }
+//     else if (!strcmp(args[0], "env") && !args[1])
+//     {
+//         if (*env || !*env)
+//         {
+//             print_list(export_i);
+//         }
+//     }
+// 	else
+// 		flag = 1;
+	
+// 	// exit(EXIT_SUCCESS);
+// }
+
+int builtins(ExecutionData *data)
+{
+	char **args = NULL;
+	int flag = 0;
+	// printf("data->lst->cmd : |%s|\n", data->lst->cmd);
+	args = ft_split(data->lst->cmd, ' ');
+	char *pwd;
+	if (!strcmp(args[0], "exit"))
     {
         printf("exit\n");
         exit(EXIT_SUCCESS);
     }
     else if (!strcmp(args[0], "echo"))
     {
-        echo_fct(args, export_i);
+        echo_fct(args, data->export_i);
     }
     else if (!strcmp(args[0], "pwd"))
     {
@@ -217,26 +264,24 @@ void builtins(char **args, s_env *export_i, char **env)
     }
     else if (!strcmp(args[0], "export"))
     {
-        export_i = export_fct(args, export_i, export_i, env);
+        data->export_i = export_fct(args, data->export_i, data->export_i, data->env);
     }
     else if (!strcmp(args[0], "unset"))
     {
-        export_i = unset_fct(args, export_i);
+        data->export_i = unset_fct(args, data->export_i);
     }
     else if (!strcmp(args[0], "cd"))
     {
-        export_i = execute_cd(args, export_i);        
+        data->export_i = execute_cd(args, data->export_i);        
     }
     else if (!strcmp(args[0], "env") && !args[1])
     {
-        if (*env || !*env)
+        if (*(data->env) || !*(data->env))
         {
-            print_list(export_i);
+            print_list(data->export_i);
         }
     }
 	else
 		flag = 1;
-	
-	// exit(EXIT_SUCCESS);
+	return(flag);
 }
-      

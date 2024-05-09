@@ -6,7 +6,7 @@
 /*   By: sdiouane <sdiouane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 23:51:44 by sdiouane          #+#    #+#             */
-/*   Updated: 2024/05/08 16:02:24 by sdiouane         ###   ########.fr       */
+/*   Updated: 2024/05/09 21:13:22 by sdiouane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -178,7 +178,8 @@ int parse_redirection(char *line);
 void nbr_quotes(char *str);
 
 /**********************BUILTINS***********************************/
-void builtins(char **args, s_env *export_i, char **env);
+// void builtins(char **args, s_env *export_i, char **env);
+int builtins(ExecutionData *data);
 // export :
 s_env *export_fct(char **args, s_env *env, s_env *split_export_i, char **eenv);
 int existe_deja(char *key, s_env *env);
@@ -228,7 +229,7 @@ void	ft_putstr_fd(char *s, int fd);
 void	ft_putendl_fd(char *s, int fd);
 	// redirections :
 char	*file_nc(char *s);
-void execute_with_redirection(char *cmd, char **env, char *redirection);
+void execute_with_redirection(char *cmd, char **env, char *redirection, ExecutionData *data);
 int		only_spaces(char *str);
 s_env	*split_env(char **env);
 s_env	*split_export_i(s_env *lst);

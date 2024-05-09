@@ -6,7 +6,7 @@
 /*   By: sdiouane <sdiouane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/31 22:14:48 by sdiouane          #+#    #+#             */
-/*   Updated: 2024/05/09 11:33:39 by sdiouane         ###   ########.fr       */
+/*   Updated: 2024/05/09 21:42:33 by sdiouane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,13 +61,22 @@ void execute(char *s, char **env)
 			if (strstr(cmd[0], "\""))
 			{
 				while (cmd[i])
-					supprimerGuillemets(cmd[i++]);
+				{
+					if (cmd[i][0] != '\'')
+						supprimerGuillemets(cmd[i]);
+					i++;
+				}
 			}
-			else if (strstr(cmd[0], "\'"))
+			else if (strstr(cmd[0], "\'") && (!strstr(cmd[0], " ") || !strstr(cmd[0], "\t")))
 			{
 				i = 0;
 				while (cmd[i])
-					sup(cmd[i++]);
+				{
+					if (!strstr(cmd[i], "\'"))
+						sup(cmd[i++]);
+					i++;
+					
+				}
 			}
 		}
 		chemin = get_path(cmd[0], env);
@@ -141,7 +150,7 @@ static char	**ft_merge_envr(s_env *export_i)
 	return (str);
 }
 
-static void handle_child_process(noued_cmd *cmd_node, char **env, char **null_env, int pipefd[])
+static void handle_child_process(noued_cmd *cmd_node, char **env, char **null_env, int pipefd[], ExecutionData *data)
 {
     if (cmd_node->next != NULL)
         dup2(pipefd[1], STDOUT_FILENO);
@@ -151,54 +160,79 @@ static void handle_child_process(noued_cmd *cmd_node, char **env, char **null_en
     if (cmd_node->redirection != NULL)
 	{
         char **environment = env[0] ? env : null_env;
-        execute_with_redirection(cmd_node->cmd, environment, cmd_node->redirection);
+		if (builtins(data) == 1)
+        	execute_with_redirection(cmd_node->cmd, environment, cmd_node->redirection, data);
+		exit(EXIT_SUCCESS);
     }
 	else
 	{
         char **environment = env[0] ? env : null_env;
-        execute(cmd_node->cmd, environment);
+		if(builtins(data) == 1)
+       		execute(cmd_node->cmd, environment);
+		exit(EXIT_SUCCESS);
     }
 }
 
 
-static void execute_command(noued_cmd *cmd_node, char **env, char **null_env)
+static void execute_command(noued_cmd *cmd_node, char **env, char **null_env, ExecutionData *data)
 {
 	int pipefd[2];
     pid_t pid;
-	
-    // if (!strstr(cmd_node->cmd, "$"))
-	// {
-        // execute_child_process(cmd_node, env, null_env, redirection);
-		if (pipe(pipefd) == -1 || (pid = fork()) == -1)
-			exit(EXIT_FAILURE);
-		else if (pid == 0)
-			handle_child_process(cmd_node, env, null_env, pipefd);
-		else
-		{
-			    dup2(pipefd[0], STDIN_FILENO);
-				close(pipefd[1]);
-				close(pipefd[0]);
-		}
-	// }
-	// else
-    //     printf("\n");
+
+	if (pipe(pipefd) == -1 || (pid = fork()) == -1)
+		exit(EXIT_FAILURE);
+	else if (pid == 0)
+			handle_child_process(cmd_node, env, null_env, pipefd, data);
+	else
+	{
+		    dup2(pipefd[0], STDIN_FILENO);
+			close(pipefd[1]);
+			close(pipefd[0]);
+	}
+}
+
+char **struct_to_char(s_env *lst)
+{
+	char **env;
+	int i;
+	s_env *tmp;
+
+	i = 0;
+	tmp = lst;
+	env = malloc(sizeof(char *) * (ft_lstsize(lst) + 1));
+	while (tmp)
+	{
+		env[i] = ft_strjoin(tmp->key, "=");
+		if (tmp->value)
+			env[i] = ft_strjoin(env[i], tmp->value);
+		tmp = tmp->next;
+		i++;
+	}
+	env[i] = NULL;
+	return (env);
 }
 
 void ft_execution(ExecutionData *data)
 {
+	char	**env;
+
+	env = NULL;
+	env = struct_to_char(data->export_i);
     add_last_cmd(&data->export_i, data->args);
-    if (strcmp(data->args[0], "export") == 0 || strcmp(data->args[0], "unset") == 0 || strcmp(data->args[0], "echo") == 0 || strcmp(data->args[0], "cd") == 0 || strcmp(data->args[0], "env") == 0  || strcmp(data->args[0], "exit") == 0)
-		builtins(data->args, data->export_i, data->env);
+	if (data->lst->next == NULL && strcmp(data->lst->cmd, ""))
+	{
+			if (builtins(data) == 1)
+				execute_command(data->lst, env, data->null_env, data);
+	}
 	else
 	{
-        while (data->lst)
+		while (data->lst)
 		{
 			g_flags.envire = ft_merge_envr(data->export_i);
-        	// builtins(data->args, data->export_i, data->env);
-            execute_command(data->lst, data->env, data->null_env);
-            data->lst = data->lst->next;
-        }
-    }
+			execute_command(data->lst, env, data->null_env, data);
+			data->lst = data->lst->next;
+		}
+	}
     while (0 < wait(NULL))
 		;
 }

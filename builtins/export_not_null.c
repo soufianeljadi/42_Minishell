@@ -6,7 +6,7 @@
 /*   By: sdiouane <sdiouane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/24 21:25:42 by sdiouane          #+#    #+#             */
-/*   Updated: 2024/05/09 14:39:08 by sdiouane         ###   ########.fr       */
+/*   Updated: 2024/05/09 16:43:36 by sdiouane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,6 @@ void fct_equal(char **args, s_env *env, char *key, int f)
 	value = ft_substr(args[env->i], start, env->j - start);
 	if (f == 1)
 		value = ft_strdup("");
-	printf("++++++++++VALUE : %s\n", value);
 	if (value[0] != '\"')
 	{
 		current = env;
@@ -171,7 +170,7 @@ s_env *not_null(char **args, s_env *env)
 				{					
 					if (!existe_deja(key, env))
 					{
-						ft_lstadd_back(&env, ft_lstnew_data(NULL, key));
+						ft_lstadd_back(&env, ft_lstnew_data(strdup(""), key));
 					}
 				}
 				else

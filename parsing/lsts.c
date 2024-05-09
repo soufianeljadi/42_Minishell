@@ -6,7 +6,7 @@
 /*   By: sdiouane <sdiouane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/13 00:32:13 by sdiouane          #+#    #+#             */
-/*   Updated: 2024/05/09 14:51:41 by sdiouane         ###   ########.fr       */
+/*   Updated: 2024/05/09 16:36:33 by sdiouane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,18 +25,35 @@ s_env	*ft_lstnew(void)
 	return (b);
 }
 
-s_env	*ft_lstnew_data(char *value, char *key)
-{
-	s_env	*b;
+// s_env	*ft_lstnew_data(char *value, char *key)
+// {
+// 	s_env	*b;
 
-	b = (s_env *)malloc(sizeof(s_env));
-	if (!b)
-		exit(EXIT_FAILURE);
-	b ->key = key;
-	b ->value = value;
-	b ->next = NULL;
-	return (b);
+// 	b = (s_env *)malloc(sizeof(s_env));
+// 	if (!b)
+// 		exit(EXIT_FAILURE);
+// 	b ->key = key;
+// 	b ->value = value;
+// 	b ->next = NULL;
+// 	return (b);
+// }
+
+s_env *ft_lstnew_data(char *value, char *key)
+{
+    s_env *b;
+
+    b = (s_env *)malloc(sizeof(s_env));
+    if (!b)
+        exit(EXIT_FAILURE);
+    b->key = key;
+    if (value)
+        b->value = value;
+    else
+        b->value = NULL;
+    b->next = NULL;
+    return (b);
 }
+
 
 void	ft_lstadd_back(s_env **lst, s_env *new)
 {
@@ -75,6 +92,8 @@ void	print_list(s_env *list)
 {
 	while (list)
 	{
+		if (list->value == NULL)
+			return ;
 		if (list->value[0] || !strcmp(list->value, ""))
 		{
 			printf("%s", list->key);

@@ -6,7 +6,7 @@
 /*   By: sdiouane <sdiouane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/27 19:58:08 by sdiouane          #+#    #+#             */
-/*   Updated: 2024/05/09 12:47:48 by sdiouane         ###   ########.fr       */
+/*   Updated: 2024/05/09 20:41:49 by sdiouane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 char *get_env_value(char *key, s_env *export_i)
 {
     s_env *tmp;
-    char *value;
+    char *value = NULL;
     // int i = 0;
 
     tmp = export_i;
@@ -23,8 +23,11 @@ char *get_env_value(char *key, s_env *export_i)
     {
         if (!strcmp(tmp->key, key))
         {
-            value = strdup(tmp->value);
-            return (value);
+			if (tmp->value != NULL)
+			{
+            	value = strdup(tmp->value);
+            	return (value);
+			}
         }
         tmp = tmp->next;
     }
@@ -132,8 +135,14 @@ void ft_expanding(char **args, s_env *export_i)
                     if (!key)
                         exit(EXIT_FAILURE);       
                     value = get_env_value(key, export_i);
+					printf("value = %s\n", value);
 					if (!value)
-						break ;					
+					{
+                        key = ft_strjoin("$", key);
+                        args[i] = ft_str_replace(args[i], key, strdup(""));   
+                        args[i] = ft_substr(args[i], 0, strlen(args[i]));
+						return ;
+					}					
                     if (strcmp(value, "") && strcmp(value, " "))
                     {
                         key = ft_strjoin("$", key);
