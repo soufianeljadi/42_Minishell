@@ -6,7 +6,7 @@
 /*   By: sdiouane <sdiouane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/24 21:25:42 by sdiouane          #+#    #+#             */
-/*   Updated: 2024/05/08 18:46:05 by sdiouane         ###   ########.fr       */
+/*   Updated: 2024/05/09 11:49:35 by sdiouane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ void fct_equal(char **args, s_env *env, char *key, int f)
 			env->j++;
 	value = ft_substr(args[env->i], start, env->j - start);
 	if (f == 1)
-		value = ft_strdup(" ");
+		value = ft_strdup("");
 	if (value[0] != '\"')
 	{
 		current = env;
@@ -155,9 +155,12 @@ s_env *not_null(char **args, s_env *env)
 			j = 0;
 			if (!args[i])
 				break;
-			while (args[i][j] &&  args[i][j] != '=' && args[i][j] != '+')	
+			while (args[i][j] &&  args[i][j] != '=' && args[i][j] != '+') // here
 				j++;
 			key = ft_substr(args[i], 0, j);
+			// j++;
+			if (args[i][j] == '+' && (args[i][j + 1] != '='))
+				printf("export : %c, not a valid identifier", args[i][j]);
 			if (args[i][j] == '=' && (args[i][j + 1] == ' ' || args[i][j + 1] == '\t' || args[i][j + 1] == '\0'))
 				f = 1;
 			if (verif_export(key) == 0)

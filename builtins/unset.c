@@ -6,7 +6,7 @@
 /*   By: sdiouane <sdiouane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/23 15:04:54 by sdiouane          #+#    #+#             */
-/*   Updated: 2024/05/08 18:08:30 by sdiouane         ###   ########.fr       */
+/*   Updated: 2024/05/09 11:49:31 by sdiouane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,8 +48,8 @@ s_env *unset_fct(char **args, s_env *env)
 	{
         while (args[i])
 		{
-			printf("args[%d] = %s\n", i, args[i]);
-			cc(args[i]);
+			if (args[i][0] == '"')
+				cc(args[i]);
 			if (args[i][0] == '\'')
 				cc2(args[i]);
             j = 0;
@@ -58,11 +58,8 @@ s_env *unset_fct(char **args, s_env *env)
                 while (args[i] && args[i][j] != ' ' && args[i][j] != '\t' && args[i][j] != '\0')
                     j++;
                 key = ft_substr2(args[i], 0, j);
-                // key = get_key(args[i], j);
-
                 s_env *prev = NULL;
                 s_env *current = env;
-				printf("key = %s\n", key);
                 if (verif_export(key) == 1)
                     fprintf(stderr, "minishell: unset: %s: not a valid identifier\n", key);
 				else
@@ -93,3 +90,19 @@ s_env *unset_fct(char **args, s_env *env)
     }
     return env;
 }
+
+
+// =>  minishell => unset 'hh"h'
+// Noeud : 0
+// ->cmd : unset 'hh"h'
+// ->rederection : (null) 
+// args[1] = 'hh"h'
+// key = hhh
+
+
+// bash-3.2$ unset "hhh"
+// bash-3.2$ unset "hh'h"
+// bash: unset: `hh'h': not a valid identifier
+// bash-3.2$ unset  'hhh"hhh'
+// bash: unset: `hhh"hhh': not a valid identifier
+// bash-3.2$ 

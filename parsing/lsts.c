@@ -6,7 +6,7 @@
 /*   By: sdiouane <sdiouane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/13 00:32:13 by sdiouane          #+#    #+#             */
-/*   Updated: 2024/05/07 16:11:59 by sdiouane         ###   ########.fr       */
+/*   Updated: 2024/05/09 11:16:16 by sdiouane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,7 @@ void	print_list(s_env *list)
 {
 	while (list)
 	{
-		if (list->value[0])
+		if (list->value[0] || !strcmp(list->value, ""))
 		{
 			printf("%s", list->key);
 			printf("=%s\n", list->value);
@@ -92,12 +92,12 @@ void	print_export(s_env *list)
 			list = list->next;
 		else
 		{
-			if (!list->value[0] && strcmp(list->value, " "))
+			if (!list->value[0] && strcmp(list->value, ""))
 				printf("declare -x %s\n", list->key);
 			else
 			{
 				printf("declare -x %s=", list->key);
-				if (!strcmp(list->value, " "))
+				if (!strcmp(list->value, ""))
 					printf("\"\"\n");
 				else
 					printf("\"%s\"\n", list->value);

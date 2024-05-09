@@ -6,7 +6,7 @@
 /*   By: sdiouane <sdiouane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 23:52:10 by sdiouane          #+#    #+#             */
-/*   Updated: 2024/05/08 20:39:14 by sdiouane         ###   ########.fr       */
+/*   Updated: 2024/05/09 11:31:05 by sdiouane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,8 +89,6 @@ int is_single(char *str)
 
 	return (0);
 }
-
-
 
 void	main_loop(char *line, char **env, s_env *export_i, char **null_env)
 {
