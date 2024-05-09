@@ -6,7 +6,7 @@
 /*   By: sdiouane <sdiouane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/27 19:58:08 by sdiouane          #+#    #+#             */
-/*   Updated: 2024/05/09 11:54:01 by sdiouane         ###   ########.fr       */
+/*   Updated: 2024/05/09 12:47:48 by sdiouane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,9 +50,6 @@ char *ft_str_replace(char *source, char *pattern, char *replacement)
     strcat(new_str, occurrence + pattern_len);
     return new_str;
 }
-
-
-
 
 char *get_env_key(char *str, int i)
 {

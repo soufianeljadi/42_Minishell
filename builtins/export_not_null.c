@@ -6,7 +6,7 @@
 /*   By: sdiouane <sdiouane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/24 21:25:42 by sdiouane          #+#    #+#             */
-/*   Updated: 2024/05/09 11:49:35 by sdiouane         ###   ########.fr       */
+/*   Updated: 2024/05/09 14:39:08 by sdiouane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,7 @@ void fct_equal(char **args, s_env *env, char *key, int f)
 	value = ft_substr(args[env->i], start, env->j - start);
 	if (f == 1)
 		value = ft_strdup("");
+	printf("++++++++++VALUE : %s\n", value);
 	if (value[0] != '\"')
 	{
 		current = env;
@@ -163,12 +164,15 @@ s_env *not_null(char **args, s_env *env)
 				printf("export : %c, not a valid identifier", args[i][j]);
 			if (args[i][j] == '=' && (args[i][j + 1] == ' ' || args[i][j + 1] == '\t' || args[i][j + 1] == '\0'))
 				f = 1;
+			printf("++++++++++++++++++KEY : %s\n", key);
 			if (verif_export(key) == 0)
 			{
 				if (args[i][j] == '\0')
 				{					
 					if (!existe_deja(key, env))
-						ft_lstadd_back(&env, ft_lstnew_data(strdup(""), key));
+					{
+						ft_lstadd_back(&env, ft_lstnew_data(NULL, key));
+					}
 				}
 				else
 				{
