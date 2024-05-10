@@ -6,7 +6,7 @@
 /*   By: sdiouane <sdiouane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 23:52:10 by sdiouane          #+#    #+#             */
-/*   Updated: 2024/05/09 21:42:43 by sdiouane         ###   ########.fr       */
+/*   Updated: 2024/05/10 12:08:10 by sdiouane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,16 +86,25 @@ int is_single(char *str)
 		return (1);
 	else
 		return (0);
-
 	return (0);
 }
 
-void	main_loop(char *line, char **env, s_env *export_i, char **null_env)
+ExecutionData *init_data(char **args, noued_cmd *cmd, s_env *export_i, char **null_env)
 {
-	char **args = NULL;
-	noued_cmd *cmd = NULL;
-	dup2(0, 3);
-	dup2(1, 4);
+	ExecutionData *data = (ExecutionData *)malloc(sizeof(ExecutionData));
+	if (!data)
+		return (NULL);
+	data->lst = cmd;
+	data->args = args;
+	data->export_i = export_i;
+	data->null_env = null_env;
+	return (data);
+}
+
+
+void loop_fct(ExecutionData *data, char *line)
+{
+	(1) && (dup2(0, 3),dup2(1, 4));
 	while (42)
 	{
 		line = readline(ANSI_COLOR_CYAN "=>  "ANSI_COLOR_CYAN  "minishell => "   ANSI_RESET_ALL "");
@@ -106,28 +115,33 @@ void	main_loop(char *line, char **env, s_env *export_i, char **null_env)
 			add_history(line);
 			if(parsing(line) == 1)		
 				syntax_error();
-			else
+			else 
 			{
-				args = line_to_args(line);
-				if (!args)
+				data->args = line_to_args(line);
+				if (!data->args)
 					continue ;
-				ft_expanding(args, export_i);
-				cmd = split_args_by_pipe(args);
-				print_command_list(cmd);
-				ExecutionData data;
-				data.lst = cmd;
-				data.args = args;
-				data.env = env;
-				data.export_i = export_i;
-				data.null_env = null_env;
-				ft_execution(&data);
-				free (args);
-				free_noued_cmd(cmd);
+				ft_expanding(data->args, data->export_i);
+				data->lst = split_args_by_pipe(data->args);
+				// print_command_list(data->lst);
+				ft_execution(data);
+				(free (data->args), free_noued_cmd(data->lst));
 			}
 		}
-		dup2(3, 0);
-		dup2(4, 1);
-	}
+		(1) && (dup2(3, 0), dup2(4, 1));
+	}	
+}
+
+void	main_loop(char *line, s_env *export_i, char **null_env)
+{
+	char **args;
+	noued_cmd *cmd;
+	ExecutionData *data;
+	
+	data = NULL;
+	args = NULL;
+	cmd = NULL;
+	data = init_data(args, cmd, export_i, null_env);
+	loop_fct(data, line);
 	free(line);
 	clear_history();
 	free_noued_cmd(cmd);
@@ -161,7 +175,7 @@ int main(int ac, char **av, char **env)
 	rl_catch_signals = 0;
 	signal(SIGQUIT, signal_ctrl_c_d);
 	signal(SIGINT, signal_ctrl_c_d);
-	main_loop(line,env, export_i, &null_env);
+	main_loop(line, export_i, &null_env);
 	// free(line);
 	free_s_env(export_i);
 	close(3);

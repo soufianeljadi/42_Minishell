@@ -6,7 +6,7 @@
 /*   By: sdiouane <sdiouane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/31 22:14:48 by sdiouane          #+#    #+#             */
-/*   Updated: 2024/05/09 21:42:33 by sdiouane         ###   ########.fr       */
+/*   Updated: 2024/05/10 12:10:22 by sdiouane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -150,29 +150,28 @@ static char	**ft_merge_envr(s_env *export_i)
 	return (str);
 }
 
-static void handle_child_process(noued_cmd *cmd_node, char **env, char **null_env, int pipefd[], ExecutionData *data)
+static void handle_child_process(noued_cmd *cmd_node, char **env, char **null_env, ExecutionData *data)
 {
-    if (cmd_node->next != NULL)
-        dup2(pipefd[1], STDOUT_FILENO);
-    close(pipefd[1]);
-    close(pipefd[0]);
+	char **environment;
 
+	environment = NULL;
+	if (env[0])
+		environment = env;
+	else
+		environment = null_env;
     if (cmd_node->redirection != NULL)
 	{
-        char **environment = env[0] ? env : null_env;
 		if (builtins(data) == 1)
-        	execute_with_redirection(cmd_node->cmd, environment, cmd_node->redirection, data);
+        	execute_with_redirection(cmd_node->cmd, environment, cmd_node->redirection);
 		exit(EXIT_SUCCESS);
-    }
+    }             
 	else
 	{
-        char **environment = env[0] ? env : null_env;
 		if(builtins(data) == 1)
        		execute(cmd_node->cmd, environment);
 		exit(EXIT_SUCCESS);
     }
-}
-
+} 
 
 static void execute_command(noued_cmd *cmd_node, char **env, char **null_env, ExecutionData *data)
 {
@@ -182,7 +181,13 @@ static void execute_command(noued_cmd *cmd_node, char **env, char **null_env, Ex
 	if (pipe(pipefd) == -1 || (pid = fork()) == -1)
 		exit(EXIT_FAILURE);
 	else if (pid == 0)
-			handle_child_process(cmd_node, env, null_env, pipefd, data);
+	{
+		    if (cmd_node->next != NULL)
+        		dup2(pipefd[1], STDOUT_FILENO);
+			close(pipefd[1]);
+			close(pipefd[0]);
+			handle_child_process(cmd_node, env, null_env, data);
+	}
 	else
 	{
 		    dup2(pipefd[0], STDIN_FILENO);
@@ -221,8 +226,8 @@ void ft_execution(ExecutionData *data)
     add_last_cmd(&data->export_i, data->args);
 	if (data->lst->next == NULL && strcmp(data->lst->cmd, ""))
 	{
-			if (builtins(data) == 1)
-				execute_command(data->lst, env, data->null_env, data);
+		if (builtins(data) == 1)
+			execute_command(data->lst, env, data->null_env, data);
 	}
 	else
 	{
