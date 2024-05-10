@@ -6,7 +6,7 @@
 /*   By: sdiouane <sdiouane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 23:52:10 by sdiouane          #+#    #+#             */
-/*   Updated: 2024/05/10 12:08:10 by sdiouane         ###   ########.fr       */
+/*   Updated: 2024/05/10 13:15:37 by sdiouane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,7 +102,7 @@ ExecutionData *init_data(char **args, noued_cmd *cmd, s_env *export_i, char **nu
 }
 
 
-void loop_fct(ExecutionData *data, char *line)
+void loop_fct(ExecutionData *data, char *line, s_env *export_i, char **null_env)
 {
 	(1) && (dup2(0, 3),dup2(1, 4));
 	while (42)
@@ -123,7 +123,7 @@ void loop_fct(ExecutionData *data, char *line)
 				ft_expanding(data->args, data->export_i);
 				data->lst = split_args_by_pipe(data->args);
 				// print_command_list(data->lst);
-				ft_execution(data);
+				ft_execution(data, export_i, null_env);
 				(free (data->args), free_noued_cmd(data->lst));
 			}
 		}
@@ -141,7 +141,13 @@ void	main_loop(char *line, s_env *export_i, char **null_env)
 	args = NULL;
 	cmd = NULL;
 	data = init_data(args, cmd, export_i, null_env);
-	loop_fct(data, line);
+	// int i = 0;
+	// while (data)
+	// {
+	// 	printf("data->args[%d] = %s\n", i, data->args[i]);
+	// 	i++;
+	// }
+	loop_fct(data, line, export_i, null_env);
 	free(line);
 	clear_history();
 	free_noued_cmd(cmd);

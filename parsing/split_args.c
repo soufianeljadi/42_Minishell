@@ -6,7 +6,7 @@
 /*   By: sdiouane <sdiouane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/26 00:12:06 by sel-jadi          #+#    #+#             */
-/*   Updated: 2024/05/10 12:06:29 by sdiouane         ###   ########.fr       */
+/*   Updated: 2024/05/10 13:23:57 by sdiouane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,7 +98,7 @@ char	**line_to_args(char *line)
 	d.dq = 0;
 	d.sq = 0;
 	d.i = 0;
-	printf("line[0] = |%c|\tline[1] = |%c|\n", line[0], line[1]);
+	// printf("line[0] = |%c|\tline[1] = |%c|\n", line[0], line[1]);
 	// if ((line[0] == '>' || line[0] == '<' || line[0] == '|') && (line[1] == ' ' || line[1] == '\t' || line[1] == '\0'))
 	// {
 	// 	syntax_error();
@@ -107,12 +107,12 @@ char	**line_to_args(char *line)
 	sp_line = ft_add_sep(line, d);
 	cmds = split_args(sp_line);
 
-	int i = 0;
-	while (cmds[i])
-	{
-		printf("cmds[%d] = |%s|\n", i, cmds[i]);
-		i++;
-	}
+	// int i = 0;
+	// while (cmds[i])
+	// {
+	// 	printf("cmds[%d] = |%s|\n", i, cmds[i]);
+	// 	i++;
+	// }
 	
 	free(sp_line);
 	return (cmds);

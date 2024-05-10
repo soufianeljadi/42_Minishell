@@ -6,7 +6,7 @@
 /*   By: sdiouane <sdiouane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 23:51:44 by sdiouane          #+#    #+#             */
-/*   Updated: 2024/05/10 11:49:37 by sdiouane         ###   ########.fr       */
+/*   Updated: 2024/05/10 13:20:12 by sdiouane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -180,9 +180,10 @@ void nbr_quotes(char *str);
 
 /**********************BUILTINS***********************************/
 // void builtins(char **args, s_env *export_i, char **env);
-int builtins(ExecutionData *data);
+// int builtins(ExecutionData *data);
+int builtins(ExecutionData *data, s_env *export_i, char **env);
 // export :
-s_env *export_fct(char **args, s_env *env, s_env *split_export_i, char **eenv);
+s_env *export_fct(char **args, s_env *env, char **eenv);
 int existe_deja(char *key, s_env *env);
 char *remove_quotes(char *input);
 int	verif_export(char *str);
@@ -219,7 +220,8 @@ char	*ft_strdup_gnl(char *s1);
 
 /***********************execution********************************/
 // void ft_execution(noued_cmd *lst, char **args, char **env, s_env *export_i, char **null_env);
-void ft_execution(ExecutionData *data);
+// void ft_execution(ExecutionData *data);
+void ft_execution(ExecutionData *data, s_env *export_i, char **null_env);
 void execute(char *s, char **env);
 void pipeline(char ***cmd);
 void supprimerGuillemets(char *chaine);

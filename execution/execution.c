@@ -6,7 +6,7 @@
 /*   By: sdiouane <sdiouane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/31 22:14:48 by sdiouane          #+#    #+#             */
-/*   Updated: 2024/05/10 12:10:22 by sdiouane         ###   ########.fr       */
+/*   Updated: 2024/05/10 13:22:30 by sdiouane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -161,13 +161,13 @@ static void handle_child_process(noued_cmd *cmd_node, char **env, char **null_en
 		environment = null_env;
     if (cmd_node->redirection != NULL)
 	{
-		if (builtins(data) == 1)
+		if (builtins(data, data->export_i, null_env) == 1)
         	execute_with_redirection(cmd_node->cmd, environment, cmd_node->redirection);
 		exit(EXIT_SUCCESS);
     }             
 	else
 	{
-		if(builtins(data) == 1)
+		if (builtins(data, data->export_i, null_env) == 1)
        		execute(cmd_node->cmd, environment);
 		exit(EXIT_SUCCESS);
     }
@@ -217,7 +217,7 @@ char **struct_to_char(s_env *lst)
 	return (env);
 }
 
-void ft_execution(ExecutionData *data)
+void ft_execution(ExecutionData *data, s_env *export_i, char **null_env)
 {
 	char	**env;
 
@@ -226,7 +226,7 @@ void ft_execution(ExecutionData *data)
     add_last_cmd(&data->export_i, data->args);
 	if (data->lst->next == NULL && strcmp(data->lst->cmd, ""))
 	{
-		if (builtins(data) == 1)
+		if (builtins(data, export_i, null_env) == 1)
 			execute_command(data->lst, env, data->null_env, data);
 	}
 	else
