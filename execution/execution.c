@@ -6,7 +6,7 @@
 /*   By: sdiouane <sdiouane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/31 22:14:48 by sdiouane          #+#    #+#             */
-/*   Updated: 2024/05/11 11:09:26 by sdiouane         ###   ########.fr       */
+/*   Updated: 2024/05/11 12:47:04 by sdiouane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -154,9 +154,9 @@ static void handle_child_process(ExecutionData *data)
 {;
     if (data->lst->redirection != NULL)
 	{
-		if (builtins(data) == 1)
+		// if (builtins(data) == 1)
         	execute_with_redirection(data);
-		exit(EXIT_SUCCESS);
+		// exit(EXIT_SUCCESS);
     }             
 	else
 	{

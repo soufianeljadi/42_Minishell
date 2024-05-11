@@ -6,7 +6,7 @@
 /*   By: sdiouane <sdiouane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/05 23:00:01 by sdiouane          #+#    #+#             */
-/*   Updated: 2024/05/11 11:10:04 by sdiouane         ###   ########.fr       */
+/*   Updated: 2024/05/11 12:40:59 by sdiouane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,7 +101,7 @@ static void redirection_double_out(char *redirection, int *fd)
 static void redirection_in(char *redirection, int *fd)
 {
 	char *token_in;
-	
+	printf("redirection = %s\n", redirection);
 	token_in = strtok(redirection, "<");
 	while (token_in != NULL)
 	{
@@ -161,10 +161,12 @@ void execute_with_redirection(ExecutionData *data)
     int fd_out;
 	int i;
 	char **red;
-
+	
 	(1) && (fd_in = -1, fd_out = -1, i = 0, red = ft_split(data->lst->redirection, ' '));
-	while (red[i] && *red != NULL)
+	// while (red[i] && *red != NULL)
+	while (red[i] != NULL)
 	{
+	// printf("red[%d] = %s\n", i, red[i]);
 		if (red[i][0] == '<')
 			redirection_in(red[i], &fd_in);
 		else if (red[i][0] == '>')
@@ -174,6 +176,7 @@ void execute_with_redirection(ExecutionData *data)
 		}
 		else if (red[i][0] == '>' && red[i][1] == '>')
 			redirection_double_out(red[i], &fd_out);
+			// printf(" i : %d\n", i);
 		i++;
 	}
 	if (fd_in != -1)
