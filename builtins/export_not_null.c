@@ -6,7 +6,7 @@
 /*   By: sdiouane <sdiouane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/24 21:25:42 by sdiouane          #+#    #+#             */
-/*   Updated: 2024/05/09 16:43:36 by sdiouane         ###   ########.fr       */
+/*   Updated: 2024/05/11 10:57:02 by sdiouane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -136,7 +136,11 @@ s_env *not_null(char **args, s_env *env)
 	int j;
 	char *key;
 	int f = 0;
-
+		while (args[i])
+		{
+			printf("args[%d] = %s\n", i, args[i]);
+			i++;
+		}
 	i = 1;
 	if (!strcmp(args[0], "export") && !args[1])
 		print_export(env);

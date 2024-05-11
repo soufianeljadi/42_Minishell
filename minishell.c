@@ -6,7 +6,7 @@
 /*   By: sdiouane <sdiouane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 23:52:10 by sdiouane          #+#    #+#             */
-/*   Updated: 2024/05/10 13:15:37 by sdiouane         ###   ########.fr       */
+/*   Updated: 2024/05/11 11:14:28 by sdiouane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,7 +89,7 @@ int is_single(char *str)
 	return (0);
 }
 
-ExecutionData *init_data(char **args, noued_cmd *cmd, s_env *export_i, char **null_env)
+ExecutionData *init_data(char **args, noued_cmd *cmd, s_env *export_i)
 {
 	ExecutionData *data = (ExecutionData *)malloc(sizeof(ExecutionData));
 	if (!data)
@@ -97,12 +97,11 @@ ExecutionData *init_data(char **args, noued_cmd *cmd, s_env *export_i, char **nu
 	data->lst = cmd;
 	data->args = args;
 	data->export_i = export_i;
-	data->null_env = null_env;
 	return (data);
 }
 
 
-void loop_fct(ExecutionData *data, char *line, s_env *export_i, char **null_env)
+void loop_fct(ExecutionData *data, char *line)
 {
 	(1) && (dup2(0, 3),dup2(1, 4));
 	while (42)
@@ -122,8 +121,8 @@ void loop_fct(ExecutionData *data, char *line, s_env *export_i, char **null_env)
 					continue ;
 				ft_expanding(data->args, data->export_i);
 				data->lst = split_args_by_pipe(data->args);
-				// print_command_list(data->lst);
-				ft_execution(data, export_i, null_env);
+				print_command_list(data->lst);
+				ft_execution(data);
 				(free (data->args), free_noued_cmd(data->lst));
 			}
 		}
@@ -131,7 +130,7 @@ void loop_fct(ExecutionData *data, char *line, s_env *export_i, char **null_env)
 	}	
 }
 
-void	main_loop(char *line, s_env *export_i, char **null_env)
+void	main_loop(char *line, s_env *export_i)
 {
 	char **args;
 	noued_cmd *cmd;
@@ -140,14 +139,14 @@ void	main_loop(char *line, s_env *export_i, char **null_env)
 	data = NULL;
 	args = NULL;
 	cmd = NULL;
-	data = init_data(args, cmd, export_i, null_env);
+	data = init_data(args, cmd, export_i);
 	// int i = 0;
 	// while (data)
 	// {
 	// 	printf("data->args[%d] = %s\n", i, data->args[i]);
 	// 	i++;
 	// }
-	loop_fct(data, line, export_i, null_env);
+	loop_fct(data, line);
 	free(line);
 	clear_history();
 	free_noued_cmd(cmd);
@@ -165,23 +164,19 @@ int main(int ac, char **av, char **env)
 	(void)av;
 	// atexit(f);
 	char *line = NULL;
-	char *null_env = NULL;
 	s_env *export_i = NULL;
 
 	if (ac != 1)
 		(printf("Args not allowed !\n"),exit(EXIT_FAILURE));
 	if (!env[0])
-	{
 		export_i = split_export_i(export_i);
-		null_env = ft_strdup("PATH=/usr/gnu/bin:/usr/local/bin:/bin:/usr/bin:.");
-	}
 	else
 		export_i = split_env(env);
 	//signals
 	rl_catch_signals = 0;
 	signal(SIGQUIT, signal_ctrl_c_d);
 	signal(SIGINT, signal_ctrl_c_d);
-	main_loop(line, export_i, &null_env);
+	main_loop(line, export_i);
 	// free(line);
 	free_s_env(export_i);
 	close(3);

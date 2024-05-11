@@ -6,7 +6,7 @@
 /*   By: sdiouane <sdiouane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 23:51:44 by sdiouane          #+#    #+#             */
-/*   Updated: 2024/05/10 13:20:12 by sdiouane         ###   ########.fr       */
+/*   Updated: 2024/05/11 11:07:55 by sdiouane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,20 +97,19 @@ typedef struct g_variables
 	char		**envire;
 }					t_var;
 
-
+#define MAX_TOKEN_LENGTH 100
 
 typedef struct
 {
     noued_cmd *lst;
     char **args;
-    char **env;
     s_env *export_i;
-    char **null_env;
+    char **env;
 } ExecutionData;
 
 /**********************MAIN***********************************/
 	// init_env
-void	main_loop(char *line, s_env *export_i, char **null_env);
+void	main_loop(char *line, s_env *export_i);
 /**********************PARSING***********************************/
 	// lst :
 s_env	*ft_lstnew();
@@ -181,7 +180,7 @@ void nbr_quotes(char *str);
 /**********************BUILTINS***********************************/
 // void builtins(char **args, s_env *export_i, char **env);
 // int builtins(ExecutionData *data);
-int builtins(ExecutionData *data, s_env *export_i, char **env);
+int builtins(ExecutionData *data);
 // export :
 s_env *export_fct(char **args, s_env *env, char **eenv);
 int existe_deja(char *key, s_env *env);
@@ -221,7 +220,7 @@ char	*ft_strdup_gnl(char *s1);
 /***********************execution********************************/
 // void ft_execution(noued_cmd *lst, char **args, char **env, s_env *export_i, char **null_env);
 // void ft_execution(ExecutionData *data);
-void ft_execution(ExecutionData *data, s_env *export_i, char **null_env);
+void ft_execution(ExecutionData *data);
 void execute(char *s, char **env);
 void pipeline(char ***cmd);
 void supprimerGuillemets(char *chaine);
@@ -232,7 +231,7 @@ void	ft_putstr_fd(char *s, int fd);
 void	ft_putendl_fd(char *s, int fd);
 	// redirections :
 char	*file_nc(char *s);
-void execute_with_redirection(char *cmd, char **env, char *redirection);
+void execute_with_redirection(ExecutionData *data);
 int		only_spaces(char *str);
 s_env	*split_env(char **env);
 s_env	*split_export_i(s_env *lst);

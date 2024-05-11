@@ -6,7 +6,7 @@
 /*   By: sdiouane <sdiouane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/05 23:07:50 by sdiouane          #+#    #+#             */
-/*   Updated: 2024/05/01 16:13:01 by sdiouane         ###   ########.fr       */
+/*   Updated: 2024/05/11 11:55:14 by sdiouane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,13 +69,12 @@ s_env *split_env(char **env)
 
 s_env *add_env_entry(s_env *head, char *key, char *value)
 {
-    s_env *lst;
+   static  s_env *lst;
 	
 	lst = (s_env*)malloc(sizeof(s_env));
 	
     if (lst == NULL)
         exit(EXIT_FAILURE);
-		
     lst->key = ft_strdup(key);
 	if (value)
 	{
@@ -84,15 +83,18 @@ s_env *add_env_entry(s_env *head, char *key, char *value)
     if (lst->key == NULL)
         exit(EXIT_FAILURE);
     lst->next = head;
-
     return (lst);
 }
 
 s_env *split_export_i(s_env *lst)
 {
     lst = add_env_entry(lst, "_", "/usr/bin/env");
+	printf ("%p\n", lst);
     lst = add_env_entry(lst, "OLDPWD", "");
+	printf ("%p\n", lst);
     lst = add_env_entry(lst, "SHLVL", "2");
+	printf ("%p\n", lst);
     lst = add_env_entry(lst, "PWD", "/Users/sdiouane/Desktop/our_big_shell");
+	printf ("%p\n", lst);
     return (lst);
 }

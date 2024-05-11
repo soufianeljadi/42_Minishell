@@ -6,7 +6,7 @@
 /*   By: sdiouane <sdiouane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/31 22:14:48 by sdiouane          #+#    #+#             */
-/*   Updated: 2024/05/10 13:22:30 by sdiouane         ###   ########.fr       */
+/*   Updated: 2024/05/11 11:09:26 by sdiouane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -150,30 +150,23 @@ static char	**ft_merge_envr(s_env *export_i)
 	return (str);
 }
 
-static void handle_child_process(noued_cmd *cmd_node, char **env, char **null_env, ExecutionData *data)
-{
-	char **environment;
-
-	environment = NULL;
-	if (env[0])
-		environment = env;
-	else
-		environment = null_env;
-    if (cmd_node->redirection != NULL)
+static void handle_child_process(ExecutionData *data)
+{;
+    if (data->lst->redirection != NULL)
 	{
-		if (builtins(data, data->export_i, null_env) == 1)
-        	execute_with_redirection(cmd_node->cmd, environment, cmd_node->redirection);
+		if (builtins(data) == 1)
+        	execute_with_redirection(data);
 		exit(EXIT_SUCCESS);
     }             
 	else
 	{
-		if (builtins(data, data->export_i, null_env) == 1)
-       		execute(cmd_node->cmd, environment);
+		if (builtins(data) == 1)
+       		execute(data->lst->cmd, data->env);
 		exit(EXIT_SUCCESS);
     }
 } 
 
-static void execute_command(noued_cmd *cmd_node, char **env, char **null_env, ExecutionData *data)
+static void execute_command(ExecutionData *data)
 {
 	int pipefd[2];
     pid_t pid;
@@ -182,11 +175,11 @@ static void execute_command(noued_cmd *cmd_node, char **env, char **null_env, Ex
 		exit(EXIT_FAILURE);
 	else if (pid == 0)
 	{
-		    if (cmd_node->next != NULL)
+		    if (data->lst->next != NULL)
         		dup2(pipefd[1], STDOUT_FILENO);
 			close(pipefd[1]);
 			close(pipefd[0]);
-			handle_child_process(cmd_node, env, null_env, data);
+			handle_child_process(data);
 	}
 	else
 	{
@@ -217,24 +210,25 @@ char **struct_to_char(s_env *lst)
 	return (env);
 }
 
-void ft_execution(ExecutionData *data, s_env *export_i, char **null_env)
+void ft_execution(ExecutionData *data)
 {
 	char	**env;
 
 	env = NULL;
 	env = struct_to_char(data->export_i);
+	data->env = env;
     add_last_cmd(&data->export_i, data->args);
 	if (data->lst->next == NULL && strcmp(data->lst->cmd, ""))
 	{
-		if (builtins(data, export_i, null_env) == 1)
-			execute_command(data->lst, env, data->null_env, data);
+		if (builtins(data) == 1)
+			execute_command(data);
 	}
 	else
 	{
 		while (data->lst)
 		{
 			g_flags.envire = ft_merge_envr(data->export_i);
-			execute_command(data->lst, env, data->null_env, data);
+			execute_command(data);
 			data->lst = data->lst->next;
 		}
 	}

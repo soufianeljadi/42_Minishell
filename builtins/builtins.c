@@ -6,7 +6,7 @@
 /*   By: sdiouane <sdiouane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/26 01:07:33 by sel-jadi          #+#    #+#             */
-/*   Updated: 2024/05/10 13:23:15 by sdiouane         ###   ########.fr       */
+/*   Updated: 2024/05/11 11:07:00 by sdiouane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,48 @@ int	is_builtins(char **args, s_env *export_i, char **env, int *flag)
 	return (*flag);
 }
 
-int builtins(ExecutionData *data, s_env *export_i, char **env)
+
+char** split_with_quotes(const char* text) {
+    char** tokens = malloc(sizeof(char*) * MAX_TOKEN_LENGTH);
+    int token_count = 0;
+    int in_quote = 0;
+    const char* start = text;
+    const char* end = text;
+
+    while (*end != '\0') {
+        if (*end == '"' || *end == '\'') {
+            in_quote = !in_quote;
+            end++;
+        } else if ((*end == ' ' || *end == '\t') && !in_quote) {
+            int length = end - start;
+            if (length > 0) {
+                tokens[token_count] = malloc(sizeof(char) * (length + 1));
+                strncpy(tokens[token_count], start, length);
+                tokens[token_count][length] = '\0';
+                token_count++;
+            }
+            while (*end == ' ' || *end == '\t') {
+                end++;
+            }
+            start = end;
+        } else {
+            end++;
+        }
+    }
+
+    int length = end - start;
+    if (length > 0) {
+        tokens[token_count] = malloc(sizeof(char) * (length + 1));
+        strncpy(tokens[token_count], start, length);
+        tokens[token_count][length] = '\0';
+        token_count++;
+    }
+
+    tokens[token_count] = NULL;
+    return tokens;
+}
+
+int builtins(ExecutionData *data)
 {
 	char **args = NULL;
 	int flag = 0;
@@ -75,8 +116,10 @@ int builtins(ExecutionData *data, s_env *export_i, char **env)
 
 	if (data->lst->cmd[0] != '\0' && data->lst->cmd[0])
 	{
-		args = ft_split(data->lst->cmd, ' ');
-		flag = is_builtins(args, export_i, env ,&flag);
+		// args = ft_split(data->lst->cmd, ' ');
+		args = split_with_quotes(data->lst->cmd);
+
+		flag = is_builtins(data->args, data->export_i, data->env ,&flag);
 	}
 	else
 		return (1);

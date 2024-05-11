@@ -6,7 +6,7 @@
 /*   By: sdiouane <sdiouane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/05 23:00:01 by sdiouane          #+#    #+#             */
-/*   Updated: 2024/05/10 12:08:04 by sdiouane         ###   ########.fr       */
+/*   Updated: 2024/05/11 11:10:04 by sdiouane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -155,14 +155,14 @@ static int redirection_out(char *redirection, int *fd)
 	
 // }
 
-void execute_with_redirection(char *cmd, char **env, char *redirection)
+void execute_with_redirection(ExecutionData *data)
 {
     int fd_in;
     int fd_out;
 	int i;
 	char **red;
 
-	(1) && (fd_in = -1, fd_out = -1, i = 0, red = ft_split(redirection, ' '));
+	(1) && (fd_in = -1, fd_out = -1, i = 0, red = ft_split(data->lst->redirection, ' '));
 	while (red[i] && *red != NULL)
 	{
 		if (red[i][0] == '<')
@@ -180,6 +180,6 @@ void execute_with_redirection(char *cmd, char **env, char *redirection)
 		close(fd_in);
 	if (fd_out != -1)
 		close(fd_out);
-	if (cmd != NULL && strspn(cmd, " ") != strlen(cmd))
-       		execute(cmd, env);
+	if (data->lst->cmd != NULL && strspn(data->lst->cmd, " ") != strlen(data->lst->cmd))
+       		execute(data->lst->cmd, data->env);
 }
