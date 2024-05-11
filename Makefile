@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: sdiouane <sdiouane@student.42.fr>          +#+  +:+       +#+         #
+#    By: sel-jadi <sel-jadi@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/03/12 23:52:42 by sdiouane          #+#    #+#              #
-#    Updated: 2024/05/11 15:20:19 by sdiouane         ###   ########.fr        #
+#    Updated: 2024/05/11 20:30:44 by sel-jadi         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -46,6 +46,7 @@ SRC =	minishell.c \
 		execution/redirections.c \
 		execution/helper.c \
 		execution/split_space_tab.c \
+		execution/heredoc.c \
 		gnl/get_next_line.c \
 		gnl/get_next_line_utils.c \
 

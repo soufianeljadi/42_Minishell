@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sdiouane <sdiouane@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sel-jadi <sel-jadi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 23:51:44 by sdiouane          #+#    #+#             */
-/*   Updated: 2024/05/11 11:07:55 by sdiouane         ###   ########.fr       */
+/*   Updated: 2024/05/11 20:30:22 by sel-jadi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -248,5 +248,9 @@ char *get_env_value(char *key, s_env *export_i);
 char *ft_str_replace(char *s, char *key, char *value);
 
 int is_single(char *str);
+//heredoc
+void	handle_sigint_heredoc(int sig);
+int		heredoc(ExecutionData *data);
+void	signals_init(void);
 t_var	g_flags;
 #endif

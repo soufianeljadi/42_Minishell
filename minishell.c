@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sdiouane <sdiouane@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sel-jadi <sel-jadi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 23:52:10 by sdiouane          #+#    #+#             */
-/*   Updated: 2024/05/11 19:45:53 by sdiouane         ###   ########.fr       */
+/*   Updated: 2024/05/11 20:29:54 by sel-jadi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,11 +101,114 @@ ExecutionData *init_data(char **args, noued_cmd *cmd, s_env *export_i)
 }
 
 
+char	*add2write(char *dest, char *str3, int j)
+{
+	int	i;
+
+	i = 0;
+	if (str3)
+	{
+		while (str3[i])
+		{
+			dest[j] = str3[i];
+			i++;
+			j++;
+		}
+	}
+	dest[j] = '\0';
+	return (dest);
+}
+char	*add_write_str(char *str1, char *str2, char *str3)
+{
+	char	*dest;
+	int		i;
+	int		j;
+
+	i = 0;
+	j = 0;
+	dest = malloc(sizeof(char) * (ft_strlen(str1) + ft_strlen(str2)
+				+ ft_strlen(str3)  + 1));
+	if (str1)
+	{
+		while (str1[i])
+		{
+			dest[j] = str1[i];
+			i++;
+			j++;
+		}
+	}
+	i = 0;
+	if (str2)
+	{
+		while (str2[i])
+		{
+			dest[j] = str2[i];
+			i++;
+			j++;
+		}
+	}
+	add2write(dest, str3, j);
+	return (dest);
+}
+
+
+char	*get_directory(char *pwd)
+{
+	char	*str;
+	int		len;
+	int		i;
+
+	i = ft_strlen(pwd);
+	while (i > 0)
+	{
+		if (pwd[i] == '/')
+			break ;
+		i--;
+	}
+	i++;
+	str = malloc(sizeof(char) * ((ft_strlen(pwd) - i) + 3));
+	len = 0;
+	while (pwd[i] && pwd[i + 1])
+	{
+		str[len] = pwd[i];
+		len++;
+		i++;
+	}
+	str[len] = pwd[i];
+	str[len + 1] = '>';
+	str[len + 2] = ' ';
+	str[len + 3] = '\0';
+	return (str);
+}
+char	*print_directory(char *pwd)
+{
+	char	*directory = NULL;
+	char	*pwd2 = NULL;
+	char	*fin =  NULL;
+
+	pwd2 = getcwd(NULL, 0);
+	if (pwd2)
+	{
+		directory = get_directory(pwd2);
+		fin = add_write_str((ANSI_COLOR_RED), directory ,(ANSI_COLOR_WHITE));
+		free(directory);
+		free(pwd);
+		free(pwd2);
+		return (fin);
+	}
+	return (pwd);
+}
+
 void loop_fct(ExecutionData *data, char *line)
 {
+	char	*pwd = NULL;
+
+	(1) && (dup2(0, 3),dup2(1, 4));
 	while (42)
 	{
-		line = readline(ANSI_COLOR_CYAN "=>  "ANSI_COLOR_CYAN  "minishell => "   ANSI_RESET_ALL "");
+		pwd = print_directory(pwd);
+		//read_line
+		line = readline(pwd);
 		if (!line)
 			(printf("exit\n"),exit(0));
 		if(line != NULL && only_spaces(line) == 0)
