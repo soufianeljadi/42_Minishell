@@ -6,7 +6,7 @@
 /*   By: sdiouane <sdiouane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/27 23:28:30 by sdiouane          #+#    #+#             */
-/*   Updated: 2024/05/06 20:06:37 by sdiouane         ###   ########.fr       */
+/*   Updated: 2024/05/11 17:17:58 by sdiouane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,7 +111,7 @@ noued_cmd *split_args_by_pipe(char **args)
 	while (args[i])
 	{
 		if (strcmp(args[i], "|") == 0) 
-			(add_back_noued_cmd(&cmd, s, redirection), free(s), s = NULL);
+			(add_back_noued_cmd(&cmd, s, redirection), free(s), free (redirection), redirection = NULL, s = NULL);
 		else if (strcmp(args[i], "<") == 0 || strcmp(args[i], ">") == 0
 		|| strcmp(args[i], ">>") == 0 || strcmp(args[i], "<<") == 0)
 		{
@@ -125,6 +125,7 @@ noued_cmd *split_args_by_pipe(char **args)
 		i++;
 	}
 	(add_back_noued_cmd(&cmd, s, redirection),	free(s));
+	// free(redirection);
 	return (cmd);
 }
 

@@ -6,7 +6,7 @@
 /*   By: sdiouane <sdiouane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 23:52:10 by sdiouane          #+#    #+#             */
-/*   Updated: 2024/05/11 11:14:28 by sdiouane         ###   ########.fr       */
+/*   Updated: 2024/05/11 16:48:29 by sdiouane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -117,10 +117,11 @@ void loop_fct(ExecutionData *data, char *line)
 			else 
 			{
 				data->args = line_to_args(line);
-				if (!data->args)
-					continue ;
-				ft_expanding(data->args, data->export_i);
+				// if (!strcmp(data->args[0], "|"))
+				// 	syntax_error();
+				// ft_expanding(data->args, data->export_i);
 				data->lst = split_args_by_pipe(data->args);
+				ft_expanding(data->args, data->export_i);
 				print_command_list(data->lst);
 				ft_execution(data);
 				(free (data->args), free_noued_cmd(data->lst));
@@ -140,17 +141,11 @@ void	main_loop(char *line, s_env *export_i)
 	args = NULL;
 	cmd = NULL;
 	data = init_data(args, cmd, export_i);
-	// int i = 0;
-	// while (data)
-	// {
-	// 	printf("data->args[%d] = %s\n", i, data->args[i]);
-	// 	i++;
-	// }
 	loop_fct(data, line);
 	free(line);
 	clear_history();
 	free_noued_cmd(cmd);
-	ft_free_tab(args);
+	// ft_free_tab(args);
 }
 
 void	f(void)

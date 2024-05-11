@@ -6,7 +6,7 @@
 /*   By: sdiouane <sdiouane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/27 19:58:08 by sdiouane          #+#    #+#             */
-/*   Updated: 2024/05/09 20:41:49 by sdiouane         ###   ########.fr       */
+/*   Updated: 2024/05/11 16:14:06 by sdiouane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -121,7 +121,11 @@ void ft_expanding(char **args, s_env *export_i)
     char *value;
     i = j = 0;
 
-    
+    if (!strcmp(args[0], "|"))
+	{
+		syntax_error();
+		return ;
+	}
     while (args[i])
     {
         if (is_single(args[i]) == 1)
@@ -135,7 +139,6 @@ void ft_expanding(char **args, s_env *export_i)
                     if (!key)
                         exit(EXIT_FAILURE);       
                     value = get_env_value(key, export_i);
-					printf("value = %s\n", value);
 					if (!value)
 					{
                         key = ft_strjoin("$", key);

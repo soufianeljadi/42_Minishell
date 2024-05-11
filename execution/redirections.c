@@ -6,7 +6,7 @@
 /*   By: sdiouane <sdiouane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/05 23:00:01 by sdiouane          #+#    #+#             */
-/*   Updated: 2024/05/11 12:40:59 by sdiouane         ###   ########.fr       */
+/*   Updated: 2024/05/11 18:47:33 by sdiouane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,86 +73,42 @@ char *ft_strsep(char **stringp, const char *delim)
 
 static void redirection_double_out(char *redirection, int *fd)
 {
-    char *token_out;
-    char *ptr;
-	char *token_double_out;
-	
-	token_out = NULL;
-	token_double_out = NULL;
-	ptr = redirection;
-    while ((token_double_out = ft_strsep(&ptr, ">>")) != NULL)
-    {
-        while (*token_double_out && *token_double_out == ' ')
-            token_double_out++;
-        if (*token_double_out != '\0')
-        {
-            *fd = open(file_nc(token_double_out), O_WRONLY | O_CREAT | O_APPEND, 0666);
+            *fd = open(file_nc(redirection), O_WRONLY | O_CREAT | O_APPEND, 0666);
 			if (*fd < 0)
 			{
-				printf("minishell: %s: No such file or directory\n", token_double_out);
+				printf("minishell: %s: No such file or directory\n", redirection);
 				exit(EXIT_FAILURE);
 			}
             dup2(*fd, STDOUT_FILENO);
             close(*fd);
-        }
-    }
 }
 
 static void redirection_in(char *redirection, int *fd)
 {
-	char *token_in;
-	printf("redirection = %s\n", redirection);
-	token_in = strtok(redirection, "<");
-	while (token_in != NULL)
-	{
-		while (*token_in && *token_in == ' ')
-			token_in++;
-		if (*token_in != '\0')
-		{
-			*fd = open(file_nc(token_in), O_RDONLY);
+			*fd = open(file_nc(redirection), O_RDONLY);
 			if (*fd < 0)
 			{
-				printf("minishell: %s: No such file or directory\n", token_in);
+				printf("minishell: %s: No such file or directory\n", redirection);
 				exit(EXIT_FAILURE);
 			}
 			dup2(*fd, STDIN_FILENO);
 			close(*fd);
-		}
-		token_in = strtok(NULL, "<");
-	}
-	
 }
 
-static int redirection_out(char *redirection, int *fd)
+static void redirection_out(char *redirection, int *fd)
 {
-    char *token_out;
-    char *ptr;
-	
-	token_out = NULL;
-	ptr = redirection;
-    while ((token_out = ft_strsep(&ptr, ">")) != NULL)
-	{
-        while (*token_out && *token_out == ' ')
-            token_out++;
-        if (*token_out != '\0')
-		{
-            *fd = open(file_nc(token_out), O_WRONLY | O_CREAT | O_TRUNC, 0666);
+            *fd = open(file_nc(redirection), O_WRONLY | O_CREAT | O_TRUNC, 0666);
             if (*fd < 0)
 			{
-                printf("minishell: %s: No such file or directory\n", token_out);
+                printf("minishell: %s: No such file or directory\n", redirection);
                 exit(EXIT_FAILURE);
             }
-            dup2(*fd, STDOUT_FILENO);
-            close(*fd);
-            return (1);
-        }
-    }
-    return (0);
+			dup2(*fd, STDIN_FILENO);
+			close(*fd);
 }
 
 // char *here_doc_fct(char **args)
 // {
-	
 // }
 
 void execute_with_redirection(ExecutionData *data)
@@ -161,24 +117,19 @@ void execute_with_redirection(ExecutionData *data)
     int fd_out;
 	int i;
 	char **red;
-	
-	(1) && (fd_in = -1, fd_out = -1, i = 0, red = ft_split(data->lst->redirection, ' '));
-	// while (red[i] && *red != NULL)
+	(1) && (fd_in = -1, fd_out = -1, i = 0, red = line_to_args(data->lst->redirection));
 	while (red[i] != NULL)
 	{
-	// printf("red[%d] = %s\n", i, red[i]);
-		if (red[i][0] == '<')
-			redirection_in(red[i], &fd_in);
-		else if (red[i][0] == '>')
-		{
-			if (!redirection_out(red[i], &fd_out))
-				return ;
-		}
-		else if (red[i][0] == '>' && red[i][1] == '>')
-			redirection_double_out(red[i], &fd_out);
-			// printf(" i : %d\n", i);
+		printf("red[%d] = %s\n", i, red[i]);
+		if (!strcmp(red[i], ">"))
+			redirection_out(red[i + 1], &fd_out);
+		else if (!strcmp(red[i], "<"))
+			redirection_in(red[i + 1], &fd_in);
+		else if (!strcmp(red[i], ">>"))
+			redirection_double_out(red[i + 1], &fd_out);
 		i++;
 	}
+	free (red);
 	if (fd_in != -1)
 		close(fd_in);
 	if (fd_out != -1)

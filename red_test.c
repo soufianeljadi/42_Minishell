@@ -6,7 +6,7 @@
 /*   By: sdiouane <sdiouane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/27 23:28:30 by sdiouane          #+#    #+#             */
-/*   Updated: 2024/05/06 15:11:03 by sdiouane         ###   ########.fr       */
+/*   Updated: 2024/05/11 15:50:16 by sdiouane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -119,6 +119,11 @@ noued_cmd *split_args_by_pipe(char **args)
 	int i = 0;
 	// char *op_and_filename;
 	// char *tmp;
+	    if (!strcmp(args[0], "|"))
+	{
+		syntax_error();
+		return ;
+	}
 	while (args[i])
 	{
 		if (strcmp(args[i], "|") == 0) 

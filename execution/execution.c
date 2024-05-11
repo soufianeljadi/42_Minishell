@@ -6,7 +6,7 @@
 /*   By: sdiouane <sdiouane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/31 22:14:48 by sdiouane          #+#    #+#             */
-/*   Updated: 2024/05/11 12:47:04 by sdiouane         ###   ########.fr       */
+/*   Updated: 2024/05/11 16:13:58 by sdiouane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,20 @@ void supprimerGuillemets(char *chaine)
     while (chaine[i])
 	{
         if (chaine[i] != '"')
+            chaine[j++] = chaine[i];
+        i++;
+    }
+    chaine[j] = '\0';
+}
+
+void del_qotes(char *chaine)
+{
+    int i = 0;
+	int j = 0;
+
+    while (chaine[i])
+	{
+        if (chaine[i] != '"' && chaine[i] != '\'')
             chaine[j++] = chaine[i];
         i++;
     }
@@ -79,6 +93,13 @@ void execute(char *s, char **env)
 				}
 			}
 		}
+		int i = 0;
+		while (cmd[i])
+		{
+			if (!strstr(cmd[i], " ") && !strstr(cmd[i], "\t"))
+				del_qotes(cmd[i]);
+			i++;
+		}
 		chemin = get_path(cmd[0], env);
 		if (execve(chemin, cmd, g_flags.envire) == -1 && !strstr(cmd[0], "$"))
 		{
@@ -89,6 +110,8 @@ void execute(char *s, char **env)
 		}
 	}
 }
+
+
 
 void add_last_cmd(s_env **lst, char **args)
 {
@@ -154,15 +177,18 @@ static void handle_child_process(ExecutionData *data)
 {;
     if (data->lst->redirection != NULL)
 	{
-		// if (builtins(data) == 1)
+		if (builtins(data) == 1)
         	execute_with_redirection(data);
-		// exit(EXIT_SUCCESS);
+		exit(EXIT_SUCCESS);
     }             
 	else
 	{
-		if (builtins(data) == 1)
-       		execute(data->lst->cmd, data->env);
-		exit(EXIT_SUCCESS);
+		if (data->lst->cmd != NULL)
+		{
+			if (builtins(data) == 1)
+				execute(data->lst->cmd, data->env);
+			exit(EXIT_SUCCESS);
+		}
     }
 } 
 
@@ -218,6 +244,11 @@ void ft_execution(ExecutionData *data)
 	env = struct_to_char(data->export_i);
 	data->env = env;
     add_last_cmd(&data->export_i, data->args);
+    if (!strcmp(data->args[0], "|"))
+	{
+		syntax_error();
+		return ;
+	}
 	if (data->lst->next == NULL && strcmp(data->lst->cmd, ""))
 	{
 		if (builtins(data) == 1)

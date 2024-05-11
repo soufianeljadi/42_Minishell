@@ -6,7 +6,7 @@
 /*   By: sdiouane <sdiouane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/23 16:50:26 by sdiouane          #+#    #+#             */
-/*   Updated: 2024/05/10 12:03:35 by sdiouane         ###   ########.fr       */
+/*   Updated: 2024/05/11 16:13:51 by sdiouane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,11 +79,6 @@ static void echo_no_option(char **args, s_env *s_env,int q)
 	int j;
 	
 	(void)q;
-	// if(q == -1)
-	// {
-	// 	printf("\n");
-	// 	return ;
-	// }
 	i = 1;
 
 		while(args[i])
@@ -104,7 +99,7 @@ static void echo_no_option(char **args, s_env *s_env,int q)
 							j++;
 						}
 					}
-					else if(args[i][j] == '\'')
+					else if(args[i][j] == '\'' && args[i][j + 1] != '\0')
 					{
 						j++;
 						while(args[i][j] != '\'')
