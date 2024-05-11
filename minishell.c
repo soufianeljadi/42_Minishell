@@ -6,7 +6,7 @@
 /*   By: sdiouane <sdiouane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 23:52:10 by sdiouane          #+#    #+#             */
-/*   Updated: 2024/05/11 16:48:29 by sdiouane         ###   ########.fr       */
+/*   Updated: 2024/05/11 19:45:53 by sdiouane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,7 +103,6 @@ ExecutionData *init_data(char **args, noued_cmd *cmd, s_env *export_i)
 
 void loop_fct(ExecutionData *data, char *line)
 {
-	(1) && (dup2(0, 3),dup2(1, 4));
 	while (42)
 	{
 		line = readline(ANSI_COLOR_CYAN "=>  "ANSI_COLOR_CYAN  "minishell => "   ANSI_RESET_ALL "");
@@ -123,11 +122,13 @@ void loop_fct(ExecutionData *data, char *line)
 				data->lst = split_args_by_pipe(data->args);
 				ft_expanding(data->args, data->export_i);
 				print_command_list(data->lst);
+				(1) && (dup2(0, 3),dup2(1, 4));
 				ft_execution(data);
+				(1) && (dup2(3, 0), dup2(4, 1));
+				(1) && (close(3), close(4));
 				(free (data->args), free_noued_cmd(data->lst));
 			}
 		}
-		(1) && (dup2(3, 0), dup2(4, 1));
 	}	
 }
 
@@ -174,7 +175,5 @@ int main(int ac, char **av, char **env)
 	main_loop(line, export_i);
 	// free(line);
 	free_s_env(export_i);
-	close(3);
-	close(4);
 	return 0;
 }
