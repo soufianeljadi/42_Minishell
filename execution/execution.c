@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execution.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sdiouane <sdiouane@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sel-jadi <sel-jadi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/31 22:14:48 by sdiouane          #+#    #+#             */
-/*   Updated: 2024/05/12 19:31:16 by sdiouane         ###   ########.fr       */
+/*   Updated: 2024/05/12 21:24:31 by sel-jadi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -182,6 +182,11 @@ static void execute_command(ExecutionData *data)
 	int pipefd[2];
     pid_t pid;
 
+	if (!ft_strncmp(data->args[0], "<<", 2) && data->args[1])
+	{
+		heredoc(data);
+		return ;
+	}
 	if (pipe(pipefd) == -1 || (pid = fork()) == -1)
 		exit(EXIT_FAILURE);
 	else if (pid == 0)
@@ -229,6 +234,11 @@ void	ft_execution(ExecutionData *data)
 	env = struct_to_char(data->export_i);
 	data->env = env;
     add_last_cmd(&data->export_i, data->args);
+	if (!ft_strncmp(data->args[0], "<<", 2) && !data->args[1])
+	{
+		syntax_error();
+		exit(EXIT_FAILURE);
+	}
 	if (data->lst->next == NULL && strcmp(data->lst->cmd, ""))
 	{
 		if (builtins(data) == 1)

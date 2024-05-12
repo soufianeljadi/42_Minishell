@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sdiouane <sdiouane@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sel-jadi <sel-jadi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 23:52:10 by sdiouane          #+#    #+#             */
-/*   Updated: 2024/05/12 18:30:05 by sdiouane         ###   ########.fr       */
+/*   Updated: 2024/05/12 21:05:55 by sel-jadi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,9 +103,13 @@ ExecutionData *init_data(char **args, noued_cmd *cmd, s_env *export_i)
 
 void loop_fct(ExecutionData *data, char *line)
 {
+	char	*pwd = NULL;
+	
 	while (42)
 	{
-		line = readline(ANSI_COLOR_CYAN "=>  "ANSI_COLOR_CYAN  "minishell => "   ANSI_RESET_ALL "");
+		pwd = print_directory(pwd);
+		//read_line
+		line = readline(pwd);
 		if (!line)
 			(printf("exit\n"),exit(0));
 		if(line != NULL && only_spaces(line) == 0)
@@ -166,8 +170,7 @@ int main(int ac, char **av, char **env)
 		export_i = split_env(env);
 	//signals
 	rl_catch_signals = 0;
-	signal(SIGQUIT, signal_ctrl_c_d);
-	signal(SIGINT, signal_ctrl_c_d);
+	signals_init();
 	main_loop(line, export_i);
 	// free(line);
 	free_s_env(export_i);

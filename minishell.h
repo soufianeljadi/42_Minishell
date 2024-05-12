@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sdiouane <sdiouane@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sel-jadi <sel-jadi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 23:51:44 by sdiouane          #+#    #+#             */
-/*   Updated: 2024/05/12 20:05:31 by sdiouane         ###   ########.fr       */
+/*   Updated: 2024/05/12 21:21:27 by sel-jadi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,36 +14,36 @@
 #ifndef MINISHELL_H
 # define MINISHELL_H
 
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
-#include <unistd.h>
-#include <fcntl.h>
-#include <stdbool.h>
-#include <sys/wait.h>
-#include <readline/readline.h>
-#include <readline/history.h>
-#include <errno.h>
+# include <stdio.h>
+# include <stdlib.h>
+# include <string.h>
+# include <termios.h>
+# include <unistd.h>
+# include <fcntl.h>
+# include <stdbool.h>
+# include <sys/wait.h>
+# include <readline/readline.h>
+# include <readline/history.h>
+# include <errno.h>
 
-#define ANSI_RESET_ALL          "\x1b[0m"
-#define ANSI_COLOR_RED          "\x1b[31m"
-#define ANSI_COLOR_GREEN        "\x1b[32m"
-#define ANSI_COLOR_YELLOW       "\x1b[33m"
-#define ANSI_BACKGROUND_RED     "\x1b[41m"
-#define ANSI_COLOR_MAGENTA      "\x1b[35m"
-#define ANSI_COLOR_CYAN         "\x1b[36m"
-#define ANSI_COLOR_BLUE         "\x1b[34m"
-#define ANSI_COLOR_WHITE        "\x1b[37m"
-#define ANSI_COLOR_BLACK        "\x1b[30m"
-#define ANSI_BOLD               "\x1b[1m"
+# define ANSI_RESET_ALL          "\x1b[0m"
+# define ANSI_COLOR_RED          "\x1b[31m"
+# define ANSI_COLOR_GREEN        "\x1b[32m"
+# define ANSI_COLOR_YELLOW       "\x1b[33m"
+# define ANSI_BACKGROUND_RED     "\x1b[41m"
+# define ANSI_COLOR_MAGENTA      "\x1b[35m"
+# define ANSI_COLOR_CYAN         "\x1b[36m"
+# define ANSI_COLOR_BLUE         "\x1b[34m"
+# define ANSI_COLOR_WHITE        "\x1b[37m"
+# define ANSI_COLOR_BLACK        "\x1b[30m"
+# define ANSI_BOLD               "\x1b[1m"
 
-
-#define MAX_COMMAND_LENGTH 100
+# define MAX_TOKEN_LENGTH 100
+# define MAX_COMMAND_LENGTH 100
 
 # ifndef BUFFER_SIZE
 #  define BUFFER_SIZE 1042
 # endif
-
 
 typedef	struct			s_cmd
 {
@@ -97,7 +97,6 @@ typedef struct g_variables
 	char		**envire;
 }					t_var;
 
-#define MAX_TOKEN_LENGTH 100
 
 typedef struct
 {
@@ -207,7 +206,6 @@ void echo_fct(char **args, s_env *s_env);
 int   check_variables(char **args, s_env *lst);
 
 /**********************signals***********************************/
-void    signal_ctrl_c_d(int signal);
 
 /**********************get_next_line*****************************/
 char	*get_next_line(int fd);
@@ -229,7 +227,7 @@ char	*get_env(char *s, char **env);
 char	*get_path(char *cmd, char **env);
 void	ft_putstr_fd(char *s, int fd);
 void	ft_putendl_fd(char *s, int fd);
-	// redirections :
+// redirections :
 char	*file_nc(char *s);
 void execute_with_redirection(ExecutionData *data);
 int		only_spaces(char *str);
@@ -247,6 +245,15 @@ char *ft_expanding(char *commande, s_env *export_i);
 char *get_env_key(char *s, int j);
 char *get_env_value(char *key, s_env *export_i);
 char *ft_str_replace(char *s, char *key, char *value);
+//heredoc
+void	handle_sigint_heredoc(int sig);
+int		heredoc(ExecutionData *data);
+void	signals_init(void);
+//promt
+char	*print_directory(char *pwd);
+char	*get_directory(char *pwd);
+char	*add_write_str(char *str1, char *str2, char *str3);
+void	add2write(char *dest, char *str, int *j); 
 
 int is_single(char *str);
 t_var	g_flags;
