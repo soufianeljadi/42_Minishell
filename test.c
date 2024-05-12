@@ -98,7 +98,7 @@ void free_tokens(char** tokens) {
 }
 
 int main() {
-    const char* text = "export x=\"ls -la\" \"kk    ll\"  'll k'";
+    const char* text = "export x=\"ls -la\" \"    kk    ll\"  'll k'";
     char** tokens = split_with_quotes(text);
     
     printf("Tokens:\n");

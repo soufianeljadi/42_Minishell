@@ -6,7 +6,7 @@
 /*   By: sdiouane <sdiouane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/24 21:25:42 by sdiouane          #+#    #+#             */
-/*   Updated: 2024/05/11 14:54:07 by sdiouane         ###   ########.fr       */
+/*   Updated: 2024/05/12 20:06:45 by sdiouane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ void sp(char *chaine)
     chaine[j] = '\0';
 }
 
-void fct_equal(char **args, s_env *env, char *key, int f)
+void fct_equal(char **args, s_env *env, char *key)
 {
 	char	*value;
 	s_env	*current;
@@ -46,20 +46,17 @@ void fct_equal(char **args, s_env *env, char *key, int f)
 		while (args[env->i][env->j] && args[env->i][env->j] != '\"')
 			env->j++;
 	value = ft_substr(args[env->i], start, env->j - start);
-	if (f == 1)
-		value = ft_strdup("");
-	printf("value = %s\n", value);
 	if (value[0] != '\"')
 	{
 		current = env;
-		while (current != NULL && current->value)
+		while (current != NULL)
 		{
 			if (strcmp(current->key, key) == 0)
 			{
-				free(current->value);
-				current->value = value;
+				free(current->value);	
+				current->value = value;	
 				break;
-			}
+		}
 			current = current->next;
 		}
 		if (current == NULL)
@@ -67,7 +64,7 @@ void fct_equal(char **args, s_env *env, char *key, int f)
 	}
 	else
 	{
-		value = remove_quotes(value);
+		// value = remove_quotes(value);
 		// sp(value);
 		current = env;
 		while (current != NULL && current->value)
@@ -136,15 +133,11 @@ s_env *not_null(char **args, s_env *env)
 	int i = 0;
 	int j;
 	char *key;
-	int f = 0;
-	
 	i = 1;
 	if (!strcmp(args[0], "export") && !args[1])
 		print_export(env);
 	else if (!strcmp(args[0], "export") && args[1])	
 	{
-		// sp(args[1]);
-		// supprimerGuillemets(args[1]);
 		while (args[i])
 		{
 			supprimerGuillemets(args[i]);
@@ -159,19 +152,17 @@ s_env *not_null(char **args, s_env *env)
 			while (args[i][j] &&  args[i][j] != '=' && args[i][j] != '+') // here
 				j++;
 			key = ft_substr(args[i], 0, j);
-			// j++;
 			if (args[i][j] == '+' && (args[i][j + 1] != '='))
+			{
 				printf("export : %c, not a valid identifier", args[i][j]);
-			if (args[i][j] == '=' && (args[i][j + 1] == ' ' || args[i][j + 1] == '\t' || args[i][j + 1] == '\0'))
-				f = 1;
+				return (env);
+			}
 			if (verif_export(key) == 0)
 			{
 				if (args[i][j] == '\0')
-				{					
-					if (!existe_deja(key, env))
-					{
-						ft_lstadd_back(&env, ft_lstnew_data(strdup(""), key));
-					}
+				{
+					if (existe_deja(key, env) == 0)
+						ft_lstadd_back(&env, ft_lstnew_data(NULL, key));
 				}
 				else
 				{
@@ -179,7 +170,7 @@ s_env *not_null(char **args, s_env *env)
 					{
 						env->i = i;
 						env->j = j;
-						fct_equal(args, env, key, f);
+						fct_equal(args, env, key);
 					}             
 					else if (args[i][j] == '+' && args[i][j + 1] == '=')
 					{

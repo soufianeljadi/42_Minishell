@@ -6,7 +6,7 @@
 /*   By: sdiouane <sdiouane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 23:52:10 by sdiouane          #+#    #+#             */
-/*   Updated: 2024/05/11 19:45:53 by sdiouane         ###   ########.fr       */
+/*   Updated: 2024/05/12 18:30:05 by sdiouane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -116,22 +116,19 @@ void loop_fct(ExecutionData *data, char *line)
 			else 
 			{
 				data->args = line_to_args(line);
-				// if (!strcmp(data->args[0], "|"))
-				// 	syntax_error();
-				// ft_expanding(data->args, data->export_i);
 				data->lst = split_args_by_pipe(data->args);
-				ft_expanding(data->args, data->export_i);
-				print_command_list(data->lst);
+				data->lst->cmd = ft_expanding(data->lst->cmd, data->export_i);
 				(1) && (dup2(0, 3),dup2(1, 4));
 				ft_execution(data);
 				(1) && (dup2(3, 0), dup2(4, 1));
 				(1) && (close(3), close(4));
+				print_command_list(data->lst);
 				(free (data->args), free_noued_cmd(data->lst));
 			}
 		}
 	}	
 }
-
+// export $khjj
 void	main_loop(char *line, s_env *export_i)
 {
 	char **args;
@@ -146,12 +143,11 @@ void	main_loop(char *line, s_env *export_i)
 	free(line);
 	clear_history();
 	free_noued_cmd(cmd);
-	// ft_free_tab(args);
+	ft_free_tab(args);
 }
 
 void	f(void)
 {     
-	// system("lsof minishell > file");
 	system("leaks minishell");					
 }
 

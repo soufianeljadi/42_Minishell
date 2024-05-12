@@ -6,34 +6,34 @@
 /*   By: sdiouane <sdiouane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/31 22:14:48 by sdiouane          #+#    #+#             */
-/*   Updated: 2024/05/11 16:13:58 by sdiouane         ###   ########.fr       */
+/*   Updated: 2024/05/12 19:31:16 by sdiouane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-void supprimerGuillemets(char *chaine)
-{
-    int i = 0;
-	int j = 0;
+// void supprimerGuillemets(char *chaine)
+// {
+//     int i = 0;
+// 	int j = 0;
 
-    while (chaine[i])
-	{
-        if (chaine[i] != '"')
-            chaine[j++] = chaine[i];
-        i++;
-    }
-    chaine[j] = '\0';
-}
+//     while (chaine[i])
+// 	{
+//         if (chaine[i] != '"')
+//             chaine[j++] = chaine[i];
+//         i++;
+//     }
+//     chaine[j] = '\0';
+// }
 
 void del_qotes(char *chaine)
 {
     int i = 0;
 	int j = 0;
-
+	
     while (chaine[i])
 	{
-        if (chaine[i] != '"' && chaine[i] != '\'')
+        if (chaine[i] != '"')
             chaine[j++] = chaine[i];
         i++;
     }
@@ -54,6 +54,18 @@ void sup(char *chaine)
     chaine[j] = '\0';
 }
 
+void supprimerGuillemets(char *chaine) {
+    int i = 0, j = 0;
+
+    while (chaine[i]) {
+        if (chaine[i] != '\"' && chaine[i] != '\'')
+            chaine[j++] = chaine[i];
+        i++;
+    }
+    chaine[j] = '\0';
+}
+
+
 void execute(char *s, char **env)
 {
 	char	*chemin;
@@ -62,56 +74,29 @@ void execute(char *s, char **env)
 
 	if (*env)
 	{
-		if ((((s[0] == '"' || s[0] == '\'') && (strstr(s, " ") || strstr(s, "\t")))))
+		if ((s[0] == '\"' || s[0] == '\'') && (strstr(s, " ") || strstr(s, "\t")))
 			cmd = ft_split(s, ' ');
 		else
 		{
 			if (!strcmp(s , ""))
-				cmd[0] = strdup(s);
+			{
+				return ;
+			}
 			else
 				cmd = split_space_tab(s, ' ');
 			if (cmd[0][0] == '\0')
 				exit(EXIT_FAILURE);
-			if (strstr(cmd[0], "\""))
-			{
-				while (cmd[i])
-				{
-					if (cmd[i][0] != '\'')
-						supprimerGuillemets(cmd[i]);
-					i++;
-				}
-			}
-			else if (strstr(cmd[0], "\'") && (!strstr(cmd[0], " ") || !strstr(cmd[0], "\t")))
-			{
-				i = 0;
-				while (cmd[i])
-				{
-					if (!strstr(cmd[i], "\'"))
-						sup(cmd[i++]);
-					i++;
-					
-				}
-			}
-		}
-		int i = 0;
-		while (cmd[i])
-		{
-			if (!strstr(cmd[i], " ") && !strstr(cmd[i], "\t"))
-				del_qotes(cmd[i]);
-			i++;
+			while (cmd[i])
+				supprimerGuillemets(cmd[i++]);
 		}
 		chemin = get_path(cmd[0], env);
 		if (execve(chemin, cmd, g_flags.envire) == -1 && !strstr(cmd[0], "$"))
 		{
-			// perror(errno);
 			fprintf(stderr, "minishell : %s %s\n", cmd[0], strerror(errno));
-			ft_free_tab(cmd);
-			exit(EXIT_FAILURE);
+			(ft_free_tab(cmd), exit(EXIT_FAILURE));
 		}
 	}
 }
-
-
 
 void add_last_cmd(s_env **lst, char **args)
 {
@@ -236,7 +221,7 @@ char **struct_to_char(s_env *lst)
 	return (env);
 }
 
-void ft_execution(ExecutionData *data)
+void	ft_execution(ExecutionData *data)
 {
 	char	**env;
 
@@ -244,18 +229,13 @@ void ft_execution(ExecutionData *data)
 	env = struct_to_char(data->export_i);
 	data->env = env;
     add_last_cmd(&data->export_i, data->args);
-    if (!strcmp(data->args[0], "|"))
-	{
-		syntax_error();
-		return ;
-	}
 	if (data->lst->next == NULL && strcmp(data->lst->cmd, ""))
 	{
 		if (builtins(data) == 1)
 			execute_command(data);
 	}
 	else
-	{
+	{       
 		while (data->lst)
 		{
 			g_flags.envire = ft_merge_envr(data->export_i);

@@ -6,7 +6,7 @@
 /*   By: sdiouane <sdiouane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 23:51:44 by sdiouane          #+#    #+#             */
-/*   Updated: 2024/05/11 11:07:55 by sdiouane         ###   ########.fr       */
+/*   Updated: 2024/05/12 20:05:31 by sdiouane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -190,7 +190,7 @@ void is_null(char **args, s_env *env);
 void concatenation(char **args, s_env *env, char *key);
 void is_equal(char **args, s_env *export_i, char *key);
 s_env *not_null(char **args, s_env *env);
-void fct_equal(char **args, s_env *env, char *key, int f);
+void fct_equal(char **args, s_env *env, char *key);
 void ftc_concatination(char **args, s_env *env, char *key);
 
 //pwd :
@@ -242,7 +242,8 @@ char	*ft_itoa(unsigned int n);
 int	ft_atoi(const char *str);
 
 // expanding :
-void ft_expanding(char **args, s_env *export_i);
+// void ft_expanding(char **args, s_env *export_i);
+char *ft_expanding(char *commande, s_env *export_i);
 char *get_env_key(char *s, int j);
 char *get_env_value(char *key, s_env *export_i);
 char *ft_str_replace(char *s, char *key, char *value);
