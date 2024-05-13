@@ -6,7 +6,7 @@
 /*   By: sdiouane <sdiouane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 23:52:10 by sdiouane          #+#    #+#             */
-/*   Updated: 2024/05/13 14:37:21 by sdiouane         ###   ########.fr       */
+/*   Updated: 2024/05/13 20:04:11 by sdiouane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -132,9 +132,9 @@ void loop_fct(ExecutionData *data, char *line)
 
 void	main_loop(char *line, s_env *export_i)
 {
-	char **args;
-	noued_cmd *cmd;
-	ExecutionData *data;
+	char			**args;
+	noued_cmd		*cmd;
+	ExecutionData	*data;
 	
 	data = NULL;
 	args = NULL;
@@ -156,9 +156,10 @@ int main(int ac, char **av, char **env)
 {
 	(void)av;
 	// atexit(f);
-	char *line = NULL;
-	s_env *export_i = NULL;
-
+	char *line;
+	s_env *export_i;
+	
+	(export_i = NULL, line = NULL);
 	if (ac != 1)
 		(printf("Args not allowed !\n"),exit(EXIT_FAILURE));
 	if (!env[0])

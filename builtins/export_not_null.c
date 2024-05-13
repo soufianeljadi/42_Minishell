@@ -6,7 +6,7 @@
 /*   By: sdiouane <sdiouane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/24 21:25:42 by sdiouane          #+#    #+#             */
-/*   Updated: 2024/05/13 14:29:11 by sdiouane         ###   ########.fr       */
+/*   Updated: 2024/05/13 20:29:18 by sdiouane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ void sp(char *chaine)
     chaine[j] = '\0';
 }
 
-void fct_equal(char **args, s_env *env, char *key)
+void  fct_equal(char **args, s_env *env, char *key)
 {
 	char	*value;
 	s_env	*current;
@@ -60,7 +60,10 @@ void fct_equal(char **args, s_env *env, char *key)
 			current = current->next;
 		}
 		if (current == NULL)
-			ft_lstadd_back(&env, ft_lstnew_data(value, key));
+		{
+			// if (existe_deja(key, env) == 0)
+				ft_lstadd_back(&env, ft_lstnew_data(value, key));
+		}
 	}
 	else
 	{
@@ -78,7 +81,10 @@ void fct_equal(char **args, s_env *env, char *key)
 			current = current->next;
 		}
 		if (current == NULL)
-			ft_lstadd_back(&env, ft_lstnew_data(value, key));
+		{
+			// if (existe_deja(key, env) == 0)
+				ft_lstadd_back(&env, ft_lstnew_data(value, key));
+		}
 	}
 }
 
@@ -186,6 +192,11 @@ s_env *not_null(char **args, s_env *env)
 						env->j = j;
 						ftc_concatination(args, env, key);
 					}
+					// else
+					// {
+					// 	if (existe_deja(key, env) == 0)
+					// 		ft_lstadd_back(&env, ft_lstnew_data(NULL, key));
+					// }
 				}
 			}
 			else

@@ -6,7 +6,7 @@
 /*   By: sdiouane <sdiouane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/27 19:58:08 by sdiouane          #+#    #+#             */
-/*   Updated: 2024/05/13 12:15:52 by sdiouane         ###   ########.fr       */
+/*   Updated: 2024/05/13 19:49:11 by sdiouane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -124,11 +124,11 @@ char *ft_expanding(char *commande, s_env *export_i)
 	char	*key;
 	char	*value;
     int		i;
-	
+
 	(exp_commande = strdup(commande), i = 0, exp_cmd = NULL);
     while (exp_commande && exp_commande[i] != '\0')
 	{
-        if (exp_commande[i] == '$') 
+        if (exp_commande[i] && exp_commande[i] == '$') 
 		{
             key = get_env_key(exp_commande, i);
             if (!key)
@@ -138,12 +138,14 @@ char *ft_expanding(char *commande, s_env *export_i)
 			{
 				exp_cmd = ft_str_replace(exp_commande, key, strdup(""));
 				(free(exp_commande), exp_commande = exp_cmd);
+				break ;
 			}
             else if (!value || (!strcmp(value, "") || !strcmp(value, " ")))
 			{
 				key = ft_strjoin("$", key);
                 exp_commande = ft_str_replace(exp_commande, key, strdup(""));
                 (free(key), free(value));
+				break ;
             }
 			else
 			{

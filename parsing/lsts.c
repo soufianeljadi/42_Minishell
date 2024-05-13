@@ -6,7 +6,7 @@
 /*   By: sdiouane <sdiouane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/13 00:32:13 by sdiouane          #+#    #+#             */
-/*   Updated: 2024/05/13 13:47:01 by sdiouane         ###   ########.fr       */
+/*   Updated: 2024/05/13 20:36:14 by sdiouane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,8 +93,8 @@ void	print_list(s_env *list)
 	while (list)
 	{
 		if (list->value == NULL)
-			return ;
-		if (list->value[0] || !strcmp(list->value, ""))
+			printf("%s\n", list->key);
+		else if (list->value[0] || !strcmp(list->value, ""))
 		{
 			printf("%s", list->key);
 			printf("=%s\n", list->value);
@@ -103,27 +103,28 @@ void	print_list(s_env *list)
 	}
 }
 
-void	print_export(s_env *list)
+void print_export(s_env *list)
 {
-	while (list)
+    while (list)
 	{
-		if (!strcmp(list->key, "_"))
-			list = list->next;
-		else
+        if (strcmp(list->key, "_") != 0)
 		{
-			if (list->value == NULL)
-			{
-				printf("declare -x %s\n", list->key);
-			}
+            if (list->value == NULL)
+                printf("declare -x %s\n", list->key);
 			else
 			{
-				printf("declare -x %s=", list->key);
-				if (!strcmp(list->value, ""))
-					printf("\"\"\n");
-				else
+				if (strcmp(list->value, "") == 0)
+				{
+					printf("declare -x %s=", list->key);
 					printf("\"%s\"\n", list->value);
+				}
+                else if (strcmp(list->value, ""))
+				{
+                	printf("declare -x %s=", list->key);
+                    printf("\"%s\"\n", list->value);
+				}
 			}
-			list = list->next;
 		}
+		list = list->next;
 	}
 }

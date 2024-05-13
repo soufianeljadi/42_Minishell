@@ -6,7 +6,7 @@
 /*   By: sdiouane <sdiouane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/22 22:11:52 by sdiouane          #+#    #+#             */
-/*   Updated: 2024/05/12 20:06:06 by sdiouane         ###   ########.fr       */
+/*   Updated: 2024/05/13 20:27:48 by sdiouane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ int existe_deja(char *key, s_env *env)
 	s_env *current;
 
 	current = env;
-	while (current != NULL && current->value)
+	while (current != NULL)
 	{
 		if (strcmp(current->key, key) == 0)
 			return (1);

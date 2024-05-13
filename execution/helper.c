@@ -6,7 +6,7 @@
 /*   By: sdiouane <sdiouane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/05 23:07:50 by sdiouane          #+#    #+#             */
-/*   Updated: 2024/05/13 14:21:37 by sdiouane         ###   ########.fr       */
+/*   Updated: 2024/05/13 20:05:25 by sdiouane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,10 @@ s_env *split_env(char **env)
 			value = ft_value_of_shlvl(str);
 		}
 		else if (!strcmp(key, "OLDPWD"))
-			value = strdup("");
+		{
+			value = NULL;
+			// value = strdup("");
+		}
 		else
 			value = ft_substr(env[i] ,j + 1 ,ft_strlen(env[i]));
 		ft_lstadd_back(&lst, ft_lstnew_data(value ,key));
