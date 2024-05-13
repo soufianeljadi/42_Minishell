@@ -6,7 +6,7 @@
 /*   By: sdiouane <sdiouane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/24 21:25:42 by sdiouane          #+#    #+#             */
-/*   Updated: 2024/05/12 20:06:45 by sdiouane         ###   ########.fr       */
+/*   Updated: 2024/05/13 14:29:11 by sdiouane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,8 +90,16 @@ void ftc_concatination(char **args, s_env *env, char *key)
 	
 	env->j = env->j + 2;
 	start = env->j;
-	while (args[env->i][env->j] && args[env->i][env->j] != ' ')
+	if (args[env->i][env->j] == '"')
+	{
 		env->j++;
+		while (args[env->i][env->j] && args[env->i][env->j] != '"')
+			env->j++;
+	}
+	else
+		while (args[env->i][env->j] && args[env->i][env->j] != '\"')
+			env->j++;
+	
 	value = ft_substr(args[env->i], start, env->j - start);
 	if (value[0] != '\"')
 	{

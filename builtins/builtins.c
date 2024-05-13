@@ -6,7 +6,7 @@
 /*   By: sdiouane <sdiouane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/26 01:07:33 by sel-jadi          #+#    #+#             */
-/*   Updated: 2024/05/12 17:55:02 by sdiouane         ###   ########.fr       */
+/*   Updated: 2024/05/13 14:37:14 by sdiouane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,6 +83,7 @@ char** split_with_quotes(const char* text)
 int	is_builtins(char **args, s_env *export_i, char **env, int *flag)
 {
 	char *pwd;
+	supprimerGuillemets(args[0]);
 	if (!strcmp(args[0], "exit"))
 	{
 		printf("exit\n");
@@ -111,8 +112,6 @@ int	is_builtins(char **args, s_env *export_i, char **env, int *flag)
 		*flag = 1;
 	return (*flag);
 }
-
-
 
 int builtins(ExecutionData *data)
 {

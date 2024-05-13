@@ -6,7 +6,7 @@
 /*   By: sdiouane <sdiouane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/05 23:07:50 by sdiouane          #+#    #+#             */
-/*   Updated: 2024/05/11 11:55:14 by sdiouane         ###   ########.fr       */
+/*   Updated: 2024/05/13 14:21:37 by sdiouane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,12 +89,12 @@ s_env *add_env_entry(s_env *head, char *key, char *value)
 s_env *split_export_i(s_env *lst)
 {
     lst = add_env_entry(lst, "_", "/usr/bin/env");
-	printf ("%p\n", lst);
+	// printf ("%p\n", lst);
     lst = add_env_entry(lst, "OLDPWD", "");
-	printf ("%p\n", lst);
+	// printf ("%p\n", lst);
     lst = add_env_entry(lst, "SHLVL", "2");
-	printf ("%p\n", lst);
+	// printf ("%p\n", lst);
     lst = add_env_entry(lst, "PWD", "/Users/sdiouane/Desktop/our_big_shell");
-	printf ("%p\n", lst);
+	// printf ("%p\n", lst);
     return (lst);
 }

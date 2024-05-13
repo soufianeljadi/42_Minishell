@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   promt.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sel-jadi <sel-jadi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sdiouane <sdiouane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/12 20:27:18 by sel-jadi          #+#    #+#             */
-/*   Updated: 2024/05/12 20:43:45 by sel-jadi         ###   ########.fr       */
+/*   Updated: 2024/05/13 10:58:28 by sdiouane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,7 +85,7 @@ char	*print_directory(char *pwd)
 	if (pwd2)
 	{
 		directory = get_directory(pwd2);
-		fin = add_write_str((ANSI_COLOR_RED), directory, (ANSI_COLOR_WHITE));
+		fin = add_write_str((ANSI_COLOR_CYAN), directory, (ANSI_COLOR_WHITE));
 		free(directory);
 		free(pwd);
 		free(pwd2);

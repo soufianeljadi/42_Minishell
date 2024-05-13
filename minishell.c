@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sel-jadi <sel-jadi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sdiouane <sdiouane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 23:52:10 by sdiouane          #+#    #+#             */
-/*   Updated: 2024/05/12 21:05:55 by sel-jadi         ###   ########.fr       */
+/*   Updated: 2024/05/13 14:37:21 by sdiouane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,13 +103,12 @@ ExecutionData *init_data(char **args, noued_cmd *cmd, s_env *export_i)
 
 void loop_fct(ExecutionData *data, char *line)
 {
-	char	*pwd = NULL;
+	char	*pwd;
 	
+	pwd = NULL;
 	while (42)
 	{
-		pwd = print_directory(pwd);
-		//read_line
-		line = readline(pwd);
+		(pwd = print_directory(pwd), line = readline(pwd));
 		if (!line)
 			(printf("exit\n"),exit(0));
 		if(line != NULL && only_spaces(line) == 0)
@@ -122,17 +121,15 @@ void loop_fct(ExecutionData *data, char *line)
 				data->args = line_to_args(line);
 				data->lst = split_args_by_pipe(data->args);
 				data->lst->cmd = ft_expanding(data->lst->cmd, data->export_i);
-				(1) && (dup2(0, 3),dup2(1, 4));
-				ft_execution(data);
-				(1) && (dup2(3, 0), dup2(4, 1));
-				(1) && (close(3), close(4));
+				(dup2(0, 3),dup2(1, 4), ft_execution(data));
+				(dup2(3, 0), dup2(4, 1), close(3), close(4));
 				print_command_list(data->lst);
 				(free (data->args), free_noued_cmd(data->lst));
 			}
 		}
 	}	
 }
-// export $khjj
+
 void	main_loop(char *line, s_env *export_i)
 {
 	char **args;
@@ -168,7 +165,6 @@ int main(int ac, char **av, char **env)
 		export_i = split_export_i(export_i);
 	else
 		export_i = split_env(env);
-	//signals
 	rl_catch_signals = 0;
 	signals_init();
 	main_loop(line, export_i);

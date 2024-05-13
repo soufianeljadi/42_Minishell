@@ -6,7 +6,7 @@
 /*   By: sdiouane <sdiouane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/13 00:32:13 by sdiouane          #+#    #+#             */
-/*   Updated: 2024/05/12 18:02:44 by sdiouane         ###   ########.fr       */
+/*   Updated: 2024/05/13 13:47:01 by sdiouane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -114,8 +114,6 @@ void	print_export(s_env *list)
 			if (list->value == NULL)
 			{
 				printf("declare -x %s\n", list->key);
-				// return ;
-				
 			}
 			else
 			{

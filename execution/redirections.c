@@ -6,7 +6,7 @@
 /*   By: sdiouane <sdiouane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/05 23:00:01 by sdiouane          #+#    #+#             */
-/*   Updated: 2024/05/11 20:13:15 by sdiouane         ###   ########.fr       */
+/*   Updated: 2024/05/13 11:34:20 by sdiouane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,7 @@ char *file_nc(char *s)
 	return f;
 }
 
+
 static void redirection_double_out(char *redirection, int *fd)
 {
 	if (redirection)
@@ -58,7 +59,9 @@ static void redirection_double_out(char *redirection, int *fd)
         *fd = open(file_nc(redirection), O_WRONLY | O_CREAT | O_APPEND, 0666);
 		if (*fd < 0)
 		{
-			printf("minishell: %s: No such file or directory\n", redirection);
+			ft_putstr_fd("minishell: ", 2);
+			ft_putstr_fd(redirection, 2);
+			ft_putstr_fd(": No such file or directory\n", 2);
 			exit(EXIT_FAILURE);
 		}
 		redirection = NULL;
@@ -74,7 +77,9 @@ static void redirection_in(char *redirection, int *fd)
 		*fd = open(file_nc(redirection), O_RDONLY);
 		if (*fd < 0)
 		{
-			fprintf(stderr, "minishell: %s: No such file or directory+++\n", redirection);
+			ft_putstr_fd("minishell: ", 2);
+			ft_putstr_fd(redirection, 2);
+			ft_putstr_fd(": No such file or directory\n", 2);
 			exit(EXIT_FAILURE);
 		}
 		redirection = NULL;
@@ -107,7 +112,8 @@ void execute_with_redirection(ExecutionData *data)
 	int i;
 	char **red;
 
-	(1) && (fd_in = -1, fd_out = -1, i = 0, red = line_to_args(data->lst->redirection));
+	(1) && (fd_in = -1, fd_out = -1, i = 0,
+	red = line_to_args(data->lst->redirection));
 	while (red[i])
 	{
 		if (!strcmp(red[i], "<"))
@@ -122,6 +128,7 @@ void execute_with_redirection(ExecutionData *data)
 		close(fd_in);
 	if (fd_out != -1)
 		close(fd_out);
-	if (data->lst->cmd != NULL && strspn(data->lst->cmd, " ") != strlen(data->lst->cmd))
+	if (data->lst->cmd != NULL
+		&& strspn(data->lst->cmd, " ") != strlen(data->lst->cmd))
        		execute(data->lst->cmd, data->env);
 }

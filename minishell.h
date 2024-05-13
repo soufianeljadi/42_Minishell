@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sel-jadi <sel-jadi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sdiouane <sdiouane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 23:51:44 by sdiouane          #+#    #+#             */
-/*   Updated: 2024/05/12 21:21:27 by sel-jadi         ###   ########.fr       */
+/*   Updated: 2024/05/13 11:34:12 by sdiouane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -256,5 +256,6 @@ char	*add_write_str(char *str1, char *str2, char *str3);
 void	add2write(char *dest, char *str, int *j); 
 
 int is_single(char *str);
+void	ft_putstr_fd(char *s, int fd);
 t_var	g_flags;
 #endif
