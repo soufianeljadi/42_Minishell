@@ -6,7 +6,7 @@
 /*   By: sdiouane <sdiouane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 23:51:44 by sdiouane          #+#    #+#             */
-/*   Updated: 2024/05/13 11:34:12 by sdiouane         ###   ########.fr       */
+/*   Updated: 2024/05/14 16:02:35 by sdiouane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -257,5 +257,7 @@ void	add2write(char *dest, char *str, int *j);
 
 int is_single(char *str);
 void	ft_putstr_fd(char *s, int fd);
+int	ft_lstsize(s_env *lst);
+char **struct_to_char(s_env *lst);
 t_var	g_flags;
 #endif

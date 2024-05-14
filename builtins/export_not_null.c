@@ -6,7 +6,7 @@
 /*   By: sdiouane <sdiouane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/24 21:25:42 by sdiouane          #+#    #+#             */
-/*   Updated: 2024/05/13 20:29:18 by sdiouane         ###   ########.fr       */
+/*   Updated: 2024/05/14 13:49:18 by sdiouane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -154,7 +154,9 @@ s_env *not_null(char **args, s_env *env)
 	{
 		while (args[i])
 		{
+			// printf("after : args[%d] = %s\n", i, args[i]);
 			supprimerGuillemets(args[i]);
+			// printf("before : args[%d] = %s\n", i, args[i]);
 			if ((!strcmp(args[i], ">") || !strcmp(args[i], ">>") || !strcmp(args[i], "<") || !strcmp(args[i], "<<")))
 			{
 				if (args[i + 1])

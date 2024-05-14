@@ -6,7 +6,7 @@
 /*   By: sdiouane <sdiouane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 23:52:10 by sdiouane          #+#    #+#             */
-/*   Updated: 2024/05/13 20:04:11 by sdiouane         ###   ########.fr       */
+/*   Updated: 2024/05/14 16:36:16 by sdiouane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,7 +91,8 @@ int is_single(char *str)
 
 ExecutionData *init_data(char **args, noued_cmd *cmd, s_env *export_i)
 {
-	ExecutionData *data = (ExecutionData *)malloc(sizeof(ExecutionData));
+	ExecutionData *data;
+	data = (ExecutionData *)malloc(sizeof(ExecutionData));
 	if (!data)
 		return (NULL);
 	data->lst = cmd;
@@ -123,7 +124,7 @@ void loop_fct(ExecutionData *data, char *line)
 				data->lst->cmd = ft_expanding(data->lst->cmd, data->export_i);
 				(dup2(0, 3),dup2(1, 4), ft_execution(data));
 				(dup2(3, 0), dup2(4, 1), close(3), close(4));
-				print_command_list(data->lst);
+				// print_command_list(data->lst);
 				(free (data->args), free_noued_cmd(data->lst));
 			}
 		}
@@ -159,17 +160,25 @@ int main(int ac, char **av, char **env)
 	char *line;
 	s_env *export_i;
 	
+	printf("env = |%s|\n", env[0]);
 	(export_i = NULL, line = NULL);
 	if (ac != 1)
 		(printf("Args not allowed !\n"),exit(EXIT_FAILURE));
-	if (!env[0])
+	if (env[0] == NULL)
 		export_i = split_export_i(export_i);
 	else
 		export_i = split_env(env);
+	// int i = 0;
+	// while(env[i])
+	// {
+	// 	printf("env[%d] = |%s|\n", i, env[i]);
+	// 	i++;
+	// }
 	rl_catch_signals = 0;
 	signals_init();
 	main_loop(line, export_i);
-	// free(line);
-	free_s_env(export_i);
+	// env = struct_to_char(export_i);
+	// // free(line);
+	// free_s_env(export_i);
 	return 0;
 }

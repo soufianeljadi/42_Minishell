@@ -6,7 +6,7 @@
 /*   By: sdiouane <sdiouane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/26 01:07:33 by sel-jadi          #+#    #+#             */
-/*   Updated: 2024/05/13 14:37:14 by sdiouane         ###   ########.fr       */
+/*   Updated: 2024/05/14 16:06:43 by sdiouane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,7 +80,7 @@ char** split_with_quotes(const char* text)
     return tokens;
 }
 
-int	is_builtins(char **args, s_env *export_i, char **env, int *flag)
+int	is_builtins(char **args, s_env *   export_i, char **env, int *flag)
 {
 	char *pwd;
 	supprimerGuillemets(args[0]);

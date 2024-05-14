@@ -6,7 +6,7 @@
 /*   By: sdiouane <sdiouane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/05 23:07:50 by sdiouane          #+#    #+#             */
-/*   Updated: 2024/05/13 20:05:25 by sdiouane         ###   ########.fr       */
+/*   Updated: 2024/05/14 16:35:03 by sdiouane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ s_env *split_env(char **env)
 	char 	*key;
 	char 	*value;
 	char 	*str;
-	
+
 	while (env[i])
 	{
 		j = 0;
@@ -54,10 +54,7 @@ s_env *split_env(char **env)
 			value = ft_value_of_shlvl(str);
 		}
 		else if (!strcmp(key, "OLDPWD"))
-		{
 			value = NULL;
-			// value = strdup("");
-		}
 		else
 			value = ft_substr(env[i] ,j + 1 ,ft_strlen(env[i]));
 		ft_lstadd_back(&lst, ft_lstnew_data(value ,key));
@@ -80,9 +77,9 @@ s_env *add_env_entry(s_env *head, char *key, char *value)
         exit(EXIT_FAILURE);
     lst->key = ft_strdup(key);
 	if (value)
-	{
     	lst->value = ft_strdup(value);
-	}
+	else
+		lst->value = NULL;
     if (lst->key == NULL)
         exit(EXIT_FAILURE);
     lst->next = head;
@@ -92,12 +89,8 @@ s_env *add_env_entry(s_env *head, char *key, char *value)
 s_env *split_export_i(s_env *lst)
 {
     lst = add_env_entry(lst, "_", "/usr/bin/env");
-	// printf ("%p\n", lst);
-    lst = add_env_entry(lst, "OLDPWD", "");
-	// printf ("%p\n", lst);
-    lst = add_env_entry(lst, "SHLVL", "2");
-	// printf ("%p\n", lst);
+    lst = add_env_entry(lst, "OLDPWD", NULL);
+    lst = add_env_entry(lst, "SHLVL", "1");
     lst = add_env_entry(lst, "PWD", "/Users/sdiouane/Desktop/our_big_shell");
-	// printf ("%p\n", lst);
     return (lst);
 }
