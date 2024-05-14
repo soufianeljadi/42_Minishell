@@ -6,7 +6,7 @@
 /*   By: sdiouane <sdiouane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/31 22:14:48 by sdiouane          #+#    #+#             */
-/*   Updated: 2024/05/14 16:37:32 by sdiouane         ###   ########.fr       */
+/*   Updated: 2024/05/14 16:44:29 by sdiouane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -217,7 +217,7 @@ void	ft_execution(ExecutionData *data)
 	env = NULL;
 	env = struct_to_char(data->export_i);
 	data->env = env;
-		int i = 0;
+		// int i = 0;
 	// while(data->env[i])
 	// {
 	// 	printf("env[%d] = |%s|\n", i, data->env[i]);

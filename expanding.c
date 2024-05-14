@@ -6,7 +6,7 @@
 /*   By: sdiouane <sdiouane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/27 19:58:08 by sdiouane          #+#    #+#             */
-/*   Updated: 2024/05/13 19:49:11 by sdiouane         ###   ########.fr       */
+/*   Updated: 2024/05/14 18:50:13 by sdiouane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -117,6 +117,9 @@ void rmv(char **str)
 
 }
 
+
+
+// asl 
 char *ft_expanding(char *commande, s_env *export_i)
 {
     char	*exp_commande;
@@ -124,16 +127,21 @@ char *ft_expanding(char *commande, s_env *export_i)
 	char	*key;
 	char	*value;
     int		i;
+	int f = 0;
 
 	(exp_commande = strdup(commande), i = 0, exp_cmd = NULL);
+	printf("exp_commande = %s\n", exp_commande);
     while (exp_commande && exp_commande[i] != '\0')
 	{
         if (exp_commande[i] && exp_commande[i] == '$') 
 		{
+			if (exp_commande[i - 1] == '=')
+				f =1 ;
             key = get_env_key(exp_commande, i);
             if (!key)
                 exit(EXIT_FAILURE);
             value = get_env_value(key, export_i);
+			// protect the case of $var after '='
 			if (!value)
 			{
 				exp_cmd = ft_str_replace(exp_commande, key, strdup(""));
@@ -161,50 +169,3 @@ char *ft_expanding(char *commande, s_env *export_i)
 		supprimerDoll(exp_commande);
     return (exp_commande);
 }
-
-// char *ft_expanding(char *commande, s_env *export_i)
-// {
-//     int i;
-//     char *expanded_commande = strdup(commande);
-	
-//     i = 0;
-//     while (expanded_commande && expanded_commande[i] != '\0')
-// 	{
-//         if (expanded_commande[i] == '$') 
-// 		{
-//             char *key = get_env_key(expanded_commande, i);
-//             if (!key)
-//                 exit(EXIT_FAILURE);
-//             char *value = get_env_value(key, export_i);
-// 			if (!value)
-// 			{
-// 				key = ft_strjoin("$", key); 
-// 				char *expanded_cmd = ft_str_replace(expanded_commande, key, strdup(""));
-// 				free(expanded_commande);
-// 				expanded_commande = expanded_cmd;
-// 				break ;
-// 			}
-//             else if (!value || (!strcmp(value, "") || !strcmp(value, " ")))
-// 			{
-// 				key = ft_strjoin("$", key);
-//                 expanded_commande = ft_str_replace(expanded_commande, key, strdup(""));
-// 				break ;
-//                 free(key);
-//                 free(value);
-//             }
-// 			else
-// 			{
-// 				key = ft_strjoin("$", key);
-//                 char *expanded_cmd = ft_str_replace(expanded_commande, key, value);
-//                 free(expanded_commande);
-//                 expanded_commande = expanded_cmd;
-//                 free(key);
-//                 free(value);
-// 			}
-//         }
-//         	i++;
-//     }
-// 	if (strstr(expanded_commande, "$"))
-// 		supprimerDoll(expanded_commande);
-//     return (expanded_commande);
-// }

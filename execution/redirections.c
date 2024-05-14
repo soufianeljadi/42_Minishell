@@ -6,7 +6,7 @@
 /*   By: sdiouane <sdiouane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/05 23:00:01 by sdiouane          #+#    #+#             */
-/*   Updated: 2024/05/14 15:09:21 by sdiouane         ###   ########.fr       */
+/*   Updated: 2024/05/14 17:09:46 by sdiouane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,6 +56,13 @@ static void redirection_double_out(char *redirection, int *fd)
 {
 	if (redirection)
 	{
+		if (redirection[0] == '$')
+		{
+			ft_putstr_fd("minishell: ", 2);
+			ft_putstr_fd(redirection, 2);
+			ft_putstr_fd(": ambiguous redirect\n", 2);
+			exit(EXIT_FAILURE);
+		}
         *fd = open(file_nc(redirection), O_WRONLY | O_CREAT | O_APPEND, 0666);
 		if (*fd < 0)
 		{
@@ -74,6 +81,13 @@ static void redirection_in(char *redirection, int *fd)
 {
 	if (redirection != NULL)
 	{
+		if (redirection[0] == '$')
+		{
+			ft_putstr_fd("minishell: ", 2);
+			ft_putstr_fd(redirection, 2);
+			ft_putstr_fd(": ambiguous redirect\n", 2);
+			exit(EXIT_FAILURE);
+		}
 		*fd = open(file_nc(redirection), O_RDONLY);
 		if (*fd < 0)
 		{
@@ -92,7 +106,13 @@ static void redirection_out(char *redirection, int *fd)
 {
 	if (redirection)
 	{
-	
+		if (redirection[0] == '$')
+		{
+			ft_putstr_fd("minishell: ", 2);
+			ft_putstr_fd(redirection, 2);
+			ft_putstr_fd(": ambiguous redirect\n", 2);
+			exit(EXIT_FAILURE);
+		}
         *fd = open(file_nc(redirection), O_WRONLY | O_CREAT | O_TRUNC, 0666);
         if (*fd < 0)
 		{

@@ -6,7 +6,7 @@
 /*   By: sdiouane <sdiouane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/24 21:25:42 by sdiouane          #+#    #+#             */
-/*   Updated: 2024/05/14 13:49:18 by sdiouane         ###   ########.fr       */
+/*   Updated: 2024/05/14 18:14:34 by sdiouane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -168,6 +168,7 @@ s_env *not_null(char **args, s_env *env)
 			while (args[i][j] &&  args[i][j] != '=' && args[i][j] != '+') // here
 				j++;
 			key = ft_substr(args[i], 0, j);
+			printf("key = |%s|\n", key);
 			if (args[i][j] == '+' && (args[i][j + 1] != '='))
 			{
 				printf("export : %c, not a valid identifier", args[i][j]);
