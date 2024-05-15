@@ -6,7 +6,7 @@
 /*   By: sel-jadi <sel-jadi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/18 23:09:54 by sdiouane          #+#    #+#             */
-/*   Updated: 2024/05/03 19:10:56 by sel-jadi         ###   ########.fr       */
+/*   Updated: 2024/05/15 21:29:27 by sel-jadi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,11 +62,7 @@ int	parse_redirection(char *line)
 	r = 0;
 	while (line[i] <= 32)
 		i++;
-	while (line[i] != '\0')
-	{
-		check_line(line, i, r);
-		i++;
-	}
+	check_line(line, i, r);
 	if (r == 0)
 		return (0);
 	return (1);

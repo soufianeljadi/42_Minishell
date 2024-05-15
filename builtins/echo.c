@@ -3,14 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   echo.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sdiouane <sdiouane@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sel-jadi <sel-jadi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/23 16:50:26 by sdiouane          #+#    #+#             */
-/*   Updated: 2024/05/13 14:35:44 by sdiouane         ###   ########.fr       */
+/*   Updated: 2024/05/15 22:20:20 by sel-jadi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
+
 int echo_dollar(char *args, s_env *s_env)
 {
 	char *str;
@@ -23,8 +24,6 @@ int echo_dollar(char *args, s_env *s_env)
 	str = args + 1; 
 	while(s_env)
 	{
-			// printf("K:%s_____________\n",s_env->key);
-			// printf("V:%s_____________\n\n",s_env->value);
 		if(!strcmp(s_env->key,str))
 		{
 			printf("%s",s_env->value);
@@ -194,8 +193,7 @@ static int all__args_n(char **args)
 
 void echo_fct(char **args, s_env *s_env)
 {
-	// printf("--------------------------------------args[0] = %s\n",args[0]);
-	// supprimerGuillemets(args[0]);
+
 	if((!strcmp(args[0],"echo") && !args[1] )|| all__args_n(args))
 		printf("\n");
 	else if(!strcmp(args[0],"echo") && args[1])
