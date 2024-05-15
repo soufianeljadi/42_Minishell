@@ -6,7 +6,7 @@
 /*   By: sdiouane <sdiouane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 23:52:10 by sdiouane          #+#    #+#             */
-/*   Updated: 2024/05/14 17:55:14 by sdiouane         ###   ########.fr       */
+/*   Updated: 2024/05/15 15:47:04 by sdiouane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,7 +78,9 @@ int is_single(char *str)
 			d = 0;
 		if (s == 2)
 			s = 0;
-		if (str[i] == '$')
+		if (str[i] == '$' && (str[i + 1] == '"' || str[i + 1] == '\''))
+			return (1);
+		else if (str[i] == '$')
 			break;
 		i++;
 	}

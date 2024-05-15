@@ -6,7 +6,7 @@
 /*   By: sdiouane <sdiouane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/27 19:58:08 by sdiouane          #+#    #+#             */
-/*   Updated: 2024/05/14 18:50:13 by sdiouane         ###   ########.fr       */
+/*   Updated: 2024/05/15 15:49:05 by sdiouane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -127,16 +127,14 @@ char *ft_expanding(char *commande, s_env *export_i)
 	char	*key;
 	char	*value;
     int		i;
-	int f = 0;
 
 	(exp_commande = strdup(commande), i = 0, exp_cmd = NULL);
-	printf("exp_commande = %s\n", exp_commande);
     while (exp_commande && exp_commande[i] != '\0')
 	{
+		if (is_single(exp_commande) == 1)
+			return (exp_commande);
         if (exp_commande[i] && exp_commande[i] == '$') 
 		{
-			if (exp_commande[i - 1] == '=')
-				f =1 ;
             key = get_env_key(exp_commande, i);
             if (!key)
                 exit(EXIT_FAILURE);
@@ -146,14 +144,11 @@ char *ft_expanding(char *commande, s_env *export_i)
 			{
 				exp_cmd = ft_str_replace(exp_commande, key, strdup(""));
 				(free(exp_commande), exp_commande = exp_cmd);
-				break ;
 			}
             else if (!value || (!strcmp(value, "") || !strcmp(value, " ")))
 			{
-				key = ft_strjoin("$", key);
                 exp_commande = ft_str_replace(exp_commande, key, strdup(""));
                 (free(key), free(value));
-				break ;
             }
 			else
 			{

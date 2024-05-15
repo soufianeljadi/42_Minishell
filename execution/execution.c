@@ -6,7 +6,7 @@
 /*   By: sdiouane <sdiouane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/31 22:14:48 by sdiouane          #+#    #+#             */
-/*   Updated: 2024/05/14 16:44:29 by sdiouane         ###   ########.fr       */
+/*   Updated: 2024/05/15 15:52:41 by sdiouane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -117,33 +117,33 @@ int	ft_lstsize(s_env *lst)
 	return (c);
 }
 
-// static char	**ft_merge_envr(s_env *export_i)
-// {
-// 	char	**str;
-// 	int		len;
-// 	int		i;
+static char	**ft_merge_envr(s_env *export_i)
+{
+	char	**str;
+	int		len;
+	int		i;
 
-// 	i = 0;
-// 	len = ft_lstsize(export_i);
-// 	str = NULL;
-// 	str = malloc(sizeof(char *) * (len + 1));
-// 	if (!str)
-// 		return (NULL);
-// 	while (export_i)
-// 	{
-// 		str[i] = ft_strdup("");
-// 		str[i] = ft_strjoin(str[i], export_i->key);
-// 		if (export_i->value)
-// 		{
-// 			str[i] = ft_strjoin(str[i], "=");
-// 			str[i] = ft_strjoin(str[i], export_i->value);
-// 		}
-// 		export_i = export_i->next;
-// 		i++;
-// 	}
-// 	str[i] = NULL;
-// 	return (str);
-// }
+	i = 0;
+	len = ft_lstsize(export_i);
+	str = NULL;
+	str = malloc(sizeof(char *) * (len + 1));
+	if (!str)
+		return (NULL);
+	while (export_i)
+	{
+		str[i] = ft_strdup("");
+		str[i] = ft_strjoin(str[i], export_i->key);
+		if (export_i->value)
+		{
+			str[i] = ft_strjoin(str[i], "=");
+			str[i] = ft_strjoin(str[i], export_i->value);
+		}
+		export_i = export_i->next;
+		i++;
+	}
+	str[i] = NULL;
+	return (str);
+}
 
 static void handle_child_process(ExecutionData *data)
 {
@@ -235,7 +235,7 @@ void	ft_execution(ExecutionData *data)
 	{
 		while (data->lst)
 		{
-			// g_flags.envire = ft_merge_envr(data->export_i);
+			g_flags.envire = ft_merge_envr(data->export_i);
 			execute_command(data);
 			data->lst = data->lst->next;
 		}
