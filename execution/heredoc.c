@@ -6,13 +6,13 @@
 /*   By: sel-jadi <sel-jadi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/11 19:37:55 by sel-jadi          #+#    #+#             */
-/*   Updated: 2024/05/12 20:26:21 by sel-jadi         ###   ########.fr       */
+/*   Updated: 2024/05/16 21:25:57 by sel-jadi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-static void	go_heredoc(ExecutionData *data, int fd_doc)
+static void	go_heredoc( char *red, ExecutionData *data, int fd_doc)
 {
 	char	*line;
 
@@ -21,7 +21,7 @@ static void	go_heredoc(ExecutionData *data, int fd_doc)
 		line = readline("> ");
 		if (!line)
 			break ;
-		if (ft_strncmp(line, data->args[1], ft_strlen(data->args[1]) + 1) == 0)
+		if (ft_strncmp(line, red, ft_strlen(data->args[1]) + 1) == 0)
 			break ;
 		ft_putstr_fd(line, fd_doc);
 		ft_putstr_fd("\n", fd_doc);
@@ -31,11 +31,11 @@ static void	go_heredoc(ExecutionData *data, int fd_doc)
 		free(line);
 }
 
-static void	child_heredoc(ExecutionData *data, int *heredoc)
+static void	child_heredoc(char *red, ExecutionData *data, int *heredoc)
 {
 	signal(SIGINT, handle_sigint_heredoc);
 	close(heredoc[0]);
-	go_heredoc(data, heredoc[1]);
+	go_heredoc(red ,data, heredoc[1]);
 	close(heredoc[1]);
 	exit(0);
 }
@@ -60,7 +60,7 @@ static int	parent_heredoc(ExecutionData *data, int *heredoc)
 	return (0);
 }
 
-int	heredoc(ExecutionData *data)
+int	heredoc(char *red ,ExecutionData *data)
 {
 	int	pid;
 	int	heredoc[2];
@@ -71,7 +71,7 @@ int	heredoc(ExecutionData *data)
 		exit(1);
 	pid = fork();
 	if (pid == 0)
-		child_heredoc(data, heredoc);
+		child_heredoc(red,data, heredoc);
 	else
 		return (parent_heredoc(data, heredoc));
 	return (0);

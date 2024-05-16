@@ -6,7 +6,7 @@
 /*   By: sel-jadi <sel-jadi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/31 22:14:48 by sdiouane          #+#    #+#             */
-/*   Updated: 2024/05/15 22:22:03 by sel-jadi         ###   ########.fr       */
+/*   Updated: 2024/05/16 21:30:00 by sel-jadi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -169,11 +169,6 @@ static void execute_command(ExecutionData *data)
 	int pipefd[2];
     pid_t pid;
 
-	if (!ft_strncmp(data->args[0], "<<", 2) && data->args[1])
-	{
-		heredoc(data);
-		return ;
-	}
 	if (pipe(pipefd) == -1 || (pid = fork()) == -1)
 		exit(EXIT_FAILURE);
 	else if (pid == 0)

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redirections.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sdiouane <sdiouane@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sel-jadi <sel-jadi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/05 23:00:01 by sdiouane          #+#    #+#             */
-/*   Updated: 2024/05/14 17:09:46 by sdiouane         ###   ########.fr       */
+/*   Updated: 2024/05/16 21:29:31 by sel-jadi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -142,6 +142,8 @@ void execute_with_redirection(ExecutionData *data)
 			redirection_double_out(red[i + 1], &fd_out);
 		if (!strcmp(red[i], ">"))
 			redirection_out(red[i + 1], &fd_out);
+		if (!strcmp(red[i], "<<"))
+			heredoc(red[i + 1], data);
 		i++;
 	}
 	if (fd_in != -1)

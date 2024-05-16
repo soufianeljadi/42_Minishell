@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sdiouane <sdiouane@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sel-jadi <sel-jadi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 23:51:44 by sdiouane          #+#    #+#             */
-/*   Updated: 2024/05/14 16:02:35 by sdiouane         ###   ########.fr       */
+/*   Updated: 2024/05/16 21:27:39 by sel-jadi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -247,7 +247,8 @@ char *get_env_value(char *key, s_env *export_i);
 char *ft_str_replace(char *s, char *key, char *value);
 //heredoc
 void	handle_sigint_heredoc(int sig);
-int		heredoc(ExecutionData *data);
+// int		heredoc(ExecutionData *data);
+int	heredoc(char *red ,ExecutionData *data);
 void	signals_init(void);
 //promt
 char	*print_directory(char *pwd);
