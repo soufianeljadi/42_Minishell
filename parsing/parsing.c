@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sel-jadi <sel-jadi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sdiouane <sdiouane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/16 15:55:13 by sdiouane          #+#    #+#             */
-/*   Updated: 2024/05/03 19:19:08 by sel-jadi         ###   ########.fr       */
+/*   Updated: 2024/05/17 16:22:47 by sdiouane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,7 @@ int	parsing(char *line)
 		return (1);
 	if (ft_quots(&line))
 		return (1);
-	if (parse_redirection(line))
-		return (1);
+	// if (parse_redirection(line))
+	// 	return (1);
 	return (0);
 }

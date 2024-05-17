@@ -6,7 +6,7 @@
 /*   By: sdiouane <sdiouane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/17 09:55:09 by sdiouane          #+#    #+#             */
-/*   Updated: 2024/05/17 09:55:23 by sdiouane         ###   ########.fr       */
+/*   Updated: 2024/05/17 11:36:01 by sdiouane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,7 @@ char **check_quotes_before_execution(char *s)
 		if (!strcmp(s , ""))
 		{
 			cmd = malloc(sizeof(char *) * 2);
-			cmd[0] = strdup("");
+			cmd[0] = strdup("\0");
 			cmd[1] = NULL;
 			return (cmd);
 		}

@@ -6,7 +6,7 @@
 /*   By: sdiouane <sdiouane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/05 23:00:01 by sdiouane          #+#    #+#             */
-/*   Updated: 2024/05/17 10:10:06 by sdiouane         ###   ########.fr       */
+/*   Updated: 2024/05/17 15:50:21 by sdiouane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -136,13 +136,13 @@ void execute_with_redirection(ExecutionData *data)
 	red = line_to_args(data->lst->redirection));
 	while (red[i])
 	{
-		if (!strcmp(red[i], "<"))
+		if (!strcmp(red[i], "<") && red[i + 1])
 			redirection_in(red[i + 1], &fd_in);
-		if (!strcmp(red[i], ">>"))
+		if (!strcmp(red[i], ">>") && red[i + 1])
 			redirection_double_out(red[i + 1], &fd_out);
-		if (!strcmp(red[i], ">"))
+		if (!strcmp(red[i], ">") && red[i + 1])
 			redirection_out(red[i + 1], &fd_out);
-		if (!strcmp(red[i], "<<"))
+		if (!strcmp(red[i], "<<") && red[i + 1])
 			heredoc(red[i + 1], data);
 		i++;
 	}

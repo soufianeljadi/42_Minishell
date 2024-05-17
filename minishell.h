@@ -6,7 +6,7 @@
 /*   By: sdiouane <sdiouane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 23:51:44 by sdiouane          #+#    #+#             */
-/*   Updated: 2024/05/17 10:12:02 by sdiouane         ###   ########.fr       */
+/*   Updated: 2024/05/17 11:06:03 by sdiouane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,11 @@
 # include <readline/readline.h>
 # include <readline/history.h>
 # include <errno.h>
+# include <signal.h>
+# include <sys/types.h>
+# include <sys/stat.h>
+# include <dirent.h>
+
 
 # define ANSI_RESET_ALL          "\x1b[0m"
 # define ANSI_COLOR_RED          "\x1b[31m"

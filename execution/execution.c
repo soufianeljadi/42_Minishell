@@ -6,7 +6,7 @@
 /*   By: sdiouane <sdiouane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/31 22:14:48 by sdiouane          #+#    #+#             */
-/*   Updated: 2024/05/17 10:25:26 by sdiouane         ###   ########.fr       */
+/*   Updated: 2024/05/17 11:35:21 by sdiouane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -249,6 +249,34 @@
 // 		;
 // }
 
+static int  ft_execut_error(char *cmd)
+{
+    int         ref;
+    DIR         *ptr;
+
+    ref = errno;
+    ft_putstr_fd("minishell: ", 2);
+    ft_putstr_fd(cmd, 2);
+    if (ref == 2)
+    {
+        ft_putendl_fd(": command not found", 2);
+        return (127);
+    }
+    else if (ref == 13)
+    {
+        ptr = opendir(cmd);
+        if (ptr && !closedir(ptr))
+            ft_putendl_fd(": is directory", 2);
+        else
+        {
+            ft_putstr_fd(": ", 2);
+            ft_putendl_fd(strerror(ref), 2);
+        }
+        return (126);
+    }
+    return (0);
+}
+
 
 void execute(char *s, char **env)
 {
@@ -265,9 +293,10 @@ void execute(char *s, char **env)
 		else if (cmd[0][0] == '\"')
 			del_dbl_quotes(cmd[0]);
 		chemin = get_path(cmd[0], env);
-		if (execve(chemin, cmd, env) == -1)
+		if (execve(chemin, cmd, env) == -1 /*&& strcmp(cmd[0], "\0")*/)
 		{
-			fprintf(stderr, "minishell : %s %s\n", cmd[0], strerror(errno));
+			if (strcmp(cmd[0], "\0"))
+				ft_execut_error(cmd[0]);
 			(ft_free_tab(cmd), exit(EXIT_FAILURE));
 		}
 	}

@@ -6,7 +6,7 @@
 /*   By: sdiouane <sdiouane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/18 23:09:54 by sdiouane          #+#    #+#             */
-/*   Updated: 2024/05/16 18:49:04 by sdiouane         ###   ########.fr       */
+/*   Updated: 2024/05/17 15:00:02 by sdiouane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,8 +28,7 @@ static	void	        check_line(char *line, int i, int r)
 {
 	while (line[i] != '\0')
 	{
-		if ((line[i] == '>' && line[i + 1] == '>')
-			|| (line[i] == '<' && line[i + 1] == '<'))
+		if ((line[i] == '>' && line[i + 1] == '>') || (line[i] == '<' && line[i + 1] == '<'))
 		{
 			if (line[i + 2] == '<' || line[i + 2] == '>')
 			{
@@ -41,8 +40,7 @@ static	void	        check_line(char *line, int i, int r)
 		}
 		else if (line[i] == '>' || line[i] == '<')
 		{
-			if ((line[i] == '>' && line[i + 1] == '<')
-				|| (line[i] == '<' && line[i + 1] == '>'))
+			if ((line[i] == '>' && line[i + 1] == '\0') || (line[i] == '<' && line[i + 1] == '\0'))
 			{
 				r = 1;
 				break ;
@@ -71,3 +69,50 @@ int	parse_redirection(char *line)
 		return (0);
 	return (1);
 }
+
+
+// static void check_line(char *line, int i, int *r)
+// {
+//     while (line[i] != '\0')
+//     {
+//         if ((line[i] == '>' && line[i + 1] == '>') || (line[i] == '<' && line[i + 1] == '<'))
+//         {
+//             if (line[i + 2] == '<' || line[i + 2] == '>')
+//             {
+//                 *r = 1;
+//                 break;
+//             }
+//             i = i + 2;
+//             *r = only_spaces__(line, i);
+//         }
+//         else if (line[i] == '>' || line[i] == '<')
+//         {
+//             if ((line[i] == '>' && line[i + 1] == '\0') || (line[i] == '<' && line[i + 1] == '\0'))
+//             {
+//                 *r = 1;
+//                 break;
+//             }
+//             *r = only_spaces__(line, i + 1);
+//         }
+//         i++;
+//     }
+// }
+
+// int parse_redirection(char *line)
+// {
+//     int i;
+//     int r;
+
+//     i = 0;
+//     r = 0;
+//     while (line[i] <= 32)
+//         i++;
+//     while (line[i] != '\0')
+//     {
+//         check_line(line, i, &r);
+//         i++;
+//     }
+//     if (r == 0)
+//         return (0);
+//     return (1);
+// }

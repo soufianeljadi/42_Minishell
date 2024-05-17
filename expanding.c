@@ -6,7 +6,7 @@
 /*   By: sdiouane <sdiouane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/27 19:58:08 by sdiouane          #+#    #+#             */
-/*   Updated: 2024/05/17 10:20:01 by sdiouane         ###   ########.fr       */
+/*   Updated: 2024/05/17 16:02:55 by sdiouane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -125,27 +125,29 @@ char *ft_expanding(char *commande, s_env *export_i)
 	char	*value;
     int		i;
 
+	if (!commande)
+	{
+		puts("Erreur d'allocation de mémoire\n");
+		exit(EXIT_FAILURE);
+	}
 	(exp_commande = strdup(commande), i = 0, exp_cmd = NULL);
     while (exp_commande && exp_commande[i] != '\0')
 	{
 		if (is_single(exp_commande) == 1)
+		{
+			// supprimerDoll(exp_commande);
+			printf("exp_commande = %s\n", exp_commande);
 			return (exp_commande);
+		}
         if (exp_commande[i] && exp_commande[i] == '$') 
 		{
             key = get_env_key(exp_commande, i);
             if (!key)
                 exit(EXIT_FAILURE);
-            value = get_env_value(key, export_i);
-			if (!value)
-			{
-				exp_cmd = ft_str_replace(exp_commande, key, strdup(""));
-				(free(exp_commande), exp_commande = exp_cmd);
-				supprimerDoll(exp_commande);
-			}
-            else if (!value || (!strcmp(value, "") || !strcmp(value, " ")))
+			value = get_env_value(key, export_i);
+            if (!value || !strcmp(value, "") || !strcmp(value, " "))
 			{
                 exp_commande = ft_str_replace(exp_commande, key, strdup(""));
-				supprimerDoll(exp_commande);
                 (free(key), free(value));
             }
 			else
@@ -158,86 +160,10 @@ char *ft_expanding(char *commande, s_env *export_i)
         }
         	i++;
     }
+	// del_dbl_quotes(exp_commande);
 	if (strstr(exp_commande, "$"))
 		supprimerDoll(exp_commande);
     return (exp_commande);
 }
 
 
-
-// int is_single(char *str)
-// {
-// 	int s;
-// 	int d;
-// 	int i;
-
-// 	i = 0;
-// 	s = d = 0;
-// 	while (str[i])
-// 	{
-// 		if (str[i] == '\'' && d == 0)
-// 			s = s + 1;
-// 		else if (str[i] == '"' && s == 0)
-// 			d = d + 1;
-// 		if (d == 2)
-// 			d = 0;
-// 		if (s == 2)
-// 			s = 0;
-// 		if (str[i] == '$' && (str[i + 1] == '"' || str[i + 1] == '\''))
-// 			return (1);
-// 		else if (str[i] == '$')
-// 			break;
-// 		i++;
-// 	}
-// 	if (s == 1)
-// 		return (1);
-// 	else
-// 		return (0);
-// 	return (0);
-// }
-
-
-// char *ft_expanding(char *commande, s_env *export_i)
-// {
-//     char	*exp_commande;
-// 	char	*exp_cmd;
-// 	char	*key;
-// 	char	*value;
-//     int		i;
-
-// 	(exp_commande = strdup(commande), i = 0, exp_cmd = NULL);
-//     while (exp_commande && exp_commande[i] != '\0')
-// 	{
-// 		if (is_single(exp_commande) == 1)
-// 			return (exp_commande);
-//         if (exp_commande[i] && exp_commande[i] == '$') 
-// 		{
-//             key = get_env_key(exp_commande, i);
-//             if (!key)
-//                 exit(EXIT_FAILURE);
-//             value = get_env_value(key, export_i);
-// 			// protect the case of $var after '='
-// 			if (!value)
-// 			{
-// 				exp_cmd = ft_str_replace(exp_commande, key, strdup(""));
-// 				(free(exp_commande), exp_commande = exp_cmd);
-// 			}
-//             else if (!value || (!strcmp(value, "") || !strcmp(value, " ")))
-// 			{
-//                 exp_commande = ft_str_replace(exp_commande, key, strdup(""));
-//                 (free(key), free(value));
-//             }
-// 			else
-// 			{
-// 				key = ft_strjoin("$", key);
-//                 exp_cmd = ft_str_replace(exp_commande, key, value);
-//                 (free(exp_commande), exp_commande = exp_cmd);
-//                 (free(key), free(value));
-// 			}
-//         }
-//         	i++;
-//     }
-// 	if (strstr(exp_commande, "$"))
-// 		supprimerDoll(exp_commande);
-//     return (exp_commande);
-// }

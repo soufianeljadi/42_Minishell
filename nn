@@ -13,6 +13,7 @@ minishell
 minishell.c
 minishell.h
 multipl_pipe.c
+nn
 parsing
 pp
 promt.c

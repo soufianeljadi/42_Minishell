@@ -6,7 +6,7 @@
 /*   By: sdiouane <sdiouane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/26 00:12:06 by sel-jadi          #+#    #+#             */
-/*   Updated: 2024/05/10 13:26:58 by sdiouane         ###   ########.fr       */
+/*   Updated: 2024/05/17 16:34:21 by sdiouane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,9 +97,9 @@ char	**line_to_args(char *line)
 	d.count = 0;
 	d.dq = 0;
 	d.sq = 0;
-	d.i = 0;
+	d.i = 0;;
 	sp_line = ft_add_sep(line, d);
 	cmds = split_args(sp_line);
 	free(sp_line);
-	return (cmds);
+	return (cmds);       
 }

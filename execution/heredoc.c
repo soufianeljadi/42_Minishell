@@ -6,7 +6,7 @@
 /*   By: sdiouane <sdiouane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/11 19:37:55 by sel-jadi          #+#    #+#             */
-/*   Updated: 2024/05/17 10:13:40 by sdiouane         ###   ########.fr       */
+/*   Updated: 2024/05/17 10:57:03 by sdiouane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ void	go_heredoc( char *red, ExecutionData *data, int fd_doc)
 
 	while (1)
 	{
-		line = readline("> ");
+		line = readline("<-heredoc-> ");
 		if (!line)
 			break ;
 		if (ft_strncmp(line, red, ft_strlen(data->args[1]) + 1) == 0)

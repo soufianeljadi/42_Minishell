@@ -6,7 +6,7 @@
 /*   By: sdiouane <sdiouane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/27 23:28:30 by sdiouane          #+#    #+#             */
-/*   Updated: 2024/05/11 17:17:58 by sdiouane         ###   ########.fr       */
+/*   Updated: 2024/05/17 16:04:22 by sdiouane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,9 @@ char *ft_strjoin(const char *s1, const char *s2)
 	size_t i = 0;
 	size_t j = 0;
 	char *result;
-
+	
+	// if (!s1 || !s2)
+	// 	return NULL;
 	if (s1)
 		while (s1[len_s1])
 			len_s1++;
@@ -108,26 +110,86 @@ noued_cmd *split_args_by_pipe(char **args)
 	char 		*temp;
 
 	(1) && (i = 0, cmd = NULL, s = NULL, redirection = NULL, temp = NULL);
-	while (args[i])
+	
+	i = 0;
+	while (args[i] != NULL)
 	{
 		if (strcmp(args[i], "|") == 0) 
 			(add_back_noued_cmd(&cmd, s, redirection), free(s), free (redirection), redirection = NULL, s = NULL);
-		else if (strcmp(args[i], "<") == 0 || strcmp(args[i], ">") == 0
-		|| strcmp(args[i], ">>") == 0 || strcmp(args[i], "<<") == 0)
+		else if (strcmp(args[i], "<") == 0 || strcmp(args[i], ">") == 0 || strcmp(args[i], ">>") == 0 || strcmp(args[i], "<<") == 0)
 		{
+			if (args[i + 1] == NULL)
+				return (cmd);
 			(!s) && (s = strdup(""));
-			(1) && (redirection = ft_strjoin(redirection,
-			strdup(ft_strjoin(args[i], args[i + 1]))),
-			redirection = ft_strjoin(redirection, " "),	i++);
+			(1) && (redirection = ft_strjoin(redirection, strdup(ft_strjoin(args[i], args[i + 1]))), redirection = ft_strjoin(redirection, " "),	i++);
 		}
 		else
 			s = fct(args, temp, s, i);
 		i++;
 	}
-	(add_back_noued_cmd(&cmd, s, redirection),	free(s));
-	// free(redirection);
+	if (s || redirection)	
+		(add_back_noued_cmd(&cmd, s, redirection),	free(s));
 	return (cmd);
 }
+
+// noued_cmd *split_args_by_pipe(char **args) {
+//     noued_cmd *cmd = NULL;
+//     char *s = NULL;
+//     char *redirection = NULL;
+//     int i = 0;
+//     char *temp = NULL;
+
+//     while (args[i]) {
+//         if (strcmp(args[i], "|") == 0) {
+//             add_back_noued_cmd(&cmd, s, redirection);
+//             free(s);
+//             free(redirection);
+//             redirection = NULL;
+//             s = NULL;
+//         } else if (strcmp(args[i], "<") == 0 || strcmp(args[i], ">") == 0 ||
+//                    strcmp(args[i], ">>") == 0 || strcmp(args[i], "<<") == 0) {
+//             if (args[i + 1] == NULL || args[i + 1][0] == '\0') {
+//                 // Handle syntax error
+//                 fprintf(stderr, "Syntax error: Missing argument for redirection\n");
+//                 // Free any allocated memory before returning
+//                 free(s);
+//                 free(redirection);
+//                 // Return partially built command list
+//                 return cmd;
+//             }
+//             if (!s) {
+//                 s = strdup(""); // Initialize s if it's NULL
+//             }
+//             char *new_redirection = ft_strjoin(args[i], args[i + 1]);
+//             if (!redirection) {
+//                 redirection = strdup(new_redirection);
+//             } else {
+//                 char *temp_redirection = ft_strjoin(redirection, " ");
+//                 free(redirection);
+//                 redirection = ft_strjoin(temp_redirection, new_redirection);
+//                 free(temp_redirection);
+//             }
+//             free(new_redirection);
+//             i++; // Skip the next argument as it is part of the redirection
+//         } else {
+//             // Assuming fct is a function that processes the argument
+//             s = fct(args, temp, s, i);
+//         }
+//         i++;
+//     }
+
+//     // Add the last command if any
+//     if (s || redirection) {
+//         add_back_noued_cmd(&cmd, s, redirection);
+//     }
+
+//     // Free allocated memory
+//     free(s);
+//     free(redirection);
+
+//     return cmd;
+// }
+
 
 void print_command_list(noued_cmd *head)
 {

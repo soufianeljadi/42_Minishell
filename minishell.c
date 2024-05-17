@@ -6,7 +6,7 @@
 /*   By: sdiouane <sdiouane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 23:52:10 by sdiouane          #+#    #+#             */
-/*   Updated: 2024/05/16 16:46:22 by sdiouane         ###   ########.fr       */
+/*   Updated: 2024/05/17 16:43:07 by sdiouane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -119,11 +119,10 @@ void loop_fct(ExecutionData *data, char *line)
 		if(line != NULL && only_spaces(line) == 0)
 		{
 			add_history(line);
-			if(parsing(line) == 1)		
+			if(parsing(line) == 1)	
 				syntax_error();
 			else 
 			{
-				// protect_single_quote(line);
 				data->args = line_to_args(line);
 				data->lst = split_args_by_pipe(data->args);
 				data->lst->cmd = ft_expanding(data->lst->cmd, data->export_i);
@@ -157,7 +156,7 @@ void	f(void)
 {     
 	system("leaks minishell");					
 }
-
+// export x="ls > gg">
 int main(int ac, char **av, char **env)
 {
 	(void)av;
