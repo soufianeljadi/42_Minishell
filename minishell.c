@@ -6,7 +6,7 @@
 /*   By: sdiouane <sdiouane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 23:52:10 by sdiouane          #+#    #+#             */
-/*   Updated: 2024/05/15 15:47:04 by sdiouane         ###   ########.fr       */
+/*   Updated: 2024/05/16 16:46:22 by sdiouane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,25 +26,28 @@ void supprimerGuillemets__(char *chaine)
     chaine[j] = '\0';
 }
 
-void before_expanding(char **args)
-{
-	// char *tmp;
-	int i = 0;
-	int j = 0;
-	while (args[i])
-	{
-		j = 0;
-		if (args[i][j] == '"')
-		{
-			while (args[i][j] != '"')
-				i++;
-			args[i] = ft_substr2(args[i], 1, strlen(args[i]) - 1);
-			supprimerGuillemets(args[i]);
-			printf("tmp = %s\n", args[i]);
-		}
-		i++;
-	}
-}
+// char* protect_single_quote(const char* input)
+// {
+//     size_t input_length = strlen(input);
+//     // Allouer suffisamment de mémoire pour la chaîne de sortie
+//     char* output = (char*)malloc((input_length * 2 + 1) * sizeof(char)); // *2 pour la possibilité de doubler la longueur
+//     if (output == NULL)
+//         exit(EXIT_FAILURE);
+
+//     size_t output_index = 0;
+//     for (size_t i = 0; i < input_length; ++i) {
+//         if (input[i] == '\'' || input[i] == '"') {
+//             // Ajouter un backslash
+//             output[output_index++] = '\\';
+//         }
+//         // Ajouter le caractère actuel
+//         output[output_index++] = input[i];
+//     }
+//     // Ajouter le caractère de fin de chaîne
+//     output[output_index] = '\0';
+//     return output;
+// }
+
 
 void supprimerGuillemetsdoll(char *chaine)
 {
@@ -66,8 +69,7 @@ int is_single(char *str)
 	int d;
 	int i;
 
-	i = 0;
-	s = d = 0;
+	(1) && (i = 0, s = 0, d = 0);
 	while (str[i])
 	{
 		if (str[i] == '\'' && d == 0)
@@ -78,7 +80,9 @@ int is_single(char *str)
 			d = 0;
 		if (s == 2)
 			s = 0;
-		if (str[i] == '$' && (str[i + 1] == '"' || str[i + 1] == '\''))
+		if (str[i] == '$' && (str[i + 1] == ' ' || str[i + 1] == '\0' || str[i + 1] == '\t'))
+			return (1);
+		else if (str[i] == '$' && (str[i + 1] == '"' || str[i + 1] == '\''))
 			return (1);
 		else if (str[i] == '$')
 			break;
@@ -86,8 +90,6 @@ int is_single(char *str)
 	}
 	if (s == 1)
 		return (1);
-	else
-		return (0);
 	return (0);
 }
 
@@ -121,6 +123,7 @@ void loop_fct(ExecutionData *data, char *line)
 				syntax_error();
 			else 
 			{
+				// protect_single_quote(line);
 				data->args = line_to_args(line);
 				data->lst = split_args_by_pipe(data->args);
 				data->lst->cmd = ft_expanding(data->lst->cmd, data->export_i);
@@ -161,8 +164,7 @@ int main(int ac, char **av, char **env)
 	// atexit(f);
 	char *line;
 	s_env *export_i;
-	
-	printf("env = |%s|\n", env[0]);
+
 	(export_i = NULL, line = NULL);
 	if (ac != 1)
 		(printf("Args not allowed !\n"),exit(EXIT_FAILURE));
@@ -170,17 +172,10 @@ int main(int ac, char **av, char **env)
 		export_i = split_export_i(export_i);
 	else
 		export_i = split_env(env);
-	// int i = 0;
-	// while(env[i])
-	// {
-	// 	printf("env[%d] = |%s|\n", i, env[i]);
-	// 	i++;
-	// }
 	rl_catch_signals = 0;
 	signals_init();
 	main_loop(line, export_i);
-	// env = struct_to_char(export_i);
-	// // free(line);
-	// free_s_env(export_i);
+	// free(line);
+	free_s_env(export_i);
 	return 0;
 }

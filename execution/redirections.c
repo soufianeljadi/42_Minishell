@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redirections.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sel-jadi <sel-jadi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sdiouane <sdiouane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/05 23:00:01 by sdiouane          #+#    #+#             */
-/*   Updated: 2024/05/16 21:29:31 by sel-jadi         ###   ########.fr       */
+/*   Updated: 2024/05/17 10:10:06 by sdiouane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ char *file_nc(char *s)
 }
 
 
-static void redirection_double_out(char *redirection, int *fd)
+void redirection_double_out(char *redirection, int *fd)
 {
 	if (redirection)
 	{
@@ -77,7 +77,7 @@ static void redirection_double_out(char *redirection, int *fd)
 	}
 }
 
-static void redirection_in(char *redirection, int *fd)
+void redirection_in(char *redirection, int *fd)
 {
 	if (redirection != NULL)
 	{
@@ -102,7 +102,7 @@ static void redirection_in(char *redirection, int *fd)
 	}
 }
 
-static void redirection_out(char *redirection, int *fd)
+void redirection_out(char *redirection, int *fd)
 {
 	if (redirection)
 	{

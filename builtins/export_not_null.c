@@ -6,7 +6,7 @@
 /*   By: sdiouane <sdiouane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/24 21:25:42 by sdiouane          #+#    #+#             */
-/*   Updated: 2024/05/14 18:14:34 by sdiouane         ###   ########.fr       */
+/*   Updated: 2024/05/16 18:56:10 by sdiouane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,56 +36,40 @@ void  fct_equal(char **args, s_env *env, char *key)
 	current = NULL;	
 	env->j++;
 	start = env->j;
-	if (args[env->i][env->j] == '"')
-	{
-		env->j++;
-		while (args[env->i][env->j] && args[env->i][env->j] != '"')
-			env->j++;
-	}
-	else
-		while (args[env->i][env->j] && args[env->i][env->j] != '\"')
+	// if (args[env->i][env->j] == '"')
+	// {
+	// 	env->j++;
+	// 	while (args[env->i][env->j] && args[env->i][env->j] != '\0')
+	// 		env->j++;
+	// 	env->j++;
+	// }
+	// else if (args[env->i][env->j] == '\'')
+	// {
+	// 	env->j++;
+	// 	while (args[env->i][env->j] && args[env->i][env->j] != '\0')
+	// 		env->j++;
+	// }
+	// else
+		while (args[env->i][env->j] && args[env->i][env->j] != '\0')
 			env->j++;
 	value = ft_substr(args[env->i], start, env->j - start);
-	if (value[0] != '\"')
+	if (value[0] == '\'')
+		value = ft_substr(value, 1, ft_strlen(value) - 2);
+	if (value[0] == '\"')
+		sp(value);
+	current = env;
+	while (current != NULL)
 	{
-		current = env;
-		while (current != NULL)
+		if (strcmp(current->key, key) == 0)
 		{
-			if (strcmp(current->key, key) == 0)
-			{
-				free(current->value);	
-				current->value = value;	
-				break;
-		}
-			current = current->next;
-		}
-		if (current == NULL)
-		{
-			// if (existe_deja(key, env) == 0)
-				ft_lstadd_back(&env, ft_lstnew_data(value, key));
-		}
+			free(current->value);	
+			current->value = value;	
+			break;
 	}
-	else
-	{
-		// value = remove_quotes(value);
-		// sp(value);
-		current = env;
-		while (current != NULL && current->value)
-		{
-			if (strcmp(current->key, key) == 0)
-			{
-				free(current->value);
-				current->value = value;
-				break;
-			}
-			current = current->next;
-		}
-		if (current == NULL)
-		{
-			// if (existe_deja(key, env) == 0)
-				ft_lstadd_back(&env, ft_lstnew_data(value, key));
-		}
+		current = current->next;
 	}
+	if (current == NULL)
+		ft_lstadd_back(&env, ft_lstnew_data(value, key));
 }
 
 void ftc_concatination(char **args, s_env *env, char *key)
@@ -124,7 +108,6 @@ void ftc_concatination(char **args, s_env *env, char *key)
 	}
 	else
 	{
-		// value = remove_quotes(value);
 		current = env;
 		while (current != NULL && current->value)
 		{
@@ -141,12 +124,27 @@ void ftc_concatination(char **args, s_env *env, char *key)
 	}
 }
 
+// void del_qotes1(char *chaine)
+// {
+//     int i = 0;
+// 	int j = 0;
+	
+//     while (chaine[i])
+// 	{
+//         if (chaine[i] != '"')
+//             chaine[j++] = chaine[i];
+//         i++;
+//     }
+//     chaine[j] = '\0';
+// }
+
 
 s_env *not_null(char **args, s_env *env)
 {
-	int i = 0;
+	int i;
 	int j;
 	char *key;
+	
 	i = 1;
 	if (!strcmp(args[0], "export") && !args[1])
 		print_export(env);
@@ -154,21 +152,19 @@ s_env *not_null(char **args, s_env *env)
 	{
 		while (args[i])
 		{
-			// printf("after : args[%d] = %s\n", i, args[i]);
-			supprimerGuillemets(args[i]);
-			// printf("before : args[%d] = %s\n", i, args[i]);
-			if ((!strcmp(args[i], ">") || !strcmp(args[i], ">>") || !strcmp(args[i], "<") || !strcmp(args[i], "<<")))
-			{
-				if (args[i + 1])
-					i = i + 2;
-			}
+			// del_qotes1(args[i]);
+			// if ((!strcmp(args[i], ">") || !strcmp(args[i], ">>") || !strcmp(args[i], "<") || !strcmp(args[i], "<<")))
+			// {
+			// 	printf("args : %s\n", args[i]);
+			// 	if (args[i + 1])
+			// 		i = i + 2;
+			// }
 			j = 0;
 			if (!args[i])
 				break;
 			while (args[i][j] &&  args[i][j] != '=' && args[i][j] != '+') // here
 				j++;
 			key = ft_substr(args[i], 0, j);
-			printf("key = |%s|\n", key);
 			if (args[i][j] == '+' && (args[i][j + 1] != '='))
 			{
 				printf("export : %c, not a valid identifier", args[i][j]);
@@ -185,21 +181,14 @@ s_env *not_null(char **args, s_env *env)
 				{
 					if (args[i][j] == '=')
 					{
-						env->i = i;
-						env->j = j;
+						(env->i = i, env->j = j);
 						fct_equal(args, env, key);
 					}             
 					else if (args[i][j] == '+' && args[i][j + 1] == '=')
 					{
-						env->i = i;
-						env->j = j;
+						(env->i = i, env->j = j);
 						ftc_concatination(args, env, key);
 					}
-					// else
-					// {
-					// 	if (existe_deja(key, env) == 0)
-					// 		ft_lstadd_back(&env, ft_lstnew_data(NULL, key));
-					// }
 				}
 			}
 			else

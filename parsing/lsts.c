@@ -6,7 +6,7 @@
 /*   By: sdiouane <sdiouane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/13 00:32:13 by sdiouane          #+#    #+#             */
-/*   Updated: 2024/05/14 16:56:28 by sdiouane         ###   ########.fr       */
+/*   Updated: 2024/05/16 15:48:41 by sdiouane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -119,7 +119,10 @@ void print_export(s_env *list)
                 else if (strcmp(list->value, ""))
 				{
                 	printf("declare -x %s=", list->key);
-                    printf("\"%s\"\n", list->value);
+					if (list->value[0] == '"')
+						printf("%s\n", list->value);
+					else
+                    	printf("\"%s\"\n", list->value);
 				}
 			}
 		}

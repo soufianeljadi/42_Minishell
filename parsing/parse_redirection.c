@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_redirection.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sel-jadi <sel-jadi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sdiouane <sdiouane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/18 23:09:54 by sdiouane          #+#    #+#             */
-/*   Updated: 2024/05/15 21:29:27 by sel-jadi         ###   ########.fr       */
+/*   Updated: 2024/05/16 18:49:04 by sdiouane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ static	int	only_spaces__(char *line, int i)
 	return (r);
 }
 
-static	void	check_line(char *line, int i, int r)
+static	void	        check_line(char *line, int i, int r)
 {
 	while (line[i] != '\0')
 	{
@@ -62,7 +62,11 @@ int	parse_redirection(char *line)
 	r = 0;
 	while (line[i] <= 32)
 		i++;
-	check_line(line, i, r);
+	while (line[i] != '\0')
+	{
+		check_line(line, i, r);
+		i++;
+	}
 	if (r == 0)
 		return (0);
 	return (1);

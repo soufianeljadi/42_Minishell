@@ -6,7 +6,7 @@
 /*   By: sdiouane <sdiouane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/24 21:24:00 by sdiouane          #+#    #+#             */
-/*   Updated: 2024/05/12 17:57:57 by sdiouane         ###   ########.fr       */
+/*   Updated: 2024/05/16 17:29:11 by sdiouane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,9 +17,9 @@
 // 	char	*value;
 // 	s_env	*current;
 // 	int		start;
-	
+
 // 	value = NULL;
-// 	current = NULL;
+// 	current = NULL;	
 // 	env->j++;
 // 	start = env->j;
 // 	if (args[env->i][env->j] == '"')
@@ -29,7 +29,7 @@
 // 			env->j++;
 // 	}
 // 	else
-// 		while (args[env->i][env->j] && args[env->i][env->j] != ' ')
+// 		while (args[env->i][env->j] && args[env->i][env->j] != '\"')
 // 			env->j++;
 // 	value = ft_substr(args[env->i], start, env->j - start);
 // 	if (value[0] != '\"')
@@ -51,6 +51,7 @@
 // 	else
 // 	{
 // 		value = remove_quotes(value);
+// 		// sp(value);
 // 		current = env;
 // 		while (current != NULL && current->value)
 // 		{
@@ -69,11 +70,11 @@
 
 // void concatenation(char **args, s_env *env, char *key)
 // {
-// 	char *value = NULL;
+// 	char *value;
+// 	int start;
 // 	s_env *current;
 	
 // 	env->j = env->j + 2;
-// 	int start;
 // 	start = env->j;
 // 	while (args[env->i][env->j] && args[env->i][env->j] != ' ')
 // 		env->j++;
@@ -95,7 +96,7 @@
 // 	}
 // 	else
 // 	{
-// 		value = remove_quotes(value);
+// 		// value = remove_quotes(value);
 // 		current = env;
 // 		while (current != NULL && current->value)
 // 		{
@@ -109,64 +110,25 @@
 // 				ft_lstadd_back(&env, ft_lstnew_data(value, key));						
 // 		}
 							
-// 	}	
+// 	}
 // }
 
-// void is_null(char **args, s_env *env)
-// {
-// 	int i = 1;
-// 	int j;
-// 	char *key;
-// 	int f = 0;
 
-// 	if (!strcmp(args[0], "export") && !args[1])
-// 		print_export(env);
-// 	else if (!strcmp(args[0], "export") && args[1])	
+
+
+
+// void sp(char *chaine)
+// {
+//     int i = 0;
+// 	int j = 0;
+
+//     while (chaine[i])
 // 	{
-// 		supprimerGuillemets(args[1]);
-// 		while (args[i])
-// 		{
-// 			if ((!strcmp(args[i], ">") || !strcmp(args[i], ">>") || !strcmp(args[i], "<") || !strcmp(args[i], "<<")))
-// 			{
-// 				if (args[i + 1])
-// 					i = i + 2;
-// 			}
-// 			j = 0;
-// 			if (!args[i])
-// 				break;
-// 			while (args[i][j] &&  args[i][j] != '=' && args[i][j] != '+')
-// 				j++;
-// 			key = ft_substr(args[i], 0, j);
-// 			if (args[i][j] == '=' && (args[i][j + 1] == ' ' || args[i][j + 1] == '\t' || args[i][j + 1] == '\0'))
-// 				f = 1;
-// 			if (verif_export(key) == 0)
-// 			{
-// 				if (args[i][j] == '\0')
-// 				{		
-// 					if (!existe_deja(key, env))
-// 						ft_lstadd_back(&env, ft_lstnew_data(strdup(""), key));
-// 				}
-// 				else
-// 				{
-// 					if (args[i][j] == '=')
-// 					{
-// 						env->i = i;
-// 						env->j = j;
-// 						is_equal(args, env, key);
-// 					}
-// 					else if (args[i][j] == '+' && args[i][j + 1] == '=')
-// 					{
-// 						env->i = i;
-// 						env->j = j;
-// 						concatenation(args, env, key);
-// 					}
-// 				}
-// 			}
-// 			else
-// 				fprintf(stderr, "minishell: export: `%s': not a valid identifier\n", args[i]);
-// 			i++;
-// 		}
-// 	}
+//         if (chaine[i] != '"')
+//             chaine[j++] = chaine[i];
+//         i++;
+//     }
+//     chaine[j] = '\0';
 // }
 
 void is_equal(char **args, s_env *env, char *key)
@@ -179,50 +141,40 @@ void is_equal(char **args, s_env *env, char *key)
 	current = NULL;	
 	env->j++;
 	start = env->j;
-	if (args[env->i][env->j] == '"')
-	{
-		env->j++;
-		while (args[env->i][env->j] && args[env->i][env->j] != '"')
-			env->j++;
-	}
-	else
-		while (args[env->i][env->j] && args[env->i][env->j] != '\"')
+	// if (args[env->i][env->j] == '"')
+	// {
+	// 	env->j++;
+	// 	while (args[env->i][env->j] && args[env->i][env->j] != '\0')
+	// 		env->j++;
+	// 	env->j++;
+	// }
+	// else if (args[env->i][env->j] == '\'')
+	// {
+	// 	env->j++;
+	// 	while (args[env->i][env->j] && args[env->i][env->j] != '\0')
+	// 		env->j++;
+	// }
+	// else
+		while (args[env->i][env->j] && args[env->i][env->j] != '\0')
 			env->j++;
 	value = ft_substr(args[env->i], start, env->j - start);
-	if (value[0] != '\"')
+	// value = ft_strjoin("\'" ,value);
+	// value = ft_strjoin(value , "\'");
+	if (value[0] == '\"')
+		sp(value);
+	current = env;
+	while (current != NULL)
 	{
-		current = env;
-		while (current != NULL && current->value)
+		if (strcmp(current->key, key) == 0)
 		{
-			if (strcmp(current->key, key) == 0)
-			{
-				free(current->value);
-				current->value = value;
-				break;
-			}
-			current = current->next;
-		}
-		if (current == NULL)
-			ft_lstadd_back(&env, ft_lstnew_data(value, key));
+			free(current->value);	
+			current->value = value;	
+			break;
 	}
-	else
-	{
-		value = remove_quotes(value);
-		// sp(value);
-		current = env;
-		while (current != NULL && current->value)
-		{
-			if (strcmp(current->key, key) == 0)
-			{
-				free(current->value);
-				current->value = value;
-				break;
-			}
-			current = current->next;
-		}
-		if (current == NULL)
-			ft_lstadd_back(&env, ft_lstnew_data(value, key));
+		current = current->next;
 	}
+	if (current == NULL)
+		ft_lstadd_back(&env, ft_lstnew_data(value, key));
 }
 
 void concatenation(char **args, s_env *env, char *key)
@@ -233,9 +185,19 @@ void concatenation(char **args, s_env *env, char *key)
 	
 	env->j = env->j + 2;
 	start = env->j;
-	while (args[env->i][env->j] && args[env->i][env->j] != ' ')
+	if (args[env->i][env->j] == '"')
+	{
 		env->j++;
+		while (args[env->i][env->j] && args[env->i][env->j] != '"')
+			env->j++;
+	}
+	else
+		while (args[env->i][env->j] && args[env->i][env->j] != '\"')
+			env->j++;
+	
 	value = ft_substr(args[env->i], start, env->j - start);
+	// value = ft_strjoin("\'" ,value);
+	// value = ft_strjoin(value , "\'");
 	if (value[0] != '\"')
 	{
 		current = env;
@@ -253,7 +215,6 @@ void concatenation(char **args, s_env *env, char *key)
 	}
 	else
 	{
-		// value = remove_quotes(value);
 		current = env;
 		while (current != NULL && current->value)
 		{
@@ -269,6 +230,22 @@ void concatenation(char **args, s_env *env, char *key)
 							
 	}
 }
+
+
+void del_qotes1(char *chaine)
+{
+    int i = 0;
+	int j = 0;
+	
+    while (chaine[i])
+	{
+        if (chaine[i] != '"')
+            chaine[j++] = chaine[i];
+        i++;
+    }
+    chaine[j] = '\0';
+}
+
 
 void is_null(char **args, s_env *env)
 {
@@ -305,22 +282,18 @@ void is_null(char **args, s_env *env)
 				if (args[i][j] == '\0')
 				{					
 					if (!existe_deja(key, env))
-					{
 						ft_lstadd_back(&env, ft_lstnew_data(strdup(""), key));
-					}
 				}
 				else
 				{
 					if (args[i][j] == '=')
 					{
-						env->i = i;
-						env->j = j;
+						(env->i = i, env->j = j);
 						fct_equal(args, env, key);
 					}             
 					else if (args[i][j] == '+' && args[i][j + 1] == '=')
 					{
-						env->i = i;
-						env->j = j;
+						(env->i = i, env->j = j);
 						ftc_concatination(args, env, key);
 					}
 				}
@@ -330,5 +303,4 @@ void is_null(char **args, s_env *env)
 			i++;
 		}
 	}
-	// return ();	
 }

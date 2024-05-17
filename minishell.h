@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sel-jadi <sel-jadi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sdiouane <sdiouane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 23:51:44 by sdiouane          #+#    #+#             */
-/*   Updated: 2024/05/16 21:27:39 by sel-jadi         ###   ########.fr       */
+/*   Updated: 2024/05/17 10:12:02 by sdiouane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,6 +104,8 @@ typedef struct
     char **args;
     s_env *export_i;
     char **env;
+	int fd_in;
+	int fd_out;
 } ExecutionData;
 
 /**********************MAIN***********************************/
@@ -247,7 +249,6 @@ char *get_env_value(char *key, s_env *export_i);
 char *ft_str_replace(char *s, char *key, char *value);
 //heredoc
 void	handle_sigint_heredoc(int sig);
-// int		heredoc(ExecutionData *data);
 int	heredoc(char *red ,ExecutionData *data);
 void	signals_init(void);
 //promt
@@ -260,5 +261,30 @@ int is_single(char *str);
 void	ft_putstr_fd(char *s, int fd);
 int	ft_lstsize(s_env *lst);
 char **struct_to_char(s_env *lst);
+
+
+
+//redirection : 
+void redirection_in(char *redirection, int *fd);
+void redirection_double_out(char *redirection, int *fd);
+void redirection_out(char *redirection, int *fd);
+void del_qotes1(char *chaine);
+void sp(char *chaine);
+
+void del_qotes(char *chaine);
+void del_dbl_quotes(char *chaine);
+void del_sngl_quotes(char *chaine);
+void supprimerGuillemets(char *chaine);
+int ft_lstsize(s_env *lst);
+char **ft_merge_envr(s_env *export_i);
+void add_last_cmd(s_env **lst, char **args);
+char **struct_to_char(s_env *lst);
+char **check_quotes_before_execution(char *s);
+
+
+void	child_heredoc(char *red, ExecutionData *data, int *heredoc);
+int		parent_heredoc(ExecutionData *data, int *heredoc);
+void	go_heredoc( char *red, ExecutionData *data, int fd_doc);
+
 t_var	g_flags;
 #endif

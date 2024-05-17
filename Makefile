@@ -3,17 +3,21 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: sel-jadi <sel-jadi@student.42.fr>          +#+  +:+       +#+         #
+#    By: sdiouane <sdiouane@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/03/12 23:52:42 by sdiouane          #+#    #+#              #
-#    Updated: 2024/05/15 21:28:10 by sel-jadi         ###   ########.fr        #
+#    Updated: 2024/05/17 09:58:55 by sdiouane         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = minishell
-CC = cc #-g -fsanitize=address
+
+CC = cc -g -fsanitize=address
+
 CFLAGS = -Wall -Wextra -Werror 
+
 RDFLAGS =  -L $(shell brew --prefix readline)/lib -lreadline
+
 SRC =	minishell.c \
 		ft_itoa.c \
 		promt.c \
@@ -48,6 +52,9 @@ SRC =	minishell.c \
 		execution/helper.c \
 		execution/split_space_tab.c \
 		execution/heredoc.c \
+		execution/execution_utils.c \
+		execution/merge_env.c  \
+		execution/handle_quotes.c \
 		gnl/get_next_line.c \
 		gnl/get_next_line_utils.c \
 

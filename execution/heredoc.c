@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   heredoc.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sel-jadi <sel-jadi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sdiouane <sdiouane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/11 19:37:55 by sel-jadi          #+#    #+#             */
-/*   Updated: 2024/05/16 21:25:57 by sel-jadi         ###   ########.fr       */
+/*   Updated: 2024/05/17 10:13:40 by sdiouane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-static void	go_heredoc( char *red, ExecutionData *data, int fd_doc)
+void	go_heredoc( char *red, ExecutionData *data, int fd_doc)
 {
 	char	*line;
 
@@ -31,7 +31,7 @@ static void	go_heredoc( char *red, ExecutionData *data, int fd_doc)
 		free(line);
 }
 
-static void	child_heredoc(char *red, ExecutionData *data, int *heredoc)
+void	child_heredoc(char *red, ExecutionData *data, int *heredoc)
 {
 	signal(SIGINT, handle_sigint_heredoc);
 	close(heredoc[0]);
@@ -40,7 +40,7 @@ static void	child_heredoc(char *red, ExecutionData *data, int *heredoc)
 	exit(0);
 }
 
-static int	parent_heredoc(ExecutionData *data, int *heredoc)
+int	parent_heredoc(ExecutionData *data, int *heredoc)
 {
 	int	exit_status;
 
