@@ -6,7 +6,7 @@
 /*   By: sdiouane <sdiouane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 23:52:10 by sdiouane          #+#    #+#             */
-/*   Updated: 2024/05/18 17:26:57 by sdiouane         ###   ########.fr       */
+/*   Updated: 2024/05/18 19:39:31 by sdiouane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -145,7 +145,7 @@ void loop_fct(ExecutionData *data, char *line)
 				data->args = line_to_args(line);
 				data->lst = split_args_by_pipe(data->args);
 				data->lst->cmd = ft_expanding(data->lst->cmd, data->export_i);
-				print_command_list(data->lst);
+				// print_command_list(data->lst);
 				(dup2(0, 3),dup2(1, 4), ft_execution(data));
 				(dup2(3, 0), dup2(4, 1), close(3), close(4));
 				(free (data->args), free_noued_cmd(data->lst));

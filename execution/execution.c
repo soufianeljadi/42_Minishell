@@ -6,7 +6,7 @@
 /*   By: sdiouane <sdiouane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/31 22:14:48 by sdiouane          #+#    #+#             */
-/*   Updated: 2024/05/18 16:27:29 by sdiouane         ###   ########.fr       */
+/*   Updated: 2024/05/18 19:55:24 by sdiouane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,10 +41,10 @@ static int  ft_execut_error(char *cmd)
 }
 
 
-void execute(char *s, char **env)
+void execute(char *s, char **env, ExecutionData *data)
 {
-	char	*chemin;
-	char	**cmd;
+	char    *chemin;
+	char    **cmd;
 
 	(1) && (cmd = NULL, chemin = NULL);
 	if (*env)
@@ -57,11 +57,14 @@ void execute(char *s, char **env)
 		else if (cmd[0][0] == '\"')
 			del_dbl_quotes(cmd[0]);
 		chemin = get_path(cmd[0], env);
-		if (execve(chemin, cmd, env) == -1 /*&& strcmp(cmd[0], "\0")*/)
+		if (builtins(data) == 1)
 		{
-			if (strcmp(cmd[0], "\0"))
-				ft_execut_error(cmd[0]);
-			(ft_free_tab(cmd), exit(EXIT_FAILURE));
+			if (execve(chemin, cmd, env) == -1 /*&& strcmp(cmd[0], "\0")*/)
+			{
+				if (strcmp(cmd[0], "\0"))
+					ft_execut_error(cmd[0]);
+				(ft_free_tab(cmd), exit(EXIT_FAILURE));
+			}
 		}
 	}
 }
@@ -72,7 +75,7 @@ static void handle_child_process(ExecutionData *data)
 			execute_with_redirection(data);
 		else
 			if (data->lst->cmd != NULL)
-				execute(data->lst->cmd, data->env);
+				execute(data->lst->cmd, data->env, data);
 }
 
 static void execute_command(ExecutionData *data)
@@ -83,14 +86,13 @@ static void execute_command(ExecutionData *data)
 	if (pipe(pipefd) == -1 || (pid = fork()) == -1)
 		exit(EXIT_FAILURE);
 	else if (pid == 0)
-	{
+	{	
 		signal(SIGINT, SIG_DFL);
 		if (data->lst->next != NULL)
         	dup2(pipefd[1], STDOUT_FILENO);
 		close(pipefd[1]);
 		close(pipefd[0]);
-		if (builtins(data) == 1)
-			handle_child_process(data);
+		handle_child_process(data);
 		exit(EXIT_SUCCESS);
 	}
 	else
@@ -122,4 +124,3 @@ void	ft_execution(ExecutionData *data)
     while (0 < wait(NULL))
 		;
 }
-

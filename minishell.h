@@ -6,7 +6,7 @@
 /*   By: sdiouane <sdiouane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 23:51:44 by sdiouane          #+#    #+#             */
-/*   Updated: 2024/05/18 16:14:39 by sdiouane         ###   ########.fr       */
+/*   Updated: 2024/05/18 19:52:29 by sdiouane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -225,7 +225,7 @@ char	*ft_strdup_gnl(char *s1);
 // void ft_execution(noued_cmd *lst, char **args, char **env, s_env *export_i, char **null_env);
 // void ft_execution(ExecutionData *data);
 void ft_execution(ExecutionData *data);
-void execute(char *s, char **env);
+void execute(char *s, char **env, ExecutionData *data);
 void pipeline(char ***cmd);
 void supprimerGuillemets(char *chaine);
 int		ft_strncmp(const char *s1, const char *s2, size_t n);

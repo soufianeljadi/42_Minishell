@@ -6,7 +6,7 @@
 /*   By: sdiouane <sdiouane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/27 19:58:08 by sdiouane          #+#    #+#             */
-/*   Updated: 2024/05/18 18:10:10 by sdiouane         ###   ########.fr       */
+/*   Updated: 2024/05/18 19:39:20 by sdiouane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -218,32 +218,6 @@ char *concat_strings(char **strings, int count) {
 //     return (s);
 // }
 
-int expanded(char **str) {
-    int i = 0;
-
-    while (str[i]) {
-        int j = 0;
-        int in_double_quote = 0;
-
-        while (str[i][j]) {
-            if (str[i][j] == '"') {
-                in_double_quote = !in_double_quote;
-            }
-
-            if (in_double_quote && str[i][j] == '$') {
-                return 1;
-            }
-
-            j++;
-        }
-
-        i++;
-    }
-
-    return 0;
-}
-
-
 char *ft_expanding(char *commande, s_env *export_i)
 {
     char *exp_commande = strdup(commande);
@@ -258,19 +232,23 @@ char *ft_expanding(char *commande, s_env *export_i)
 	{
 		// 	return (strdup(exp_commande));
 		// if (exp_commande[i] == '$')
-		if (axpanded(exp_commande, i) == 1)
-        if (exp_commande[i] == '$' && (exp_commande[i + 1] != ' ' && exp_commande[i + 1] != '\0' && exp_commande[i + 1] != '\t'))
+		if (exp_commande[i] == '$' && (exp_commande[i + 1] == ' ' || exp_commande[i + 1] == '\0' || exp_commande[i + 1] == '\t'))
+		{
+			// printf("yoooooooooooooooooo\n");
+			;
+		} 
+        else if (exp_commande[i] == '$')
 		{
             key = get_env_key(exp_commande, i);
             if (!key)
                 exit(EXIT_FAILURE);
 			value = get_env_value(key, export_i);
-            if (!value || !strcmp(value, "") || !strcmp(value, " "))
-			{
-				key = ft_strjoin("$", key);
-                exp_commande = ft_str_replace(exp_commande, key, strdup(""));
-                (free(key), free(value));
-            }
+			printf("key = |%s|, value = |%s|\n", key, value);
+			if (!value || !strcmp(value, "") || !strcmp(value, " "))
+			{	
+				exp_commande = ft_str_replace(exp_commande, key, strdup(""));
+				(free(key), free(value));
+			}
 			else
 			{
 				key = ft_strjoin("$", key);
@@ -279,7 +257,11 @@ char *ft_expanding(char *commande, s_env *export_i)
                 (free(key), free(value));
 			}
 		}
-        i++;
-    }
+		i++;
+	}
+    // printf("BEFORE : exp_commande = |%s|\n", exp_commande);
+	if (strstr(exp_commande, "$"))
+    	supprimerDoll(exp_commande);
+    // printf("AFTER : exp_commande = |%s|\n", exp_commande);
     return exp_commande;
 }
