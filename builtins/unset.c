@@ -6,7 +6,7 @@
 /*   By: sdiouane <sdiouane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/23 15:04:54 by sdiouane          #+#    #+#             */
-/*   Updated: 2024/05/09 11:49:31 by sdiouane         ###   ########.fr       */
+/*   Updated: 2024/05/18 10:58:12 by sdiouane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,51 +39,113 @@ void cc2(char *chaine)
     }
     chaine[j] = '\0';
 }
-s_env *unset_fct(char **args, s_env *env)
-{
+// s_env *unset_fct(char **args, s_env *env)
+// {
+//     int i = 1;
+//     int j;
+//     char *key;
+//     if (!strcmp(args[0], "unset"))
+// 	{
+//         while (args[i])
+// 		{
+// 			if (args[i][0] == '"')
+// 				cc(args[i]);
+// 			if (args[i][0] == '\'')
+// 				cc2(args[i]);
+//             j = 0;
+//             while (args[i][j])
+// 			{
+//                 while (args[i] && args[i][j] != ' ' && args[i][j] != '\t' && args[i][j] != '\0')
+//                     j++;
+//                 key = ft_substr2(args[i], 0, j);
+//                 s_env *prev = NULL;
+//                 s_env *current = env;
+//                 if (verif_export(key) == 1)
+//                     fprintf(stderr, "minishell: unset: %s: not a valid identifier\n", key);
+// 				else
+// 				{
+// 					while (current != NULL)
+// 					{
+// 						if (strcmp(current->key, key) == 0)
+// 						{
+// 							if (prev != NULL)
+// 								prev->next = current->next;
+// 							else
+// 								env = current->next;
+// 							free(current->key);
+// 							free(current->value);
+// 							free(current);
+// 							break;
+// 						}
+// 						prev = current;
+// 						current = current->next;
+// 					}
+// 					free(key);
+// 					while (args[i][j] == ' ' || args[i][j] == '\t')
+// 						j++;
+// 				}
+//             }
+//             i++;
+//         }
+//     }
+//     return env;
+// }
+
+
+
+
+
+
+
+
+
+
+
+
+s_env *unset_fct(char **args, s_env *env) {
     int i = 1;
     int j;
     char *key;
-    if (!strcmp(args[0], "unset"))
-	{
-        while (args[i])
-		{
-			if (args[i][0] == '"')
-				cc(args[i]);
-			if (args[i][0] == '\'')
-				cc2(args[i]);
+    
+    if (!strcmp(args[0], "unset")) {
+        while (args[i]) {
+            if (args[i][0] == '"')
+                cc(args[i]);
+            if (args[i][0] == '\'')
+                cc2(args[i]);
+
             j = 0;
-            while (args[i][j])
-			{
+            while (args[i][j]) {
                 while (args[i] && args[i][j] != ' ' && args[i][j] != '\t' && args[i][j] != '\0')
                     j++;
+                
                 key = ft_substr2(args[i], 0, j);
-                s_env *prev = NULL;
-                s_env *current = env;
-                if (verif_export(key) == 1)
+
+                if (verif_export(key) == 1) {
                     fprintf(stderr, "minishell: unset: %s: not a valid identifier\n", key);
-				else
-				{
-					while (current != NULL)
-					{
-						if (strcmp(current->key, key) == 0)
-						{
-							if (prev != NULL)
-								prev->next = current->next;
-							else
-								env = current->next;
-							free(current->key);
-							free(current->value);
-							free(current);
-							break;
-						}
-						prev = current;
-						current = current->next;
-					}
-					free(key);
-					while (args[i][j] == ' ' || args[i][j] == '\t')
-						j++;
-				}
+                } else {
+                    s_env *prev = NULL;
+                    s_env *current = env;
+                    
+                    while (current != NULL) {
+                        if (strcmp(current->key, key) == 0) {
+                            if (prev != NULL) {
+                                prev->next = current->next;
+                            } else {
+                                env = current->next;  // Met à jour la tête de la liste
+                            }
+                            free(current->key);
+                            free(current->value);
+                            free(current);
+                            break;
+                        }
+                        prev = current;
+                        current = current->next;
+                    }
+                }
+                free(key);
+                while (args[i][j] == ' ' || args[i][j] == '\t')
+                    j++;
             }
             i++;
         }

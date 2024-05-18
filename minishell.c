@@ -6,7 +6,7 @@
 /*   By: sdiouane <sdiouane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 23:52:10 by sdiouane          #+#    #+#             */
-/*   Updated: 2024/05/17 16:43:07 by sdiouane         ###   ########.fr       */
+/*   Updated: 2024/05/18 12:27:03 by sdiouane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,9 +102,9 @@ ExecutionData *init_data(char **args, noued_cmd *cmd, s_env *export_i)
 	data->lst = cmd;
 	data->args = args;
 	data->export_i = export_i;
+	data->env = struct_to_char(&data->export_i);
 	return (data);
 }
-
 
 void loop_fct(ExecutionData *data, char *line)
 {

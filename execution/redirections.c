@@ -6,7 +6,7 @@
 /*   By: sdiouane <sdiouane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/05 23:00:01 by sdiouane          #+#    #+#             */
-/*   Updated: 2024/05/17 15:50:21 by sdiouane         ###   ########.fr       */
+/*   Updated: 2024/05/18 14:00:38 by sdiouane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -132,8 +132,10 @@ void execute_with_redirection(ExecutionData *data)
 	int i;
 	char **red;
 
-	(1) && (fd_in = -1, fd_out = -1, i = 0,
+	(1) && (fd_in = 0, fd_out = 1, i = 0,
 	red = line_to_args(data->lst->redirection));
+	if (!red)
+		return ;
 	while (red[i])
 	{
 		if (!strcmp(red[i], "<") && red[i + 1])
@@ -146,11 +148,11 @@ void execute_with_redirection(ExecutionData *data)
 			heredoc(red[i + 1], data);
 		i++;
 	}
-	if (fd_in != -1)
-		close(fd_in);
-	if (fd_out != -1)
-		close(fd_out);
-	if (data->lst->cmd != NULL
-		&& strspn(data->lst->cmd, " ") != strlen(data->lst->cmd))
+	if (data->lst->cmd != NULL && strspn(data->lst->cmd, " ") != strlen(data->lst->cmd))
+	{
+		printf("cmd = %s\n", data->lst->cmd);
 			execute(data->lst->cmd, data->env);
+	}
 }
+
+

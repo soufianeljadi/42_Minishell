@@ -1,23 +1,3 @@
-Makefile
-a
-builtins
-dfghjkl
-execution
-expanding.c
-ft_itoa.c
-gg
-gnl
-kiki
-l
-minishell
-minishell.c
-minishell.h
-multipl_pipe.c
-parsing
-pp
-promt.c
-repo
-sdiouane
-signals
-test.c
-tokenizer_2_1.tldr
+fd_in = 0
+fd_out = 5
+cmd = export

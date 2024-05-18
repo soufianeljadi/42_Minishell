@@ -6,7 +6,7 @@
 /*   By: sdiouane <sdiouane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/17 09:55:09 by sdiouane          #+#    #+#             */
-/*   Updated: 2024/05/17 11:36:01 by sdiouane         ###   ########.fr       */
+/*   Updated: 2024/05/18 11:16:25 by sdiouane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,15 +29,15 @@ void add_last_cmd(s_env **lst, char **args)
 	}
 }
 
-char **struct_to_char(s_env *lst)
+char **struct_to_char(s_env **lst)
 {
 	char **env;
 	int i;
 	s_env *tmp;
 
 	i = 0;
-	tmp = lst;
-	env = malloc(sizeof(char *) * (ft_lstsize(lst) + 1));
+	tmp = *lst;
+	env = malloc(sizeof(char *) * (ft_lstsize(tmp) + 1));
 	while (tmp)
 	{
 		env[i] = ft_strjoin(tmp->key, "=");

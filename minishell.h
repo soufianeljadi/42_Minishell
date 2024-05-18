@@ -6,7 +6,7 @@
 /*   By: sdiouane <sdiouane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 23:51:44 by sdiouane          #+#    #+#             */
-/*   Updated: 2024/05/17 11:06:03 by sdiouane         ###   ########.fr       */
+/*   Updated: 2024/05/18 11:08:45 by sdiouane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,15 +102,14 @@ typedef struct g_variables
 	char		**envire;
 }					t_var;
 
-
 typedef struct
 {
-    noued_cmd *lst;
-    char **args;
-    s_env *export_i;
-    char **env;
-	int fd_in;
-	int fd_out;
+    noued_cmd 	*lst;
+    char 		**args;
+    s_env 		*export_i;
+    char 		**env;
+	int 		fd_in;
+	int 		fd_out;
 } ExecutionData;
 
 /**********************MAIN***********************************/
@@ -188,7 +187,7 @@ void nbr_quotes(char *str);
 // int builtins(ExecutionData *data);
 int builtins(ExecutionData *data);
 // export :
-s_env *export_fct(char **args, s_env *env, char **eenv);
+s_env *export_fct(char **args, s_env *env, char **eenv); ////////////////////
 int existe_deja(char *key, s_env *env);
 char *remove_quotes(char *input);
 int	verif_export(char *str);
@@ -265,7 +264,6 @@ void	add2write(char *dest, char *str, int *j);
 int is_single(char *str);
 void	ft_putstr_fd(char *s, int fd);
 int	ft_lstsize(s_env *lst);
-char **struct_to_char(s_env *lst);
 
 
 
@@ -283,7 +281,7 @@ void supprimerGuillemets(char *chaine);
 int ft_lstsize(s_env *lst);
 char **ft_merge_envr(s_env *export_i);
 void add_last_cmd(s_env **lst, char **args);
-char **struct_to_char(s_env *lst);
+char **struct_to_char(s_env **lst);
 char **check_quotes_before_execution(char *s);
 
 
