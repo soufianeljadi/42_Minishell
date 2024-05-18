@@ -6,7 +6,7 @@
 /*   By: sdiouane <sdiouane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/31 22:14:48 by sdiouane          #+#    #+#             */
-/*   Updated: 2024/05/18 14:00:17 by sdiouane         ###   ########.fr       */
+/*   Updated: 2024/05/18 16:27:29 by sdiouane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,8 +49,9 @@ void execute(char *s, char **env)
 	(1) && (cmd = NULL, chemin = NULL);
 	if (*env)
 	{
-		
 		cmd = check_quotes_before_execution(s);
+		if (!cmd[0])
+			exit(EXIT_FAILURE);
 		if (cmd[0][0] == '\'')
 			del_sngl_quotes(cmd[0]);
 		else if (cmd[0][0] == '\"')
@@ -67,25 +68,17 @@ void execute(char *s, char **env)
 
 static void handle_child_process(ExecutionData *data)
 {
-	if (data->lst->redirection != NULL)
-	{
-		execute_with_redirection(data);
-	}
-	else
-	{
-		if (data->lst->cmd != NULL)
-		{
-			if (builtins(data) == 1)
+		if (data->lst->redirection != NULL)
+			execute_with_redirection(data);
+		else
+			if (data->lst->cmd != NULL)
 				execute(data->lst->cmd, data->env);
-			exit(EXIT_SUCCESS);
-		}
-	}
 }
 
 static void execute_command(ExecutionData *data)
 {
-	int pipefd[2];
-    pid_t pid;
+    pid_t	pid;
+	int		pipefd[2];
 
 	if (pipe(pipefd) == -1 || (pid = fork()) == -1)
 		exit(EXIT_FAILURE);
@@ -96,7 +89,9 @@ static void execute_command(ExecutionData *data)
         	dup2(pipefd[1], STDOUT_FILENO);
 		close(pipefd[1]);
 		close(pipefd[0]);
-		handle_child_process(data);
+		if (builtins(data) == 1)
+			handle_child_process(data);
+		exit(EXIT_SUCCESS);
 	}
 	else
 	{
@@ -107,28 +102,24 @@ static void execute_command(ExecutionData *data)
 	}
 }
 
-
 void	ft_execution(ExecutionData *data)
 {
     add_last_cmd(&data->export_i, data->args);
 	if (!ft_strncmp(data->args[0], "<<", 2) && !data->args[1])
 		(syntax_error(), exit(EXIT_FAILURE));
 	if (data->lst->next == NULL)
-	{
-		if (builtins(data) == 1)
 			execute_command(data);
-	}
 	else
 	{
 		signal(SIGINT, SIG_IGN);
 		while (data->lst)
 		{
 			g_flags.envire = ft_merge_envr(data->export_i);
-			if (builtins(data) == 1)
-				execute_command(data);
+			execute_command(data);
 			data->lst = data->lst->next;         
 		}
 	}
     while (0 < wait(NULL))
 		;
 }
+

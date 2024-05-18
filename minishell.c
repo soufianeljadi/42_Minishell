@@ -6,7 +6,7 @@
 /*   By: sdiouane <sdiouane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 23:52:10 by sdiouane          #+#    #+#             */
-/*   Updated: 2024/05/18 12:27:03 by sdiouane         ###   ########.fr       */
+/*   Updated: 2024/05/18 17:26:57 by sdiouane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,6 @@ void supprimerGuillemets__(char *chaine)
 //     return output;
 // }
 
-
 void supprimerGuillemetsdoll(char *chaine)
 {
     int i = 0;
@@ -63,35 +62,55 @@ void supprimerGuillemetsdoll(char *chaine)
     chaine[j] = '\0';
 }
 
+// int is_single(char *str)
+// {
+// 	int s;
+// 	int d;
+// 	int i;
+
+// 	(1) && (i = 0, s = 0, d = 0);
+// 	while (str[i])
+// 	{
+// 		if (str[i] == '\'' && d == 0)
+// 			s = s + 1;
+// 		else if (str[i] == '"' && s == 0)
+// 			d = d + 1;
+// 		if (d == 2)
+// 			d = 0;
+// 		if (s == 2)
+// 			s = 0;
+// 		if (str[i] == '$' && (str[i + 1] == ' ' || str[i + 1] == '\0' || str[i + 1] == '\t'))
+// 			return (1);
+// 		else if (str[i] == '$' && (str[i + 1] == '"' || str[i + 1] == '\''))
+// 			return (1);
+// 		else if (str[i] == '$')
+// 			break;
+// 		i++;
+// 	}
+// 	if (s == 1)
+// 		return (1);
+// 	return (0);
+// }
+
 int is_single(char *str)
 {
-	int s;
-	int d;
-	int i;
-
-	(1) && (i = 0, s = 0, d = 0);
-	while (str[i])
+    int s = 0, d = 0;
+	
+    for (int i = 0; str[i]; i++)
 	{
-		if (str[i] == '\'' && d == 0)
-			s = s + 1;
-		else if (str[i] == '"' && s == 0)
-			d = d + 1;
-		if (d == 2)
-			d = 0;
-		if (s == 2)
-			s = 0;
-		if (str[i] == '$' && (str[i + 1] == ' ' || str[i + 1] == '\0' || str[i + 1] == '\t'))
-			return (1);
-		else if (str[i] == '$' && (str[i + 1] == '"' || str[i + 1] == '\''))
-			return (1);
-		else if (str[i] == '$')
-			break;
-		i++;
-	}
-	if (s == 1)
-		return (1);
-	return (0);
+        if (str[i] == '\'' && !d)
+			s = !s;
+        if (str[i] == '"' && !s)
+			d = !d;
+        if ((str[i] == '$' && (str[i + 1] == ' ' || str[i + 1] == '\0' || str[i + 1] == '\t')) ||
+            (str[i] == '$' && (str[i + 1] == '"' || str[i + 1] == '\'')))
+            return 1;
+        if (s || d)
+			return 1;
+    }
+    return 0;
 }
+
 
 ExecutionData *init_data(char **args, noued_cmd *cmd, s_env *export_i)
 {
@@ -126,9 +145,9 @@ void loop_fct(ExecutionData *data, char *line)
 				data->args = line_to_args(line);
 				data->lst = split_args_by_pipe(data->args);
 				data->lst->cmd = ft_expanding(data->lst->cmd, data->export_i);
+				print_command_list(data->lst);
 				(dup2(0, 3),dup2(1, 4), ft_execution(data));
 				(dup2(3, 0), dup2(4, 1), close(3), close(4));
-				print_command_list(data->lst);
 				(free (data->args), free_noued_cmd(data->lst));
 			}
 		}

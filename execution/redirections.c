@@ -6,7 +6,7 @@
 /*   By: sdiouane <sdiouane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/05 23:00:01 by sdiouane          #+#    #+#             */
-/*   Updated: 2024/05/18 14:00:38 by sdiouane         ###   ########.fr       */
+/*   Updated: 2024/05/18 14:53:02 by sdiouane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -149,10 +149,5 @@ void execute_with_redirection(ExecutionData *data)
 		i++;
 	}
 	if (data->lst->cmd != NULL && strspn(data->lst->cmd, " ") != strlen(data->lst->cmd))
-	{
-		printf("cmd = %s\n", data->lst->cmd);
-			execute(data->lst->cmd, data->env);
-	}
+		execute(data->lst->cmd, data->env);
 }
-
-

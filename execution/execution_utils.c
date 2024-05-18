@@ -6,7 +6,7 @@
 /*   By: sdiouane <sdiouane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/17 09:55:09 by sdiouane          #+#    #+#             */
-/*   Updated: 2024/05/18 11:16:25 by sdiouane         ###   ########.fr       */
+/*   Updated: 2024/05/18 16:26:44 by sdiouane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,23 +56,27 @@ char **check_quotes_before_execution(char *s)
 {
 	char **cmd = NULL;
 
-	if ((s[0] == '\"' || s[0] == '\'') && (strstr(s, " ") || strstr(s, "\t")))
-		cmd = ft_split(s, ' ');
-	else
-	{
-		if (!strcmp(s , ""))
+		if ((s[0] == '\"' || s[0] == '\'') && (strstr(s, " ") || strstr(s, "\t")))
 		{
-			cmd = malloc(sizeof(char *) * 2);
-			cmd[0] = strdup("\0");
-			cmd[1] = NULL;
-			return (cmd);
-		}
-		else
-		{
-			cmd = split_space_tab(s, ' ');
+			cmd = ft_split(s, ' ');
 			if (cmd[0][0] == '\0')
 				exit(EXIT_FAILURE);
 		}
-	}
+		else
+		{
+			if (is_not_empty(s) == 0)
+			{
+				cmd = malloc(sizeof(char *) * 2);
+				cmd[0] = strdup("\0");
+				cmd[1] = NULL;
+				return (cmd);
+			}
+			else
+			{
+				cmd = split_space_tab(s, ' ');
+				if (cmd[0][0] == '\0')
+					exit(EXIT_FAILURE);
+			}
+		}
 	return (cmd);
 }

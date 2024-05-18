@@ -6,7 +6,7 @@
 /*   By: sdiouane <sdiouane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/27 19:58:08 by sdiouane          #+#    #+#             */
-/*   Updated: 2024/05/17 16:02:55 by sdiouane         ###   ########.fr       */
+/*   Updated: 2024/05/18 18:10:10 by sdiouane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -117,29 +117,149 @@ void rmv(char **str)
 
 }
 
+char *concat_strings(char **strings, int count) {
+    int total_length = 0;
+    for (int i = 0; i < count; i++) {
+        total_length += strlen(strings[i]);
+    }
+    total_length += count - 1;
+    char *result = (char *)malloc((total_length + 1) * sizeof(char));
+    if (!result) {
+        fprintf(stderr, "Erreur d'allocation de mémoire\n");
+        exit(1);
+    }
+    result[0] = '\0';
+    for (int i = 0; i < count; i++) {
+        strcat(result, strings[i]);
+        if (i < count - 1) strcat(result, " ");
+    }
+    return result;
+}
+
+
+// char *ft_expanding(char *commande, s_env *export_i) {
+//     if (!commande) exit(EXIT_FAILURE);
+//     char **exp_commande = ft_split(commande, ' ');
+//     if (!exp_commande) exit(EXIT_FAILURE);
+
+// 	int i = 0;
+//     for (i = 0; exp_commande[i]; i++) {
+//         if (is_single(exp_commande[i])) return strdup(exp_commande[i]);
+//         for (int j = 0; exp_commande[i][j]; j++) {
+//             if (exp_commande[i][j] == '$') {
+//                 char *key = get_env_key(exp_commande[i], j);
+//                 if (!key) exit(EXIT_FAILURE);
+//                 char *value = get_env_value(key, export_i);
+//                 if (!value) value = strdup("");
+//                 char *new_str = ft_str_replace(exp_commande[i], key, value);
+//                 if (!new_str) exit(EXIT_FAILURE);
+//                 free(exp_commande[i]);
+//                 exp_commande[i] = new_str;
+//                 free(key);
+//                 free(value);
+//             }
+//         }
+//     }
+//     char *s = concat_strings(exp_commande, i);
+//     printf("s = %s\n", s);
+// 	if (strstr(s, "$"))
+// 		supprimerDoll(s);
+//     printf("s = %s\n", s);
+//     return s;
+// }
+
+
+// char *ft_expanding(char *commande, s_env *export_i)
+// {
+//     char	**exp_commande;
+// 	char	*exp_cmd;
+// 	char	*key;
+// 	char	*value;
+//     int		i;
+
+// 	if (!commande)
+// 		exit(EXIT_FAILURE);
+// 	(/*xp_commande = strdup(commande),*/ i = 0, exp_cmd = NULL);
+// 	exp_commande = ft_split(commande, ' ');
+// 	while (exp_commande[i])
+// 	{
+// 		if (is_single(exp_commande[i]) == 1)
+// 			return (exp_commande[i]);
+// 		int j = 0;
+// 		while (exp_commande && exp_commande[i][j] != '\0')
+// 		{
+// 			if (exp_commande[i] && exp_commande[i][j] == '$') 
+// 			{
+// 				key = get_env_key(exp_commande[i], j);
+// 				if (!key)
+// 					exit(EXIT_FAILURE);
+// 				value = get_env_value(key, export_i);
+// 				if (!value || !strcmp(value, "") || !strcmp(value, " "))
+// 				{
+// 					exp_commande[i] = ft_str_replace(exp_commande[i], key, strdup(""));
+// 					(free(key), free(value));
+// 				}
+// 				else
+// 				{
+// 					key = ft_strjoin("$", key);
+// 					exp_cmd = ft_str_replace(exp_commande[i], key, value);
+// 					(free(exp_commande[i]), exp_commande[i] = exp_cmd);
+// 					(free(key), free(value));
+// 				}
+// 			}
+// 				i++;
+// 		}
+// 	}
+// 	// del_dbl_quotes(exp_commande);
+	// if (strstr(exp_commande, "$"))
+	// 	supprimerDoll(exp_commande);
+// 	char *s = concat_strings(exp_commande, i);
+// 	printf("s = %s\n", s);
+//     return (s);
+// }
+
+int expanded(char **str) {
+    int i = 0;
+
+    while (str[i]) {
+        int j = 0;
+        int in_double_quote = 0;
+
+        while (str[i][j]) {
+            if (str[i][j] == '"') {
+                in_double_quote = !in_double_quote;
+            }
+
+            if (in_double_quote && str[i][j] == '$') {
+                return 1;
+            }
+
+            j++;
+        }
+
+        i++;
+    }
+
+    return 0;
+}
+
+
 char *ft_expanding(char *commande, s_env *export_i)
 {
-    char	*exp_commande;
-	char	*exp_cmd;
-	char	*key;
-	char	*value;
-    int		i;
+    char *exp_commande = strdup(commande);
+    char *exp_cmd = NULL;
+    char *key = NULL;
+    char *value = NULL;
+    int i = 0;
 
-	if (!commande)
-	{
-		puts("Erreur d'allocation de mémoire\n");
-		exit(EXIT_FAILURE);
-	}
-	(exp_commande = strdup(commande), i = 0, exp_cmd = NULL);
+    if (!exp_commande)
+        exit(EXIT_FAILURE);
     while (exp_commande && exp_commande[i] != '\0')
 	{
-		if (is_single(exp_commande) == 1)
-		{
-			// supprimerDoll(exp_commande);
-			printf("exp_commande = %s\n", exp_commande);
-			return (exp_commande);
-		}
-        if (exp_commande[i] && exp_commande[i] == '$') 
+		// 	return (strdup(exp_commande));
+		// if (exp_commande[i] == '$')
+		if (axpanded(exp_commande, i) == 1)
+        if (exp_commande[i] == '$' && (exp_commande[i + 1] != ' ' && exp_commande[i + 1] != '\0' && exp_commande[i + 1] != '\t'))
 		{
             key = get_env_key(exp_commande, i);
             if (!key)
@@ -147,6 +267,7 @@ char *ft_expanding(char *commande, s_env *export_i)
 			value = get_env_value(key, export_i);
             if (!value || !strcmp(value, "") || !strcmp(value, " "))
 			{
+				key = ft_strjoin("$", key);
                 exp_commande = ft_str_replace(exp_commande, key, strdup(""));
                 (free(key), free(value));
             }
@@ -157,13 +278,8 @@ char *ft_expanding(char *commande, s_env *export_i)
                 (free(exp_commande), exp_commande = exp_cmd);
                 (free(key), free(value));
 			}
-        }
-        	i++;
+		}
+        i++;
     }
-	// del_dbl_quotes(exp_commande);
-	if (strstr(exp_commande, "$"))
-		supprimerDoll(exp_commande);
-    return (exp_commande);
+    return exp_commande;
 }
-
-

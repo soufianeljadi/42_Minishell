@@ -6,7 +6,7 @@
 /*   By: sdiouane <sdiouane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 23:51:44 by sdiouane          #+#    #+#             */
-/*   Updated: 2024/05/18 11:08:45 by sdiouane         ###   ########.fr       */
+/*   Updated: 2024/05/18 16:14:39 by sdiouane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -288,6 +288,6 @@ char **check_quotes_before_execution(char *s);
 void	child_heredoc(char *red, ExecutionData *data, int *heredoc);
 int		parent_heredoc(ExecutionData *data, int *heredoc);
 void	go_heredoc( char *red, ExecutionData *data, int fd_doc);
-
+int is_not_empty(char *str);
 t_var	g_flags;
 #endif
