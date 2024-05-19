@@ -6,7 +6,7 @@
 /*   By: sdiouane <sdiouane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/17 09:55:09 by sdiouane          #+#    #+#             */
-/*   Updated: 2024/05/18 16:26:44 by sdiouane         ###   ########.fr       */
+/*   Updated: 2024/05/19 15:03:53 by sdiouane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,31 +52,81 @@ char **struct_to_char(s_env **lst)
 	return (env);
 }
 
+// char **check_quotes_before_execution(char *s)
+// {
+// 	char **cmd = NULL;
+
+// 	printf("s = %s\n", s);
+// 		if ((s[0] == '\"' || s[0] == '\'') && (!strstr(s, " ") && !strstr(s, "\t")))
+// 		{
+// 			cmd = ft_split(s, ' ');
+// 			if (cmd[0][0] == '\0')
+// 				exit(EXIT_FAILURE);
+// 		}
+// 		else
+// 		{
+// 			if (is_not_empty(s) == 0)
+// 			{
+// 				cmd = malloc(sizeof(char *) * 2);
+// 				cmd[0] = strdup("\0");
+// 				cmd[1] = NULL;
+// 				return (cmd);
+// 			}
+// 			else
+// 			{
+// 				cmd = split_space_tab(s, ' ');
+// 				if (cmd[0][0] == '\0')
+// 					exit(EXIT_FAILURE);
+				
+// 			}
+// 		}
+// 		// int i = 0;
+// 		// while (cmd[i])
+// 		// {
+// 		// 	printf("cmd[%d] = %s\n", i, cmd[i]);
+// 		// 	i++;
+// 		// }
+// 	return (cmd);
+// }
+
 char **check_quotes_before_execution(char *s)
 {
-	char **cmd = NULL;
+    char **cmd = NULL;
 
-		if ((s[0] == '\"' || s[0] == '\'') && (strstr(s, " ") || strstr(s, "\t")))
-		{
-			cmd = ft_split(s, ' ');
-			if (cmd[0][0] == '\0')
-				exit(EXIT_FAILURE);
-		}
-		else
-		{
-			if (is_not_empty(s) == 0)
-			{
-				cmd = malloc(sizeof(char *) * 2);
-				cmd[0] = strdup("\0");
-				cmd[1] = NULL;
-				return (cmd);
-			}
-			else
-			{
-				cmd = split_space_tab(s, ' ');
-				if (cmd[0][0] == '\0')
-					exit(EXIT_FAILURE);
-			}
-		}
-	return (cmd);
+    // printf("s = %s\n", s);
+    if ((s[0] == '\"' || s[0] == '\'') && (strstr(s, " ") || strstr(s, "\t")))
+    {
+        cmd = ft_split(s, ' ');
+        if (!cmd || !cmd[0] || cmd[0][0] == '\0')
+        {
+            if (cmd) free(cmd);
+            exit(EXIT_FAILURE);
+        }
+    }
+    else
+    {
+        if (is_not_empty(s) == 0)
+        {
+            cmd = malloc(sizeof(char *) * 2);
+            if (!cmd) exit(EXIT_FAILURE); // Vérification de l'allocation
+            cmd[0] = strdup("\0");
+            if (!cmd[0])
+            {
+                free(cmd);
+                exit(EXIT_FAILURE);
+            }
+            cmd[1] = NULL;
+            return cmd;
+        }
+        else
+        {
+            cmd = split_space_tab(s, ' ');
+            if (!cmd || !cmd[0] || cmd[0][0] == '\0')
+            {
+                if (cmd) free(cmd);
+                exit(EXIT_FAILURE);
+            }
+        }
+    }
+    return cmd;
 }

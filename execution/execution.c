@@ -6,7 +6,7 @@
 /*   By: sdiouane <sdiouane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/31 22:14:48 by sdiouane          #+#    #+#             */
-/*   Updated: 2024/05/18 19:55:24 by sdiouane         ###   ########.fr       */
+/*   Updated: 2024/05/19 16:17:45 by sdiouane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,29 @@ static int  ft_execut_error(char *cmd)
     return (0);
 }
 
+char *remove_quo(char *str)
+{
+    if (!str)
+        return NULL;
+
+    size_t len = strlen(str);
+    if (len < 2)
+        return str;
+
+    if ((str[0] == '\'' && str[len - 1] == '\'') || (str[0] == '\"' && str[len - 1] == '\"'))
+    {
+        char *new_str = (char *)malloc(len - 1);
+        if (!new_str)
+            return NULL;
+        strncpy(new_str, str + 1, len - 2);
+        new_str[len - 2] = '\0';
+        return new_str;
+    }
+
+    return str;
+}
+
+
 
 void execute(char *s, char **env, ExecutionData *data)
 {
@@ -50,13 +73,20 @@ void execute(char *s, char **env, ExecutionData *data)
 	if (*env)
 	{
 		cmd = check_quotes_before_execution(s);
-		if (!cmd[0])
-			exit(EXIT_FAILURE);
-		if (cmd[0][0] == '\'')
-			del_sngl_quotes(cmd[0]);
-		else if (cmd[0][0] == '\"')
+		if (cmd[0][0] == '\"')
+		{
 			del_dbl_quotes(cmd[0]);
+		}
+		else if (cmd[0][0] == '\'')
+		{
+			if (!strstr(cmd[0], "\""))
+				del_sngl_quotes(cmd[0]);
+			else
+				del_sngl_quotes(cmd[0]);
+		}
 		chemin = get_path(cmd[0], env);
+		printf("\nIN EXECUTION :\n");
+		printf("------------------------------------------ > |%s| <------------------------------------------\n", cmd[0]);
 		if (builtins(data) == 1)
 		{
 			if (execve(chemin, cmd, env) == -1 /*&& strcmp(cmd[0], "\0")*/)
@@ -110,7 +140,10 @@ void	ft_execution(ExecutionData *data)
 	if (!ft_strncmp(data->args[0], "<<", 2) && !data->args[1])
 		(syntax_error(), exit(EXIT_FAILURE));
 	if (data->lst->next == NULL)
+	{
+		if (builtins(data) == 1)
 			execute_command(data);
+	}
 	else
 	{
 		signal(SIGINT, SIG_IGN);

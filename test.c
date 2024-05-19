@@ -395,50 +395,254 @@
 // }
 
 
+// #include <stdio.h>
+// #include <stdlib.h>
+// #include <string.h>
+
+// char* concat_strings(char **strings, int count) {
+//     // Calculer la longueur totale nécessaire
+//     int total_length = 0;
+//     for (int i = 0; i < count; i++) {
+//         total_length += strlen(strings[i]);
+//     }
+//     // Ajouter de l'espace pour les séparateurs et le caractère nul de fin
+//     total_length += count - 1;  // Pour les espaces ou autres séparateurs
+//     total_length += 1;          // Pour le caractère nul de fin
+
+//     // Allouer de la mémoire pour la chaîne résultante
+//     char *result = (char *)malloc(total_length * sizeof(char));
+//     if (result == NULL) {
+//         fprintf(stderr, "Erreur d'allocation de mémoire\n");
+//         exit(1);
+//     }
+
+//     // Initialiser la chaîne résultante avec une chaîne vide
+//     result[0] = '\0';
+
+//     // Concaténer les chaînes
+//     for (int i = 0; i < count; i++) {
+//         strcat(result, strings[i]);
+//         if (i < count - 1) {
+//             strcat(result, " ");  // Ajouter un espace entre les mots, par exemple
+//         }
+//     }
+
+//     return result;
+// }
+
+// int main() {
+//     char *strings[] = {"Bonjour", "le", "monde"};
+//     int count = sizeof(strings) / sizeof(strings[0]);
+
+//     char *result = concat_strings(strings, count);
+//     printf("Résultat : %s\n", result);
+
+//     // Libérer la mémoire allouée
+//     free(result);
+
+//     return 0;
+// }
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 
-char* concat_strings(char **strings, int count) {
-    // Calculer la longueur totale nécessaire
-    int total_length = 0;
-    for (int i = 0; i < count; i++) {
-        total_length += strlen(strings[i]);
-    }
-    // Ajouter de l'espace pour les séparateurs et le caractère nul de fin
-    total_length += count - 1;  // Pour les espaces ou autres séparateurs
-    total_length += 1;          // Pour le caractère nul de fin
+// // Mocking external functions
+// char *ft_strchr(const char *s, int c) {
+//     return strchr(s, c);
+// }
 
-    // Allouer de la mémoire pour la chaîne résultante
-    char *result = (char *)malloc(total_length * sizeof(char));
-    if (result == NULL) {
-        fprintf(stderr, "Erreur d'allocation de mémoire\n");
-        exit(1);
-    }
+// char *ft_substr(char const *s, unsigned int start, size_t len) {
+//     char *substr = (char *)malloc(len + 1);
+//     if (substr) {
+//         strncpy(substr, s + start, len);
+//         substr[len] = '\0';
+//     }
+//     return substr;
+// }
 
-    // Initialiser la chaîne résultante avec une chaîne vide
-    result[0] = '\0';
+// char *ft_strjoin(char const *s1, char const *s2) {
+//     size_t len1 = strlen(s1);
+//     size_t len2 = strlen(s2);
+//     char *joined = (char *)malloc(len1 + len2 + 1);
+//     if (joined) {
+//         strcpy(joined, s1);
+//         strcat(joined, s2);
+//     }
+//     return joined;
+// }
 
-    // Concaténer les chaînes
-    for (int i = 0; i < count; i++) {
-        strcat(result, strings[i]);
-        if (i < count - 1) {
-            strcat(result, " ");  // Ajouter un espace entre les mots, par exemple
-        }
-    }
+// char *ft_str_replace(char *orig, char *rep, char *with) {
+//     char *result, *ins, *tmp;
+//     int len_rep, len_with, len_front, count;
 
-    return result;
+//     if (!orig || !rep)
+//         return NULL;
+//     len_rep = strlen(rep);
+//     if (len_rep == 0)
+//         return NULL;
+//     if (!with)
+//         with = "";
+//     len_with = strlen(with);
+
+//     ins = orig;
+//     for (count = 0; (tmp = strstr(ins, rep)); ++count) {
+//         ins = tmp + len_rep;
+//     }
+
+//     tmp = result = malloc(strlen(orig) + (len_with - len_rep) * count + 1);
+
+//     if (!result)
+//         return NULL;
+
+//     while (count--) {
+//         ins = strstr(orig, rep);
+//         len_front = ins - orig;
+//         tmp = strncpy(tmp, orig, len_front) + len_front;
+//         tmp = strcpy(tmp, with) + len_with;
+//         orig += len_front + len_rep;
+//     }
+//     strcpy(tmp, orig);
+//     return result;
+// }
+
+// char get_q(char *str) {
+//     while (*str) {
+//         if (ft_strchr("'\"", *str)) {
+//             return *str;
+//         }
+//         str++;
+//     }
+//     return 0;
+// }
+
+// int is_within_quotes(char *str, int pos) {
+//     int i = 0;
+//     char quote = 0;
+
+//     while (i < pos) {
+//         if (str[i] == '\'' || str[i] == '"') {
+//             if (quote == 0) {
+//                 quote = str[i];
+//             } else if (quote == str[i]) {
+//                 quote = 0;
+//             }
+//         }
+//         i++;
+//     }
+//     return (quote == '\'');
+// }
+
+// char *get_env_key(char *str, int pos) {
+//     // Mock implementation for example
+//     return "MOCK_KEY";
+// }
+
+// char *get_env_value(char *key, void *export_i) {
+//     // Mock implementation for example
+//     return "MOCK_VALUE";
+// }
+
+// void supprimerDoll(char *str) {
+//     // Mock implementation for example
+// }
+
+// char *ft_expanding(char *commande, void *export_i) {
+//     char *exp_commande = strdup(commande);
+//     char *exp_cmd = NULL;
+//     char *key = NULL;
+//     char *value = NULL;
+//     int i = 0;
+
+//     if (!exp_commande)
+//         exit(EXIT_FAILURE);
+
+//     while (exp_commande && exp_commande[i] != '\0') {
+//         if (exp_commande[i] == '\'' || exp_commande[i] == '"') {
+//             char quote = exp_commande[i];
+//             i++;
+//             while (exp_commande[i] && exp_commande[i] != quote) {
+//                 i++;
+//             }
+//             i++;
+//         } else if (exp_commande[i] == '$' && !is_within_quotes(exp_commande, i)) {
+//             key = get_env_key(exp_commande, i);
+//             if (!key)
+//                 exit(EXIT_FAILURE);
+//             value = get_env_value(key, export_i);
+//             if (!value || !strcmp(value, "") || !strcmp(value, " ")) {
+//                 exp_commande = ft_str_replace(exp_commande, key, strdup(""));
+//                 free(key);
+//                 free(value);
+//             } else {
+//                 key = ft_strjoin("$", key);
+//                 exp_cmd = ft_str_replace(exp_commande, key, value);
+//                 free(exp_commande);
+//                 exp_commande = exp_cmd;
+//                 free(key);
+//                 free(value);
+//             }
+//         }
+//         i++;
+//     }
+
+//     if (strstr(exp_commande, "$") && is_within_quotes(exp_commande, 0) == 0)
+//         supprimerDoll(exp_commande);
+//     return exp_commande;
+// }
+
+
+
+// char *sera_expander_quotes(char *str)
+// {
+// 	int i = 0;
+// 	int j = 0;
+// 	char *new_str = (char *)malloc((strlen(str) + 1) * sizeof(char));
+// 	if (!new_str)
+// 		exit(EXIT_FAILURE);
+// 	while (str[i])
+// 	{
+// 		if (str[i] == '"')
+// 		{
+// 			i++;
+// 			while (str[i] && str[i] != '"')
+// 				new_str[j++] = str[i++];
+// 		}
+// 		else if (str[i] == '\'')
+// 		{
+// 			i++;
+// 			while (str[i] && str[i] != '\'')
+// 				new_str[j++] = str[i++];
+// 		}
+// 		else
+// 			i++;
+// 			// new_str[j++] = str[i++];
+// 	}
+// 	new_str[j] = '\0';
+// 	return (new_str);		
+// }
+
+
+int is_closed(char *str, int n)
+{
+	int i = 0;
+
+	while (str[i] && i < n)
+	{
+		if (str[i] == '"')
+		{
+			i++;
+			while (str[i] && str[i] != '"')
+				i++;
+			if (str[i] == '\0' || i >= n)
+				return (0);
+		}
+		i++;
+	}
+	return (1);
 }
 
-int main() {
-    char *strings[] = {"Bonjour", "le", "monde"};
-    int count = sizeof(strings) / sizeof(strings[0]);
-
-    char *result = concat_strings(strings, count);
-    printf("Résultat : %s\n", result);
-
-    // Libérer la mémoire allouée
-    free(result);
-
-    return 0;
+int main(int arc, char **arv)
+{
+	printf("%d\n", is_closed(arv[1], atoi(arv[2])));
 }

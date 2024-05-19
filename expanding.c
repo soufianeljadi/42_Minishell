@@ -6,7 +6,7 @@
 /*   By: sdiouane <sdiouane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/27 19:58:08 by sdiouane          #+#    #+#             */
-/*   Updated: 2024/05/18 19:39:20 by sdiouane         ###   ########.fr       */
+/*   Updated: 2024/05/19 16:21:50 by sdiouane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -218,6 +218,87 @@ char *concat_strings(char **strings, int count) {
 //     return (s);
 // }
 
+// char *skip_spaces(char *str)
+// {
+// 	int i = 0;
+// 	while (str[i] && (str[i] == ' ' || str[i] == '\t'))
+// 		i++;
+// 	if (i > 0)
+// 	{
+// 		int j = 0;
+// 		while (str[i])
+// 			str[j++] = str[i++];
+// 		str[j] = '\0';
+// 	}
+// 	return str;
+// }
+
+
+
+
+
+char *sera_expander_quotes(char *str)
+{
+	int i = 0;
+	int j = 0;
+	char *new_str = (char *)malloc((strlen(str) + 1) * sizeof(char));
+	if (!new_str)
+		exit(EXIT_FAILURE);
+	while (str[i])
+	{
+		if (str[i] == '"')
+		{
+			i++;
+			while (str[i] && str[i] != '"')
+				new_str[j++] = str[i++];
+		}
+		else if (str[i] == '\'')
+		{
+			i++;
+			while (str[i] && str[i] != '\'')
+				new_str[j++] = str[i++];
+		}
+		else
+			i++;
+			// new_str[j++] = str[i++];
+	}
+	new_str[j] = '\0';
+	return (new_str);		
+}
+
+
+
+char get_q(char *str)
+{
+	while(*str)
+		if(ft_strchr("\'\"",*(str++)))
+			return *(str - 1);
+	return(0);
+}
+
+
+
+int is_closed(char *str, int n)
+{
+    int i = 0;
+
+    while (str[i] && i < n)
+	{
+        if (str[i] == '"')
+		{
+            i++;
+            while (str[i] && str[i] != '"')
+                i++;
+            if (str[i] == '\0' || i >= n)
+                return 0;
+        }
+        i++;
+    }
+    return 1;
+}
+
+
+
 char *ft_expanding(char *commande, s_env *export_i)
 {
     char *exp_commande = strdup(commande);
@@ -225,43 +306,136 @@ char *ft_expanding(char *commande, s_env *export_i)
     char *key = NULL;
     char *value = NULL;
     int i = 0;
+    int quote_open = 0;
+    char current_quote = '\0';
 
     if (!exp_commande)
         exit(EXIT_FAILURE);
     while (exp_commande && exp_commande[i] != '\0')
 	{
-		// 	return (strdup(exp_commande));
-		// if (exp_commande[i] == '$')
-		if (exp_commande[i] == '$' && (exp_commande[i + 1] == ' ' || exp_commande[i + 1] == '\0' || exp_commande[i + 1] == '\t'))
+        if (exp_commande[i] == '"' || exp_commande[i] == '\'')
 		{
-			// printf("yoooooooooooooooooo\n");
-			;
-		} 
-        else if (exp_commande[i] == '$')
+            if (quote_open && exp_commande[i] == current_quote)
+			{
+                quote_open = 0;
+                current_quote = '\0';
+            }
+			else if (!quote_open)
+			{
+                quote_open = 1;
+                current_quote = exp_commande[i];
+            }
+        } 
+		else if (exp_commande[i] == '$' && (!quote_open || (quote_open && current_quote == '"')))
 		{
             key = get_env_key(exp_commande, i);
             if (!key)
                 exit(EXIT_FAILURE);
-			value = get_env_value(key, export_i);
-			printf("key = |%s|, value = |%s|\n", key, value);
-			if (!value || !strcmp(value, "") || !strcmp(value, " "))
-			{	
-				exp_commande = ft_str_replace(exp_commande, key, strdup(""));
-				(free(key), free(value));
-			}
+            value = get_env_value(key, export_i);
+            if (!value || !strcmp(value, "") || !strcmp(value, " "))
+			{
+                exp_commande = ft_str_replace(exp_commande, key, strdup(""));
+                free(key);
+                free(value);
+            }
 			else
 			{
-				key = ft_strjoin("$", key);
+                key = ft_strjoin("$", key);
                 exp_cmd = ft_str_replace(exp_commande, key, value);
-                (free(exp_commande), exp_commande = exp_cmd);
-                (free(key), free(value));
-			}
-		}
-		i++;
-	}
-    // printf("BEFORE : exp_commande = |%s|\n", exp_commande);
-	if (strstr(exp_commande, "$"))
-    	supprimerDoll(exp_commande);
-    // printf("AFTER : exp_commande = |%s|\n", exp_commande);
+                free(exp_commande);
+                exp_commande = exp_cmd;
+                free(key);
+                free(value);
+            }
+        }
+        i++;
+    }
+
+    if (strstr(exp_commande, "$"))
+        supprimerDoll(exp_commande);
+
+    printf("\nIN EXPANDING :\n");
+    printf("------------------------------------------ > |%s| <------------------------------------------\n", exp_commande);
     return exp_commande;
 }
+
+
+				// start = i;
+				// while (exp_commande[i] && exp_commande[i] != '\'')
+				// 	i++;
+				// if (exp_commande[i] == '\'')
+				// {
+				// 	i++;
+				// 	continue;
+				// }
+				// else
+				// {
+				// 	exp_commande = ft_substr2(exp_commande, 0, start);
+				// 	break;
+				// }
+
+// int is_closed(char *str, int n)
+// {
+// 	int i = 0;
+
+// 	while (str[i] && i < n)
+// 	{
+// 		if (str[i] == '"')
+// 		{
+// 			i++;
+// 			while (str[i] && str[i] != '"')
+// 				i++;
+// 			if (str[i] == '\0' || i >= n)
+// 				return (0);
+// 		}
+// 		i++;
+// 	}
+// 	return (1);
+// }
+
+// 		// exp_commande = sera_expander_quotes(commande);
+// char *ft_expanding(char *commande, s_env *export_i)
+// {
+//     char *exp_commande = strdup(commande);
+//     char *exp_cmd = NULL;
+//     char *key = NULL;
+//     char *value = NULL;
+//     int i = 0;
+// 	int start = 0;
+
+//     if (!exp_commande)
+//         exit(EXIT_FAILURE);
+//     while (exp_commande && exp_commande[i] != '\0')
+// 	{
+// 		if (exp_commande[i] == '\'')
+// 		{
+// 		}
+// 		if (exp_commande[i] == '$')
+// 			{
+// 				key = get_env_key(exp_commande, i);
+// 				if (!key)
+// 					exit(EXIT_FAILURE);
+// 				value = get_env_value(key, export_i);
+// 				// printf("key = |%s|, value = |%s|\n", key, value);
+// 				if (!value || !strcmp(value, "") || !strcmp(value, " "))
+// 				{	
+// 					exp_commande = ft_str_replace(exp_commande, key, strdup(""));
+// 					(free(key), free(value));
+// 				}
+// 				else
+// 				{
+// 					key = ft_strjoin("$", key);
+// 					exp_cmd = ft_str_replace(exp_commande, key, value);
+// 					(free(exp_commande), exp_commande = exp_cmd);
+// 					(free(key), free(value));
+// 				}
+// 			}
+// 		i++;
+// 	}
+//     // printf("BEFORE : exp_commande = |%s|\n", exp_commande);
+// 	if (strstr(exp_commande, "$") && is_single(exp_commande) == 0)
+//     	supprimerDoll(exp_commande);
+// 	printf("\nIN EXPANDING :\n");
+// 	printf("------------------------------------------ > |%s| <------------------------------------------\n", exp_commande);
+//     return exp_commande;
+// }
