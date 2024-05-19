@@ -6,7 +6,7 @@
 /*   By: sdiouane <sdiouane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/27 19:58:08 by sdiouane          #+#    #+#             */
-/*   Updated: 2024/05/19 16:21:50 by sdiouane         ###   ########.fr       */
+/*   Updated: 2024/05/19 21:08:35 by sdiouane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -136,107 +136,6 @@ char *concat_strings(char **strings, int count) {
     return result;
 }
 
-
-// char *ft_expanding(char *commande, s_env *export_i) {
-//     if (!commande) exit(EXIT_FAILURE);
-//     char **exp_commande = ft_split(commande, ' ');
-//     if (!exp_commande) exit(EXIT_FAILURE);
-
-// 	int i = 0;
-//     for (i = 0; exp_commande[i]; i++) {
-//         if (is_single(exp_commande[i])) return strdup(exp_commande[i]);
-//         for (int j = 0; exp_commande[i][j]; j++) {
-//             if (exp_commande[i][j] == '$') {
-//                 char *key = get_env_key(exp_commande[i], j);
-//                 if (!key) exit(EXIT_FAILURE);
-//                 char *value = get_env_value(key, export_i);
-//                 if (!value) value = strdup("");
-//                 char *new_str = ft_str_replace(exp_commande[i], key, value);
-//                 if (!new_str) exit(EXIT_FAILURE);
-//                 free(exp_commande[i]);
-//                 exp_commande[i] = new_str;
-//                 free(key);
-//                 free(value);
-//             }
-//         }
-//     }
-//     char *s = concat_strings(exp_commande, i);
-//     printf("s = %s\n", s);
-// 	if (strstr(s, "$"))
-// 		supprimerDoll(s);
-//     printf("s = %s\n", s);
-//     return s;
-// }
-
-
-// char *ft_expanding(char *commande, s_env *export_i)
-// {
-//     char	**exp_commande;
-// 	char	*exp_cmd;
-// 	char	*key;
-// 	char	*value;
-//     int		i;
-
-// 	if (!commande)
-// 		exit(EXIT_FAILURE);
-// 	(/*xp_commande = strdup(commande),*/ i = 0, exp_cmd = NULL);
-// 	exp_commande = ft_split(commande, ' ');
-// 	while (exp_commande[i])
-// 	{
-// 		if (is_single(exp_commande[i]) == 1)
-// 			return (exp_commande[i]);
-// 		int j = 0;
-// 		while (exp_commande && exp_commande[i][j] != '\0')
-// 		{
-// 			if (exp_commande[i] && exp_commande[i][j] == '$') 
-// 			{
-// 				key = get_env_key(exp_commande[i], j);
-// 				if (!key)
-// 					exit(EXIT_FAILURE);
-// 				value = get_env_value(key, export_i);
-// 				if (!value || !strcmp(value, "") || !strcmp(value, " "))
-// 				{
-// 					exp_commande[i] = ft_str_replace(exp_commande[i], key, strdup(""));
-// 					(free(key), free(value));
-// 				}
-// 				else
-// 				{
-// 					key = ft_strjoin("$", key);
-// 					exp_cmd = ft_str_replace(exp_commande[i], key, value);
-// 					(free(exp_commande[i]), exp_commande[i] = exp_cmd);
-// 					(free(key), free(value));
-// 				}
-// 			}
-// 				i++;
-// 		}
-// 	}
-// 	// del_dbl_quotes(exp_commande);
-	// if (strstr(exp_commande, "$"))
-	// 	supprimerDoll(exp_commande);
-// 	char *s = concat_strings(exp_commande, i);
-// 	printf("s = %s\n", s);
-//     return (s);
-// }
-
-// char *skip_spaces(char *str)
-// {
-// 	int i = 0;
-// 	while (str[i] && (str[i] == ' ' || str[i] == '\t'))
-// 		i++;
-// 	if (i > 0)
-// 	{
-// 		int j = 0;
-// 		while (str[i])
-// 			str[j++] = str[i++];
-// 		str[j] = '\0';
-// 	}
-// 	return str;
-// }
-
-
-
-
-
 char *sera_expander_quotes(char *str)
 {
 	int i = 0;
@@ -297,67 +196,149 @@ int is_closed(char *str, int n)
     return 1;
 }
 
+// char *ft_expanding(char *commande, s_env *export_i)
+// {
+//     char	*exp_commande;
+//     char	*exp_cmd;
+//     char	*key;
+//     char	*value;
+// 	t_p		p;
+	
+// 	if (!commande)
+// 		exit(EXIT_FAILURE);
+// 	(1) && (p.i = 0, p.j = 0, p.quote_open = 0, p.current_quote = '\0');
+// 	(1) && (exp_cmd = NULL, key = NULL, value = NULL);
+// 	exp_commande = strdup(commande);
+//     if (!exp_commande)
+//         exit(EXIT_FAILURE);
+//     while (exp_commande && exp_commande[p.i] != '\0')
+// 	{
+//         if (exp_commande[p.i] == '"' || exp_commande[p.i] == '\'')
+// 		{
+//             if (p.quote_open && exp_commande[p.i] == p.current_quote)
+//                 (1) && (p.quote_open = 0, p.current_quote = '\0');
+// 			else if (!p.quote_open)
+//                 (1) && (p.quote_open = 1, p.current_quote = exp_commande[p.i]);
+//         } 
+// 		else if (exp_commande[p.i] == '$' && (!p.quote_open || (p.quote_open && p.current_quote == '"')))
+// 		{
+//             key = get_env_key(exp_commande, p.i);
+//             if (!key)
+//                 exit(EXIT_FAILURE);
+//             value = get_env_value(key, export_i);
+//             if (!value || !strcmp(value, "") || !strcmp(value, " "))
+// 			{
+//                 exp_commande = ft_str_replace(exp_commande, key, strdup(""));
+// 				if (!exp_commande)
+// 					exit (EXIT_FAILURE);
+//         		(free(key), free(value));
+//             }
+// 			else
+// 			{
+//                 key = ft_strjoin("$", key);
+// 				if (!key)
+// 					exit (EXIT_FAILURE);
+//                 exp_cmd = ft_str_replace(exp_commande, key, value);
+// 				if (!exp_cmd)
+// 					exit (EXIT_FAILURE);
+//                 free(exp_commande);
+//                 exp_commande = strdup(exp_cmd);
+// 				if (!exp_commande)
+// 					exit (EXIT_FAILURE);
+//                 (free(key), free(value));
+//             }
+//         }
+//         p.i++;
+//     }
 
+//     if (strstr(exp_commande, "$") && is_closed(exp_commande, p.i) == 0)
+//         supprimerDoll(exp_commande);
+//     // printf("\nIN EXPANDING :\n");
+//     // printf("------------------------------------------ > |%s| <------------------------------------------\n", exp_commande);
+//     return (exp_commande);
+// }
+
+void check_memory_allocation(void *ptr) 
+{
+    if (!ptr) exit(EXIT_FAILURE);
+}
+
+void handle_quotes(char *exp_commande, t_p *p)
+{
+    if (exp_commande[p->i] == '"' || exp_commande[p->i] == '\'')
+	{
+        if (p->quote_open && exp_commande[p->i] == p->current_quote)
+		{
+            p->quote_open = 0;
+            p->current_quote = '\0';
+        }
+		else if (!p->quote_open)
+		{
+            p->quote_open = 1;
+            p->current_quote = exp_commande[p->i];
+        }
+    }
+}
+
+char *process_variable(char *exp_commande, t_p *p, s_env *export_i)
+{
+    char *key;
+    char *value;
+	char *full_key;
+	char *exp_cmd;
+
+	(key= get_env_key(exp_commande, p->i), check_memory_allocation(key));
+	value = get_env_value(key, export_i);
+    if (!value || !strcmp(value, "") || !strcmp(value, " "))
+	{
+        exp_commande = ft_str_replace(exp_commande, key, strdup(""));
+        (check_memory_allocation(exp_commande), free(key), free(value));
+    }
+	else
+	{
+        full_key = ft_strjoin("$", key);
+        check_memory_allocation(full_key);
+        exp_cmd = ft_str_replace(exp_commande, full_key, value);
+        check_memory_allocation(exp_cmd);
+        free(exp_commande);
+        exp_commande = strdup(exp_cmd);
+        check_memory_allocation(exp_commande);
+        (free(full_key), free(exp_cmd), free(key), free(value));
+    }
+    return (exp_commande);
+}
 
 char *ft_expanding(char *commande, s_env *export_i)
 {
-    char *exp_commande = strdup(commande);
-    char *exp_cmd = NULL;
-    char *key = NULL;
-    char *value = NULL;
-    int i = 0;
-    int quote_open = 0;
-    char current_quote = '\0';
-
-    if (!exp_commande)
-        exit(EXIT_FAILURE);
-    while (exp_commande && exp_commande[i] != '\0')
+    char *exp_commande;
+	
+    t_p p = {0, 0, 0, '\0'};
+    if (!commande) exit(EXIT_FAILURE);
+    exp_commande = strdup(commande);
+    check_memory_allocation(exp_commande);
+    while (exp_commande && exp_commande[p.i] != '\0')
 	{
-        if (exp_commande[i] == '"' || exp_commande[i] == '\'')
+        handle_quotes(exp_commande, &p);
+        if (exp_commande[p.i] == '$' && (!p.quote_open || (p.quote_open && p.current_quote == '"')))
 		{
-            if (quote_open && exp_commande[i] == current_quote)
-			{
-                quote_open = 0;
-                current_quote = '\0';
-            }
-			else if (!quote_open)
-			{
-                quote_open = 1;
-                current_quote = exp_commande[i];
-            }
-        } 
-		else if (exp_commande[i] == '$' && (!quote_open || (quote_open && current_quote == '"')))
-		{
-            key = get_env_key(exp_commande, i);
-            if (!key)
-                exit(EXIT_FAILURE);
-            value = get_env_value(key, export_i);
-            if (!value || !strcmp(value, "") || !strcmp(value, " "))
-			{
-                exp_commande = ft_str_replace(exp_commande, key, strdup(""));
-                free(key);
-                free(value);
-            }
-			else
-			{
-                key = ft_strjoin("$", key);
-                exp_cmd = ft_str_replace(exp_commande, key, value);
-                free(exp_commande);
-                exp_commande = exp_cmd;
-                free(key);
-                free(value);
-            }
+            exp_commande = process_variable(exp_commande, &p, export_i);
+            check_memory_allocation(exp_commande);
         }
-        i++;
+        p.i++;
     }
-
-    if (strstr(exp_commande, "$"))
+    if (strstr(exp_commande, "$") && is_closed(exp_commande, p.i) == 0)
         supprimerDoll(exp_commande);
-
-    printf("\nIN EXPANDING :\n");
-    printf("------------------------------------------ > |%s| <------------------------------------------\n", exp_commande);
     return exp_commande;
 }
+
+
+
+
+
+
+
+
+
 
 
 				// start = i;

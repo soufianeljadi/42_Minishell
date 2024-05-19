@@ -6,7 +6,7 @@
 /*   By: sdiouane <sdiouane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/31 22:14:48 by sdiouane          #+#    #+#             */
-/*   Updated: 2024/05/19 16:17:45 by sdiouane         ###   ########.fr       */
+/*   Updated: 2024/05/19 21:16:11 by sdiouane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,8 +85,9 @@ void execute(char *s, char **env, ExecutionData *data)
 				del_sngl_quotes(cmd[0]);
 		}
 		chemin = get_path(cmd[0], env);
-		printf("\nIN EXECUTION :\n");
-		printf("------------------------------------------ > |%s| <------------------------------------------\n", cmd[0]);
+		// printf("\nIN EXECUTION :\n");
+		// printf("------------------------------------------ > |%s| <------------------------------------------\n", cmd[0]);
+		// cmd = ft_split(s, ' ');
 		if (builtins(data) == 1)
 		{
 			if (execve(chemin, cmd, env) == -1 /*&& strcmp(cmd[0], "\0")*/)

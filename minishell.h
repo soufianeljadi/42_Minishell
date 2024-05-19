@@ -6,7 +6,7 @@
 /*   By: sdiouane <sdiouane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 23:51:44 by sdiouane          #+#    #+#             */
-/*   Updated: 2024/05/18 19:52:29 by sdiouane         ###   ########.fr       */
+/*   Updated: 2024/05/19 20:49:06 by sdiouane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,6 +111,17 @@ typedef struct
 	int 		fd_in;
 	int 		fd_out;
 } ExecutionData;
+
+
+
+typedef struct t_p
+{
+	int	i;
+	int	j;
+	int	quote_open;
+	int	current_quote;
+}	t_p;
+
 
 /**********************MAIN***********************************/
 	// init_env
