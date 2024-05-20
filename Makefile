@@ -6,7 +6,7 @@
 #    By: sdiouane <sdiouane@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/03/12 23:52:42 by sdiouane          #+#    #+#              #
-#    Updated: 2024/05/20 11:19:16 by sdiouane         ###   ########.fr        #
+#    Updated: 2024/05/20 19:02:29 by sdiouane         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -40,6 +40,7 @@ SRC =	minishell.c \
 		builtins/export.c \
 		builtins/export_null.c \
 		builtins/export_not_null.c \
+		builtins/export_not_null_utils.c \
 		builtins/pwd.c \
 		builtins/cd.c \
 		builtins/unset.c \

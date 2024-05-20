@@ -6,7 +6,7 @@
 /*   By: sdiouane <sdiouane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/26 01:07:33 by sel-jadi          #+#    #+#             */
-/*   Updated: 2024/05/18 16:14:14 by sdiouane         ###   ########.fr       */
+/*   Updated: 2024/05/20 12:53:44 by sdiouane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,9 +102,7 @@ int	is_builtins(char **args, s_env **export_i, char **env, int *flag)
 	else if (!strcmp(args[0], "export"))
 		*export_i = export_fct(args, *export_i, env);
 	else if (!strcmp(args[0], "unset"))
-	{
 		*export_i = unset_fct(args, *export_i);
-	}
 	else if (!strcmp(args[0], "cd"))
 		*export_i = execute_cd(args, *export_i);        
 	else if (!strcmp(args[0], "env") && !args[1])

@@ -6,7 +6,7 @@
 /*   By: sdiouane <sdiouane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 23:52:10 by sdiouane          #+#    #+#             */
-/*   Updated: 2024/05/20 12:18:43 by sdiouane         ###   ########.fr       */
+/*   Updated: 2024/05/20 21:51:46 by sdiouane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,6 @@ int is_single(char *str)
     }
     return 0;
 }
-
 
 ExecutionData *init_data(char **args, noued_cmd *cmd, s_env *export_i)
 {
@@ -139,6 +138,7 @@ int main(int ac, char **av, char **env)
 		printf("minishell: is not a tty\n");
 		exit(EXIT_FAILURE);
 	}
+	printf("HELLO WORLD !\n");
 	if (env[0] == NULL)
 		export_i = split_export_i(export_i);
 	else

@@ -6,7 +6,7 @@
 /*   By: sdiouane <sdiouane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 23:51:44 by sdiouane          #+#    #+#             */
-/*   Updated: 2024/05/20 12:36:29 by sdiouane         ###   ########.fr       */
+/*   Updated: 2024/05/20 15:28:01 by sdiouane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -313,5 +313,17 @@ int is_closed(char *exp_commande, int i);
 void supprimerDoll(char *exp_commande);
 void check_memory_allocation(void *ptr);
 
+
+//export 
+s_env *export_fct(char **args, s_env *env, char **eenv);
+int existe_deja(char *key, s_env *env);
+int	verif_export(char *str);
+void is_null(char **args, s_env *env);
+void concatenation(char **args, s_env *env, char *key);
+void is_equal(char **args, s_env *export_i, char *key);
+s_env *not_null(char **args, s_env *env);
+void fct_equal(char **args, s_env *env, char *key);
+void ftc_concatination(char **args, s_env *env, char *key);
+void remove_q(char *chaine);
 t_var	g_flags;
 #endif

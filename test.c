@@ -623,26 +623,96 @@
 // }
 
 
-int is_closed(char *str, int n)
-{
-	int i = 0;
+// int is_closed(char *str, int n)
+// {
+// 	int i = 0;
 
-	while (str[i] && i < n)
-	{
-		if (str[i] == '"')
-		{
-			i++;
-			while (str[i] && str[i] != '"')
-				i++;
-			if (str[i] == '\0' || i >= n)
-				return (0);
-		}
-		i++;
-	}
-	return (1);
+// 	while (str[i] && i < n)
+// 	{
+// 		if (str[i] == '"')
+// 		{
+// 			i++;
+// 			while (str[i] && str[i] != '"')
+// 				i++;
+// 			if (str[i] == '\0' || i >= n)
+// 				return (0);
+// 		}
+// 		i++;
+// 	}
+// 	return (1);
+// }
+
+// int main(int arc, char **arv)
+// {
+// 	printf("%d\n", is_closed(arv[1], atoi(arv[2])));
+// }
+
+
+// char *supp_quotes(char *str)
+// {
+// 	char *new_str;
+// 	int i = 0;
+// 	int j = 0;
+
+// 	new_str = (char *)malloc(sizeof(char) * (strlen(str) + 1));
+// 	if (!new_str)
+// 		return NULL;
+// 	while (str[i])
+// 	{
+// 		if (str[i] != '\"')
+// 		{
+// 			while (str[i] && str[i] != '\"')
+// 			{
+// 				new_str[j] = str[i];
+// 				i++;
+// 				j++;
+// 			}
+// 		}
+// 		else if (str[i] == '\"')
+// 		{
+// 			i++;
+// 			while (str[i] && str[i] != '\"')
+// 			{
+// 				new_str[j] = str[i];
+// 				i++;
+// 				j++;
+// 			}
+// 		}
+// 		i++;
+// 	}
+// 	new_str[j] = '\0';
+// 	return new_str;
+// }
+
+char *supp_quotes(char *str) {
+    char *new_str;
+    int i = 0;
+    int j = 0;
+    int quote_open = 0; // 0: no quote, 1: single quote, 2: double quote
+
+    new_str = (char *)malloc(sizeof(char) * (strlen(str) + 1));
+    if (!new_str)
+        return NULL;
+    
+    while (str[i]) {
+        if (str[i] == '\'' && quote_open != 2) {
+            quote_open = (quote_open == 1) ? 0 : 1;
+            i++;
+        } else if (str[i] == '\"' && quote_open != 1) {
+            quote_open = (quote_open == 2) ? 0 : 2;
+            i++;
+        } else {
+            new_str[j++] = str[i++];
+        }
+    }
+    new_str[j] = '\0';
+    return new_str;
 }
+
 
 int main(int arc, char **arv)
 {
-	printf("%d\n", is_closed(arv[1], atoi(arv[2])));
+	printf("%s\n", supp_quotes("\"'''''''''''''''''ls\""));
+	printf("\n");
+	return (0);
 }

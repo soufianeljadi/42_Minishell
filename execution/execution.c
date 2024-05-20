@@ -6,13 +6,13 @@
 /*   By: sdiouane <sdiouane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/31 22:14:48 by sdiouane          #+#    #+#             */
-/*   Updated: 2024/05/20 10:43:57 by sdiouane         ###   ########.fr       */
+/*   Updated: 2024/05/20 21:42:18 by sdiouane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-static int  ft_execut_error(char *cmd)
+int  ft_execut_error(char *cmd)
 {
     int         ref;
     DIR         *ptr;
@@ -40,28 +40,22 @@ static int  ft_execut_error(char *cmd)
     return (0);
 }
 
-char *remove_quo(char *str)
-{
-    if (!str)
-        return NULL;
+void remove_outermost_quotes(char *str) {
+    int len = strlen(str);
+    if (len < 2) return; // If the string is too short, do nothing
 
-    size_t len = strlen(str);
-    if (len < 2)
-        return str;
-
-    if ((str[0] == '\'' && str[len - 1] == '\'') || (str[0] == '\"' && str[len - 1] == '\"'))
-    {
-        char *new_str = (char *)malloc(len - 1);
-        if (!new_str)
-            return NULL;
-        strncpy(new_str, str + 1, len - 2);
-        new_str[len - 2] = '\0';
-        return new_str;
+    // Remove leading quote
+    if (str[0] == '"' || str[0] == '\'') {
+        memmove(str, str + 1, len - 1);
+        str[len - 1] = '\0';
+        len--;
     }
 
-    return str;
+    // Remove trailing quote
+    if (str[len - 1] == '"' || str[len - 1] == '\'') {
+        str[len - 1] = '\0';
+    }
 }
-
 
 
 void execute(char *s, char **env, ExecutionData *data)
@@ -69,34 +63,24 @@ void execute(char *s, char **env, ExecutionData *data)
 	char    *chemin;
 	char    **cmd;
 
+	(void)data;
 	(1) && (cmd = NULL, chemin = NULL);
+	
 	if (*env)
 	{
 		cmd = check_quotes_before_execution(s);
-		if (cmd[0][0] == '\"')
-		{
-			del_dbl_quotes(cmd[0]);
-		}
-		else if (cmd[0][0] == '\'')
-		{
-			if (!strstr(cmd[0], "\""))
-				del_sngl_quotes(cmd[0]);
-			else
-				del_sngl_quotes(cmd[0]);
-		}
+		if (cmd[0] == NULL)
+			exit(EXIT_FAILURE);
 		chemin = get_path(cmd[0], env);
-		// printf("\nIN EXECUTION :\n");
-		// printf("------------------------------------------ > |%s| <------------------------------------------\n", cmd[0]);
-		// cmd = ft_split(s, ' ');
-		if (builtins(data) == 1)
+		if (chemin == NULL)
+			(ft_free_tab(cmd), exit(EXIT_FAILURE));
+		if (execve(chemin, cmd, env) == -1 && strcmp(cmd[0], "\0"))
 		{
-			if (execve(chemin, cmd, env) == -1 && strcmp(cmd[0], "\0"))
-			{
-				if (strcmp(cmd[0], "\0"))
-					ft_execut_error(cmd[0]);
-				(ft_free_tab(cmd), exit(EXIT_FAILURE));
-			}
+			if (strcmp(cmd[0], "\0"))
+				ft_execut_error(cmd[0]);
+			(ft_free_tab(cmd), exit(EXIT_FAILURE));
 		}
+		// exit(EXIT_SUCCESS);
 	}
 }
 
@@ -104,8 +88,7 @@ static void handle_child_process(ExecutionData *data)
 {
 		if (data->lst->redirection != NULL)
 			execute_with_redirection(data);
-		else
-			if (data->lst->cmd != NULL)
+		else if (data->lst->cmd != NULL)
 				execute(data->lst->cmd, data->env, data);
 }
 
