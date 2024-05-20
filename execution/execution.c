@@ -6,7 +6,7 @@
 /*   By: sdiouane <sdiouane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/31 22:14:48 by sdiouane          #+#    #+#             */
-/*   Updated: 2024/05/19 21:16:11 by sdiouane         ###   ########.fr       */
+/*   Updated: 2024/05/20 10:43:57 by sdiouane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,7 +90,7 @@ void execute(char *s, char **env, ExecutionData *data)
 		// cmd = ft_split(s, ' ');
 		if (builtins(data) == 1)
 		{
-			if (execve(chemin, cmd, env) == -1 /*&& strcmp(cmd[0], "\0")*/)
+			if (execve(chemin, cmd, env) == -1 && strcmp(cmd[0], "\0"))
 			{
 				if (strcmp(cmd[0], "\0"))
 					ft_execut_error(cmd[0]);
@@ -124,7 +124,6 @@ static void execute_command(ExecutionData *data)
 		close(pipefd[1]);
 		close(pipefd[0]);
 		handle_child_process(data);
-		exit(EXIT_SUCCESS);
 	}
 	else
 	{

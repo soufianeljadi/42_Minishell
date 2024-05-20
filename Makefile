@@ -6,13 +6,13 @@
 #    By: sdiouane <sdiouane@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/03/12 23:52:42 by sdiouane          #+#    #+#              #
-#    Updated: 2024/05/19 14:06:55 by sdiouane         ###   ########.fr        #
+#    Updated: 2024/05/20 09:59:53 by sdiouane         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = minishell
 
-CC = cc #-g -fsanitize=address
+CC = cc -g -fsanitize=address
 
 CFLAGS = -Wall -Wextra -Werror 
 

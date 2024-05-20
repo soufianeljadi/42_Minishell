@@ -6,7 +6,7 @@
 /*   By: sdiouane <sdiouane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 23:51:44 by sdiouane          #+#    #+#             */
-/*   Updated: 2024/05/19 20:49:06 by sdiouane         ###   ########.fr       */
+/*   Updated: 2024/05/20 10:27:07 by sdiouane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -258,7 +258,8 @@ int	ft_atoi(const char *str);
 
 // expanding :
 // void ft_expanding(char **args, s_env *export_i);
-char *ft_expanding(char *commande, s_env *export_i);
+// char *ft_expanding(char *commande, char *red, s_env *export_i);
+noued_cmd *ft_expanding(ExecutionData	**data, s_env *export_i);
 char *get_env_key(char *s, int j);
 char *get_env_value(char *key, s_env *export_i);
 char *ft_str_replace(char *s, char *key, char *value);
