@@ -6,7 +6,7 @@
 /*   By: sdiouane <sdiouane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/24 21:24:00 by sdiouane          #+#    #+#             */
-/*   Updated: 2024/05/16 17:29:11 by sdiouane         ###   ########.fr       */
+/*   Updated: 2024/05/20 12:50:27 by sdiouane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -196,36 +196,30 @@ void concatenation(char **args, s_env *env, char *key)
 			env->j++;
 	
 	value = ft_substr(args[env->i], start, env->j - start);
-	// value = ft_strjoin("\'" ,value);
-	// value = ft_strjoin(value , "\'");
 	if (value[0] != '\"')
 	{
 		current = env;
-		while (current != NULL && current->value)
+		while (current != NULL)
 		{
 			if (strcmp(current->key, key) == 0)
 			{
 				current->value = ft_strjoin(current->value, value);
 				break ;
 			}
-			current = current->next;
-			if (current == NULL)
-				ft_lstadd_back(&env, ft_lstnew_data(value, key));						
+			current = current->next;						
 		}
 	}
 	else
 	{
 		current = env;
-		while (current != NULL && current->value)
+		while (current != NULL)
 		{
 			if (strcmp(current->key, key) == 0)
 			{
 				current->value = ft_strjoin(current->value, value);
 				break ;
 			}
-			current = current->next;
-			if (current == NULL)
-				ft_lstadd_back(&env, ft_lstnew_data(value, key));						
+			current = current->next;					
 		}
 							
 	}
@@ -260,15 +254,8 @@ void is_null(char **args, s_env *env)
 	{
 		while (args[i])
 		{
-			supprimerGuillemets(args[i]);
-			if ((!strcmp(args[i], ">") || !strcmp(args[i], ">>") || !strcmp(args[i], "<") || !strcmp(args[i], "<<")))
-			{
-				if (args[i + 1])
-					i = i + 2;
-			}
+			// supprimerGuillemets(args[i]);
 			j = 0;
-			if (!args[i])
-				break;
 			while (args[i][j] &&  args[i][j] != '=' && args[i][j] != '+') // here
 				j++;
 			key = ft_substr(args[i], 0, j);
@@ -289,12 +276,12 @@ void is_null(char **args, s_env *env)
 					if (args[i][j] == '=')
 					{
 						(env->i = i, env->j = j);
-						fct_equal(args, env, key);
+						is_equal(args, env, key);
 					}             
 					else if (args[i][j] == '+' && args[i][j + 1] == '=')
 					{
 						(env->i = i, env->j = j);
-						ftc_concatination(args, env, key);
+						concatenation(args, env, key);
 					}
 				}
 			}

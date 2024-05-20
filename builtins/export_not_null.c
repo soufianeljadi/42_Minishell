@@ -6,7 +6,7 @@
 /*   By: sdiouane <sdiouane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/24 21:25:42 by sdiouane          #+#    #+#             */
-/*   Updated: 2024/05/16 18:56:10 by sdiouane         ###   ########.fr       */
+/*   Updated: 2024/05/20 12:49:47 by sdiouane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,22 +36,8 @@ void  fct_equal(char **args, s_env *env, char *key)
 	current = NULL;	
 	env->j++;
 	start = env->j;
-	// if (args[env->i][env->j] == '"')
-	// {
-	// 	env->j++;
-	// 	while (args[env->i][env->j] && args[env->i][env->j] != '\0')
-	// 		env->j++;
-	// 	env->j++;
-	// }
-	// else if (args[env->i][env->j] == '\'')
-	// {
-	// 	env->j++;
-	// 	while (args[env->i][env->j] && args[env->i][env->j] != '\0')
-	// 		env->j++;
-	// }
-	// else
-		while (args[env->i][env->j] && args[env->i][env->j] != '\0')
-			env->j++;
+	while (args[env->i][env->j] && args[env->i][env->j] != '\0')
+		env->j++;
 	value = ft_substr(args[env->i], start, env->j - start);
 	if (value[0] == '\'')
 		value = ft_substr(value, 1, ft_strlen(value) - 2);
@@ -83,18 +69,18 @@ void ftc_concatination(char **args, s_env *env, char *key)
 	if (args[env->i][env->j] == '"')
 	{
 		env->j++;
+		start = env->j;
 		while (args[env->i][env->j] && args[env->i][env->j] != '"')
 			env->j++;
 	}
 	else
 		while (args[env->i][env->j] && args[env->i][env->j] != '\"')
 			env->j++;
-	
 	value = ft_substr(args[env->i], start, env->j - start);
 	if (value[0] != '\"')
 	{
 		current = env;
-		while (current != NULL && current->value)
+		while (current != NULL)
 		{
 			if (strcmp(current->key, key) == 0)
 			{
@@ -102,14 +88,13 @@ void ftc_concatination(char **args, s_env *env, char *key)
 				break ;
 			}
 			current = current->next;
-			if (current == NULL)
-				ft_lstadd_back(&env, ft_lstnew_data(value, key));						
 		}
+					
 	}
 	else
 	{
 		current = env;
-		while (current != NULL && current->value)
+		while (current != NULL)
 		{
 			if (strcmp(current->key, key) == 0)
 			{
@@ -117,27 +102,11 @@ void ftc_concatination(char **args, s_env *env, char *key)
 				break ;
 			}
 			current = current->next;
-			if (current == NULL)
-				ft_lstadd_back(&env, ft_lstnew_data(value, key));						
 		}
+						
 							
 	}
 }
-
-// void del_qotes1(char *chaine)
-// {
-//     int i = 0;
-// 	int j = 0;
-	
-//     while (chaine[i])
-// 	{
-//         if (chaine[i] != '"')
-//             chaine[j++] = chaine[i];
-//         i++;
-//     }
-//     chaine[j] = '\0';
-// }
-
 
 s_env *not_null(char **args, s_env *env)
 {
@@ -152,13 +121,6 @@ s_env *not_null(char **args, s_env *env)
 	{
 		while (args[i])
 		{
-			// del_qotes1(args[i]);
-			// if ((!strcmp(args[i], ">") || !strcmp(args[i], ">>") || !strcmp(args[i], "<") || !strcmp(args[i], "<<")))
-			// {
-			// 	printf("args : %s\n", args[i]);
-			// 	if (args[i + 1])
-			// 		i = i + 2;
-			// }
 			j = 0;
 			if (!args[i])
 				break;
@@ -187,6 +149,7 @@ s_env *not_null(char **args, s_env *env)
 					else if (args[i][j] == '+' && args[i][j + 1] == '=')
 					{
 						(env->i = i, env->j = j);
+						printf("here\n");
 						ftc_concatination(args, env, key);
 					}
 				}

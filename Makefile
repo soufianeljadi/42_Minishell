@@ -6,7 +6,7 @@
 #    By: sdiouane <sdiouane@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/03/12 23:52:42 by sdiouane          #+#    #+#              #
-#    Updated: 2024/05/20 09:59:53 by sdiouane         ###   ########.fr        #
+#    Updated: 2024/05/20 11:19:16 by sdiouane         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -21,7 +21,6 @@ RDFLAGS =  -L $(shell brew --prefix readline)/lib -lreadline
 SRC =	minishell.c \
 		ft_itoa.c \
 		promt.c \
-		expanding.c \
     	parsing/ft_split.c \
 		parsing/lsts.c \
 		parsing/token.c \
@@ -57,6 +56,8 @@ SRC =	minishell.c \
 		execution/handle_quotes.c \
 		gnl/get_next_line.c \
 		gnl/get_next_line_utils.c \
+		expanding/expanding.c \
+		expanding/expanding_utils.c 
 
 OBJ = $(SRC:.c=.o)
 
