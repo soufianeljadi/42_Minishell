@@ -6,7 +6,7 @@
 /*   By: sdiouane <sdiouane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/31 22:14:48 by sdiouane          #+#    #+#             */
-/*   Updated: 2024/05/20 21:42:18 by sdiouane         ###   ########.fr       */
+/*   Updated: 2024/05/21 19:54:37 by sdiouane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,22 +74,21 @@ void execute(char *s, char **env, ExecutionData *data)
 		chemin = get_path(cmd[0], env);
 		if (chemin == NULL)
 			(ft_free_tab(cmd), exit(EXIT_FAILURE));
-		if (execve(chemin, cmd, env) == -1 && strcmp(cmd[0], "\0"))
-		{
-			if (strcmp(cmd[0], "\0"))
-				ft_execut_error(cmd[0]);
-			(ft_free_tab(cmd), exit(EXIT_FAILURE));
-		}
-		// exit(EXIT_SUCCESS);
+			if (execve(chemin, cmd, env) == -1 && strcmp(cmd[0], "\0"))
+			{
+				if (strcmp(cmd[0], "\0"))
+					ft_execut_error(cmd[0]);
+				(ft_free_tab(cmd), exit(EXIT_FAILURE));
+			}
 	}
 }
 
 static void handle_child_process(ExecutionData *data)
 {
-		if (data->lst->redirection != NULL)
-			execute_with_redirection(data);
-		else if (data->lst->cmd != NULL)
-				execute(data->lst->cmd, data->env, data);
+	if (data->lst->redirection != NULL)
+		execute_with_redirection(data);
+	else if (data->lst->cmd != NULL)
+		execute(data->lst->cmd, data->env, data);
 }
 
 static void execute_command(ExecutionData *data)
@@ -119,6 +118,7 @@ static void execute_command(ExecutionData *data)
 
 void	ft_execution(ExecutionData *data)
 {
+	data->env = struct_to_char(&data->export_i);
     add_last_cmd(&data->export_i, data->args);
 	if (!ft_strncmp(data->args[0], "<<", 2) && !data->args[1])
 		(syntax_error(), exit(EXIT_FAILURE));

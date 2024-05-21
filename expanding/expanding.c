@@ -6,7 +6,7 @@
 /*   By: sdiouane <sdiouane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/27 19:58:08 by sdiouane          #+#    #+#             */
-/*   Updated: 2024/05/20 11:14:33 by sdiouane         ###   ########.fr       */
+/*   Updated: 2024/05/21 20:10:45 by sdiouane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,44 @@ void handle_quotes(char *exp_commande, t_p *p)
     }
 }
 
+char *protect_value(char *str)
+{
+	char *new_str;
+	int i;
+	int j;
+
+	i = 0;
+	j = 0;
+	new_str = (char *)malloc(sizeof(char) * (strlen(str) + 1));
+	check_memory_allocation(new_str);
+	new_str = ft_strjoin("\"", str);
+	check_memory_allocation(new_str);
+	new_str = ft_strjoin(new_str, "\"");
+	check_memory_allocation(new_str);
+	return (new_str);
+}
+
+// char *remove_protection(char *str)
+// {
+// 	char *new_str;
+// 	int i;
+// 	int j;
+
+// 	i = 0;
+// 	j = 0;
+// 	new_str = (char *)malloc(sizeof(char) * (strlen(str) + 1));
+// 	check_memory_allocation(new_str);
+// 	while (str[i])
+// 	{
+// 		if (str[i] != '\\')
+// 			new_str[j++] = str[i];
+// 		i++;
+// 	}
+// 	new_str[j] = '\0';
+// 	return (new_str);
+
+// }
+
 char *process_variable(char *exp_commande, t_p *p, s_env *export_i)
 {
     char *key;
@@ -44,29 +82,37 @@ char *process_variable(char *exp_commande, t_p *p, s_env *export_i)
     key = get_env_key(exp_commande, p->i);
     check_memory_allocation(key);
     value = get_env_value(key, export_i);
-    if (!value || !strcmp(value, "") || !strcmp(value, " "))
+	value = protect_value(value);
+	printf("value = %s\n", value);
+	if (!value || !strcmp(value, ""))
 	{
-        exp_commande = ft_str_replace(exp_commande, key, strdup(""));
-        check_memory_allocation(exp_commande);
-        (free(key), free(value));
-    }
+		if (strcmp(key, ""))
+		{
+			key = ft_strjoin("$", key);
+			exp_commande = ft_str_replace(exp_commande, key, strdup(""));
+		}
+		check_memory_allocation(exp_commande);
+		(free(key), free(value));
+	}
 	else
 	{
-        full_key = ft_strjoin("$", key);
-        check_memory_allocation(full_key);
-        exp_cmd = ft_str_replace(exp_commande, full_key, value);
-        (check_memory_allocation(exp_cmd), free(exp_commande));
-        exp_commande = strdup(exp_cmd);
-        check_memory_allocation(exp_commande);
-        (free(full_key), free(exp_cmd), free(key), free(value));
-    }
-    return exp_commande;
+		full_key = ft_strjoin("$", key);
+		check_memory_allocation(full_key);
+		exp_cmd = ft_str_replace(exp_commande, full_key, value);
+		(check_memory_allocation(exp_cmd), free(exp_commande));
+		exp_commande = strdup(exp_cmd);
+		check_memory_allocation(exp_commande);
+		(free(full_key), free(exp_cmd), free(key), free(value));
+	}
+    return (exp_commande);
 }
 
 char *exp_fct(char *commande, s_env *export_i)
 {
-    char *exp_commande;
-    t_p p = {0, 0, 0, '\0'};
+    char	*exp_commande;
+    t_p		p;
+
+	(1) && (p= (t_p){0, 0, 0, '\0'}, exp_commande = NULL);
     if (!commande) exit(EXIT_FAILURE);
     exp_commande = strdup(commande);
     check_memory_allocation(exp_commande);
@@ -81,15 +127,15 @@ char *exp_fct(char *commande, s_env *export_i)
         p.i++;
     }
 	// if (strstr(exp_commande, "$") && is_closed(exp_commande, p.i) == 0)
-        supprimerDoll(exp_commande);
-    return exp_commande;
+    return (exp_commande);
 }
 
 noued_cmd *ft_expanding(ExecutionData **data, s_env *export_i)
 {
-    ExecutionData *tmp = *data;
-    noued_cmd *current = tmp->lst;
+    ExecutionData	*tmp;
+    noued_cmd		*current;
 
+	(1) && (tmp = *data, current = tmp->lst);
     while (current)
 	{
         if (current->cmd)

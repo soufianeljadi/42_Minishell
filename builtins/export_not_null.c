@@ -6,7 +6,7 @@
 /*   By: sdiouane <sdiouane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/24 21:25:42 by sdiouane          #+#    #+#             */
-/*   Updated: 2024/05/20 15:25:38 by sdiouane         ###   ########.fr       */
+/*   Updated: 2024/05/21 20:21:35 by sdiouane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,13 +26,19 @@ void remove_q(char *chaine)
 
 s_env *process_export_args(char **args, s_env *env)
 {
-    int i = 1;
+    int		i;
+	char	*key;
+
+	(1) && (i = 1, key = NULL);
     while (args[i])
 	{
         int j = 0;
         while (args[i][j] && args[i][j] != '=' && args[i][j] != '+')
             j++;
-        char *key = ft_substr(args[i], 0, j);
+		del_dbl_quotes(args[i]);
+        key = ft_substr(args[i], 0, j);
+		// del_dbl_quotes(key);
+		printf("key: |%s|\n", key);
         if (args[i][j] == '+' && args[i][j + 1] != '=')
             printf("export : %c, not a valid identifier", args[i][j]);
 		else if (verif_export(key) == 0)
@@ -45,12 +51,15 @@ s_env *process_export_args(char **args, s_env *env)
                 ft_lstadd_back(&env, ft_lstnew_data(NULL, key));
         }
 		else
-            fprintf(stderr, "minishell: export: `%s': not a valid identifier\n", args[i]);
+		{
+			printf("------------key: %s\n", key);
+            fprintf(stderr, "minishell: export: `%s': not a valid identifier\n", key);
+		}
         i++;
     }
     return env;
 }
-
+          
 s_env *not_null(char **args, s_env *env)
 {
     if (!strcmp(args[0], "export"))
