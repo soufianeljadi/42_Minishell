@@ -6,7 +6,7 @@
 /*   By: sdiouane <sdiouane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/26 01:07:33 by sel-jadi          #+#    #+#             */
-/*   Updated: 2024/05/21 18:53:49 by sdiouane         ###   ########.fr       */
+/*   Updated: 2024/05/23 15:46:10 by sdiouane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -131,7 +131,6 @@ int builtins(ExecutionData *data)
 {
 	char **args = NULL;
 	int flag = 0;
-
 	if (data->lst->cmd[0] != '\0' && is_not_empty(data->lst->cmd))
 	{
 		args = split_with_quotes(data->lst->cmd);

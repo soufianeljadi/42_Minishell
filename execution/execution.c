@@ -6,7 +6,7 @@
 /*   By: sdiouane <sdiouane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/31 22:14:48 by sdiouane          #+#    #+#             */
-/*   Updated: 2024/05/21 19:54:37 by sdiouane         ###   ########.fr       */
+/*   Updated: 2024/05/23 15:50:46 by sdiouane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,9 +63,7 @@ void execute(char *s, char **env, ExecutionData *data)
 	char    *chemin;
 	char    **cmd;
 
-	(void)data;
 	(1) && (cmd = NULL, chemin = NULL);
-	
 	if (*env)
 	{
 		cmd = check_quotes_before_execution(s);
@@ -74,12 +72,17 @@ void execute(char *s, char **env, ExecutionData *data)
 		chemin = get_path(cmd[0], env);
 		if (chemin == NULL)
 			(ft_free_tab(cmd), exit(EXIT_FAILURE));
+		if (builtins(data) == 1)
+		{
+			if (cmd[0][0] == '.' || cmd[0][0] == '/')
+				if (execve(cmd[0], cmd, env) == -1)
+					(ft_execut_error(cmd[0]), ft_free_tab(cmd), exit(EXIT_FAILURE));
 			if (execve(chemin, cmd, env) == -1 && strcmp(cmd[0], "\0"))
 			{
 				if (strcmp(cmd[0], "\0"))
-					ft_execut_error(cmd[0]);
-				(ft_free_tab(cmd), exit(EXIT_FAILURE));
+					(ft_execut_error(cmd[0]), ft_free_tab(cmd), exit(EXIT_FAILURE));
 			}
+		}
 	}
 }
 
@@ -126,6 +129,7 @@ void	ft_execution(ExecutionData *data)
 	{
 		if (builtins(data) == 1)
 			execute_command(data);
+		// handle_child_process(data);
 	}
 	else
 	{
