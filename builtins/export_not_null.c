@@ -6,7 +6,7 @@
 /*   By: sdiouane <sdiouane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/24 21:25:42 by sdiouane          #+#    #+#             */
-/*   Updated: 2024/05/21 20:21:35 by sdiouane         ###   ########.fr       */
+/*   Updated: 2024/05/23 11:57:18 by sdiouane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ void remove_q(char *chaine)
     int i = 0, j = 0;
     while (chaine[i])
 	{
-        if (chaine[i] != '"')
+        if (chaine[i] != '\'')
             chaine[j++] = chaine[i];
         i++;
     }
@@ -33,28 +33,22 @@ s_env *process_export_args(char **args, s_env *env)
     while (args[i])
 	{
         int j = 0;
-        while (args[i][j] && args[i][j] != '=' && args[i][j] != '+')
-            j++;
-		del_dbl_quotes(args[i]);
-        key = ft_substr(args[i], 0, j);
-		// del_dbl_quotes(key);
-		printf("key: |%s|\n", key);
-        if (args[i][j] == '+' && args[i][j + 1] != '=')
-            printf("export : %c, not a valid identifier", args[i][j]);
-		else if (verif_export(key) == 0)
-		{
-            if (args[i][j] == '=')
-                (env->i = i, env->j = j), fct_equal(args, env, key);
-            else if (args[i][j] == '+' && args[i][j + 1] == '=')
-                (env->i = i, env->j = j), ftc_concatination(args, env, key);
-            else if (existe_deja(key, env) == 0)
-                ft_lstadd_back(&env, ft_lstnew_data(NULL, key));
-        }
-		else
-		{
-			printf("------------key: %s\n", key);
-            fprintf(stderr, "minishell: export: `%s': not a valid identifier\n", key);
-		}
+			while (args[i][j] && args[i][j] != '=' && args[i][j] != '+')
+				j++;
+			key = ft_substr(args[i], 0, j);
+			if (args[i][j] == '+' && args[i][j + 1] != '=')
+				printf("export : %c, not a valid identifier", args[i][j]);
+			else if (verif_export(key) == 0)
+			{
+				if (args[i][j] == '=')
+					(env->i = i, env->j = j), fct_equal(args, env, key);
+				else if (args[i][j] == '+' && args[i][j + 1] == '=')
+					(env->i = i, env->j = j), ftc_concatination(args, env, key);
+				else if (existe_deja(key, env) == 0)
+					ft_lstadd_back(&env, ft_lstnew_data(NULL, key));
+			}
+			else
+				fprintf(stderr, "minishell: export: `%s': not a valid identifier\n", key);
         i++;
     }
     return env;

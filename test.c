@@ -684,35 +684,112 @@
 // 	return new_str;
 // }
 
-char *supp_quotes(char *str) {
-    char *new_str;
-    int i = 0;
-    int j = 0;
-    int quote_open = 0; // 0: no quote, 1: single quote, 2: double quote
+// char *supp_quotes(char *str) {
+//     char *new_str;
+//     int i = 0;
+//     int j = 0;
+//     int quote_open = 0; // 0: no quote, 1: single quote, 2: double quote
 
-    new_str = (char *)malloc(sizeof(char) * (strlen(str) + 1));
-    if (!new_str)
-        return NULL;
+//     new_str = (char *)malloc(sizeof(char) * (strlen(str) + 1));
+//     if (!new_str)
+//         return NULL;
     
-    while (str[i]) {
-        if (str[i] == '\'' && quote_open != 2) {
-            quote_open = (quote_open == 1) ? 0 : 1;
-            i++;
-        } else if (str[i] == '\"' && quote_open != 1) {
-            quote_open = (quote_open == 2) ? 0 : 2;
-            i++;
-        } else {
-            new_str[j++] = str[i++];
-        }
-    }
-    new_str[j] = '\0';
-    return new_str;
-}
+//     while (str[i]) {
+//         if (str[i] == '\'' && quote_open != 2) {
+//             quote_open = (quote_open == 1) ? 0 : 1;
+//             i++;
+//         } else if (str[i] == '\"' && quote_open != 1) {
+//             quote_open = (quote_open == 2) ? 0 : 2;
+//             i++;
+//         } else {
+//             new_str[j++] = str[i++];
+//         }
+//     }
+//     new_str[j] = '\0';
+//     return new_str;
+// }
 
 
-int main(int arc, char **arv)
-{
-	printf("%s\n", supp_quotes("\"'''''''''''''''''ls\""));
-	printf("\n");
-	return (0);
-}
+// int main(int arc, char **arv)
+// {
+// 	printf("%s\n", supp_quotes("\"'''''''''''''''''ls\""));
+// 	printf("\n");
+// 	return (0);
+// }
+
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+
+// char *replace_substring(const char *original, const char *key, const char *value) {
+//     const char *pos = strstr(original, key);
+//     if (!pos) {
+//         return strdup(original);
+//     }
+
+//     size_t original_len = strlen(original);
+//     size_t key_len = strlen(key);
+//     size_t value_len = strlen(value);
+
+//     size_t new_len = original_len - key_len + value_len;
+//     char *new_str = (char *)malloc(new_len + 1);
+//     if (!new_str) {
+//         return NULL;
+//     }
+
+//     size_t prefix_len = pos - original;
+//     strncpy(new_str, original, prefix_len);
+//     new_str[prefix_len] = '\0';
+
+//     strcat(new_str, value);
+//     strcat(new_str, pos + key_len);
+
+//     return new_str;
+// }
+
+// int main() {
+//     char *original = "Hello $USER, welcome!";
+//     char *key = "$USER";
+//     char *value = "";
+//     char *result = replace_substring(original, key, value);
+
+//     if (result) {
+//         printf("Original: %s\n", original);
+//         printf("Result: %s\n", result);
+//         free(result);
+//     } else {
+//         printf("Memory allocation failed\n");
+//     }
+
+//     return 0;
+// }
+
+// #include "minishell.h"
+
+// char *concat_str(char *s, char **args)
+// {
+// 	int i = 1;
+// 	while (args[i])
+// 	{
+// 		s = ft_strjoin(s, args[i]);
+// 		i++;
+// 	}
+// 	return (s);
+// }
+
+// void new(char *str)
+// {
+// 	char **args = ft_split(str, ' ');
+// 	char *s = NULL;
+	
+// 	if (strcmp(args[0], "export") == 0)
+// 	{
+// 		s = concat_str(s, args);
+// 	}
+// 	printf("s = %s\n", s);
+// }
+// int main()
+// {
+// 	new("export x p xx");
+// 	return (0);
+// }

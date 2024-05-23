@@ -6,7 +6,7 @@
 /*   By: sdiouane <sdiouane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 23:51:44 by sdiouane          #+#    #+#             */
-/*   Updated: 2024/05/20 15:28:01 by sdiouane         ###   ########.fr       */
+/*   Updated: 2024/05/23 11:00:40 by sdiouane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -306,7 +306,7 @@ int is_not_empty(char *str);
 char *get_env_value(char *key, s_env *export_i);
 char *get_env_key(char *s, int j);
 char *ft_str_replace(char *s, char *key, char *value);
-char *exp_fct(char *commande, s_env *export_i);
+char *exp_fct(char *commande, s_env *export_i, int *f);
 char *process_variable(char *exp_commande, t_p *p, s_env *export_i);
 void handle_quotes(char *exp_commande, t_p *p);
 int is_closed(char *exp_commande, int i);
