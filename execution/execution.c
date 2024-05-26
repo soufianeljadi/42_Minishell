@@ -6,7 +6,7 @@
 /*   By: sdiouane <sdiouane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/31 22:14:48 by sdiouane          #+#    #+#             */
-/*   Updated: 2024/05/23 15:50:46 by sdiouane         ###   ########.fr       */
+/*   Updated: 2024/05/26 22:58:31 by sdiouane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,28 +33,29 @@ int  ft_execut_error(char *cmd)
         else
         {
             ft_putstr_fd(": ", 2);
-            ft_putendl_fd(strerror(ref), 2);
+            
         }
         return (126);
     }
     return (0);
 }
 
-void remove_outermost_quotes(char *str) {
+void remove_outermost_quotes(char *str)
+{
     int len = strlen(str);
     if (len < 2) return; // If the string is too short, do nothing
 
     // Remove leading quote
-    if (str[0] == '"' || str[0] == '\'') {
+    if (str[0] == '"' || str[0] == '\'')
+	{
         memmove(str, str + 1, len - 1);
         str[len - 1] = '\0';
         len--;
     }
 
     // Remove trailing quote
-    if (str[len - 1] == '"' || str[len - 1] == '\'') {
+    if (str[len - 1] == '"' || str[len - 1] == '\'')
         str[len - 1] = '\0';
-    }
 }
 
 
@@ -127,6 +128,7 @@ void	ft_execution(ExecutionData *data)
 		(syntax_error(), exit(EXIT_FAILURE));
 	if (data->lst->next == NULL)
 	{
+		signal(SIGINT, SIG_IGN);
 		if (builtins(data) == 1)
 			execute_command(data);
 		// handle_child_process(data);

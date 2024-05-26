@@ -6,7 +6,7 @@
 /*   By: sdiouane <sdiouane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/26 01:07:33 by sel-jadi          #+#    #+#             */
-/*   Updated: 2024/05/23 15:46:10 by sdiouane         ###   ########.fr       */
+/*   Updated: 2024/05/26 14:48:32 by sdiouane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,7 +92,7 @@ int	is_builtins(char **args, s_env **export_i, char **env, int *flag)
 		exit(EXIT_SUCCESS);
 	}
 	else if (!strcmp(args[0], "echo"))
-		echo_fct(args, *export_i);
+		echo_fct(args);
 	else if (!strcmp(args[0], "pwd"))
 	{
 		pwd = getcwd(NULL, 0);

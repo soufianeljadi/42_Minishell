@@ -6,7 +6,7 @@
 /*   By: sdiouane <sdiouane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 23:52:10 by sdiouane          #+#    #+#             */
-/*   Updated: 2024/05/23 15:21:22 by sdiouane         ###   ########.fr       */
+/*   Updated: 2024/05/26 22:57:53 by sdiouane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,14 +87,14 @@ void loop_fct(ExecutionData *data, char *line)
 			add_history(line);
 			if(parsing(line) == 1)	
 				syntax_error();
-			else 
+			else
 			{
 				data->args = line_to_args(line);
 				data->lst = split_args_by_pipe(data->args);
 				data->lst = ft_expanding(&data, data->export_i);
-				// print_command_list(data->lst);
 				(dup2(0, 3),dup2(1, 4), ft_execution(data));
 				(dup2(3, 0), dup2(4, 1), close(3), close(4));
+				// print_command_list(data->lst);
 				(free (data->args)/*, free_noued_cmd(data->lst)*/);
 			}
 		}
@@ -133,11 +133,11 @@ int main(int ac, char **av, char **env)
 	(export_i = NULL, line = NULL);
 	if (ac != 1)
 		(printf("Args not allowed !\n"),exit(EXIT_FAILURE));
-	if (!isatty(STDIN_FILENO))
-	{
-		printf("minishell: is not a tty\n");
-		exit(EXIT_FAILURE);
-	}
+	// if (!isatty(STDIN_FILENO))
+	// {
+	// 	printf("minishell: is not a tty\n");
+	// 	exit(EXIT_FAILURE);
+	// }
 	if (env[0] == NULL)
 		export_i = split_export_i(export_i);
 	else

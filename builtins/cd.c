@@ -6,7 +6,7 @@
 /*   By: sdiouane <sdiouane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/25 17:00:00 by sdiouane          #+#    #+#             */
-/*   Updated: 2024/05/21 18:53:31 by sdiouane         ###   ########.fr       */
+/*   Updated: 2024/05/24 16:39:09 by sdiouane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,11 +102,11 @@ s_env *execute_cd(char **args, s_env *lst)
 	(1) && (i = 0, new_pwd = NULL, old_pwd = NULL);
     while (args[i])
 		i++;
-    if (i > 2)
-	{
-        ft_putstr_fd("minishell: cd: too many arguments\n", 2);
-        return (lst);
-    }
+    // if (i > 2)
+	// {
+    //     ft_putstr_fd("minishell: cd: too many arguments\n", 2);
+    //     return (lst);
+    // }
     old_pwd = getcwd(NULL, 0);
     if (!old_pwd)
 	{

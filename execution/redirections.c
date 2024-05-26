@@ -6,7 +6,7 @@
 /*   By: sdiouane <sdiouane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/05 23:00:01 by sdiouane          #+#    #+#             */
-/*   Updated: 2024/05/23 15:33:15 by sdiouane         ###   ########.fr       */
+/*   Updated: 2024/05/26 21:14:16 by sdiouane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,8 @@ void redirection_double_out(char *redirection, int *fd)
 		{
 			ft_putstr_fd("minishell: ", 2);
 			ft_putstr_fd(redirection, 2);
-			ft_putstr_fd(": No such file or directory\n", 2);
+			ft_putstr_fd(": ", 2);
+			ft_putendl_fd(strerror(errno), 2);
 			exit(EXIT_FAILURE);
 		}
 		redirection = NULL;
@@ -85,7 +86,8 @@ void redirection_in(char *redirection, int *fd)
 		{
 			ft_putstr_fd("minishell: ", 2);
 			ft_putstr_fd(redirection, 2);
-			ft_putstr_fd(": No such file or directory\n", 2);
+			ft_putstr_fd(": ", 2);
+			ft_putendl_fd(strerror(errno), 2);
 			exit(EXIT_FAILURE);
 		}
 		redirection = NULL;
@@ -103,12 +105,16 @@ void redirection_in(char *redirection, int *fd)
 
 void redirection_out(char *redirection, int *fd)
 {
+	// del_qotes1(redirection);
 	if (redirection)
 	{
         *fd = open(file_nc(redirection), O_WRONLY | O_CREAT | O_TRUNC, 0666);
         if (*fd < 0)
 		{
-            printf("minishell: %s: No such file or directory\n", redirection);
+			ft_putstr_fd("minishell: ", 2);
+			ft_putstr_fd(redirection, 2);
+			ft_putstr_fd(" : ", 2);
+			ft_putendl_fd(strerror(errno), 2);
             exit(EXIT_FAILURE);
         }
 		redirection = NULL;
@@ -143,8 +149,8 @@ void execute_with_redirection(ExecutionData *data)
 			redirection_double_out(red[i + 1], &fd_out);
 		if (!strcmp(red[i], ">"))
 			redirection_out(red[i + 1], &fd_out);
-		if (!strcmp(red[i], "<<") && red[i + 1])
-			heredoc(red[i + 1], data);
+		// if (!strcmp(red[i], "<<") && red[i + 1])
+			// heredoc(red[i + 1], data);
 		i++;
 	}
 	if (builtins(data) == 1)

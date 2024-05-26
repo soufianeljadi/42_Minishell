@@ -6,7 +6,7 @@
 /*   By: sdiouane <sdiouane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 23:51:44 by sdiouane          #+#    #+#             */
-/*   Updated: 2024/05/23 11:00:40 by sdiouane         ###   ########.fr       */
+/*   Updated: 2024/05/26 14:40:26 by sdiouane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -218,7 +218,7 @@ int cmp(void *data1, void *data2);
 // cd :
 s_env *execute_cd(char **args, s_env *lst);
 // echo :
-void echo_fct(char **args, s_env *s_env);
+void echo_fct(char **args);
 // $var :
 int   check_variables(char **args, s_env *lst);
 
@@ -325,5 +325,6 @@ s_env *not_null(char **args, s_env *env);
 void fct_equal(char **args, s_env *env, char *key);
 void ftc_concatination(char **args, s_env *env, char *key);
 void remove_q(char *chaine);
+int  ft_execut_error(char *cmd);
 t_var	g_flags;
 #endif

@@ -1,0 +1,735 @@
+
+███████╗██╗  ██╗██████╗  ██████╗ ██████╗ ████████╗
+██╔════╝╚██╗██╔╝██╔══██╗██╔═══██╗██╔══██╗╚══██╔══╝
+█████╗   ╚███╔╝ ██████╔╝██║   ██║██████╔╝   ██║   
+██╔══╝   ██╔██╗ ██╔═══╝ ██║   ██║██╔══██╗   ██║   
+███████╗██╔╝ ██╗██║     ╚██████╔╝██║  ██║   ██║   
+╚══════╝╚═╝  ╚═╝╚═╝      ╚═════╝ ╚═╝  ╚═╝   ╚═╝   
+                                                  
+
+[31m[1m[KO][0m	(B[m[0m[36m   export variable=randomtext	 [0m
+
+[31m------------------------------------[0m
+[31m	Minishell output  	: [32mminishell >[0mexport | grep variable
+declare -x variable="randomtext"
+declare -x TERM_PROGRAM="vscode"
+declare -x TERM="xterm-256color"
+declare -x HOMEBREW_TEMP="/tmp/sdiouane/Homebrew/Temp"
+declare -x SHELL="/bin/zsh"
+declare -x TMPDIR="/var/folders/zz/zyxvpxvq6csfxvn_n000cmm4003551/T/"
+declare -x TERM_PROGRAM_VERSION="1.89.1"
+declare -x ZDOTDIR="/Users/sdiouane"
+declare -x ORIGINAL_XDG_CURRENT_DESKTOP="undefined"
+declare -x MallocNanoZone="0"
+declare -x ZSH="/Users/sdiouane/.oh-my-zsh"
+declare -x USER="sdiouane"
+declare -x LS_COLORS="di=1;36:ln=35:so=32:pi=33:ex=31:bd=34;46:cd=34;43:su=30;41:sg=30;46:tw=30;42:ow=30;43"
+declare -x SSH_AUTH_SOCK="/private/tmp/com.apple.launchd.035KNx5CiS/Listeners"
+declare -x __CF_USER_TEXT_ENCODING="0x194A1:0x0:0x0"
+declare -x PAGER="less"
+declare -x HOMEBREW_CACHE="/tmp/sdiouane/Homebrew/Caches"
+declare -x LSCOLORS="Gxfxcxdxbxegedabagacad"
+declare -x PATH="/Users/sdiouane/.brew/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/munki:/Library/Apple/usr/bin:/Users/sdiouane/.brew/bin"
+declare -x USER_ZDOTDIR="/Users/sdiouane"
+declare -x PWD="/Users/sdiouane/Desktop/our_big_shell/Minishell_Tester"
+declare -x LANG="en_US.UTF-8"
+declare -x VSCODE_GIT_ASKPASS_EXTRA_ARGS=""
+declare -x XPC_FLAGS="0x0"
+declare -x XPC_SERVICE_NAME="0"
+declare -x VSCODE_INJECTION="1"
+declare -x SHLVL="3"
+declare -x HOME="/Users/sdiouane"
+declare -x VSCODE_GIT_ASKPASS_MAIN="/Applications/Visual Studio Code.app/Contents/Resources/app/extensions/git/dist/askpass-main.js"
+declare -x LESS="-R"
+declare -x LOGNAME="sdiouane"
+declare -x VSCODE_GIT_IPC_HANDLE="/var/folders/zz/zyxvpxvq6csfxvn_n000cmm4003551/T/vscode-git-c6d0735467.sock"
+declare -x VSCODE_GIT_ASKPASS_NODE="/Applications/Visual Studio Code.app/Contents/Frameworks/Code Helper (Plugin).app/Contents/MacOS/Code Helper (Plugin)"
+declare -x GIT_ASKPASS="/Applications/Visual Studio Code.app/Contents/Resources/app/extensions/git/dist/askpass.sh"
+declare -x COLORTERM="truecolor"
+[32mminishell >[0mexit
+[32mminishell >[0mexit	[0m
+[32m	Bash output       	: declare -x variable="randomtext"		[0m
+[31m------------------------------------[0m
+
+[31m[1m[KO][0m	(B[m[0m[36m   export var_=0 var_=1 var_=2 var_=3	 [0m
+
+[31m------------------------------------[0m
+[31m	Minishell output  	: [32mminishell >[0mexport | grep var_
+declare -x variable="randomtext"
+declare -x TERM_PROGRAM="vscode"
+declare -x TERM="xterm-256color"
+declare -x HOMEBREW_TEMP="/tmp/sdiouane/Homebrew/Temp"
+declare -x SHELL="/bin/zsh"
+declare -x TMPDIR="/var/folders/zz/zyxvpxvq6csfxvn_n000cmm4003551/T/"
+declare -x TERM_PROGRAM_VERSION="1.89.1"
+declare -x ZDOTDIR="/Users/sdiouane"
+declare -x ORIGINAL_XDG_CURRENT_DESKTOP="undefined"
+declare -x MallocNanoZone="0"
+declare -x ZSH="/Users/sdiouane/.oh-my-zsh"
+declare -x USER="sdiouane"
+declare -x LS_COLORS="di=1;36:ln=35:so=32:pi=33:ex=31:bd=34;46:cd=34;43:su=30;41:sg=30;46:tw=30;42:ow=30;43"
+declare -x SSH_AUTH_SOCK="/private/tmp/com.apple.launchd.035KNx5CiS/Listeners"
+declare -x __CF_USER_TEXT_ENCODING="0x194A1:0x0:0x0"
+declare -x PAGER="less"
+declare -x HOMEBREW_CACHE="/tmp/sdiouane/Homebrew/Caches"
+declare -x LSCOLORS="Gxfxcxdxbxegedabagacad"
+declare -x PATH="/Users/sdiouane/.brew/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/munki:/Library/Apple/usr/bin:/Users/sdiouane/.brew/bin"
+declare -x USER_ZDOTDIR="/Users/sdiouane"
+declare -x PWD="/Users/sdiouane/Desktop/our_big_shell/Minishell_Tester"
+declare -x LANG="en_US.UTF-8"
+declare -x VSCODE_GIT_ASKPASS_EXTRA_ARGS=""
+declare -x XPC_FLAGS="0x0"
+declare -x XPC_SERVICE_NAME="0"
+declare -x VSCODE_INJECTION="1"
+declare -x SHLVL="3"
+declare -x HOME="/Users/sdiouane"
+declare -x var_="3"
+declare -x VSCODE_GIT_ASKPASS_MAIN="/Applications/Visual Studio Code.app/Contents/Resources/app/extensions/git/dist/askpass-main.js"
+declare -x LESS="-R"
+declare -x LOGNAME="sdiouane"
+declare -x VSCODE_GIT_IPC_HANDLE="/var/folders/zz/zyxvpxvq6csfxvn_n000cmm4003551/T/vscode-git-c6d0735467.sock"
+declare -x VSCODE_GIT_ASKPASS_NODE="/Applications/Visual Studio Code.app/Contents/Frameworks/Code Helper (Plugin).app/Contents/MacOS/Code Helper (Plugin)"
+declare -x GIT_ASKPASS="/Applications/Visual Studio Code.app/Contents/Resources/app/extensions/git/dist/askpass.sh"
+declare -x COLORTERM="truecolor"
+[32mminishell >[0mexit
+[32mminishell >[0mexit	[0m
+[32m	Bash output       	: declare -x var_="3"		[0m
+[31m------------------------------------[0m
+
+[31m[1m[KO][0m	(B[m[0m[36m   export value=1 export value+=2 export value+=3	 [0m
+
+[31m------------------------------------[0m
+[31m	Minishell output  	: [32mminishell >[0mexport | grep value
+declare -x variable="randomtext"
+declare -x TERM_PROGRAM="vscode"
+declare -x TERM="xterm-256color"
+declare -x HOMEBREW_TEMP="/tmp/sdiouane/Homebrew/Temp"
+declare -x SHELL="/bin/zsh"
+declare -x TMPDIR="/var/folders/zz/zyxvpxvq6csfxvn_n000cmm4003551/T/"
+declare -x TERM_PROGRAM_VERSION="1.89.1"
+declare -x value="123"
+declare -x ZDOTDIR="/Users/sdiouane"
+declare -x ORIGINAL_XDG_CURRENT_DESKTOP="undefined"
+declare -x MallocNanoZone="0"
+declare -x ZSH="/Users/sdiouane/.oh-my-zsh"
+declare -x USER="sdiouane"
+declare -x LS_COLORS="di=1;36:ln=35:so=32:pi=33:ex=31:bd=34;46:cd=34;43:su=30;41:sg=30;46:tw=30;42:ow=30;43"
+declare -x SSH_AUTH_SOCK="/private/tmp/com.apple.launchd.035KNx5CiS/Listeners"
+declare -x __CF_USER_TEXT_ENCODING="0x194A1:0x0:0x0"
+declare -x PAGER="less"
+declare -x HOMEBREW_CACHE="/tmp/sdiouane/Homebrew/Caches"
+declare -x LSCOLORS="Gxfxcxdxbxegedabagacad"
+declare -x PATH="/Users/sdiouane/.brew/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/munki:/Library/Apple/usr/bin:/Users/sdiouane/.brew/bin"
+declare -x USER_ZDOTDIR="/Users/sdiouane"
+declare -x PWD="/Users/sdiouane/Desktop/our_big_shell/Minishell_Tester"
+declare -x LANG="en_US.UTF-8"
+declare -x VSCODE_GIT_ASKPASS_EXTRA_ARGS=""
+declare -x XPC_FLAGS="0x0"
+declare -x XPC_SERVICE_NAME="0"
+declare -x VSCODE_INJECTION="1"
+declare -x SHLVL="3"
+declare -x HOME="/Users/sdiouane"
+declare -x var_="3"
+declare -x VSCODE_GIT_ASKPASS_MAIN="/Applications/Visual Studio Code.app/Contents/Resources/app/extensions/git/dist/askpass-main.js"
+declare -x LESS="-R"
+declare -x LOGNAME="sdiouane"
+declare -x VSCODE_GIT_IPC_HANDLE="/var/folders/zz/zyxvpxvq6csfxvn_n000cmm4003551/T/vscode-git-c6d0735467.sock"
+declare -x VSCODE_GIT_ASKPASS_NODE="/Applications/Visual Studio Code.app/Contents/Frameworks/Code Helper (Plugin).app/Contents/MacOS/Code Helper (Plugin)"
+declare -x GIT_ASKPASS="/Applications/Visual Studio Code.app/Contents/Resources/app/extensions/git/dist/askpass.sh"
+declare -x COLORTERM="truecolor"
+[32mminishell >[0mexit
+[32mminishell >[0mexit	[0m
+[32m	Bash output       	: declare -x value="123"		[0m
+[31m------------------------------------[0m
+
+[31m[1m[KO][0m	(B[m[0m[36m   export | grep "SHLVL"	 [0m
+
+[31m------------------------------------[0m
+[31m	Minishell output  	: [32mminishell >[0mexport | grep "SHLVL"
+declare -x variable="randomtext"
+declare -x TERM_PROGRAM="vscode"
+declare -x TERM="xterm-256color"
+declare -x HOMEBREW_TEMP="/tmp/sdiouane/Homebrew/Temp"
+declare -x SHELL="/bin/zsh"
+declare -x TMPDIR="/var/folders/zz/zyxvpxvq6csfxvn_n000cmm4003551/T/"
+declare -x TERM_PROGRAM_VERSION="1.89.1"
+declare -x value="123"
+declare -x ZDOTDIR="/Users/sdiouane"
+declare -x ORIGINAL_XDG_CURRENT_DESKTOP="undefined"
+declare -x MallocNanoZone="0"
+declare -x ZSH="/Users/sdiouane/.oh-my-zsh"
+declare -x USER="sdiouane"
+declare -x LS_COLORS="di=1;36:ln=35:so=32:pi=33:ex=31:bd=34;46:cd=34;43:su=30;41:sg=30;46:tw=30;42:ow=30;43"
+declare -x SSH_AUTH_SOCK="/private/tmp/com.apple.launchd.035KNx5CiS/Listeners"
+declare -x __CF_USER_TEXT_ENCODING="0x194A1:0x0:0x0"
+declare -x PAGER="less"
+declare -x HOMEBREW_CACHE="/tmp/sdiouane/Homebrew/Caches"
+declare -x LSCOLORS="Gxfxcxdxbxegedabagacad"
+declare -x PATH="/Users/sdiouane/.brew/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/munki:/Library/Apple/usr/bin:/Users/sdiouane/.brew/bin"
+declare -x USER_ZDOTDIR="/Users/sdiouane"
+declare -x PWD="/Users/sdiouane/Desktop/our_big_shell/Minishell_Tester"
+declare -x LANG="en_US.UTF-8"
+declare -x VSCODE_GIT_ASKPASS_EXTRA_ARGS=""
+declare -x XPC_FLAGS="0x0"
+declare -x XPC_SERVICE_NAME="0"
+declare -x VSCODE_INJECTION="1"
+declare -x SHLVL="3"
+declare -x HOME="/Users/sdiouane"
+declare -x var_="3"
+declare -x VSCODE_GIT_ASKPASS_MAIN="/Applications/Visual Studio Code.app/Contents/Resources/app/extensions/git/dist/askpass-main.js"
+declare -x LESS="-R"
+declare -x LOGNAME="sdiouane"
+declare -x VSCODE_GIT_IPC_HANDLE="/var/folders/zz/zyxvpxvq6csfxvn_n000cmm4003551/T/vscode-git-c6d0735467.sock"
+declare -x VSCODE_GIT_ASKPASS_NODE="/Applications/Visual Studio Code.app/Contents/Frameworks/Code Helper (Plugin).app/Contents/MacOS/Code Helper (Plugin)"
+declare -x GIT_ASKPASS="/Applications/Visual Studio Code.app/Contents/Resources/app/extensions/git/dist/askpass.sh"
+declare -x COLORTERM="truecolor"
+[32mminishell >[0mexit
+[32mminishell >[0mexit	[0m
+[32m	Bash output       	: declare -x SHLVL="3"		[0m
+[31m------------------------------------[0m
+
+[31m[1m[KO][0m	(B[m[0m[36m   export | grep "PWD"	 [0m
+
+[31m------------------------------------[0m
+[31m	Minishell output  	: [32mminishell >[0mexport | grep "PWD"
+declare -x variable="randomtext"
+declare -x TERM_PROGRAM="vscode"
+declare -x TERM="xterm-256color"
+declare -x HOMEBREW_TEMP="/tmp/sdiouane/Homebrew/Temp"
+declare -x SHELL="/bin/zsh"
+declare -x TMPDIR="/var/folders/zz/zyxvpxvq6csfxvn_n000cmm4003551/T/"
+declare -x TERM_PROGRAM_VERSION="1.89.1"
+declare -x value="123"
+declare -x ZDOTDIR="/Users/sdiouane"
+declare -x ORIGINAL_XDG_CURRENT_DESKTOP="undefined"
+declare -x MallocNanoZone="0"
+declare -x ZSH="/Users/sdiouane/.oh-my-zsh"
+declare -x USER="sdiouane"
+declare -x LS_COLORS="di=1;36:ln=35:so=32:pi=33:ex=31:bd=34;46:cd=34;43:su=30;41:sg=30;46:tw=30;42:ow=30;43"
+declare -x SSH_AUTH_SOCK="/private/tmp/com.apple.launchd.035KNx5CiS/Listeners"
+declare -x __CF_USER_TEXT_ENCODING="0x194A1:0x0:0x0"
+declare -x PAGER="less"
+declare -x HOMEBREW_CACHE="/tmp/sdiouane/Homebrew/Caches"
+declare -x LSCOLORS="Gxfxcxdxbxegedabagacad"
+declare -x PATH="/Users/sdiouane/.brew/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/munki:/Library/Apple/usr/bin:/Users/sdiouane/.brew/bin"
+declare -x USER_ZDOTDIR="/Users/sdiouane"
+declare -x PWD="/Users/sdiouane/Desktop/our_big_shell/Minishell_Tester"
+declare -x LANG="en_US.UTF-8"
+declare -x VSCODE_GIT_ASKPASS_EXTRA_ARGS=""
+declare -x XPC_FLAGS="0x0"
+declare -x XPC_SERVICE_NAME="0"
+declare -x VSCODE_INJECTION="1"
+declare -x SHLVL="3"
+declare -x HOME="/Users/sdiouane"
+declare -x var_="3"
+declare -x VSCODE_GIT_ASKPASS_MAIN="/Applications/Visual Studio Code.app/Contents/Resources/app/extensions/git/dist/askpass-main.js"
+declare -x LESS="-R"
+declare -x LOGNAME="sdiouane"
+declare -x VSCODE_GIT_IPC_HANDLE="/var/folders/zz/zyxvpxvq6csfxvn_n000cmm4003551/T/vscode-git-c6d0735467.sock"
+declare -x VSCODE_GIT_ASKPASS_NODE="/Applications/Visual Studio Code.app/Contents/Frameworks/Code Helper (Plugin).app/Contents/MacOS/Code Helper (Plugin)"
+declare -x GIT_ASKPASS="/Applications/Visual Studio Code.app/Contents/Resources/app/extensions/git/dist/askpass.sh"
+declare -x COLORTERM="truecolor"
+[32mminishell >[0mexit
+[32mminishell >[0mexit	[0m
+[32m	Bash output       	: declare -x OLDPWD
+declare -x PWD="/Users/sdiouane/Desktop/our_big_shell/Minishell_Tester"		[0m
+[31m------------------------------------[0m
+
+[31m[1m[KO][0m	(B[m[0m[36m   export bensouda=	 [0m
+
+[31m------------------------------------[0m
+[31m	Minishell output  	: [32mminishell >[0mexport | grep bensouda
+declare -x variable="randomtext"
+declare -x TERM_PROGRAM="vscode"
+declare -x TERM="xterm-256color"
+declare -x HOMEBREW_TEMP="/tmp/sdiouane/Homebrew/Temp"
+declare -x SHELL="/bin/zsh"
+declare -x TMPDIR="/var/folders/zz/zyxvpxvq6csfxvn_n000cmm4003551/T/"
+declare -x TERM_PROGRAM_VERSION="1.89.1"
+declare -x value="123"
+declare -x ZDOTDIR="/Users/sdiouane"
+declare -x ORIGINAL_XDG_CURRENT_DESKTOP="undefined"
+declare -x MallocNanoZone="0"
+declare -x ZSH="/Users/sdiouane/.oh-my-zsh"
+declare -x USER="sdiouane"
+declare -x LS_COLORS="di=1;36:ln=35:so=32:pi=33:ex=31:bd=34;46:cd=34;43:su=30;41:sg=30;46:tw=30;42:ow=30;43"
+declare -x SSH_AUTH_SOCK="/private/tmp/com.apple.launchd.035KNx5CiS/Listeners"
+declare -x __CF_USER_TEXT_ENCODING="0x194A1:0x0:0x0"
+declare -x PAGER="less"
+declare -x HOMEBREW_CACHE="/tmp/sdiouane/Homebrew/Caches"
+declare -x LSCOLORS="Gxfxcxdxbxegedabagacad"
+declare -x PATH="/Users/sdiouane/.brew/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/munki:/Library/Apple/usr/bin:/Users/sdiouane/.brew/bin"
+declare -x USER_ZDOTDIR="/Users/sdiouane"
+declare -x PWD="/Users/sdiouane/Desktop/our_big_shell/Minishell_Tester"
+declare -x LANG="en_US.UTF-8"
+declare -x VSCODE_GIT_ASKPASS_EXTRA_ARGS=""
+declare -x XPC_FLAGS="0x0"
+declare -x XPC_SERVICE_NAME="0"
+declare -x VSCODE_INJECTION="1"
+declare -x SHLVL="3"
+declare -x HOME="/Users/sdiouane"
+declare -x var_="3"
+declare -x VSCODE_GIT_ASKPASS_MAIN="/Applications/Visual Studio Code.app/Contents/Resources/app/extensions/git/dist/askpass-main.js"
+declare -x LESS="-R"
+declare -x LOGNAME="sdiouane"
+declare -x VSCODE_GIT_IPC_HANDLE="/var/folders/zz/zyxvpxvq6csfxvn_n000cmm4003551/T/vscode-git-c6d0735467.sock"
+declare -x bensouda=""
+declare -x VSCODE_GIT_ASKPASS_NODE="/Applications/Visual Studio Code.app/Contents/Frameworks/Code Helper (Plugin).app/Contents/MacOS/Code Helper (Plugin)"
+declare -x GIT_ASKPASS="/Applications/Visual Studio Code.app/Contents/Resources/app/extensions/git/dist/askpass.sh"
+declare -x COLORTERM="truecolor"
+[32mminishell >[0mexit
+[32mminishell >[0mexit	[0m
+[32m	Bash output       	: declare -x bensouda=""		[0m
+[31m------------------------------------[0m
+
+[31m[1m[KO][0m	(B[m[0m[36m   export Nothing	 [0m
+
+[31m------------------------------------[0m
+[31m	Minishell output  	: [32mminishell >[0mexport | grep Nothing
+declare -x variable="randomtext"
+declare -x TERM_PROGRAM="vscode"
+declare -x TERM="xterm-256color"
+declare -x HOMEBREW_TEMP="/tmp/sdiouane/Homebrew/Temp"
+declare -x SHELL="/bin/zsh"
+declare -x TMPDIR="/var/folders/zz/zyxvpxvq6csfxvn_n000cmm4003551/T/"
+declare -x TERM_PROGRAM_VERSION="1.89.1"
+declare -x value="123"
+declare -x ZDOTDIR="/Users/sdiouane"
+declare -x ORIGINAL_XDG_CURRENT_DESKTOP="undefined"
+declare -x MallocNanoZone="0"
+declare -x ZSH="/Users/sdiouane/.oh-my-zsh"
+declare -x USER="sdiouane"
+declare -x LS_COLORS="di=1;36:ln=35:so=32:pi=33:ex=31:bd=34;46:cd=34;43:su=30;41:sg=30;46:tw=30;42:ow=30;43"
+declare -x SSH_AUTH_SOCK="/private/tmp/com.apple.launchd.035KNx5CiS/Listeners"
+declare -x __CF_USER_TEXT_ENCODING="0x194A1:0x0:0x0"
+declare -x PAGER="less"
+declare -x HOMEBREW_CACHE="/tmp/sdiouane/Homebrew/Caches"
+declare -x LSCOLORS="Gxfxcxdxbxegedabagacad"
+declare -x PATH="/Users/sdiouane/.brew/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/munki:/Library/Apple/usr/bin:/Users/sdiouane/.brew/bin"
+declare -x USER_ZDOTDIR="/Users/sdiouane"
+declare -x PWD="/Users/sdiouane/Desktop/our_big_shell/Minishell_Tester"
+declare -x LANG="en_US.UTF-8"
+declare -x VSCODE_GIT_ASKPASS_EXTRA_ARGS=""
+declare -x XPC_FLAGS="0x0"
+declare -x XPC_SERVICE_NAME="0"
+declare -x VSCODE_INJECTION="1"
+declare -x SHLVL="3"
+declare -x HOME="/Users/sdiouane"
+declare -x var_="3"
+declare -x VSCODE_GIT_ASKPASS_MAIN="/Applications/Visual Studio Code.app/Contents/Resources/app/extensions/git/dist/askpass-main.js"
+declare -x LESS="-R"
+declare -x LOGNAME="sdiouane"
+declare -x VSCODE_GIT_IPC_HANDLE="/var/folders/zz/zyxvpxvq6csfxvn_n000cmm4003551/T/vscode-git-c6d0735467.sock"
+declare -x bensouda=""
+declare -x VSCODE_GIT_ASKPASS_NODE="/Applications/Visual Studio Code.app/Contents/Frameworks/Code Helper (Plugin).app/Contents/MacOS/Code Helper (Plugin)"
+declare -x GIT_ASKPASS="/Applications/Visual Studio Code.app/Contents/Resources/app/extensions/git/dist/askpass.sh"
+declare -x COLORTERM="truecolor"
+[32mminishell >[0mexit
+[32mminishell >[0mexit	[0m
+[32m	Bash output       	: 		[0m
+[31m------------------------------------[0m
+
+[31m	Minishell exit status   => [31m0[0m
+[32m	Bash exit status        => [32m1[0m
+
+[31m[1m[KO][0m	(B[m[0m[36m   export export	 [0m
+
+[31m------------------------------------[0m
+[31m	Minishell output  	: [32mminishell >[0mexport | grep export
+declare -x variable="randomtext"
+declare -x TERM_PROGRAM="vscode"
+declare -x TERM="xterm-256color"
+declare -x HOMEBREW_TEMP="/tmp/sdiouane/Homebrew/Temp"
+declare -x SHELL="/bin/zsh"
+declare -x TMPDIR="/var/folders/zz/zyxvpxvq6csfxvn_n000cmm4003551/T/"
+declare -x TERM_PROGRAM_VERSION="1.89.1"
+declare -x value="123"
+declare -x ZDOTDIR="/Users/sdiouane"
+declare -x ORIGINAL_XDG_CURRENT_DESKTOP="undefined"
+declare -x MallocNanoZone="0"
+declare -x ZSH="/Users/sdiouane/.oh-my-zsh"
+declare -x USER="sdiouane"
+declare -x LS_COLORS="di=1;36:ln=35:so=32:pi=33:ex=31:bd=34;46:cd=34;43:su=30;41:sg=30;46:tw=30;42:ow=30;43"
+declare -x SSH_AUTH_SOCK="/private/tmp/com.apple.launchd.035KNx5CiS/Listeners"
+declare -x __CF_USER_TEXT_ENCODING="0x194A1:0x0:0x0"
+declare -x PAGER="less"
+declare -x HOMEBREW_CACHE="/tmp/sdiouane/Homebrew/Caches"
+declare -x LSCOLORS="Gxfxcxdxbxegedabagacad"
+declare -x PATH="/Users/sdiouane/.brew/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/munki:/Library/Apple/usr/bin:/Users/sdiouane/.brew/bin"
+declare -x USER_ZDOTDIR="/Users/sdiouane"
+declare -x PWD="/Users/sdiouane/Desktop/our_big_shell/Minishell_Tester"
+declare -x LANG="en_US.UTF-8"
+declare -x VSCODE_GIT_ASKPASS_EXTRA_ARGS=""
+declare -x XPC_FLAGS="0x0"
+declare -x XPC_SERVICE_NAME="0"
+declare -x VSCODE_INJECTION="1"
+declare -x SHLVL="3"
+declare -x HOME="/Users/sdiouane"
+declare -x var_="3"
+declare -x VSCODE_GIT_ASKPASS_MAIN="/Applications/Visual Studio Code.app/Contents/Resources/app/extensions/git/dist/askpass-main.js"
+declare -x LESS="-R"
+declare -x LOGNAME="sdiouane"
+declare -x VSCODE_GIT_IPC_HANDLE="/var/folders/zz/zyxvpxvq6csfxvn_n000cmm4003551/T/vscode-git-c6d0735467.sock"
+declare -x bensouda=""
+declare -x VSCODE_GIT_ASKPASS_NODE="/Applications/Visual Studio Code.app/Contents/Frameworks/Code Helper (Plugin).app/Contents/MacOS/Code Helper (Plugin)"
+declare -x GIT_ASKPASS="/Applications/Visual Studio Code.app/Contents/Resources/app/extensions/git/dist/askpass.sh"
+declare -x COLORTERM="truecolor"
+[32mminishell >[0mexit
+[32mminishell >[0mexit	[0m
+[32m	Bash output       	: 		[0m
+[31m------------------------------------[0m
+
+[31m	Minishell exit status   => [31m0[0m
+[32m	Bash exit status        => [32m1[0m
+
+[31m[1m[KO][0m	(B[m[0m[36m   export _____=abc	 [0m
+
+[31m------------------------------------[0m
+[31m	Minishell output  	: [32mminishell >[0mexport | grep _____
+declare -x variable="randomtext"
+declare -x _____="abc"
+declare -x TERM_PROGRAM="vscode"
+declare -x TERM="xterm-256color"
+declare -x HOMEBREW_TEMP="/tmp/sdiouane/Homebrew/Temp"
+declare -x SHELL="/bin/zsh"
+declare -x TMPDIR="/var/folders/zz/zyxvpxvq6csfxvn_n000cmm4003551/T/"
+declare -x TERM_PROGRAM_VERSION="1.89.1"
+declare -x value="123"
+declare -x ZDOTDIR="/Users/sdiouane"
+declare -x ORIGINAL_XDG_CURRENT_DESKTOP="undefined"
+declare -x MallocNanoZone="0"
+declare -x ZSH="/Users/sdiouane/.oh-my-zsh"
+declare -x USER="sdiouane"
+declare -x LS_COLORS="di=1;36:ln=35:so=32:pi=33:ex=31:bd=34;46:cd=34;43:su=30;41:sg=30;46:tw=30;42:ow=30;43"
+declare -x SSH_AUTH_SOCK="/private/tmp/com.apple.launchd.035KNx5CiS/Listeners"
+declare -x __CF_USER_TEXT_ENCODING="0x194A1:0x0:0x0"
+declare -x PAGER="less"
+declare -x HOMEBREW_CACHE="/tmp/sdiouane/Homebrew/Caches"
+declare -x LSCOLORS="Gxfxcxdxbxegedabagacad"
+declare -x PATH="/Users/sdiouane/.brew/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/munki:/Library/Apple/usr/bin:/Users/sdiouane/.brew/bin"
+declare -x USER_ZDOTDIR="/Users/sdiouane"
+declare -x PWD="/Users/sdiouane/Desktop/our_big_shell/Minishell_Tester"
+declare -x LANG="en_US.UTF-8"
+declare -x VSCODE_GIT_ASKPASS_EXTRA_ARGS=""
+declare -x XPC_FLAGS="0x0"
+declare -x XPC_SERVICE_NAME="0"
+declare -x VSCODE_INJECTION="1"
+declare -x SHLVL="3"
+declare -x HOME="/Users/sdiouane"
+declare -x var_="3"
+declare -x VSCODE_GIT_ASKPASS_MAIN="/Applications/Visual Studio Code.app/Contents/Resources/app/extensions/git/dist/askpass-main.js"
+declare -x LESS="-R"
+declare -x LOGNAME="sdiouane"
+declare -x VSCODE_GIT_IPC_HANDLE="/var/folders/zz/zyxvpxvq6csfxvn_n000cmm4003551/T/vscode-git-c6d0735467.sock"
+declare -x bensouda=""
+declare -x VSCODE_GIT_ASKPASS_NODE="/Applications/Visual Studio Code.app/Contents/Frameworks/Code Helper (Plugin).app/Contents/MacOS/Code Helper (Plugin)"
+declare -x GIT_ASKPASS="/Applications/Visual Studio Code.app/Contents/Resources/app/extensions/git/dist/askpass.sh"
+declare -x COLORTERM="truecolor"
+[32mminishell >[0mexit
+[32mminishell >[0mexit	[0m
+[32m	Bash output       	: declare -x _____="abc"		[0m
+[31m------------------------------------[0m
+
+[31m[1m[KO][0m	(B[m[0m[36m   export __ben_souda_=Herewego	 [0m
+
+[31m------------------------------------[0m
+[31m	Minishell output  	: [32mminishell >[0mexport | grep __ben_souda_
+declare -x variable="randomtext"
+declare -x _____="abc"
+declare -x TERM_PROGRAM="vscode"
+declare -x TERM="xterm-256color"
+declare -x HOMEBREW_TEMP="/tmp/sdiouane/Homebrew/Temp"
+declare -x SHELL="/bin/zsh"
+declare -x TMPDIR="/var/folders/zz/zyxvpxvq6csfxvn_n000cmm4003551/T/"
+declare -x TERM_PROGRAM_VERSION="1.89.1"
+declare -x value="123"
+declare -x ZDOTDIR="/Users/sdiouane"
+declare -x ORIGINAL_XDG_CURRENT_DESKTOP="undefined"
+declare -x MallocNanoZone="0"
+declare -x ZSH="/Users/sdiouane/.oh-my-zsh"
+declare -x USER="sdiouane"
+declare -x LS_COLORS="di=1;36:ln=35:so=32:pi=33:ex=31:bd=34;46:cd=34;43:su=30;41:sg=30;46:tw=30;42:ow=30;43"
+declare -x SSH_AUTH_SOCK="/private/tmp/com.apple.launchd.035KNx5CiS/Listeners"
+declare -x __CF_USER_TEXT_ENCODING="0x194A1:0x0:0x0"
+declare -x __ben_souda_="Herewego"
+declare -x PAGER="less"
+declare -x HOMEBREW_CACHE="/tmp/sdiouane/Homebrew/Caches"
+declare -x LSCOLORS="Gxfxcxdxbxegedabagacad"
+declare -x PATH="/Users/sdiouane/.brew/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/munki:/Library/Apple/usr/bin:/Users/sdiouane/.brew/bin"
+declare -x USER_ZDOTDIR="/Users/sdiouane"
+declare -x PWD="/Users/sdiouane/Desktop/our_big_shell/Minishell_Tester"
+declare -x LANG="en_US.UTF-8"
+declare -x VSCODE_GIT_ASKPASS_EXTRA_ARGS=""
+declare -x XPC_FLAGS="0x0"
+declare -x XPC_SERVICE_NAME="0"
+declare -x VSCODE_INJECTION="1"
+declare -x SHLVL="3"
+declare -x HOME="/Users/sdiouane"
+declare -x var_="3"
+declare -x VSCODE_GIT_ASKPASS_MAIN="/Applications/Visual Studio Code.app/Contents/Resources/app/extensions/git/dist/askpass-main.js"
+declare -x LESS="-R"
+declare -x LOGNAME="sdiouane"
+declare -x VSCODE_GIT_IPC_HANDLE="/var/folders/zz/zyxvpxvq6csfxvn_n000cmm4003551/T/vscode-git-c6d0735467.sock"
+declare -x bensouda=""
+declare -x VSCODE_GIT_ASKPASS_NODE="/Applications/Visual Studio Code.app/Contents/Frameworks/Code Helper (Plugin).app/Contents/MacOS/Code Helper (Plugin)"
+declare -x GIT_ASKPASS="/Applications/Visual Studio Code.app/Contents/Resources/app/extensions/git/dist/askpass.sh"
+declare -x COLORTERM="truecolor"
+[32mminishell >[0mexit
+[32mminishell >[0mexit	[0m
+[32m	Bash output       	: declare -x __ben_souda_="Herewego"		[0m
+[31m------------------------------------[0m
+
+[31m[1m[KO][0m	(B[m[0m[36m   export Nothing=0=	 [0m
+
+[31m------------------------------------[0m
+[31m	Minishell output  	: [32mminishell >[0mexport | grep Nothing
+declare -x variable="randomtext"
+declare -x _____="abc"
+declare -x TERM_PROGRAM="vscode"
+declare -x TERM="xterm-256color"
+declare -x HOMEBREW_TEMP="/tmp/sdiouane/Homebrew/Temp"
+declare -x SHELL="/bin/zsh"
+declare -x TMPDIR="/var/folders/zz/zyxvpxvq6csfxvn_n000cmm4003551/T/"
+declare -x TERM_PROGRAM_VERSION="1.89.1"
+declare -x value="123"
+declare -x ZDOTDIR="/Users/sdiouane"
+declare -x ORIGINAL_XDG_CURRENT_DESKTOP="undefined"
+declare -x MallocNanoZone="0"
+declare -x Nothing="0="
+declare -x ZSH="/Users/sdiouane/.oh-my-zsh"
+declare -x USER="sdiouane"
+declare -x LS_COLORS="di=1;36:ln=35:so=32:pi=33:ex=31:bd=34;46:cd=34;43:su=30;41:sg=30;46:tw=30;42:ow=30;43"
+declare -x SSH_AUTH_SOCK="/private/tmp/com.apple.launchd.035KNx5CiS/Listeners"
+declare -x __CF_USER_TEXT_ENCODING="0x194A1:0x0:0x0"
+declare -x __ben_souda_="Herewego"
+declare -x PAGER="less"
+declare -x HOMEBREW_CACHE="/tmp/sdiouane/Homebrew/Caches"
+declare -x LSCOLORS="Gxfxcxdxbxegedabagacad"
+declare -x PATH="/Users/sdiouane/.brew/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/munki:/Library/Apple/usr/bin:/Users/sdiouane/.brew/bin"
+declare -x USER_ZDOTDIR="/Users/sdiouane"
+declare -x PWD="/Users/sdiouane/Desktop/our_big_shell/Minishell_Tester"
+declare -x LANG="en_US.UTF-8"
+declare -x VSCODE_GIT_ASKPASS_EXTRA_ARGS=""
+declare -x XPC_FLAGS="0x0"
+declare -x XPC_SERVICE_NAME="0"
+declare -x VSCODE_INJECTION="1"
+declare -x SHLVL="3"
+declare -x HOME="/Users/sdiouane"
+declare -x var_="3"
+declare -x VSCODE_GIT_ASKPASS_MAIN="/Applications/Visual Studio Code.app/Contents/Resources/app/extensions/git/dist/askpass-main.js"
+declare -x LESS="-R"
+declare -x LOGNAME="sdiouane"
+declare -x VSCODE_GIT_IPC_HANDLE="/var/folders/zz/zyxvpxvq6csfxvn_n000cmm4003551/T/vscode-git-c6d0735467.sock"
+declare -x bensouda=""
+declare -x VSCODE_GIT_ASKPASS_NODE="/Applications/Visual Studio Code.app/Contents/Frameworks/Code Helper (Plugin).app/Contents/MacOS/Code Helper (Plugin)"
+declare -x GIT_ASKPASS="/Applications/Visual Studio Code.app/Contents/Resources/app/extensions/git/dist/askpass.sh"
+declare -x COLORTERM="truecolor"
+[32mminishell >[0mexit
+[32mminishell >[0mexit	[0m
+[32m	Bash output       	: declare -x Nothing="0="		[0m
+[31m------------------------------------[0m
+
+[31m[1m[KO][0m	(B[m[0m[36m   export exitstatus$?=true	 [0m
+
+[31m------------------------------------[0m
+[31m	Minishell output  	: [32mminishell >[0mexport | grep exitstatus
+declare -x variable="randomtext"
+declare -x _____="abc"
+declare -x TERM_PROGRAM="vscode"
+declare -x TERM="xterm-256color"
+declare -x HOMEBREW_TEMP="/tmp/sdiouane/Homebrew/Temp"
+declare -x SHELL="/bin/zsh"
+declare -x TMPDIR="/var/folders/zz/zyxvpxvq6csfxvn_n000cmm4003551/T/"
+declare -x TERM_PROGRAM_VERSION="1.89.1"
+declare -x value="123"
+declare -x ZDOTDIR="/Users/sdiouane"
+declare -x ORIGINAL_XDG_CURRENT_DESKTOP="undefined"
+declare -x MallocNanoZone="0"
+declare -x Nothing="0="
+declare -x ZSH="/Users/sdiouane/.oh-my-zsh"
+declare -x USER="sdiouane"
+declare -x LS_COLORS="di=1;36:ln=35:so=32:pi=33:ex=31:bd=34;46:cd=34;43:su=30;41:sg=30;46:tw=30;42:ow=30;43"
+declare -x SSH_AUTH_SOCK="/private/tmp/com.apple.launchd.035KNx5CiS/Listeners"
+declare -x __CF_USER_TEXT_ENCODING="0x194A1:0x0:0x0"
+declare -x __ben_souda_="Herewego"
+declare -x PAGER="less"
+declare -x HOMEBREW_CACHE="/tmp/sdiouane/Homebrew/Caches"
+declare -x LSCOLORS="Gxfxcxdxbxegedabagacad"
+declare -x PATH="/Users/sdiouane/.brew/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/munki:/Library/Apple/usr/bin:/Users/sdiouane/.brew/bin"
+declare -x USER_ZDOTDIR="/Users/sdiouane"
+declare -x PWD="/Users/sdiouane/Desktop/our_big_shell/Minishell_Tester"
+declare -x exitstatus0="true"
+declare -x LANG="en_US.UTF-8"
+declare -x VSCODE_GIT_ASKPASS_EXTRA_ARGS=""
+declare -x XPC_FLAGS="0x0"
+declare -x XPC_SERVICE_NAME="0"
+declare -x VSCODE_INJECTION="1"
+declare -x SHLVL="3"
+declare -x HOME="/Users/sdiouane"
+declare -x var_="3"
+declare -x VSCODE_GIT_ASKPASS_MAIN="/Applications/Visual Studio Code.app/Contents/Resources/app/extensions/git/dist/askpass-main.js"
+declare -x LESS="-R"
+declare -x LOGNAME="sdiouane"
+declare -x VSCODE_GIT_IPC_HANDLE="/var/folders/zz/zyxvpxvq6csfxvn_n000cmm4003551/T/vscode-git-c6d0735467.sock"
+declare -x bensouda=""
+declare -x VSCODE_GIT_ASKPASS_NODE="/Applications/Visual Studio Code.app/Contents/Frameworks/Code Helper (Plugin).app/Contents/MacOS/Code Helper (Plugin)"
+declare -x GIT_ASKPASS="/Applications/Visual Studio Code.app/Contents/Resources/app/extensions/git/dist/askpass.sh"
+declare -x COLORTERM="truecolor"
+[32mminishell >[0mexit
+[32mminishell >[0mexit	[0m
+[32m	Bash output       	: declare -x exitstatus0="true"		[0m
+[31m------------------------------------[0m
+
+[31m[1m[KO][0m	(B[m[0m[36m   export val\lue=100	 [0m
+
+[31m------------------------------------[0m
+[31m	Minishell output  	: [32mminishell >[0mexport | grep val\ue
+declare -x variable="randomtext"
+declare -x _____="abc"
+declare -x TERM_PROGRAM="vscode"
+declare -x TERM="xterm-256color"
+declare -x HOMEBREW_TEMP="/tmp/sdiouane/Homebrew/Temp"
+declare -x SHELL="/bin/zsh"
+declare -x TMPDIR="/var/folders/zz/zyxvpxvq6csfxvn_n000cmm4003551/T/"
+declare -x TERM_PROGRAM_VERSION="1.89.1"
+declare -x value="100"
+declare -x ZDOTDIR="/Users/sdiouane"
+declare -x ORIGINAL_XDG_CURRENT_DESKTOP="undefined"
+declare -x MallocNanoZone="0"
+declare -x Nothing="0="
+declare -x ZSH="/Users/sdiouane/.oh-my-zsh"
+declare -x USER="sdiouane"
+declare -x LS_COLORS="di=1;36:ln=35:so=32:pi=33:ex=31:bd=34;46:cd=34;43:su=30;41:sg=30;46:tw=30;42:ow=30;43"
+declare -x SSH_AUTH_SOCK="/private/tmp/com.apple.launchd.035KNx5CiS/Listeners"
+declare -x __CF_USER_TEXT_ENCODING="0x194A1:0x0:0x0"
+declare -x __ben_souda_="Herewego"
+declare -x PAGER="less"
+declare -x HOMEBREW_CACHE="/tmp/sdiouane/Homebrew/Caches"
+declare -x LSCOLORS="Gxfxcxdxbxegedabagacad"
+declare -x PATH="/Users/sdiouane/.brew/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/munki:/Library/Apple/usr/bin:/Users/sdiouane/.brew/bin"
+declare -x USER_ZDOTDIR="/Users/sdiouane"
+declare -x PWD="/Users/sdiouane/Desktop/our_big_shell/Minishell_Tester"
+declare -x exitstatus0="true"
+declare -x LANG="en_US.UTF-8"
+declare -x VSCODE_GIT_ASKPASS_EXTRA_ARGS=""
+declare -x XPC_FLAGS="0x0"
+declare -x XPC_SERVICE_NAME="0"
+declare -x VSCODE_INJECTION="1"
+declare -x SHLVL="3"
+declare -x HOME="/Users/sdiouane"
+declare -x var_="3"
+declare -x VSCODE_GIT_ASKPASS_MAIN="/Applications/Visual Studio Code.app/Contents/Resources/app/extensions/git/dist/askpass-main.js"
+declare -x LESS="-R"
+declare -x LOGNAME="sdiouane"
+declare -x VSCODE_GIT_IPC_HANDLE="/var/folders/zz/zyxvpxvq6csfxvn_n000cmm4003551/T/vscode-git-c6d0735467.sock"
+declare -x bensouda=""
+declare -x VSCODE_GIT_ASKPASS_NODE="/Applications/Visual Studio Code.app/Contents/Frameworks/Code Helper (Plugin).app/Contents/MacOS/Code Helper (Plugin)"
+declare -x GIT_ASKPASS="/Applications/Visual Studio Code.app/Contents/Resources/app/extensions/git/dist/askpass.sh"
+declare -x COLORTERM="truecolor"
+[32mminishell >[0mexit
+[32mminishell >[0mexit	[0m
+[32m	Bash output       	: declare -x value="100"		[0m
+[31m------------------------------------[0m
+
+Checking if you return the error as the bash does
+[31m[1m[KO][0m	(B[m[0m[36m   export --TEST=123	 [0m
+
+[31m------------------------------------[0m
+[31m	Minishell output  	: Minishell: tcgetattr: Inappropriate ioctl for device
+Minishell: tcsetattr: Inappropriate ioctl for device
+[32mminishell >[0mexport --TEST=123
+minishell: export: `--TEST': not a valid identifier
+[32mminishell >[0mexit	[0m
+[32m	Bash output       	: bash: line 1: export: --: invalid option
+export: usage: export [-nf] [name[=value] ...] or export -p		[0m
+[31m------------------------------------[0m
+
+[31m	Minishell exit status   => [31m0[0m
+[32m	Bash exit status        => [32m2[0m
+
+[31m[1m[KO][0m	(B[m[0m[36m   export =	 [0m
+[31m	Minishell exit status   => [31m0[0m
+[32m	Bash exit status        => [32m1[0m
+
+[31m[1m[KO][0m	(B[m[0m[36m   export ''=''			 [0m
+[31m	Minishell exit status   => [31m0[0m
+[32m	Bash exit status        => [32m1[0m
+
+[31m[1m[KO][0m	(B[m[0m[36m   export ===			 [0m
+[31m	Minishell exit status   => [31m0[0m
+[32m	Bash exit status        => [32m1[0m
+
+[31m[1m[KO][0m	(B[m[0m[36m   export '='='='			 [0m
+[31m	Minishell exit status   => [31m0[0m
+[32m	Bash exit status        => [32m1[0m
+
+[31m[1m[KO][0m	(B[m[0m[36m   export TE-ST=100		 [0m
+[31m	Minishell exit status   => [31m0[0m
+[32m	Bash exit status        => [32m1[0m
+
+[31m[1m[KO][0m	(B[m[0m[36m   export TEST-=100		 [0m
+[31m	Minishell exit status   => [31m0[0m
+[32m	Bash exit status        => [32m1[0m
+
+[31m[1m[KO][0m	(B[m[0m[36m   export -TEST=100		 [0m
+
+[31m------------------------------------[0m
+[31m	Minishell output  	: Minishell: tcgetattr: Inappropriate ioctl for device
+Minishell: tcsetattr: Inappropriate ioctl for device
+[32mminishell >[0mexport -TEST=100
+minishell: export: `-TEST': not a valid identifier
+[32mminishell >[0mexit	[0m
+[32m	Bash output       	: bash: line 1: export: -T: invalid option
+export: usage: export [-nf] [name[=value] ...] or export -p		[0m
+[31m------------------------------------[0m
+
+[31m	Minishell exit status   => [31m0[0m
+[32m	Bash exit status        => [32m2[0m
+
+[31m[1m[KO][0m	(B[m[0m[36m   export ==========abc		 [0m
+[31m	Minishell exit status   => [31m0[0m
+[32m	Bash exit status        => [32m1[0m
+
+[31m[1m[KO][0m	(B[m[0m[36m   export 1TEST=			 [0m
+[31m	Minishell exit status   => [31m0[0m
+[32m	Bash exit status        => [32m1[0m
+
+[31m[1m[KO][0m	(B[m[0m[36m   export TE+S=T=	 [0m
+[31m	Minishell exit status   => [31m0[0m
+[32m	Bash exit status        => [32m1[0m
+
+[31m[1m[KO][0m	(B[m[0m[36m   export me!me=123	 [0m
+[31m	Minishell exit status   => [31m0[0m
+[32m	Bash exit status        => [32m1[0m
+
+[31m[1m[KO][0m	(B[m[0m[36m   export TES.T=123	 [0m
+[31m	Minishell exit status   => [31m0[0m
+[32m	Bash exit status        => [32m1[0m
+
+[31m[1m[KO][0m	(B[m[0m[36m   export TES}T=123	 [0m
+[31m	Minishell exit status   => [31m0[0m
+[32m	Bash exit status        => [32m1[0m
+
+[31m[1m[KO][0m	(B[m[0m[36m   export TES-T=123	 [0m
+[31m	Minishell exit status   => [31m0[0m
+[32m	Bash exit status        => [32m1[0m
+
+[31m[1m[KO][0m	(B[m[0m[36m   export TE*ST=123	 [0m
+[31m	Minishell exit status   => [31m0[0m
+[32m	Bash exit status        => [32m1[0m
+
+[31m[1m[KO][0m	(B[m[0m[36m   export TES#T=123	 [0m
+[31m	Minishell exit status   => [31m0[0m
+[32m	Bash exit status        => [32m1[0m
+
+[31m[1m[KO][0m	(B[m[0m[36m   export TES@T=123	 [0m
+[31m	Minishell exit status   => [31m0[0m
+[32m	Bash exit status        => [32m1[0m
+
+[31m[1m[KO][0m	(B[m[0m[36m   export +++++++=123	 [0m
+[31m	Minishell exit status   => [31m0[0m
+[32m	Bash exit status        => [32m1[0m
+
+
+[31m[1m		More efforts should be put into this => [0/100][0m(B[m[0m
+
