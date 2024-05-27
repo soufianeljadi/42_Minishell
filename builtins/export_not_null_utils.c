@@ -6,13 +6,34 @@
 /*   By: sdiouane <sdiouane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/20 15:24:11 by sdiouane          #+#    #+#             */
-/*   Updated: 2024/05/27 20:41:50 by sdiouane         ###   ########.fr       */
+/*   Updated: 2024/05/27 23:28:17 by sdiouane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-char *remove_protection(char *str)
+// char *remove_protection(char *str)
+// {
+// 	char *new_str;
+// 	int i;
+// 	int j;
+
+// 	i = 0;
+// 	j = 0;
+// 	new_str = (char *)malloc(sizeof(char) * (strlen(str) + 1));
+// 	check_memory_allocation(new_str);
+// 	while (str[i])
+// 	{
+// 		if (str[i] != '\"')
+// 			new_str[j++] = str[i];
+// 		i++;
+// 	}
+// 	new_str[j] = '\0';
+// 	return (new_str);
+
+// }
+
+char *add_protectiom(char *str)
 {
 	char *new_str;
 	int i;
@@ -24,13 +45,13 @@ char *remove_protection(char *str)
 	check_memory_allocation(new_str);
 	while (str[i])
 	{
-		if (str[i] != '\"')
-			new_str[j++] = str[i];
+		if (str[i] == '\"')
+			new_str[j++] = '\\';
+		new_str[j++] = str[i];
 		i++;
 	}
 	new_str[j] = '\0';
 	return (new_str);
-
 }
 
 int count_quotes(char *str, char c)
@@ -54,10 +75,6 @@ char *extract_value(char *arg, int start, int end)
     char *value ;
 	
 	value = ft_substr(arg, start, end - start);
-	if (count_quotes(value, '\"') % 2 == 0)
-    	del_dbl_quotes(value);
-	else if (count_quotes(value, '\'') % 2 == 0)
-		del_sngl_quotes(value);
     return (value);
 }
 
@@ -83,7 +100,6 @@ void fct_equal(char **args, s_env *env, char *key)
 	while (args[env->i][env->j] && args[env->i][env->j] != '\0')
 		env->j++;
 	char *value = extract_value(args[env->i], start, env->j);
-	printf("value = %s\n", value);
 	update_env_value(env, key, value);
 }
 

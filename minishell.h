@@ -6,7 +6,7 @@
 /*   By: sdiouane <sdiouane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 23:51:44 by sdiouane          #+#    #+#             */
-/*   Updated: 2024/05/27 20:43:42 by sdiouane         ###   ########.fr       */
+/*   Updated: 2024/05/27 22:20:34 by sdiouane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -327,6 +327,6 @@ void ftc_concatination(char **args, s_env *env, char *key);
 void remove_q(char *chaine);
 int  ft_execut_error(char *cmd);
 t_var	g_flags;
-
+char *add_protectiom(char *str);
 int count_quotes(char *str, char c);
 #endif

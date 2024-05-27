@@ -6,7 +6,7 @@
 /*   By: sdiouane <sdiouane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/17 09:55:09 by sdiouane          #+#    #+#             */
-/*   Updated: 2024/05/27 20:47:26 by sdiouane         ###   ########.fr       */
+/*   Updated: 2024/05/27 23:24:34 by sdiouane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ void add_last_cmd(s_env **lst, char **args)
 {
 	int i;
 	s_env *tmp;
-	
+
 	i = 0;
 	tmp = *lst;
 	while (args[i])
@@ -44,7 +44,7 @@ char **struct_to_char(s_env **lst)
 		if (tmp->value)
 			env[i] = ft_strjoin(env[i], tmp->value);
 		else
-				env[i] = ft_strjoin(env[i], "");
+			env[i] = ft_strjoin(env[i], "");
 		tmp = tmp->next;
 		i++;
 	}
@@ -52,31 +52,61 @@ char **struct_to_char(s_env **lst)
 	return (env);
 }
 
-char	**splt_args(char *line)
+char **splt_args(char *line)
 {
-	char	**cmds;
-	
+	char **cmds;
+
 	cmds = split_args(line);
-	return (cmds);       
+	return (cmds);
+}
+
+void supprimer_protection(char *chaine)
+{
+	char *source = chaine;
+	char *destination = chaine;
+
+	while (*source != '\0')
+	{
+		if (*source != '\\')
+		{
+			*destination = *source;
+			destination++;
+		}
+		source++;
+	}
+	*destination = '\0';
 }
 
 char **check_quotes_before_execution(char *s)
 {
-    char	**cmd;
-    int		i;
-	
+	char **cmd;
+	int i;
+
 	cmd = NULL;
 	i = 0;
+	if (!s)
+		exit(EXIT_FAILURE);
+	if (s[0] == '\\')
+	{
+		supprimer_protection(s);
+		del_sngl_quotes(s);
+		cmd = malloc(sizeof(char *) * 2);
+		cmd[0] = strdup(s);
+		cmd[1] = NULL;
+		return (cmd);
+	}
+	if (strstr(s, " " )|| strstr(s, "\t"))
+		supprimerGuillemets(s);
 	cmd = splt_args(s);
 	if (!cmd)
 		exit(EXIT_FAILURE);
 	while (cmd[i])
-	{	
+	{
 		if (count_quotes(cmd[i], '\"') % 2 == 0)
 			del_dbl_quotes(cmd[i]);
 		if (count_quotes(cmd[i], '\'') % 2 == 0)
 			del_sngl_quotes(cmd[i]);
 		i++;
 	}
-    return (cmd);     
+	return (cmd);
 }

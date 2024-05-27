@@ -6,7 +6,7 @@
 /*   By: sdiouane <sdiouane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/24 21:25:42 by sdiouane          #+#    #+#             */
-/*   Updated: 2024/05/23 11:57:18 by sdiouane         ###   ########.fr       */
+/*   Updated: 2024/05/27 23:31:47 by sdiouane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,8 @@ s_env *process_export_args(char **args, s_env *env)
 	(1) && (i = 1, key = NULL);
     while (args[i])
 	{
+		if (strstr(args[i], " ") || strstr(args[i], "\t"))
+				del_dbl_quotes(args[i]);
         int j = 0;
 			while (args[i][j] && args[i][j] != '=' && args[i][j] != '+')
 				j++;
