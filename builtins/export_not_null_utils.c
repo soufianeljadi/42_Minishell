@@ -6,7 +6,7 @@
 /*   By: sdiouane <sdiouane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/20 15:24:11 by sdiouane          #+#    #+#             */
-/*   Updated: 2024/05/24 15:49:29 by sdiouane         ###   ########.fr       */
+/*   Updated: 2024/05/27 20:41:50 by sdiouane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,16 +33,32 @@ char *remove_protection(char *str)
 
 }
 
+int count_quotes(char *str, char c)
+{
+	int i;
+	int count;
+
+	i = 0;
+	count = 0;
+	while (str[i])
+	{
+		if (str[i] == c)
+			count++;
+		i++;
+	}
+	return (count);
+}
+
 char *extract_value(char *arg, int start, int end)
 {
-	char *value = ft_substr(arg, start, end - start);
-	del_dbl_quotes(value);
-
-	if (value[0] == '\'')
-		value = ft_substr(value, 1, ft_strlen(value) - 1); // here 1 ->> 2
-	if (value[0] == '\"')
-		remove_q(value);
-	return value;
+    char *value ;
+	
+	value = ft_substr(arg, start, end - start);
+	if (count_quotes(value, '\"') % 2 == 0)
+    	del_dbl_quotes(value);
+	else if (count_quotes(value, '\'') % 2 == 0)
+		del_sngl_quotes(value);
+    return (value);
 }
 
 void update_env_value(s_env *env, char *key, char *value)
@@ -67,6 +83,7 @@ void fct_equal(char **args, s_env *env, char *key)
 	while (args[env->i][env->j] && args[env->i][env->j] != '\0')
 		env->j++;
 	char *value = extract_value(args[env->i], start, env->j);
+	printf("value = %s\n", value);
 	update_env_value(env, key, value);
 }
 
