@@ -6,7 +6,7 @@
 #    By: sdiouane <sdiouane@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/03/12 23:52:42 by sdiouane          #+#    #+#              #
-#    Updated: 2024/05/23 11:46:44 by sdiouane         ###   ########.fr        #
+#    Updated: 2024/05/28 00:43:23 by sdiouane         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -45,6 +45,7 @@ SRC =	minishell.c \
 		builtins/cd.c \
 		builtins/unset.c \
 		builtins/echo.c \
+		builtins/exit_fct.c \
     	signals/signal.c \
 		execution/find_path.c \
 		execution/execution.c \

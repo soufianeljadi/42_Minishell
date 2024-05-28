@@ -6,7 +6,7 @@
 /*   By: sdiouane <sdiouane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/31 22:14:48 by sdiouane          #+#    #+#             */
-/*   Updated: 2024/05/27 23:24:28 by sdiouane         ###   ########.fr       */
+/*   Updated: 2024/05/28 01:05:50 by sdiouane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,6 +64,7 @@ void execute(char *s, char **env, ExecutionData *data)
 	char    *chemin;
 	char    **cmd;
 
+	(void)data;
 	(1) && (cmd = NULL, chemin = NULL);
 	if (*env)
 	{
@@ -84,6 +85,7 @@ void execute(char *s, char **env, ExecutionData *data)
 					(ft_execut_error(cmd[0]), ft_free_tab(cmd), exit(EXIT_FAILURE));
 			}
 		}
+		exit(EXIT_SUCCESS);
 	}
 }
 
@@ -128,10 +130,8 @@ void	ft_execution(ExecutionData *data)
 		(syntax_error(), exit(EXIT_FAILURE));
 	if (data->lst->next == NULL)
 	{
-		signal(SIGINT, SIG_IGN);
 		if (builtins(data) == 1)
 			execute_command(data);
-		// handle_child_process(data);
 	}
 	else
 	{

@@ -6,7 +6,7 @@
 /*   By: sdiouane <sdiouane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/26 01:07:33 by sel-jadi          #+#    #+#             */
-/*   Updated: 2024/05/26 14:48:32 by sdiouane         ###   ########.fr       */
+/*   Updated: 2024/05/28 00:50:16 by sdiouane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,10 +87,7 @@ int	is_builtins(char **args, s_env **export_i, char **env, int *flag)
 	if (strcmp(args[0], ""))
 		supprimerGuillemets(args[0]);            
 	if (!strcmp(args[0], "exit"))
-	{
-		printf("exit\n");
-		exit(EXIT_SUCCESS);
-	}
+		exit_fct(args);
 	else if (!strcmp(args[0], "echo"))
 		echo_fct(args);
 	else if (!strcmp(args[0], "pwd"))
@@ -129,9 +126,12 @@ int is_not_empty(char *str)
 
 int builtins(ExecutionData *data)
 {
-	char **args = NULL;
-	int flag = 0;
-	if (data->lst->cmd[0] != '\0' && is_not_empty(data->lst->cmd))
+	char **args;
+	int flag;
+	
+	flag = 0;
+	args = NULL;
+	if (data->lst->cmd[0] != '\0' /*&& is_not_empty(data->lst->cmd)*/)
 	{
 		args = split_with_quotes(data->lst->cmd);
 		if (!args)
