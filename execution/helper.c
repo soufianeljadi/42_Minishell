@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   helper.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sdiouane <sdiouane@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sel-jadi <sel-jadi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/05 23:07:50 by sdiouane          #+#    #+#             */
-/*   Updated: 2024/05/14 16:35:03 by sdiouane         ###   ########.fr       */
+/*   Updated: 2024/05/30 00:40:24 by sel-jadi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,6 +64,7 @@ s_env *split_env(char **env)
 		if(!value)
 			free(value);
 	}
+	ft_lstadd_back(&lst, ft_lstnew_data(ft_strdup("0") ,ft_strdup("?")));
 	return (lst);
 }
 

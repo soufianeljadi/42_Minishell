@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: sdiouane <sdiouane@student.42.fr>          +#+  +:+       +#+         #
+#    By: sel-jadi <sel-jadi@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/03/12 23:52:42 by sdiouane          #+#    #+#              #
-#    Updated: 2024/05/28 17:04:43 by sdiouane         ###   ########.fr        #
+#    Updated: 2024/05/30 00:44:36 by sel-jadi         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -50,6 +50,7 @@ SRC =	minishell.c \
 		execution/find_path.c \
 		execution/execution.c \
 		execution/redirections.c \
+		execution/exit_status.c \
 		execution/helper.c \
 		execution/split_space_tab.c \
 		execution/heredoc.c \

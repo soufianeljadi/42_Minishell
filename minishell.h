@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sdiouane <sdiouane@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sel-jadi <sel-jadi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 23:51:44 by sdiouane          #+#    #+#             */
-/*   Updated: 2024/05/28 00:44:00 by sdiouane         ###   ########.fr       */
+/*   Updated: 2024/05/30 00:44:18 by sel-jadi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,6 +100,7 @@ typedef struct g_variables
 {
 	int			shlvl;
 	char		**envire;
+	int			exit_status;
 }					t_var;
 
 typedef struct
@@ -267,6 +268,9 @@ char *ft_str_replace(char *s, char *key, char *value);
 void	handle_sigint_heredoc(int sig);
 int	heredoc(char *red ,ExecutionData *data);
 void	signals_init(void);
+void	handle_herdoc(ExecutionData *data);
+//exit status
+void	change_status(int status, ExecutionData *data);
 //promt
 char	*print_directory(char *pwd);
 char	*get_directory(char *pwd);

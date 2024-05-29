@@ -6,7 +6,7 @@
 /*   By: sel-jadi <sel-jadi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/23 22:30:21 by sdiouane          #+#    #+#             */
-/*   Updated: 2024/05/12 21:04:34 by sel-jadi         ###   ########.fr       */
+/*   Updated: 2024/05/30 00:42:20 by sel-jadi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ void	handle_sigint_heredoc(int sig)
 {
 	(void)sig;
 	write(1, "\n", 1);
-	exit(1);
+	exit(2);
 }
 
 static void	signal_ctrl_c(int signal)

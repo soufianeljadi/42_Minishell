@@ -3,14 +3,34 @@
 /*                                                        :::      ::::::::   */
 /*   heredoc.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sdiouane <sdiouane@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sel-jadi <sel-jadi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/11 19:37:55 by sel-jadi          #+#    #+#             */
-/*   Updated: 2024/05/26 22:57:58 by sdiouane         ###   ########.fr       */
+/*   Updated: 2024/05/30 00:40:53 by sel-jadi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
+
+void handle_herdoc(ExecutionData *data)
+{
+	int i;
+	char **redlin;
+	
+	i = 0;
+	redlin = line_to_args(data->lst->redirection);
+	if (!redlin)
+		return ;
+	if (data->lst->redirection != NULL)
+	{
+		while (redlin[i])
+		{
+			if (!strcmp(redlin[i], "<<") && redlin[i + 1])
+				heredoc(redlin[i + 1], data);
+			i++;
+		}
+	}
+}
 
 void	go_heredoc( char *red, ExecutionData *data, int fd_doc)
 {

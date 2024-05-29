@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sdiouane <sdiouane@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sel-jadi <sel-jadi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 23:52:10 by sdiouane          #+#    #+#             */
-/*   Updated: 2024/05/29 19:01:04 by sdiouane         ###   ########.fr       */
+/*   Updated: 2024/05/30 00:42:56 by sel-jadi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,14 +85,18 @@ void loop_fct(ExecutionData *data, char *line)
 		if(line != NULL && only_spaces(line) == 0)
 		{
 			add_history(line);
-			if(parsing(line) == 1)	
+			if(parsing(line) == 1)
+			{
+				change_status(258, data);
 				syntax_error();
+			}
 			else
 			{
 				data->args = line_to_args(line);
 				data->lst = split_args_by_pipe(data->args);
 				data->lst = ft_expanding(&data, data->export_i);
 				// print_command_list(data->lst);
+				handle_herdoc(data);
 				(dup2(0, 3),dup2(1, 4), ft_execution(data));
 				(dup2(3, 0), dup2(4, 1), close(3), close(4));
 				(free (data->args)/*, free_noued_cmd(data->lst)*/);
