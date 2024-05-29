@@ -6,7 +6,7 @@
 /*   By: sdiouane <sdiouane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/25 17:00:00 by sdiouane          #+#    #+#             */
-/*   Updated: 2024/05/24 16:39:09 by sdiouane         ###   ########.fr       */
+/*   Updated: 2024/05/29 16:34:32 by sdiouane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,78 +76,78 @@
 // 	return (lst);
 // }
 
-
-s_env *update_env_var(s_env *lst,  char *key,  char *new_value)
+// < Makefile cat | " "
+s_env *update_env_var(s_env *lst, char *key, char *new_value)
 {
-    s_env *head = lst;
-    while (lst != NULL)
+	s_env *head = lst;
+	while (lst != NULL)
 	{
-        if (!strcmp(lst->key, key))
+		if (!strcmp(lst->key, key))
 		{
-            free(lst->value); // libérer l'ancienne valeur
-            lst->value = ft_strdup(new_value);
-        }
-        lst = lst->next;
-    }
-    return head;
+			free(lst->value); // libérer l'ancienne valeur
+			lst->value = ft_strdup(new_value);
+		}
+		lst = lst->next;
+	}
+	return head;
 }
 
 s_env *execute_cd(char **args, s_env *lst)
 {
-    int		i;
-    char	*new_pwd;
-    char	*old_pwd;
+	int i;
+	char *new_pwd;
+	char *old_pwd;
 	char *home;
 
 	(1) && (i = 0, new_pwd = NULL, old_pwd = NULL);
-    while (args[i])
+	while (args[i])
 		i++;
-    // if (i > 2)
+	// if (i > 2)
 	// {
-    //     ft_putstr_fd("minishell: cd: too many arguments\n", 2);
-    //     return (lst);
-    // }
-    old_pwd = getcwd(NULL, 0);
-    if (!old_pwd)
+	//     ft_putstr_fd("minishell: cd: too many arguments\n", 2);
+	//     return (lst);
+	// }
+	old_pwd = getcwd(NULL, 0);
+	if (!old_pwd)
 	{
-        perror("getcwd");
-        return (lst);
-    }
-    if (i == 1 || (i == 2 && strcmp(args[1], "~") == 0))
+		perror("getcwd");
+		return (lst);
+	}
+	if (i == 1 || (i == 2 && strcmp(args[1], "~") == 0))
 	{
 		home = get_env_value("HOME", lst);
-        if (!home)
+		if (!home)
 		{
-            ft_putstr_fd("minishell: cd: HOME not set\n", 2);
-            free(old_pwd);
-            return lst;
-        }
-        if (chdir(home) != 0)
+			ft_putstr_fd("minishell: cd: HOME not set\n", 2);
+			free(old_pwd);
+			return lst;
+		}
+		if (chdir(home) != 0)
 		{
-            perror("cd");
-            free(old_pwd);
-            return lst;
-        }
-    }
+			perror("cd");
+			free(old_pwd);
+			return lst;
+		}
+	}
 	else
 	{
-        if (chdir(args[1]) != 0)
+		if (chdir(args[1]) != 0)
 		{
-            perror("cd");
-            free(old_pwd);
-            return lst;
-        }
-    }
-    new_pwd = getcwd(NULL, 0);
-    if (!new_pwd)
+			perror("cd");
+			free(old_pwd);
+			return lst;
+		}
+	}
+	new_pwd = getcwd(NULL, 0);
+	if (!new_pwd)
 	{
-        ft_putstr_fd("minishell: cd: error retrieving current directory: getcwd: cannot access parent directories: No such file or directory\n", 2);
-        new_pwd = ft_strjoin(old_pwd, "/..");
-    }
-    lst = update_env_var(lst, "OLDPWD", old_pwd);
-    lst = update_env_var(lst, "PWD", new_pwd);
-    free(old_pwd);
-    free(new_pwd);
+		ft_putstr_fd("minishell: cd: error retrieving current directory: getcwd: cannot access parent directories: No such file or directory\n", 2);
+		new_pwd = ft_strjoin(old_pwd, "/..");
+	}
+	lst = update_env_var(lst, "OLDPWD", old_pwd);
+	lst = update_env_var(lst, "PWD", new_pwd);
+	free(old_pwd);
+	free(new_pwd);
 
-    return lst;
+	return lst;
 }

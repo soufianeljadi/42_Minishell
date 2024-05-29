@@ -6,7 +6,7 @@
 /*   By: sdiouane <sdiouane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/27 19:58:08 by sdiouane          #+#    #+#             */
-/*   Updated: 2024/05/27 22:48:07 by sdiouane         ###   ########.fr       */
+/*   Updated: 2024/05/28 19:22:15 by sdiouane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,7 +112,9 @@ char *process_variable(char *exp_commande, t_p *p, s_env *export_i)
     key = get_env_key(exp_commande, p->i);
     check_memory_allocation(key);
     value = get_env_value(key, export_i);
-	if (value[0] == '\'' && strcmp(value, "\""))
+	if (value[0] == '\"' && value[ft_strlen(value) - 1] == '\"')
+		value = ft_substr2(value, 1, ft_strlen(value) - 2);
+	else if (value[0] == '\'' && strcmp(value, "\""))
 	{
 		value = ft_strjoin("\\", value);
 		value = ft_strjoin(value ,"\\");

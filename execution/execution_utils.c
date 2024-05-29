@@ -6,7 +6,7 @@
 /*   By: sdiouane <sdiouane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/17 09:55:09 by sdiouane          #+#    #+#             */
-/*   Updated: 2024/05/27 23:24:34 by sdiouane         ###   ########.fr       */
+/*   Updated: 2024/05/29 19:00:24 by sdiouane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,16 +95,16 @@ char **check_quotes_before_execution(char *s)
 		cmd[1] = NULL;
 		return (cmd);
 	}
-	if (strstr(s, " " )|| strstr(s, "\t"))
+	if ((strstr(s, " " ) || strstr(s, "\t")))
 		supprimerGuillemets(s);
 	cmd = splt_args(s);
 	if (!cmd)
 		exit(EXIT_FAILURE);
 	while (cmd[i])
 	{
-		if (count_quotes(cmd[i], '\"') % 2 == 0)
+		if (count_quotes(cmd[i], '\"') % 2 == 0 && strstr(cmd[i], "\"") != NULL && (strstr(cmd[i] , " ") && strstr(cmd[i] , "\t") ))
 			del_dbl_quotes(cmd[i]);
-		if (count_quotes(cmd[i], '\'') % 2 == 0)
+		else if (count_quotes(cmd[i], '\'') % 2 == 0 && strstr(cmd[i], "'") != NULL)
 			del_sngl_quotes(cmd[i]);
 		i++;
 	}

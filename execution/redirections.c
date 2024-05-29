@@ -6,7 +6,7 @@
 /*   By: sdiouane <sdiouane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/05 23:00:01 by sdiouane          #+#    #+#             */
-/*   Updated: 2024/05/28 00:56:39 by sdiouane         ###   ########.fr       */
+/*   Updated: 2024/05/28 01:39:40 by sdiouane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -128,6 +128,7 @@ void redirection_out(char *redirection, int *fd)
 		ft_putstr_fd(": ambiguous redirect\n", 2);
 		exit(EXIT_FAILURE);
 	}
+	// printf("here222\n");
 }
 
 void execute_with_redirection(ExecutionData *data)
