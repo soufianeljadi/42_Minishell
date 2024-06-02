@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sel-jadi <sel-jadi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sdiouane <sdiouane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 23:52:10 by sdiouane          #+#    #+#             */
-/*   Updated: 2024/05/30 00:42:56 by sel-jadi         ###   ########.fr       */
+/*   Updated: 2024/06/02 18:18:14 by sdiouane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,7 +95,7 @@ void loop_fct(ExecutionData *data, char *line)
 				data->args = line_to_args(line);
 				data->lst = split_args_by_pipe(data->args);
 				data->lst = ft_expanding(&data, data->export_i);
-				// print_command_list(data->lst);
+				print_command_list(data->lst);
 				handle_herdoc(data);
 				(dup2(0, 3),dup2(1, 4), ft_execution(data));
 				(dup2(3, 0), dup2(4, 1), close(3), close(4));
@@ -145,8 +145,7 @@ int main(int ac, char **av, char **env)
 	if (env[0] == NULL)
 		export_i = split_export_i(export_i);
 	else
-		export_i = split_env(env);        
-	rl_catch_signals = 0;
+		export_i = split_env(env);
 	signals_init();
 	main_loop(line, export_i);
 	// free(line);

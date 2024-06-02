@@ -6,7 +6,7 @@
 /*   By: sdiouane <sdiouane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/17 09:55:09 by sdiouane          #+#    #+#             */
-/*   Updated: 2024/05/29 19:00:24 by sdiouane         ###   ########.fr       */
+/*   Updated: 2024/06/02 17:52:47 by sdiouane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,6 +77,21 @@ void supprimer_protection(char *chaine)
 	*destination = '\0';
 }
 
+int is_blank(char *str)
+{
+	int i;
+
+	i = 0;
+	while (str[i])
+	{
+		if (str[i] != ' ' && str[i] != '\t')
+			i++;
+		else
+			return (0);
+	}
+	return (1);
+}
+
 char **check_quotes_before_execution(char *s)
 {
 	char **cmd;
@@ -95,16 +110,16 @@ char **check_quotes_before_execution(char *s)
 		cmd[1] = NULL;
 		return (cmd);
 	}
-	if ((strstr(s, " " ) || strstr(s, "\t")))
+	if ((strstr(s, " " ) || strstr(s, "\t")) && is_blank(s))
 		supprimerGuillemets(s);
 	cmd = splt_args(s);
 	if (!cmd)
 		exit(EXIT_FAILURE);
 	while (cmd[i])
 	{
-		if (count_quotes(cmd[i], '\"') % 2 == 0 && strstr(cmd[i], "\"") != NULL && (strstr(cmd[i] , " ") && strstr(cmd[i] , "\t") ))
+		if (count_quotes(cmd[i], '\"') % 2 == 0 && strstr(cmd[i], "\"") != NULL && (strstr(cmd[i] , " ") && strstr(cmd[i] , "\t")))
 			del_dbl_quotes(cmd[i]);
-		else if (count_quotes(cmd[i], '\'') % 2 == 0 && strstr(cmd[i], "'") != NULL)
+		else if (count_quotes(cmd[i], '\'') % 2 == 0 && strstr(cmd[i], "'") != NULL && (strstr(cmd[i] , " ") && strstr(cmd[i] , "\t")))
 			del_sngl_quotes(cmd[i]);
 		i++;
 	}

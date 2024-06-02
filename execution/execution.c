@@ -6,7 +6,7 @@
 /*   By: sdiouane <sdiouane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/31 22:14:48 by sdiouane          #+#    #+#             */
-/*   Updated: 2024/05/29 18:56:19 by sdiouane         ###   ########.fr       */
+/*   Updated: 2024/06/02 17:53:14 by sdiouane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,6 @@ void execute(char *s, char **env, ExecutionData *data)
 	(1) && (cmd = NULL, chemin = NULL);
 	if (*env)
 	{
-		printf("----->|%s|\n", s);
 		cmd = check_quotes_before_execution(s);
 		if (cmd[0] == NULL)
 			exit(EXIT_FAILURE);
@@ -77,7 +76,6 @@ void execute(char *s, char **env, ExecutionData *data)
 			(ft_free_tab(cmd), exit(EXIT_FAILURE));
 		// if (builtins(data) == 1)
 		// {
-			printf("---->cmd[0] : |%s|\n", cmd[0]);
 			if (cmd[0][0] == '.' || cmd[0][0] == '/')
 				if (execve(cmd[0], cmd, env) == -1)
 					(ft_execut_error(cmd[0]), ft_free_tab(cmd), exit(EXIT_FAILURE));
@@ -90,6 +88,7 @@ void execute(char *s, char **env, ExecutionData *data)
 		// exit(EXIT_SUCCESS);
 	}
 }
+
 
 static void handle_child_process(ExecutionData *data)
 {

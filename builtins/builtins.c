@@ -6,7 +6,7 @@
 /*   By: sdiouane <sdiouane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/26 01:07:33 by sel-jadi          #+#    #+#             */
-/*   Updated: 2024/05/28 00:50:16 by sdiouane         ###   ########.fr       */
+/*   Updated: 2024/06/02 18:21:41 by sdiouane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,25 +84,25 @@ int	is_builtins(char **args, s_env **export_i, char **env, int *flag)
 {
 	char *pwd;
 
-	if (strcmp(args[0], ""))
+	if (args[0] && strcmp(args[0], ""))
 		supprimerGuillemets(args[0]);            
-	if (!strcmp(args[0], "exit"))
+	if (args[0] && !strcmp(args[0], "exit"))
 		exit_fct(args);
-	else if (!strcmp(args[0], "echo"))
+	else if (args[0] && !strcmp(args[0], "echo"))
 		echo_fct(args);
-	else if (!strcmp(args[0], "pwd"))
+	else if (args[0] && !strcmp(args[0], "pwd"))
 	{
 		pwd = getcwd(NULL, 0);
 		pwd_without_options(args, pwd);
 		free(pwd);
 	}
-	else if (!strcmp(args[0], "export"))
+	else if (args[0] && !strcmp(args[0], "export"))
 		*export_i = export_fct(args, *export_i, env);
-	else if (!strcmp(args[0], "unset"))
+	else if (args[0] && !strcmp(args[0], "unset"))
 		*export_i = unset_fct(args, *export_i);
-	else if (!strcmp(args[0], "cd"))
+	else if (args[0] && !strcmp(args[0], "cd"))
 		*export_i = execute_cd(args, *export_i);        
-	else if (!strcmp(args[0], "env") && !args[1])
+	else if (args[0] && !strcmp(args[0], "env") && !args[1])
 	{   
 		if (*(env) || !*(env))	
 			print_list(*export_i);
