@@ -6,7 +6,7 @@
 /*   By: sdiouane <sdiouane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/20 11:08:19 by sdiouane          #+#    #+#             */
-/*   Updated: 2024/05/23 11:57:03 by sdiouane         ###   ########.fr       */
+/*   Updated: 2024/06/02 20:18:14 by sdiouane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,7 @@ char *get_env_key(char *str, int i)
         int key_start = i;
         while (str[i] && ((str[i] >= 'a' && str[i] <= 'z')
 				|| (str[i] >= 'A' && str[i] <= 'Z') || (str[i] >= '0' && str[i] <= '9')
-				|| str[i] == '_'))
+				|| str[i] == '_' || str[i] == '?'))
             i++;
         key = (char *)malloc((i - key_start + 1) * sizeof(char));
         if (!key)

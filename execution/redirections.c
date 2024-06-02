@@ -6,7 +6,7 @@
 /*   By: sdiouane <sdiouane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/05 23:00:01 by sdiouane          #+#    #+#             */
-/*   Updated: 2024/05/28 01:39:40 by sdiouane         ###   ########.fr       */
+/*   Updated: 2024/06/02 20:39:53 by sdiouane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -150,14 +150,12 @@ void execute_with_redirection(ExecutionData *data)
 			redirection_double_out(red[i + 1], &fd_out);
 		if (!strcmp(red[i], ">"))
 			redirection_out(red[i + 1], &fd_out);
-		// if (!strcmp(red[i], "<<") && red[i + 1])
-			// heredoc(red[i + 1], data);
 		i++;
 	}
-	if (builtins(data) == 1)
-	{
+	// if (builtins(data) == 1)
+	// {
 		if (data->lst->cmd != NULL && strspn(data->lst->cmd, " ") != strlen(data->lst->cmd))
 			execute(data->lst->cmd, data->env, data);
-	}
+	// }
 	exit(EXIT_SUCCESS);
 }

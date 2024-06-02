@@ -6,7 +6,7 @@
 /*   By: sdiouane <sdiouane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 23:52:10 by sdiouane          #+#    #+#             */
-/*   Updated: 2024/06/02 18:18:14 by sdiouane         ###   ########.fr       */
+/*   Updated: 2024/06/02 20:31:06 by sdiouane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,8 +87,9 @@ void loop_fct(ExecutionData *data, char *line)
 			add_history(line);
 			if(parsing(line) == 1)
 			{
-				change_status(258, data);
 				syntax_error();
+				change_status(258, data);
+				// break ;
 			}
 			else
 			{

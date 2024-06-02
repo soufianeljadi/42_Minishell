@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exit_status.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sel-jadi <sel-jadi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sdiouane <sdiouane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/16 21:38:36 by sel-jadi          #+#    #+#             */
-/*   Updated: 2024/05/26 22:52:39 by sel-jadi         ###   ########.fr       */
+/*   Updated: 2024/06/02 20:34:07 by sdiouane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,9 +24,10 @@ void	change_status(int status, ExecutionData *data)
 		{
 			free(tmp->export_i->value);
 			tmp->export_i->value = ft_strdup(ft_itoa(g_flags.exit_status));
-			return ;
+			printf("value ---> %s\n", tmp->export_i->value);
+			break ;
 		}
-		tmp->export_i = tmp->export_i->next;
+		else
+			tmp->export_i = tmp->export_i->next;
 	}
 }
-
