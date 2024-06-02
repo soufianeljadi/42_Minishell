@@ -3,25 +3,25 @@
 /*                                                        :::      ::::::::   */
 /*   signal.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sdiouane <sdiouane@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sel-jadi <sel-jadi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/23 22:30:21 by sdiouane          #+#    #+#             */
-/*   Updated: 2024/06/02 18:07:06 by sdiouane         ###   ########.fr       */
+/*   Updated: 2024/06/02 22:19:33 by sel-jadi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-static void	suppress_output(void)
-{
-	struct termios	termios_p;
+// static void	suppress_output(void)
+// {
+// 	struct termios	termios_p;
 
-	if (tcgetattr(0, &termios_p) != 0)
-		perror("Minishell: tcgetattr");
-	termios_p.c_lflag &= ~ECHOCTL;
-	if (tcsetattr(0, 0, &termios_p) != 0)
-		perror("Minishell: tcsetattr");
-}
+// 	if (tcgetattr(0, &termios_p) != 0)
+// 		perror("Minishell: tcgetattr");
+// 	termios_p.c_lflag &= ~ECHOCTL;
+// 	if (tcsetattr(0, 0, &termios_p) != 0)
+// 		perror("Minishell: tcsetattr");
+// }
 
 void	handle_sigint_heredoc(int sig)
 {
@@ -47,7 +47,7 @@ static void	signal_ctrl_d(int sig)
 
 void	signals_init(void)
 {
-	suppress_output();
+	// suppress_output();
 	signal(SIGINT, signal_ctrl_c);
 	signal(SIGQUIT, signal_ctrl_d);
 }

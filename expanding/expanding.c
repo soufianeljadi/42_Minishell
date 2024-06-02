@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expanding.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sdiouane <sdiouane@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sel-jadi <sel-jadi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/27 19:58:08 by sdiouane          #+#    #+#             */
-/*   Updated: 2024/06/02 18:21:59 by sdiouane         ###   ########.fr       */
+/*   Updated: 2024/06/02 22:51:44 by sel-jadi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -152,6 +152,10 @@ char *exp_fct(char *commande, s_env *export_i, int *flag)
     while (exp_commande && exp_commande[p.i] != '\0')
 	{
         handle_quotes(exp_commande, &p);
+        if (exp_commande[p.i] == '$' && exp_commande[p.i + 1] == '?')
+        {
+            exp_commande = ft_str_replace(exp_commande, ft_strdup("$?"), ft_itoa(g_flags.exit_status));
+        }
         if (exp_commande[p.i] == '$' && (!p.quote_open || (p.quote_open && p.current_quote == '"')))
 		{
             exp_commande = process_variable(exp_commande, &p, export_i);

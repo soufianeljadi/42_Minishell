@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execution_utils.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sdiouane <sdiouane@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sel-jadi <sel-jadi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/17 09:55:09 by sdiouane          #+#    #+#             */
-/*   Updated: 2024/06/02 17:52:47 by sdiouane         ###   ########.fr       */
+/*   Updated: 2024/06/02 22:55:57 by sel-jadi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -117,9 +117,9 @@ char **check_quotes_before_execution(char *s)
 		exit(EXIT_FAILURE);
 	while (cmd[i])
 	{
-		if (count_quotes(cmd[i], '\"') % 2 == 0 && strstr(cmd[i], "\"") != NULL && (strstr(cmd[i] , " ") && strstr(cmd[i] , "\t")))
+		if (count_quotes(cmd[i], '\"') % 2 == 0 && strstr(cmd[i], "\"") != NULL /*&& (strstr(cmd[i] , " ") && strstr(cmd[i] , "\t"))*/)
 			del_dbl_quotes(cmd[i]);
-		else if (count_quotes(cmd[i], '\'') % 2 == 0 && strstr(cmd[i], "'") != NULL && (strstr(cmd[i] , " ") && strstr(cmd[i] , "\t")))
+		else if (count_quotes(cmd[i], '\'') % 2 == 0 && strstr(cmd[i], "'") != NULL /*&& (strstr(cmd[i] , " ") && strstr(cmd[i] , "\t"))*/)
 			del_sngl_quotes(cmd[i]);
 		i++;
 	}

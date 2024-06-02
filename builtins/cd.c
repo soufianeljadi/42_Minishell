@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cd.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sdiouane <sdiouane@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sel-jadi <sel-jadi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/25 17:00:00 by sdiouane          #+#    #+#             */
-/*   Updated: 2024/05/29 16:34:32 by sdiouane         ###   ########.fr       */
+/*   Updated: 2024/06/02 23:22:36 by sel-jadi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -118,6 +118,7 @@ s_env *execute_cd(char **args, s_env *lst)
 		home = get_env_value("HOME", lst);
 		if (!home)
 		{
+			g_flags.exit_status = 1;
 			ft_putstr_fd("minishell: cd: HOME not set\n", 2);
 			free(old_pwd);
 			return lst;
@@ -133,6 +134,7 @@ s_env *execute_cd(char **args, s_env *lst)
 	{
 		if (chdir(args[1]) != 0)
 		{
+			g_flags.exit_status = 1 * 256;
 			perror("cd");
 			free(old_pwd);
 			return lst;

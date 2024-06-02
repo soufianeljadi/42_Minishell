@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sdiouane <sdiouane@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sel-jadi <sel-jadi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 23:52:10 by sdiouane          #+#    #+#             */
-/*   Updated: 2024/06/02 20:31:06 by sdiouane         ###   ########.fr       */
+/*   Updated: 2024/06/02 23:19:26 by sel-jadi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,7 +88,7 @@ void loop_fct(ExecutionData *data, char *line)
 			if(parsing(line) == 1)
 			{
 				syntax_error();
-				change_status(258, data);
+				g_flags.exit_status = 258;
 				// break ;
 			}
 			else
@@ -96,13 +96,15 @@ void loop_fct(ExecutionData *data, char *line)
 				data->args = line_to_args(line);
 				data->lst = split_args_by_pipe(data->args);
 				data->lst = ft_expanding(&data, data->export_i);
-				print_command_list(data->lst);
+				// print_command_list(data->lst);
 				handle_herdoc(data);
 				(dup2(0, 3),dup2(1, 4), ft_execution(data));
 				(dup2(3, 0), dup2(4, 1), close(3), close(4));
 				(free (data->args)/*, free_noued_cmd(data->lst)*/);
 			}
 		}
+		else
+			g_flags.exit_status = 66048;
 	}	
 }
 
@@ -143,6 +145,7 @@ int main(int ac, char **av, char **env)
 	// 	printf("minishell: is not a tty\n");
 	// 	exit(EXIT_FAILURE);
 	// }
+	rl_catch_signals = 0;
 	if (env[0] == NULL)
 		export_i = split_export_i(export_i);
 	else

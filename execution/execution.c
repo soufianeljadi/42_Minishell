@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execution.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sdiouane <sdiouane@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sel-jadi <sel-jadi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/31 22:14:48 by sdiouane          #+#    #+#             */
-/*   Updated: 2024/06/02 20:43:26 by sdiouane         ###   ########.fr       */
+/*   Updated: 2024/06/02 22:56:06 by sel-jadi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -131,7 +131,7 @@ void	ft_execution(ExecutionData *data)
 		(syntax_error(), exit(EXIT_FAILURE));
 	if (data->lst->next == NULL)
 	{
-		signal(SIGINT, SIG_IGN);
+		// signal(SIGINT, SIG_IGN);
 		if (builtins(data) == 0)
 		{
 			if (data->lst->redirection != NULL)
@@ -156,4 +156,5 @@ void	ft_execution(ExecutionData *data)
 	}
     while (0 < wait(NULL))
 		;
+	signals_init();
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lsts.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sdiouane <sdiouane@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sel-jadi <sel-jadi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/13 00:32:13 by sdiouane          #+#    #+#             */
-/*   Updated: 2024/06/02 20:18:40 by sdiouane         ###   ########.fr       */
+/*   Updated: 2024/06/02 22:41:53 by sel-jadi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,7 +105,7 @@ void print_export(s_env *list)
 {
     while (list)
 	{
-        if (strcmp(list->key, "_") != 0 /*&& strcmp(list->key, "?") != 0*/)
+        if (strcmp(list->key, "_") != 0 && strcmp(list->key, "?") != 0)
 		{
             if (list->value == NULL)
                 printf("declare -x %s\n", list->key);
