@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: sel-jadi <sel-jadi@student.42.fr>          +#+  +:+       +#+         #
+#    By: sdiouane <sdiouane@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/03/12 23:52:42 by sdiouane          #+#    #+#              #
-#    Updated: 2024/06/02 22:52:46 by sel-jadi         ###   ########.fr        #
+#    Updated: 2024/06/03 10:57:44 by sdiouane         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -21,6 +21,7 @@ RDFLAGS =  -L $(shell brew --prefix readline)/lib -lreadline
 SRC =	minishell.c \
 		ft_itoa.c \
 		promt.c \
+		exit_stat.c \
     	parsing/ft_split.c \
 		parsing/lsts.c \
 		parsing/token.c \

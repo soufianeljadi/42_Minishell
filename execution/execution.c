@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   execution.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sel-jadi <sel-jadi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sdiouane <sdiouane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/31 22:14:48 by sdiouane          #+#    #+#             */
-/*   Updated: 2024/06/02 22:56:06 by sel-jadi         ###   ########.fr       */
+/*   Updated: 2024/06/03 18:17:37 by sdiouane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-int  ft_execut_error(char *cmd)
+void  ft_execut_error(char *cmd)
 {
     int         ref;
     DIR         *ptr;
@@ -23,7 +23,7 @@ int  ft_execut_error(char *cmd)
     if (ref == 2)
     {
         ft_putendl_fd(": command not found", 2);
-        return (127);
+        exit (127);
     }
     else if (ref == 13)
     {
@@ -31,13 +31,10 @@ int  ft_execut_error(char *cmd)
         if (ptr && !closedir(ptr))
             ft_putendl_fd(": is directory", 2);
         else
-        {
             ft_putstr_fd(": ", 2);
-            
-        }
-        return (126);
+        exit (126);
     }
-    return (0);
+    exit (0);
 }
 
 void remove_outermost_quotes(char *str)
@@ -70,25 +67,20 @@ void execute(char *s, char **env, ExecutionData *data)
 	{
 		cmd = check_quotes_before_execution(s);
 		if (cmd[0] == NULL)
-			exit(EXIT_FAILURE);
+			exit(exit_stat(1));
 		chemin = get_path(cmd[0], env);
 		if (chemin == NULL)
 			(ft_free_tab(cmd), exit(EXIT_FAILURE));
-		// if (builtins(data) == 1)
-		// {
-			if (cmd[0][0] == '.' || cmd[0][0] == '/')
-				if (execve(cmd[0], cmd, env) == -1)
-					(ft_execut_error(cmd[0]), ft_free_tab(cmd), exit(EXIT_FAILURE));
-			if (execve(chemin, cmd, env) == -1 && strcmp(cmd[0], "\0"))
-			{
-				if (strcmp(cmd[0], "\0"))
-					(ft_execut_error(cmd[0]), ft_free_tab(cmd), exit(EXIT_FAILURE));
-			}
-		// }
-		// exit(EXIT_SUCCESS);
+		if (cmd[0][0] == '.' || cmd[0][0] == '/')
+			if (execve(cmd[0], cmd, env) == -1)
+				(ft_execut_error(cmd[0]), ft_free_tab(cmd), exit(EXIT_FAILURE));
+		if (execve(chemin, cmd, env) == -1 && strcmp(cmd[0], "\0"))
+		{
+			if (strcmp(cmd[0], "\0"))
+				(ft_execut_error(cmd[0]) ,ft_free_tab(cmd), exit(EXIT_FAILURE));
+		}
 	}
 }
-
 
 static void handle_child_process(ExecutionData *data)
 {
@@ -125,6 +117,7 @@ static void execute_command(ExecutionData *data)
 
 void	ft_execution(ExecutionData *data)
 {
+	int st;
 	data->env = struct_to_char(&data->export_i);
     add_last_cmd(&data->export_i, data->args);
 	if (!ft_strncmp(data->args[0], "<<", 2) && !data->args[1])
@@ -132,17 +125,8 @@ void	ft_execution(ExecutionData *data)
 	if (data->lst->next == NULL)
 	{
 		// signal(SIGINT, SIG_IGN);
-		if (builtins(data) == 0)
-		{
-			if (data->lst->redirection != NULL)
-			{
-				execute_with_redirection(data);
-			}
-		}
-		else if (builtins(data) == 1)
-		{		
+		if (builtins(data) == 1)	
 			execute_command(data);
-		}
 	}
 	else
 	{
@@ -154,7 +138,10 @@ void	ft_execution(ExecutionData *data)
 			data->lst = data->lst->next;         
 		}
 	}
-    while (0 < wait(NULL))
-		;
+    while (0 < wait(&st))
+	{
+		
+		exit_stat(WEXITSTATUS(st));
+	}
 	signals_init();
 }

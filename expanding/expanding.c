@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expanding.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sel-jadi <sel-jadi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sdiouane <sdiouane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/27 19:58:08 by sdiouane          #+#    #+#             */
-/*   Updated: 2024/06/02 22:51:44 by sel-jadi         ###   ########.fr       */
+/*   Updated: 2024/06/03 14:58:50 by sdiouane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,8 @@
 
 void check_memory_allocation(void *ptr)
 {
-    if (!ptr) exit(EXIT_FAILURE);
+    if (!ptr)
+        exit(exit_stat(1));
 }
 
 
@@ -121,6 +122,8 @@ char *process_variable(char *exp_commande, t_p *p, s_env *export_i)
 	}
     if (!value || !strcmp(value, "") || !strcmp(value, " "))
 	{
+        if (!value)
+            exit_stat(1);
 		if (strcmp(key, ""))
 		{
 			full_key = ft_strjoin("$", key);
@@ -146,15 +149,17 @@ char *exp_fct(char *commande, s_env *export_i, int *flag)
     char *exp_commande;
     t_p p = {0, 0, 0, '\0'};
 	
-    if (!commande) exit(EXIT_FAILURE);
-    exp_commande = strdup(commande);
+    if (!commande)
+        exit(exit_stat(1));
+    exp_commande = ft_strdup(commande);
     check_memory_allocation(exp_commande);
     while (exp_commande && exp_commande[p.i] != '\0')
 	{
         handle_quotes(exp_commande, &p);
         if (exp_commande[p.i] == '$' && exp_commande[p.i + 1] == '?')
         {
-            exp_commande = ft_str_replace(exp_commande, ft_strdup("$?"), ft_itoa(g_flags.exit_status));
+            exp_commande = ft_str_replace(exp_commande, ft_strdup("$?"), ft_itoa(exit_stat(-1)));
+            // exit_stat(127);
         }
         if (exp_commande[p.i] == '$' && (!p.quote_open || (p.quote_open && p.current_quote == '"')))
 		{
@@ -162,6 +167,7 @@ char *exp_fct(char *commande, s_env *export_i, int *flag)
             check_memory_allocation(exp_commande);
 			*flag = 1;
         }
+        // exit_stat(15);
         p.i++;
     }
     return (exp_commande);

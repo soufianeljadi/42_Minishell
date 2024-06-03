@@ -793,3 +793,20 @@
 // 	new("export x p xx");
 // 	return (0);
 // }
+
+static int var;
+int exit_s(int stat)
+{
+
+    if (stat != -1)
+        var = stat;
+    return (var);
+}
+
+
+int main()
+{
+   exit_s(255);
+   exit_s(-1);
+printf("%d", var);
+}

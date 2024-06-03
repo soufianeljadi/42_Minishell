@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sel-jadi <sel-jadi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sdiouane <sdiouane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 23:51:44 by sdiouane          #+#    #+#             */
-/*   Updated: 2024/05/30 00:44:18 by sel-jadi         ###   ########.fr       */
+/*   Updated: 2024/06/03 16:41:54 by sdiouane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -329,8 +329,11 @@ s_env *not_null(char **args, s_env *env);
 void fct_equal(char **args, s_env *env, char *key);
 void ftc_concatination(char **args, s_env *env, char *key);
 void remove_q(char *chaine);
-int  ft_execut_error(char *cmd);
+
+void  ft_execut_error(char *cmd);
+
 t_var	g_flags;
 char *add_protectiom(char *str);
 int count_quotes(char *str, char c);
+int exit_stat(int stat);
 #endif

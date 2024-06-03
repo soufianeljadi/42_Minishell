@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sel-jadi <sel-jadi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sdiouane <sdiouane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 23:52:10 by sdiouane          #+#    #+#             */
-/*   Updated: 2024/06/02 23:19:26 by sel-jadi         ###   ########.fr       */
+/*   Updated: 2024/06/03 18:17:53 by sdiouane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,8 +88,7 @@ void loop_fct(ExecutionData *data, char *line)
 			if(parsing(line) == 1)
 			{
 				syntax_error();
-				g_flags.exit_status = 258;
-				// break ;
+				exit_stat(258);
 			}
 			else
 			{
@@ -103,8 +102,8 @@ void loop_fct(ExecutionData *data, char *line)
 				(free (data->args)/*, free_noued_cmd(data->lst)*/);
 			}
 		}
-		else
-			g_flags.exit_status = 66048;
+		// else
+			// exit_stat(66048);
 	}	
 }
 
@@ -140,11 +139,11 @@ int main(int ac, char **av, char **env)
 	(export_i = NULL, line = NULL);
 	if (ac != 1)
 		(printf("Args not allowed !\n"),exit(EXIT_FAILURE));
-	// if (!isatty(STDIN_FILENO))
-	// {
-	// 	printf("minishell: is not a tty\n");
-	// 	exit(EXIT_FAILURE);
-	// }
+	if (!isatty(STDIN_FILENO))
+	{
+		printf("minishell: is not a tty\n");
+		exit(EXIT_FAILURE);
+	}
 	rl_catch_signals = 0;
 	if (env[0] == NULL)
 		export_i = split_export_i(export_i);

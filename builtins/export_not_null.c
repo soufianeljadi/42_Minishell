@@ -6,7 +6,7 @@
 /*   By: sdiouane <sdiouane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/24 21:25:42 by sdiouane          #+#    #+#             */
-/*   Updated: 2024/06/02 20:16:11 by sdiouane         ###   ########.fr       */
+/*   Updated: 2024/06/03 11:00:41 by sdiouane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,10 @@ s_env *process_export_args(char **args, s_env *env)
 				j++;
 			key = ft_substr(args[i], 0, j);
 			if (args[i][j] == '+' && args[i][j + 1] != '=')
+			{
 				printf("export : %c, not a valid identifier", args[i][j]);
+				exit_stat(1);
+			}
 			else if (verif_export(key) == 0)
 			{
 				if (args[i][j] == '=')
@@ -50,7 +53,10 @@ s_env *process_export_args(char **args, s_env *env)
 					ft_lstadd_back(&env, ft_lstnew_data(NULL, key));
 			}
 			else
+			{
 				fprintf(stderr, "minishell: export: `%s': not a valid identifier\n", key);
+				exit_stat(1);
+			}
         i++;
     }
     return env;

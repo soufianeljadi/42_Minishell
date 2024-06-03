@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cd.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sel-jadi <sel-jadi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sdiouane <sdiouane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/25 17:00:00 by sdiouane          #+#    #+#             */
-/*   Updated: 2024/06/02 23:22:36 by sel-jadi         ###   ########.fr       */
+/*   Updated: 2024/06/03 14:05:33 by sdiouane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,7 +84,7 @@ s_env *update_env_var(s_env *lst, char *key, char *new_value)
 	{
 		if (!strcmp(lst->key, key))
 		{
-			free(lst->value); // libérer l'ancienne valeur
+			free(lst->value);
 			lst->value = ft_strdup(new_value);
 		}
 		lst = lst->next;
@@ -102,11 +102,6 @@ s_env *execute_cd(char **args, s_env *lst)
 	(1) && (i = 0, new_pwd = NULL, old_pwd = NULL);
 	while (args[i])
 		i++;
-	// if (i > 2)
-	// {
-	//     ft_putstr_fd("minishell: cd: too many arguments\n", 2);
-	//     return (lst);
-	// }
 	old_pwd = getcwd(NULL, 0);
 	if (!old_pwd)
 	{
@@ -118,7 +113,7 @@ s_env *execute_cd(char **args, s_env *lst)
 		home = get_env_value("HOME", lst);
 		if (!home)
 		{
-			g_flags.exit_status = 1;
+			exit_stat(1);
 			ft_putstr_fd("minishell: cd: HOME not set\n", 2);
 			free(old_pwd);
 			return lst;
@@ -134,7 +129,7 @@ s_env *execute_cd(char **args, s_env *lst)
 	{
 		if (chdir(args[1]) != 0)
 		{
-			g_flags.exit_status = 1 * 256;
+			exit_stat(256);
 			perror("cd");
 			free(old_pwd);
 			return lst;
@@ -150,6 +145,5 @@ s_env *execute_cd(char **args, s_env *lst)
 	lst = update_env_var(lst, "PWD", new_pwd);
 	free(old_pwd);
 	free(new_pwd);
-
 	return lst;
 }

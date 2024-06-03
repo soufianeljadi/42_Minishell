@@ -6,7 +6,7 @@
 /*   By: sdiouane <sdiouane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/23 15:04:54 by sdiouane          #+#    #+#             */
-/*   Updated: 2024/05/20 21:56:26 by sdiouane         ###   ########.fr       */
+/*   Updated: 2024/06/03 14:06:42 by sdiouane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,10 @@ s_env *unset_fct(char **args, s_env *env)
                 s_env *prev = NULL;
                 s_env *current = env;
                 if (verif_export(key) == 1)
+                {
                     fprintf(stderr, "minishell: unset: %s: not a valid identifier\n", key);
+                    exit_stat(1);
+                }
 				else
 				{
 					while (current != NULL)
@@ -88,6 +91,7 @@ s_env *unset_fct(char **args, s_env *env)
             i++;
         }
     }
+    exit_stat(0);
     return env;
 }
 

@@ -6,7 +6,7 @@
 /*   By: sdiouane <sdiouane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/20 15:24:11 by sdiouane          #+#    #+#             */
-/*   Updated: 2024/05/27 23:28:17 by sdiouane         ###   ########.fr       */
+/*   Updated: 2024/06/03 14:06:09 by sdiouane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,6 +101,7 @@ void fct_equal(char **args, s_env *env, char *key)
 		env->j++;
 	char *value = extract_value(args[env->i], start, env->j);
 	update_env_value(env, key, value);
+	exit_stat(0);
 }
 
 void concat_value(s_env *env, char *key, char *value)
@@ -115,6 +116,7 @@ void concat_value(s_env *env, char *key, char *value)
         }
         current = current->next;
     }
+	exit_stat(0);
 }
 
 void ftc_concatination(char **args, s_env *env, char *key)
