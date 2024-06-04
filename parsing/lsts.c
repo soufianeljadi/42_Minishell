@@ -6,7 +6,7 @@
 /*   By: sel-jadi <sel-jadi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/13 00:32:13 by sdiouane          #+#    #+#             */
-/*   Updated: 2024/06/02 22:41:53 by sel-jadi         ###   ########.fr       */
+/*   Updated: 2024/06/04 23:19:27 by sel-jadi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,35 +25,21 @@ s_env	*ft_lstnew(void)
 	return (b);
 }
 
-// s_env	*ft_lstnew_data(char *value, char *key)
-// {
-// 	s_env	*b;
-
-// 	b = (s_env *)malloc(sizeof(s_env));
-// 	if (!b)
-// 		exit(EXIT_FAILURE);
-// 	b ->key = key;
-// 	b ->value = value;
-// 	b ->next = NULL;
-// 	return (b);
-// }
-
-s_env *ft_lstnew_data(char *value, char *key)
+s_env	*ft_lstnew_data(char *value, char *key)
 {
-    s_env *b;
+	s_env	*b;
 
-    b = (s_env *)malloc(sizeof(s_env));
-    if (!b)
-        exit(EXIT_FAILURE);
-    b->key = key;
-    if (value)
-        b->value = value;
-    else
-        b->value = NULL;
-    b->next = NULL;
-    return (b);
+	b = (s_env *)malloc(sizeof(s_env));
+	if (!b)
+		exit(EXIT_FAILURE);
+	b->key = key;
+	if (value)
+		b->value = value;
+	else
+		b->value = NULL;
+	b->next = NULL;
+	return (b);
 }
-
 
 void	ft_lstadd_back(s_env **lst, s_env *new)
 {
@@ -101,14 +87,14 @@ void	print_list(s_env *list)
 	}
 }
 
-void print_export(s_env *list)
+void	print_export(s_env *list)
 {
-    while (list)
+	while (list)
 	{
-        if (strcmp(list->key, "_") != 0 && strcmp(list->key, "?") != 0)
+		if (strcmp(list->key, "_") != 0 && strcmp(list->key, "?") != 0)
 		{
-            if (list->value == NULL)
-                printf("declare -x %s\n", list->key);
+			if (list->value == NULL)
+				printf("declare -x %s\n", list->key);
 			else
 			{
 				if (!strcmp(list->value, ""))
@@ -116,17 +102,16 @@ void print_export(s_env *list)
 					printf("declare -x %s=", list->key);
 					printf("\"%s\"\n", list->value);
 				}
-                else if (strcmp(list->value, ""))
+				else if (strcmp(list->value, ""))
 				{
-                	printf("declare -x %s=", list->key);
+					printf("declare -x %s=", list->key);
 					if (list->value[0] == '"')
 						printf("%s\n", list->value);
 					else
-                    	printf("\"%s\"\n", list->value);
+						printf("\"%s\"\n", list->value);
 				}
 			}
 		}
 		list = list->next;
 	}
 }
- // dup for builtins 

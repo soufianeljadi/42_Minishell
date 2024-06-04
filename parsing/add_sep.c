@@ -6,135 +6,108 @@
 /*   By: sel-jadi <sel-jadi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/25 23:56:31 by sel-jadi          #+#    #+#             */
-/*   Updated: 2024/06/02 23:04:27 by sel-jadi         ###   ########.fr       */
+/*   Updated: 2024/06/04 23:16:24 by sel-jadi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-char *ft_add(char c, char *s, int index)
+char	*ft_add(char c, char *s, int index)
 {
-    int len = strlen(s);
-    char *tmp = (char *)malloc(sizeof(char) * (len + 2)); // Allocate space for the new string
+	int		len;
+	char	*tmp;
 
-    if (!tmp)
-    {
-        free(s);
-        return NULL;
-    }
-
-    for (int i = 0, j = 0; i <= len; i++, j++)
-    {
-        if (j == index)
-        {
-            tmp[j++] = c;
-        }
-        tmp[j] = s[i];
-    }
-
-    tmp[len + 1] = '\0'; // Null-terminate the new string
-    // free(s);
-    return tmp;
+	tmp = (char *)malloc(sizeof(char) * (len + 2));
+	len = strlen(s);
+	if (!tmp)
+	{
+		free(s);
+		return (NULL);
+	}
+	for (int i = 0, j = 0; i <= len; i++, j++)
+	{
+		if (j == index)
+			tmp[j++] = c;
+		tmp[j] = s[i];
+	}
+	tmp[len + 1] = '\0';
+	return (tmp);
 }
 
-int ft_sep_red(char **s, int *i)
+int	ft_sep_red(char **s, int *i)
 {
-    if ((*s)[*i + 1] == (*s)[*i])
-    {
-        *s = ft_add(' ', *s, *i);
-        if (*s == NULL)
-        {
-            return -1;
-        }
-        (*i) += 2;
-    }
-    else if ((*s)[*i] == '>' || (*s)[*i] == '<')
-    {
-        *s = ft_add(' ', *s, *i);
-        if (*s == NULL)
-        {
-            return -1;
-        }
-        (*i)++;
-    }
-    (*i)++;
-    *s = ft_add(' ', *s, *i);
-    if (*s == NULL)
-    {
-        return -1;
-    }
-    return 1;
+	if ((*s)[*i + 1] == (*s)[*i])
+	{
+		*s = ft_add(' ', *s, *i);
+		if (*s == NULL)
+			return (-1);
+		(*i) += 2;
+	}
+	else if ((*s)[*i] == '>' || (*s)[*i] == '<')
+	{
+		*s = ft_add(' ', *s, *i);
+		if (*s == NULL)
+			return (-1);
+		(*i)++;
+	}
+	(*i)++;
+	*s = ft_add(' ', *s, *i);
+	if (*s == NULL)
+		return (-1);
+	return (1);
 }
 
-void ft_count_quotes(char *s, int i, t_parse *d)
+void	ft_count_quotes(char *s, int i, t_parse *d)
 {
-    if (s[i] == '\'' && d->dq == 0)
-    {
-        (d->sq)++;
-    }
-    if (s[i] == '"' && d->sq == 0)
-    {
-        (d->dq)++;
-    }
-    if (d->sq == 2)
-    {
-        d->sq = 0;
-    }
-    else if (d->dq == 2)
-    {
-        d->dq = 0;
-    }
+	if (s[i] == '\'' && d->dq == 0)
+		(d->sq)++;
+	if (s[i] == '"' && d->sq == 0)
+		(d->dq)++;
+	if (d->sq == 2)
+		d->sq = 0;
+	else if (d->dq == 2)
+		d->dq = 0;
 }
 
-int check_after(char *s, int i)
+int	check_after(char *s, int i)
 {
-    while (s[i])
-    {
-        if (s[i] == ' ' || s[i] == '\t')
-        {
-            i++;
-        }
-        else
-        {
-            return 0;
-        }
-    }
-    return 1;
+	while (s[i])
+	{
+		if (s[i] == ' ' || s[i] == '\t')
+			i++;
+		else
+			return (0);
+	}
+	return (1);
 }
 
-char *ft_add_sep(char *s, t_parse d)
+char	*ft_add_sep(char *s, t_parse d)
 {
-    if (!s)
-        return NULL;
-    d.i = 0;
-    d.dq = 0;
-    d.sq = 0;
-    while (s[(d.i)] != '\0')
-    {
-        if (s[d.i] == '\'' || s[d.i] == '"')
-            ft_count_quotes(s, d.i, &d);
-        else if ((s[d.i] == '>' || s[d.i] == '<') && (d.sq == 0 && d.dq == 0))
-        {
-            if (ft_sep_red(&s, &(d.i)) == -1)
-            {
-                return NULL;
-            }
-        }
-        else if ((s[d.i] == '|') && (d.sq == 0 && d.dq == 0))
-        {
-            s = ft_add(' ', s, d.i);
-            if (s == NULL)
-            {
-                return NULL;
-            }
-            d.i += 2;
-            s = ft_add(' ', s, d.i);
-            if (s == NULL)
-            {
-                return NULL;
-            }
-        }
-        d.i++;
-    }
-    return s;
+	if (!s)
+		return (NULL);
+	d.i = 0;
+	d.dq = 0;
+	d.sq = 0;
+	while (s[(d.i)] != '\0')
+	{
+		if (s[d.i] == '\'' || s[d.i] == '"')
+			ft_count_quotes(s, d.i, &d);
+		else if ((s[d.i] == '>' || s[d.i] == '<') && (d.sq == 0 && d.dq == 0))
+		{
+			if (ft_sep_red(&s, &(d.i)) == -1)
+				return (NULL);
+		}
+		else if ((s[d.i] == '|') && (d.sq == 0 && d.dq == 0))
+		{
+			s = ft_add(' ', s, d.i);
+			if (s == NULL)
+				return (NULL);
+			d.i += 2;
+			s = ft_add(' ', s, d.i);
+			if (s == NULL)
+				return (NULL);
+		}
+		d.i++;
+	}
+	return (s);
 }

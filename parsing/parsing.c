@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sdiouane <sdiouane@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sel-jadi <sel-jadi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/16 15:55:13 by sdiouane          #+#    #+#             */
-/*   Updated: 2024/06/04 18:21:51 by sdiouane         ###   ########.fr       */
+/*   Updated: 2024/06/04 23:25:42 by sel-jadi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ Token**	parse_command(char	*command)
 	char	*token_str;
 	int		token_count;
 
-	tokens = malloc(sizeof(Token*) * strlen(command));
+	tokens = malloc(sizeof(Token *) * strlen(command));
 	token_str = ft_strtok(command, " ");
 	token_count = 0;
 	if (tokens == NULL)
@@ -68,7 +68,7 @@ void	nbr_quotes(char *str)
 }
 
 int	parsing(char *line, ExecutionData *data)
-{	
+{
 	(void)data;
 	if (parse_single_input(line, '|') || line[0] == '|')
 		return (1);
