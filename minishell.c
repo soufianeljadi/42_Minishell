@@ -6,7 +6,7 @@
 /*   By: sdiouane <sdiouane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 23:52:10 by sdiouane          #+#    #+#             */
-/*   Updated: 2024/06/04 19:04:12 by sdiouane         ###   ########.fr       */
+/*   Updated: 2024/06/04 19:18:40 by sdiouane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,12 +85,7 @@ void	handle_heredocs(char **delem, ExecutionData *data)
 	char	*buf;
 	int flag = 0;
 	int p = 0;
-	// if (check_delem(*delem))
-	// {
-	// 	syntax_error();
-	// 	exit_stat(258);
-	// 	return ;
-	// }
+	
 	fd = open("tmp.txt", O_TRUNC | O_CREAT | O_RDWR, 0777);
 	buf = readline("heredocs >> ");
 	if (strstr(*delem, "'") || strstr(*delem, "\""))
@@ -102,7 +97,7 @@ void	handle_heredocs(char **delem, ExecutionData *data)
 	{
 		if (strcmp(buf, *delem) == 0)
 			break ;
-		if (flag == 1)
+		if (flag == 0)
 			buf = exp_fct(buf, data->export_i, &p);
 		write(fd, buf, ft_strlen(buf));
 		write(fd, "\n", 1);
@@ -116,7 +111,7 @@ void	handle_heredocs(char **delem, ExecutionData *data)
 void check_here_doc(ExecutionData *data)
 {
 	int i;
-	
+
 	i = 0;
 	if (!data->args)
 		return ;

@@ -6,7 +6,7 @@
 /*   By: sdiouane <sdiouane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/05 23:00:01 by sdiouane          #+#    #+#             */
-/*   Updated: 2024/06/04 11:20:34 by sdiouane         ###   ########.fr       */
+/*   Updated: 2024/06/04 19:17:27 by sdiouane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,6 +90,7 @@ void redirection_in(char *redirection, int *fd)
 			ft_putendl_fd(strerror(errno), 2);
 			exit(EXIT_FAILURE);
 		}
+		unlink(redirection);
 		redirection = NULL;
 		dup2(*fd, STDIN_FILENO);
 		close(*fd);
@@ -152,10 +153,6 @@ void execute_with_redirection(ExecutionData *data)
 			redirection_out(red[i + 1], &fd_out);
 		i++;
 	}
-	// if (builtins(data) == 1)
-	// {
-		if (data->lst->cmd != NULL && strspn(data->lst->cmd, " ") != strlen(data->lst->cmd))
-			execute(data->lst->cmd, data->env, data);
-	// }
-	// exit(exit_stat(0));
+	if (data->lst->cmd != NULL && strspn(data->lst->cmd, " ") != strlen(data->lst->cmd))
+		execute(data->lst->cmd, data->env, data);
 }
