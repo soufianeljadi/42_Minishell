@@ -6,7 +6,7 @@
 /*   By: sdiouane <sdiouane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 23:52:10 by sdiouane          #+#    #+#             */
-/*   Updated: 2024/06/03 18:17:53 by sdiouane         ###   ########.fr       */
+/*   Updated: 2024/06/04 15:42:29 by sdiouane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,6 +71,49 @@ ExecutionData *init_data(char **args, noued_cmd *cmd, s_env *export_i)
 	return (data);
 }
 
+void	handle_heredocs(char **delem, ExecutionData *data)
+{
+	int		fd;
+	char	*buf;
+	int flag = 0;
+	int p = 0;
+	fd = open("tmp.txt", O_TRUNC | O_CREAT | O_RDWR, 0777);
+	buf = readline("heredocs >> ");
+	if (strstr(*delem, "'") || strstr(*delem, "\""))
+	{
+		flag = 1;
+		supprimerGuillemets(*delem);
+	}
+	while (1)
+	{
+		if (strcmp(buf, *delem) == 0)
+			break ;
+		if (flag == 1)
+			buf = exp_fct(buf, data->export_i, &p);
+		write(fd, buf, ft_strlen(buf));
+		write(fd, "\n", 1);
+		buf = readline("heredocs >> ");
+	}
+	free(buf);
+	close(fd);
+	*delem = ft_strdup("tmp.txt");
+}
+
+void check_here_doc(ExecutionData *data)
+{
+	int i;
+	
+	i = 0;
+	if (!data->args)
+		return ;
+	while (data->args[i])
+	{
+		if (!strcmp(data->args[i], "<<") && data->args[i + 1])
+			handle_heredocs(&data->args[i + 1], data);
+		i++;
+	}
+}
+
 void loop_fct(ExecutionData *data, char *line)
 {
 	char	*pwd;
@@ -79,7 +122,7 @@ void loop_fct(ExecutionData *data, char *line)
 	while (42)
 	{
 		// (pwd = print_directory(pwd), line = readline(pwd));
-		line = readline(ANSI_COLOR_GREEN "minishell >" ANSI_RESET_ALL);
+		line = readline(ANSI_COLOR_GREEN "minishell > " ANSI_RESET_ALL);
 		if (!line)
 			(printf("exit\n"),exit(0));
 		if(line != NULL && only_spaces(line) == 0)
@@ -93,17 +136,17 @@ void loop_fct(ExecutionData *data, char *line)
 			else
 			{
 				data->args = line_to_args(line);
+				check_here_doc(data);
 				data->lst = split_args_by_pipe(data->args);
 				data->lst = ft_expanding(&data, data->export_i);
 				// print_command_list(data->lst);
-				handle_herdoc(data);
 				(dup2(0, 3),dup2(1, 4), ft_execution(data));
 				(dup2(3, 0), dup2(4, 1), close(3), close(4));
 				(free (data->args)/*, free_noued_cmd(data->lst)*/);
 			}
 		}
 		// else
-			// exit_stat(66048);
+			// exit_stat(66048);    
 	}	
 }
 

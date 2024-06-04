@@ -6,7 +6,7 @@
 /*   By: sdiouane <sdiouane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/27 19:58:08 by sdiouane          #+#    #+#             */
-/*   Updated: 2024/06/03 14:58:50 by sdiouane         ###   ########.fr       */
+/*   Updated: 2024/06/04 09:26:14 by sdiouane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -122,14 +122,13 @@ char *process_variable(char *exp_commande, t_p *p, s_env *export_i)
 	}
     if (!value || !strcmp(value, "") || !strcmp(value, " "))
 	{
-        if (!value)
-            exit_stat(1);
 		if (strcmp(key, ""))
 		{
 			full_key = ft_strjoin("$", key);
         	exp_commande = ft_str_replace(exp_commande, full_key, strdup(" "));
 		}
         (free(key), free(value));
+        printf("%d\n",exit_stat(0));
     }
 	else
 	{
@@ -159,7 +158,6 @@ char *exp_fct(char *commande, s_env *export_i, int *flag)
         if (exp_commande[p.i] == '$' && exp_commande[p.i + 1] == '?')
         {
             exp_commande = ft_str_replace(exp_commande, ft_strdup("$?"), ft_itoa(exit_stat(-1)));
-            // exit_stat(127);
         }
         if (exp_commande[p.i] == '$' && (!p.quote_open || (p.quote_open && p.current_quote == '"')))
 		{
@@ -190,7 +188,7 @@ noued_cmd *ft_expanding(ExecutionData **data, s_env *export_i)
     current = tmp->lst;
     while (current)
         current = current->next;
-		
+	
     return (tmp->lst);
 }
 

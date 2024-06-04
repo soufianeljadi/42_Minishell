@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   heredoc.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sel-jadi <sel-jadi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sdiouane <sdiouane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/11 19:37:55 by sel-jadi          #+#    #+#             */
-/*   Updated: 2024/06/02 22:32:59 by sel-jadi         ###   ########.fr       */
+/*   Updated: 2024/06/03 19:29:39 by sdiouane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ void	go_heredoc( char *red, ExecutionData *data, int fd_doc)
 
 	while (1)
 	{
-		line = readline("<-heredoc-> ");
+		line = readline(" > ");
 		if (!line)
 			break ;
 		if (ft_strncmp(line, red, ft_strlen(data->args[1]) + 1) == 0)

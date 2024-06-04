@@ -794,19 +794,106 @@
 // 	return (0);
 // }
 
-static int var;
-int exit_s(int stat)
-{
+// static int var;
+// int exit_s(int stat)
+// {
 
-    if (stat != -1)
-        var = stat;
-    return (var);
+//     if (stat != -1)
+//         var = stat;
+//     return (var);
+// }
+
+
+// int main()
+// {
+//    exit_s(255);
+//    exit_s(-1);
+// printf("%d", var);
+// }
+
+
+
+
+void	handle_heredocs(char **delem, ExecutionData *data)
+{
+	int		fd;
+	int		flag;
+	char	*buf;
+
+	(void)data;
+	flag = 0;
+	fd = open("tmp,txt", O_CREAT | O_WRONLY | O_RDWR, 0777);
+	buf = readline("heredocs >> ");
+	// if (strstr(*delem, "\"") || strstr(*delem, "'"))
+	// {
+	// 	flag = 1;
+	// 	supprimerGuillemets(*delem);
+	// }
+	while (1)
+	{
+		if (strcmp(buf, *delem) == 0)
+			break ;
+		// if (flag == 1)
+		// {
+		// 	ft_expanding(&data, data->export_i);
+		// }
+		write(fd, buf, ft_strlen(buf));
+		write(fd, "\n", 1);
+		buf = readline("heredocs >> ");
+	}
+	free(buf);
+	if (close(fd) == -1)
+		exit(1);
+	*delem = ft_strdup("tmp,txt");
 }
 
-
-int main()
+void check_here_doc(ExecutionData *data)
 {
-   exit_s(255);
-   exit_s(-1);
-printf("%d", var);
+	int i;
+	
+	i = 0;
+	if (!data->args)
+		return ;
+	while (data->args[i])
+	{
+		if (!strcmp(data->args[i], "<<") && data->args[i + 1])
+			handle_heredocs(&data->args[i + 1], data);
+		i++;
+	}
+}
+
+void loop_fct(ExecutionData *data, char *line)
+{
+	char	*pwd;
+	
+	pwd = NULL;
+	while (42)
+	{
+		// (pwd = print_directory(pwd), line = readline(pwd));
+		line = readline(ANSI_COLOR_GREEN "minishell > " ANSI_RESET_ALL);
+		if (!line)
+			(printf("exit\n"),exit(0));
+		if(line != NULL && only_spaces(line) == 0)
+		{
+			add_history(line);
+			if(parsing(line) == 1)
+			{
+				syntax_error();
+				exit_stat(258);
+			}
+			else
+			{
+				data->args = line_to_args(line);
+				check_here_doc(data);
+				data->lst = split_args_by_pipe(data->args);
+				data->lst = ft_expanding(&data, data->export_i);
+				// print_command_list(data->lst);
+				(dup2(0, 3),dup2(1, 4), ft_execution(data));
+				(dup2(3, 0), dup2(4, 1), close(3), close(4));
+				(free (data->args)/*, free_noued_cmd(data->lst)*/);
+			}
+		}
+		// else
+			// exit_stat(66048);    
+	}	
 }

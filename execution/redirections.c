@@ -6,7 +6,7 @@
 /*   By: sdiouane <sdiouane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/05 23:00:01 by sdiouane          #+#    #+#             */
-/*   Updated: 2024/06/03 14:06:58 by sdiouane         ###   ########.fr       */
+/*   Updated: 2024/06/04 11:20:34 by sdiouane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -144,7 +144,7 @@ void execute_with_redirection(ExecutionData *data)
 		return ;
 	while (red[i])
 	{
-		if (!strcmp(red[i], "<"))
+		if (!strcmp(red[i], "<") || !strcmp(red[i], "<<"))
 			redirection_in(red[i + 1], &fd_in);
 		if (!strcmp(red[i], ">>"))
 			redirection_double_out(red[i + 1], &fd_out);

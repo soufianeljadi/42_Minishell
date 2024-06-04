@@ -6,7 +6,7 @@
 /*   By: sdiouane <sdiouane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/31 22:14:48 by sdiouane          #+#    #+#             */
-/*   Updated: 2024/06/03 18:17:37 by sdiouane         ###   ########.fr       */
+/*   Updated: 2024/06/04 11:24:55 by sdiouane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,17 +67,17 @@ void execute(char *s, char **env, ExecutionData *data)
 	{
 		cmd = check_quotes_before_execution(s);
 		if (cmd[0] == NULL)
-			exit(exit_stat(1));
+			exit(exit_stat(-1));
 		chemin = get_path(cmd[0], env);
 		if (chemin == NULL)
-			(ft_free_tab(cmd), exit(EXIT_FAILURE));
+			(ft_free_tab(cmd), exit(0));
 		if (cmd[0][0] == '.' || cmd[0][0] == '/')
 			if (execve(cmd[0], cmd, env) == -1)
-				(ft_execut_error(cmd[0]), ft_free_tab(cmd), exit(EXIT_FAILURE));
+				(ft_execut_error(cmd[0]), ft_free_tab(cmd), exit(0));
 		if (execve(chemin, cmd, env) == -1 && strcmp(cmd[0], "\0"))
 		{
 			if (strcmp(cmd[0], "\0"))
-				(ft_execut_error(cmd[0]) ,ft_free_tab(cmd), exit(EXIT_FAILURE));
+				(ft_execut_error(cmd[0]) ,ft_free_tab(cmd), exit(0));
 		}
 	}
 }
@@ -120,13 +120,15 @@ void	ft_execution(ExecutionData *data)
 	int st;
 	data->env = struct_to_char(&data->export_i);
     add_last_cmd(&data->export_i, data->args);
-	if (!ft_strncmp(data->args[0], "<<", 2) && !data->args[1])
-		(syntax_error(), exit(EXIT_FAILURE));
+	// if (!ft_strncmp(data->args[0], "<<", 2) && !data->args[1])
+	// 	(syntax_error(), exit(EXIT_FAILURE));
 	if (data->lst->next == NULL)
 	{
 		// signal(SIGINT, SIG_IGN);
-		if (builtins(data) == 1)	
+		if (builtins(data) == 1)
+		{
 			execute_command(data);
+		}
 	}
 	else
 	{
@@ -134,14 +136,12 @@ void	ft_execution(ExecutionData *data)
 		while (data->lst)
 		{
 			g_flags.envire = ft_merge_envr(data->export_i);
+			// check_here_doc(data);
 			execute_command(data);
 			data->lst = data->lst->next;         
 		}
 	}
-    while (0 < wait(&st))
-	{
-		
+    while (0 < wait(&st))                     
 		exit_stat(WEXITSTATUS(st));
-	}
 	signals_init();
 }

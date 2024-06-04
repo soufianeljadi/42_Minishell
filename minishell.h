@@ -6,7 +6,7 @@
 /*   By: sdiouane <sdiouane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 23:51:44 by sdiouane          #+#    #+#             */
-/*   Updated: 2024/06/03 16:41:54 by sdiouane         ###   ########.fr       */
+/*   Updated: 2024/06/04 15:40:47 by sdiouane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -336,4 +336,11 @@ t_var	g_flags;
 char *add_protectiom(char *str);
 int count_quotes(char *str, char c);
 int exit_stat(int stat);
+
+// here_doc : 
+void check_here_doc(ExecutionData *data);
+void	handle_heredocs(char **delem, ExecutionData *data);
+
+void first_check(char *cmd, int i, int *t);
+int is_alpha_numirique(char *line);
 #endif
