@@ -6,16 +6,16 @@
 /*   By: sel-jadi <sel-jadi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/17 09:55:09 by sdiouane          #+#    #+#             */
-/*   Updated: 2024/06/02 22:55:57 by sel-jadi         ###   ########.fr       */
+/*   Updated: 2024/06/04 22:26:34 by sel-jadi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-void add_last_cmd(s_env **lst, char **args)
+void	add_last_cmd(s_env **lst, char **args)
 {
-	int i;
-	s_env *tmp;
+	int		i;
+	s_env	*tmp;
 
 	i = 0;
 	tmp = *lst;
@@ -29,11 +29,11 @@ void add_last_cmd(s_env **lst, char **args)
 	}
 }
 
-char **struct_to_char(s_env **lst)
+char	**struct_to_char(s_env **lst)
 {
-	char **env;
-	int i;
-	s_env *tmp;
+	char	**env;
+	s_env	*tmp;
+	int		i;
 
 	i = 0;
 	tmp = *lst;
@@ -52,19 +52,21 @@ char **struct_to_char(s_env **lst)
 	return (env);
 }
 
-char **splt_args(char *line)
+char	**splt_args(char *line)
 {
-	char **cmds;
+	char	**cmds;
 
 	cmds = split_args(line);
 	return (cmds);
 }
 
-void supprimer_protection(char *chaine)
+void	supprimer_protection(char *chaine)
 {
-	char *source = chaine;
-	char *destination = chaine;
+	char	*source;
+	char	*destination;
 
+	source = chaine;
+	destination = chaine;
 	while (*source != '\0')
 	{
 		if (*source != '\\')
@@ -77,9 +79,9 @@ void supprimer_protection(char *chaine)
 	*destination = '\0';
 }
 
-int is_blank(char *str)
+int	is_blank(char *str)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	while (str[i])
@@ -92,10 +94,10 @@ int is_blank(char *str)
 	return (1);
 }
 
-char **check_quotes_before_execution(char *s)
+char	**check_quotes_before_execution(char *s)
 {
-	char **cmd;
-	int i;
+	char	**cmd;
+	int		i;
 
 	cmd = NULL;
 	i = 0;
@@ -110,16 +112,17 @@ char **check_quotes_before_execution(char *s)
 		cmd[1] = NULL;
 		return (cmd);
 	}
-	if ((strstr(s, " " ) || strstr(s, "\t")) && is_blank(s))
+	if ((strstr(s, " ") || strstr(s, "\t")) && is_blank(s))
 		supprimerGuillemets(s);
 	cmd = splt_args(s);
 	if (!cmd)
 		exit(EXIT_FAILURE);
 	while (cmd[i])
 	{
-		if (count_quotes(cmd[i], '\"') % 2 == 0 && strstr(cmd[i], "\"") != NULL /*&& (strstr(cmd[i] , " ") && strstr(cmd[i] , "\t"))*/)
+		if (count_quotes(cmd[i], '\"') % 2 == 0 && strstr(cmd[i], "\"") != NULL)
 			del_dbl_quotes(cmd[i]);
-		else if (count_quotes(cmd[i], '\'') % 2 == 0 && strstr(cmd[i], "'") != NULL /*&& (strstr(cmd[i] , " ") && strstr(cmd[i] , "\t"))*/)
+		else if (count_quotes(cmd[i], '\'') % 2 == 0
+			&& strstr(cmd[i], "'") != NULL)
 			del_sngl_quotes(cmd[i]);
 		i++;
 	}

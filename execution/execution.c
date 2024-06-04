@@ -3,63 +3,62 @@
 /*                                                        :::      ::::::::   */
 /*   execution.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sdiouane <sdiouane@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sel-jadi <sel-jadi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/31 22:14:48 by sdiouane          #+#    #+#             */
-/*   Updated: 2024/06/04 11:24:55 by sdiouane         ###   ########.fr       */
+/*   Updated: 2024/06/04 22:27:12 by sel-jadi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-void  ft_execut_error(char *cmd)
+void ft_execut_error(char *cmd)
 {
-    int         ref;
-    DIR         *ptr;
+	int ref;
+	DIR *ptr;
 
-    ref = errno;
-    ft_putstr_fd("minishell: ", 2);
-    ft_putstr_fd(cmd, 2);
-    if (ref == 2)
-    {
-        ft_putendl_fd(": command not found", 2);
-        exit (127);
-    }
-    else if (ref == 13)
-    {
-        ptr = opendir(cmd);
-        if (ptr && !closedir(ptr))
-            ft_putendl_fd(": is directory", 2);
-        else
-            ft_putstr_fd(": ", 2);
-        exit (126);
-    }
-    exit (0);
+	ref = errno;
+	ft_putstr_fd("minishell: ", 2);
+	ft_putstr_fd(cmd, 2);
+	if (ref == 2)
+	{
+		ft_putendl_fd(": command not found", 2);
+		exit(127);
+	}
+	else if (ref == 13)
+	{
+		ptr = opendir(cmd);
+		if (ptr && !closedir(ptr))
+			ft_putendl_fd(": is directory", 2);
+		else
+			ft_putstr_fd(": ", 2);
+		exit(126);
+	}
+	exit(0);
 }
 
 void remove_outermost_quotes(char *str)
 {
-    int len;
+	int len;
 
 	len = ft_strlen(str);
-    if (len < 2)
-	return;
+	if (len < 2)
+		return;
 
-    if (str[0] == '"' || str[0] == '\'')
+	if (str[0] == '"' || str[0] == '\'')
 	{
-        memmove(str, str + 1, len - 1);
-        str[len - 1] = '\0';
-        len--;
-    }
-    if (str[len - 1] == '"' || str[len - 1] == '\'')
-        str[len - 1] = '\0';
+		memmove(str, str + 1, len - 1);
+		str[len - 1] = '\0';
+		len--;
+	}
+	if (str[len - 1] == '"' || str[len - 1] == '\'')
+		str[len - 1] = '\0';
 }
-
 
 void execute(char *s, char **env, ExecutionData *data)
 {
-	char    *chemin;
-	char    **cmd;
+	char *chemin;
+	char **cmd;
 
 	(void)data;
 	(1) && (cmd = NULL, chemin = NULL);
@@ -77,7 +76,7 @@ void execute(char *s, char **env, ExecutionData *data)
 		if (execve(chemin, cmd, env) == -1 && strcmp(cmd[0], "\0"))
 		{
 			if (strcmp(cmd[0], "\0"))
-				(ft_execut_error(cmd[0]) ,ft_free_tab(cmd), exit(0));
+				(ft_execut_error(cmd[0]), ft_free_tab(cmd), exit(0));
 		}
 	}
 }
@@ -92,16 +91,16 @@ static void handle_child_process(ExecutionData *data)
 
 static void execute_command(ExecutionData *data)
 {
-    pid_t	pid;
-	int		pipefd[2];
+	pid_t pid;
+	int pipefd[2];
 
 	if (pipe(pipefd) == -1 || (pid = fork()) == -1)
 		exit(EXIT_FAILURE);
 	else if (pid == 0)
-	{	
+	{
 		signal(SIGINT, SIG_DFL);
 		if (data->lst->next != NULL)
-        	dup2(pipefd[1], STDOUT_FILENO);
+			dup2(pipefd[1], STDOUT_FILENO);
 		close(pipefd[1]);
 		close(pipefd[0]);
 		handle_child_process(data);
@@ -115,11 +114,11 @@ static void execute_command(ExecutionData *data)
 	}
 }
 
-void	ft_execution(ExecutionData *data)
+void ft_execution(ExecutionData *data)
 {
 	int st;
 	data->env = struct_to_char(&data->export_i);
-    add_last_cmd(&data->export_i, data->args);
+	add_last_cmd(&data->export_i, data->args);
 	// if (!ft_strncmp(data->args[0], "<<", 2) && !data->args[1])
 	// 	(syntax_error(), exit(EXIT_FAILURE));
 	if (data->lst->next == NULL)
@@ -138,10 +137,10 @@ void	ft_execution(ExecutionData *data)
 			g_flags.envire = ft_merge_envr(data->export_i);
 			// check_here_doc(data);
 			execute_command(data);
-			data->lst = data->lst->next;         
+			data->lst = data->lst->next;
 		}
 	}
-    while (0 < wait(&st))                     
+	while (0 < wait(&st))
 		exit_stat(WEXITSTATUS(st));
 	signals_init();
 }

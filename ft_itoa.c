@@ -3,15 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   ft_itoa.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sdiouane <sdiouane@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sel-jadi <sel-jadi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/23 06:29:59 by sel-jadi          #+#    #+#             */
-/*   Updated: 2024/05/25 12:33:49 by sdiouane         ###   ########.fr       */
+/*   Updated: 2024/06/04 22:55:33 by sel-jadi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
 
 static int	ft_intlen(int n)
 {
@@ -78,7 +77,7 @@ char	*ft_itoa(unsigned int n)
 		p[len - 1] = n + '0';
 	return (p);
 }
-//atoi
+
 static int	ft_sing(const char *str, int *hi)
 {
 	int	sign;
@@ -97,6 +96,7 @@ static int	ft_sing(const char *str, int *hi)
 	*hi = i;
 	return (sign);
 }
+
 int	ft_atoi(const char *str)
 {
 	int	sign;

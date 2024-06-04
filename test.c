@@ -543,7 +543,7 @@
 //     return "MOCK_VALUE";
 // }
 
-// void supprimerDoll(char *str) {
+// void supprimerdoll(char *str) {
 //     // Mock implementation for example
 // }
 
@@ -587,7 +587,7 @@
 //     }
 
 //     if (strstr(exp_commande, "$") && is_within_quotes(exp_commande, 0) == 0)
-//         supprimerDoll(exp_commande);
+//         supprimerdoll(exp_commande);
 //     return exp_commande;
 // }
 

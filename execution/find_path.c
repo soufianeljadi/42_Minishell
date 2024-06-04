@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   find_path.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sdiouane <sdiouane@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sel-jadi <sel-jadi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/30 22:27:39 by sdiouane          #+#    #+#             */
-/*   Updated: 2024/06/03 14:54:11 by sdiouane         ###   ########.fr       */
+/*   Updated: 2024/06/04 22:28:55 by sel-jadi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ char	*get_env(char *s, char **env)
 		while (env[i][j] && env[i][j] != '=')
 			j++;
 		if (ft_strncmp(s, env[i], j) == 0 && s[j] == '\0')
-			return (env[i] + j + 1); // /usr/local/bin :/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/munki:/Library/Apple/usr/bin
+			return (env[i] + j + 1);
 		i++;
 	}
 	return (NULL);
@@ -76,16 +76,16 @@ char	*get_path(char *cmd, char **env)
 	char	**allpath;
 
 	i = -1;
-	allpath = ft_split(get_env("PATH", env), ':');// /bin
+	allpath = ft_split(get_env("PATH", env), ':');
 	while (allpath[++i])
 	{
-		path_part = ft_strjoin(allpath[i], "/");// /bin/kkk/
-		exec = ft_strjoin(path_part, cmd);  // /bin/kkk//ls
+		path_part = ft_strjoin(allpath[i], "/");
+		exec = ft_strjoin(path_part, cmd);
 		free(path_part);
 		if (access(exec, F_OK | X_OK) == 0)
 			return (exec);
 		free(exec);
 	}
 	ft_free_tab(allpath);
-	return (cmd); //ls
+	return (cmd);
 }

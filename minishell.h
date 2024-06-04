@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sdiouane <sdiouane@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sel-jadi <sel-jadi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 23:51:44 by sdiouane          #+#    #+#             */
-/*   Updated: 2024/06/04 18:17:27 by sdiouane         ###   ########.fr       */
+/*   Updated: 2024/06/04 22:41:47 by sel-jadi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -314,7 +314,7 @@ char *exp_fct(char *commande, s_env *export_i, int *f);
 char *process_variable(char *exp_commande, t_p *p, s_env *export_i);
 void handle_quotes(char *exp_commande, t_p *p);
 int is_closed(char *exp_commande, int i);
-void supprimerDoll(char *exp_commande);
+void supprimerdoll(char *exp_commande);
 void check_memory_allocation(void *ptr);
 
 

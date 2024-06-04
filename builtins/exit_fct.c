@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exit_fct.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sdiouane <sdiouane@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sel-jadi <sel-jadi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/28 00:42:52 by sdiouane          #+#    #+#             */
-/*   Updated: 2024/06/03 14:05:48 by sdiouane         ###   ########.fr       */
+/*   Updated: 2024/06/04 22:00:01 by sel-jadi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ static void	ft_exit_helper(char **cmds, int i)
 		exit(exit_stat(ft_atoi(cmds[1])));
 	}
 	else if (i > 2)
-	{	
+	{
 		ft_putstr_fd("minishell: exit: too many arguments\n", 2);
 	}
 }

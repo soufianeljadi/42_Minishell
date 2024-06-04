@@ -1,12 +1,22 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   exit_stat.c                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: sel-jadi <sel-jadi@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/06/04 22:54:31 by sel-jadi          #+#    #+#             */
+/*   Updated: 2024/06/04 22:55:10 by sel-jadi         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "minishell.h"
 
-
-int exit_stat(int stat)
+int	exit_stat(int stat)
 {
-    static int var;
+	static int	var;
 
-    if (stat != -1)
-        var = stat;
-    return (var);
+	if (stat != -1)
+		var = stat;
+	return (var);
 }
-

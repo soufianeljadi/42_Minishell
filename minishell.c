@@ -3,65 +3,73 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sdiouane <sdiouane@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sel-jadi <sel-jadi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 23:52:10 by sdiouane          #+#    #+#             */
-/*   Updated: 2024/06/04 19:18:40 by sdiouane         ###   ########.fr       */
+/*   Updated: 2024/06/04 23:08:08 by sel-jadi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void supprimerGuillemets__(char *chaine)
+void	supprimerguillemets__(char *chaine)
 {
-    int i = 0;
-	int j = 0;
+	int		i;
+	int		j;
 
-    while (chaine[i])
+	i = 0;
+	j = 0;
+	while (chaine[i])
 	{
-        if (chaine[i] != '\'')
-            chaine[j++] = chaine[i];
-        i++;
-    }
-    chaine[j] = '\0';
+		if (chaine[i] != '\'')
+			chaine[j++] = chaine[i];
+		i++;
+	}
+	chaine[j] = '\0';
 }
 
-void supprimerGuillemetsdoll(char *chaine)
+void	supprimerguillemetsdoll(char *chaine)
 {
-    int i = 0;
-	int j = 0;
+	int		i;
+	int		j;
 
-    while (chaine[i])
+	i = 0;
+	j = 0;
+	while (chaine[i])
 	{
-        if (chaine[i] != '$')
-            chaine[j++] = chaine[i];
-        i++;
-    }
-    chaine[j] = '\0';
+		if (chaine[i] != '$')
+			chaine[j++] = chaine[i];
+		i++;
+	}
+	chaine[j] = '\0';
 }
 
-int is_single(char *str)
+int	is_single(char *str)
 {
-    int s = 0, d = 0;
-	
-    for (int i = 0; str[i]; i++)
+	int		s;
+	int		d;
+
+	s = 0;
+	d = 0;
+	for (int i = 0; str[i]; i++)
 	{
-        if (str[i] == '\'' && !d)
+		if (str[i] == '\'' && !d)
 			s = !s;
-        if (str[i] == '"' && !s)
+		if (str[i] == '"' && !s)
 			d = !d;
-        if ((str[i] == '$' && (str[i + 1] == ' ' || str[i + 1] == '\0' || str[i + 1] == '\t')) ||
-            (str[i] == '$' && (str[i + 1] == '"' || str[i + 1] == '\'')))
-            return 1;
-        if (s || d)
+		if ((str[i] == '$' && (str[i + 1] == ' ' || str[i + 1] == '\0' || str[i + 1] == '\t')) ||
+			(str[i] == '$' && (str[i + 1] == '"' || str[i + 1] == '\'')))
 			return 1;
-    }
-    return 0;
+		if (s || d)
+			return (1);
+	}
+	return (0);
 }
 
-ExecutionData *init_data(char **args, noued_cmd *cmd, s_env *export_i)
+ExecutionData	*init_data(char **args, noued_cmd *cmd, s_env *export_i)
 {
-	ExecutionData *data;
+	ExecutionData	*data;
+
 	data = (ExecutionData *)malloc(sizeof(ExecutionData));
 	if (!data)
 		return (NULL);
@@ -71,10 +79,11 @@ ExecutionData *init_data(char **args, noued_cmd *cmd, s_env *export_i)
 	return (data);
 }
 
-int check_delem(char *delem)
+int	check_delem(char *delem)
 {
-	if (strcmp(delem, "<") || strcmp(delem, "<<") || strcmp(delem, ">") || strcmp(delem, ">>") || strcmp(delem, "|"))
-		return(0);
+	if (strcmp(delem, "<") || strcmp(delem, "<<") || strcmp(delem, ">")
+		|| strcmp(delem, ">>") || strcmp(delem, "|"))
+		return (0);
 	else
 		return (1);
 }
@@ -83,9 +92,11 @@ void	handle_heredocs(char **delem, ExecutionData *data)
 {
 	int		fd;
 	char	*buf;
-	int flag = 0;
-	int p = 0;
+	int		flag;
+	int		p;
 	
+	p = 0;
+	flag = 0;
 	fd = open("tmp.txt", O_TRUNC | O_CREAT | O_RDWR, 0777);
 	buf = readline("heredocs >> ");
 	if (strstr(*delem, "'") || strstr(*delem, "\""))
@@ -108,9 +119,9 @@ void	handle_heredocs(char **delem, ExecutionData *data)
 	*delem = ft_strdup("tmp.txt");
 }
 
-void check_here_doc(ExecutionData *data)
+void	check_here_doc(ExecutionData *data)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	if (!data->args)
@@ -123,15 +134,14 @@ void check_here_doc(ExecutionData *data)
 	}
 }
 
-void loop_fct(ExecutionData *data, char *line)
+void	loop_fct(ExecutionData *data, char *line)
 {
 	char	*pwd;
 	
 	pwd = NULL;
 	while (42)
 	{
-		// (pwd = print_directory(pwd), line = readline(pwd));
-		line = readline(ANSI_COLOR_GREEN "minishell > " ANSI_RESET_ALL);
+		(pwd = print_directory(pwd), line = readline(pwd));
 		if (!line)
 			(printf("exit\n"),exit(0));
 		if(line != NULL && only_spaces(line) == 0)
@@ -156,7 +166,7 @@ void loop_fct(ExecutionData *data, char *line)
 		}
 		// else
 			// exit_stat(66048);    
-	}	
+	}
 }
 
 void	main_loop(char *line, s_env *export_i)
@@ -164,7 +174,7 @@ void	main_loop(char *line, s_env *export_i)
 	char			**args;
 	noued_cmd		*cmd;
 	ExecutionData	*data;
-	
+
 	data = NULL;
 	args = NULL;
 	cmd = NULL;
@@ -177,20 +187,20 @@ void	main_loop(char *line, s_env *export_i)
 }
 
 void	f(void)
-{     
+{
 	system("leaks minishell");
 }
-// export x="ls > gg">
-int main(int ac, char **av, char **env)
-{
-	(void)av;
-	// atexit(f);
-	char *line;
-	s_env *export_i;
 
-	(export_i = NULL, line = NULL);
+int	main(int ac, char **av, char **env)
+{
+	char	*line;
+	s_env	*export_i;
+
+	(void)av;
+	export_i = NULL;
+	line = NULL;
 	if (ac != 1)
-		(printf("Args not allowed !\n"),exit(EXIT_FAILURE));
+		(printf("Args not allowed !\n"), exit(EXIT_FAILURE));
 	if (!isatty(STDIN_FILENO))
 	{
 		printf("minishell: is not a tty\n");
@@ -203,7 +213,6 @@ int main(int ac, char **av, char **env)
 		export_i = split_env(env);
 	signals_init();
 	main_loop(line, export_i);
-	// free(line);
 	free_s_env(export_i);
-	return 0;
+	return (0);
 }

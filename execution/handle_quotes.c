@@ -3,68 +3,75 @@
 /*                                                        :::      ::::::::   */
 /*   handle_quotes.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sdiouane <sdiouane@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sel-jadi <sel-jadi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/17 09:54:34 by sdiouane          #+#    #+#             */
-/*   Updated: 2024/05/17 09:54:47 by sdiouane         ###   ########.fr       */
+/*   Updated: 2024/06/04 22:31:23 by sel-jadi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-         
-void del_qotes(char *chaine)
+void	del_qotes(char *chaine)
 {
-    int i = 0;
-	int j = 0;
-	
-    while (chaine[i])
+	int	i;
+	int	j;
+
+	i = 0;
+	j = 0;
+	while (chaine[i])
 	{
-        if (chaine[i] != '"')
-            chaine[j++] = chaine[i];
-        i++;
-    }
-    chaine[j] = '\0';
+		if (chaine[i] != '"')
+			chaine[j++] = chaine[i];
+		i++;
+	}
+	chaine[j] = '\0';
 }
 
-void del_dbl_quotes(char *chaine)
+void	del_dbl_quotes(char *chaine)
 {
-    int i = 0;
-	int j = 0;
+	int	i;
+	int	j;
 
-    while (chaine[i])
+	i = 0;
+	j = 0;
+	while (chaine[i])
 	{
-        if (chaine[i] != '"')
-            chaine[j++] = chaine[i];
-        i++;
-    }
-    chaine[j] = '\0';
+		if (chaine[i] != '"')
+			chaine[j++] = chaine[i];
+		i++;
+	}
+	chaine[j] = '\0';
 }
 
-void supprimerGuillemets(char *chaine)
+void	supprimerGuillemets(char *chaine)
 {
-    int i = 0, j = 0;
+	int	i;
+	int	j;
 
-    while (chaine[i])
+	i = 0;
+	j = 0;
+	while (chaine[i])
 	{
-        if (chaine[i] != '\"' && chaine[i] != '\'')
-            chaine[j++] = chaine[i];
-        i++;
-    }
-    chaine[j] = '\0';
+		if (chaine[i] != '\"' && chaine[i] != '\'')
+			chaine[j++] = chaine[i];
+		i++;
+	}
+	chaine[j] = '\0';
 }
 
-
-void del_sngl_quotes(char *chaine)
+void	del_sngl_quotes(char *chaine)
 {
-    int i = 0;
-	int j = 0;
+	int	i;
+	int	j;
 
-    while (chaine[i])
+	i = 0;
+	j = 0;
+	while (chaine[i])
 	{
-        if (chaine[i] != '\'')
-            chaine[j++] = chaine[i];
-        i++;
-    }
-    chaine[j] = '\0';
+		if (chaine[i] != '\'')
+			chaine[j++] = chaine[i];
+		i++;
+	}
+	chaine[j] = '\0';
 }

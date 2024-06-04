@@ -3,20 +3,20 @@
 /*                                                        :::      ::::::::   */
 /*   heredoc.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sdiouane <sdiouane@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sel-jadi <sel-jadi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/11 19:37:55 by sel-jadi          #+#    #+#             */
-/*   Updated: 2024/06/03 19:29:39 by sdiouane         ###   ########.fr       */
+/*   Updated: 2024/06/04 22:32:55 by sel-jadi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-void handle_herdoc(ExecutionData *data)
+void	handle_herdoc(ExecutionData *data)
 {
-	int i;
-	char **redlin;
-	
+	int		i;
+	char	**redlin;
+
 	i = 0;
 	redlin = line_to_args(data->lst->redirection);
 	if (!redlin)
@@ -55,7 +55,7 @@ void	child_heredoc(char *red, ExecutionData *data, int *heredoc)
 {
 	signal(SIGINT, handle_sigint_heredoc);
 	close(heredoc[0]);
-	go_heredoc(red ,data, heredoc[1]);
+	go_heredoc(red, data, heredoc[1]);
 	close(heredoc[1]);
 	exit(0);
 }
@@ -80,7 +80,7 @@ int	parent_heredoc(ExecutionData *data, int *heredoc)
 	return (0);
 }
 
-int	heredoc(char *red ,ExecutionData *data)
+int	heredoc(char *red, ExecutionData *data)
 {
 	int	pid;
 	int	heredoc[2];
@@ -91,7 +91,7 @@ int	heredoc(char *red ,ExecutionData *data)
 		exit(1);
 	pid = fork();
 	if (pid == 0)
-		child_heredoc(red,data, heredoc);
+		child_heredoc(red, data, heredoc);
 	else
 		return (parent_heredoc(data, heredoc));
 	return (0);
