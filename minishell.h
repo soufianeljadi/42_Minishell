@@ -6,7 +6,7 @@
 /*   By: sdiouane <sdiouane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 23:51:44 by sdiouane          #+#    #+#             */
-/*   Updated: 2024/06/04 15:40:47 by sdiouane         ###   ########.fr       */
+/*   Updated: 2024/06/04 18:17:27 by sdiouane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -161,7 +161,7 @@ void 	free_tokens(Token **tokens);
 	// parsing :
 Token** parse_command(char *command);
 void 	syntax_error();
-int		parsing(char *lineint );
+int	parsing(char *line, ExecutionData *data);
 	// utils :
 size_t	ft_strlen(char *s);
 char	*ft_strjoin(const char *s1, const char *s2);

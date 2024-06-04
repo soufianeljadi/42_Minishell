@@ -6,7 +6,7 @@
 /*   By: sdiouane <sdiouane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/16 15:55:13 by sdiouane          #+#    #+#             */
-/*   Updated: 2024/05/27 20:12:16 by sdiouane         ###   ########.fr       */
+/*   Updated: 2024/06/04 18:21:51 by sdiouane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,14 +67,14 @@ void	nbr_quotes(char *str)
 		syntax_error();
 }
 
-int	parsing(char *line)
+int	parsing(char *line, ExecutionData *data)
 {	
-	
+	(void)data;
 	if (parse_single_input(line, '|') || line[0] == '|')
 		return (1);
 	if (ft_quots(&line))
 		return (1);
-	if (parse_redirection(line))
+	if (parse_redirection(line) == 1)
 		return (1);
 	return (0);
 }

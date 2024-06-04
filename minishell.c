@@ -6,7 +6,7 @@
 /*   By: sdiouane <sdiouane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 23:52:10 by sdiouane          #+#    #+#             */
-/*   Updated: 2024/06/04 15:42:29 by sdiouane         ###   ########.fr       */
+/*   Updated: 2024/06/04 19:04:12 by sdiouane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,12 +71,26 @@ ExecutionData *init_data(char **args, noued_cmd *cmd, s_env *export_i)
 	return (data);
 }
 
+int check_delem(char *delem)
+{
+	if (strcmp(delem, "<") || strcmp(delem, "<<") || strcmp(delem, ">") || strcmp(delem, ">>") || strcmp(delem, "|"))
+		return(0);
+	else
+		return (1);
+}
+
 void	handle_heredocs(char **delem, ExecutionData *data)
 {
 	int		fd;
 	char	*buf;
 	int flag = 0;
 	int p = 0;
+	// if (check_delem(*delem))
+	// {
+	// 	syntax_error();
+	// 	exit_stat(258);
+	// 	return ;
+	// }
 	fd = open("tmp.txt", O_TRUNC | O_CREAT | O_RDWR, 0777);
 	buf = readline("heredocs >> ");
 	if (strstr(*delem, "'") || strstr(*delem, "\""))
@@ -128,7 +142,7 @@ void loop_fct(ExecutionData *data, char *line)
 		if(line != NULL && only_spaces(line) == 0)
 		{
 			add_history(line);
-			if(parsing(line) == 1)
+			if(parsing(line, data) == 1)
 			{
 				syntax_error();
 				exit_stat(258);
