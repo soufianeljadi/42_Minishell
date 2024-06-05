@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execution.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sel-jadi <sel-jadi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sdiouane <sdiouane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/31 22:14:48 by sdiouane          #+#    #+#             */
-/*   Updated: 2024/06/04 22:27:12 by sel-jadi         ###   ########.fr       */
+/*   Updated: 2024/06/05 12:15:42 by sdiouane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,7 +89,7 @@ static void handle_child_process(ExecutionData *data)
 		execute(data->lst->cmd, data->env, data);
 }
 
-static void execute_command(ExecutionData *data)
+static pid_t execute_command(ExecutionData *data)
 {
 	pid_t pid;
 	int pipefd[2];
@@ -112,18 +112,22 @@ static void execute_command(ExecutionData *data)
 		close(pipefd[1]);
 		close(pipefd[0]);
 	}
+	return (pid);
 }
 
 void ft_execution(ExecutionData *data)
 {
 	int st;
+	int	i = 1;
+	int	size;
+	int	pid = 0;
+
+	size = ft_lstsize(data->export_i);
 	data->env = struct_to_char(&data->export_i);
 	add_last_cmd(&data->export_i, data->args);
-	// if (!ft_strncmp(data->args[0], "<<", 2) && !data->args[1])
-	// 	(syntax_error(), exit(EXIT_FAILURE));
 	if (data->lst->next == NULL)
 	{
-		// signal(SIGINT, SIG_IGN);
+		signal(SIGINT, SIG_IGN);
 		if (builtins(data) == 1)
 		{
 			execute_command(data);
@@ -135,12 +139,56 @@ void ft_execution(ExecutionData *data)
 		while (data->lst)
 		{
 			g_flags.envire = ft_merge_envr(data->export_i);
-			// check_here_doc(data);
-			execute_command(data);
+			if (i == size)
+				pid = execute_command(data);
+			else
+				execute_command(data);
 			data->lst = data->lst->next;
+			i++;
 		}
 	}
-	while (0 < wait(&st))
-		exit_stat(WEXITSTATUS(st));
+	waitpid(pid, &st, 0);
+	while (0 < wait(NULL))
+		;
+	exit_stat(WEXITSTATUS(st));
 	signals_init();
 }
+
+
+// void ft_execution(ExecutionData *data)
+// {
+//     int status;
+// 	pid_t pid;
+// 	pid = 0;
+//     data->env = struct_to_char(&data->export_i);
+//     add_last_cmd(&data->export_i, data->args);
+//     // if (!ft_strncmp(data->args[0], "<<", 2) &&!data->args[1])
+//     //     (syntax_error(), exit(EXIT_FAILURE));
+//     if (data->lst->next == NULL)
+//     {
+//         // signal(SIGINT, SIG_IGN);
+//         if (builtins(data) == 1)
+//         {
+//             pid = execute_command(data);
+//         }
+//     }
+//     else
+//     {
+//         signal(SIGINT, SIG_IGN);
+//         while (data->lst)
+//         {
+//             g_flags.envire = ft_merge_envr(data->export_i);
+//             // check_here_doc(data);
+//             pid = execute_command(data);
+//             data->lst = data->lst->next;
+//         }
+//     }
+//     // Utilisation de waitpid pour attendre le processus enfant
+//     ; // Attendez le processus enfant avec pid
+// 	// waitpid(pid, &status, 0);
+// 	while (waitpid(pid, &status, 0) > 0)
+// 	{
+// 		exit_stat(WEXITSTATUS(status));
+// 	}
+//     signals_init();
+// }

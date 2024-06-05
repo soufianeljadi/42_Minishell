@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   add_sep.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sel-jadi <sel-jadi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sdiouane <sdiouane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/25 23:56:31 by sel-jadi          #+#    #+#             */
-/*   Updated: 2024/06/04 23:16:24 by sel-jadi         ###   ########.fr       */
+/*   Updated: 2024/06/05 10:07:45 by sdiouane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,8 +17,8 @@ char	*ft_add(char c, char *s, int index)
 	int		len;
 	char	*tmp;
 
-	tmp = (char *)malloc(sizeof(char) * (len + 2));
 	len = strlen(s);
+	tmp = (char *)malloc(sizeof(char) * (len + 2));
 	if (!tmp)
 	{
 		free(s);

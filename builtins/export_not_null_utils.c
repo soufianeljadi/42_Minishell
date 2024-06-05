@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export_not_null_utils.c                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sel-jadi <sel-jadi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sdiouane <sdiouane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/20 15:24:11 by sdiouane          #+#    #+#             */
-/*   Updated: 2024/06/04 22:17:38 by sel-jadi         ###   ########.fr       */
+/*   Updated: 2024/06/05 10:29:20 by sdiouane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,6 +84,8 @@ void	fct_equal(char **args, s_env *env, char *key)
 	while (args[env->i][env->j] && args[env->i][env->j] != '\0')
 		env->j++;
 	value = extract_value(args[env->i], start, env->j);
+	if (value[0] == '\'' && (strstr(value, " ") || strstr(value, "\t")))
+		del_sngl_quotes(value);
 	update_env_value(env, key, value);
 	exit_stat(0);
 }

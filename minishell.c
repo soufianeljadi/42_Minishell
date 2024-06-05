@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sel-jadi <sel-jadi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sdiouane <sdiouane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 23:52:10 by sdiouane          #+#    #+#             */
-/*   Updated: 2024/06/04 23:08:08 by sel-jadi         ###   ########.fr       */
+/*   Updated: 2024/06/05 12:21:11 by sdiouane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,28 +88,88 @@ int	check_delem(char *delem)
 		return (1);
 }
 
+int file_exists(const char* filename)
+{
+    struct dirent *entry;
+	
+    DIR *dir = opendir(".");
+    if (dir == NULL)
+        return 0;
+    while ((entry = readdir(dir))!= NULL)
+	{
+        if (strcmp(entry->d_name, filename) == 0)
+		{
+            closedir(dir);
+            return 1;
+        }
+    }
+    closedir(dir);
+    return 0;
+}
+
+char* generate_name(char* base_name)
+{
+    char* filename = malloc(strlen(base_name));
+
+    if (file_exists(filename))
+	{
+        free(filename);
+        return generate_name(base_name);
+    }
+    return filename;
+}
+
+char *expand_in_heredoc(char *commande, s_env *export_i)
+{
+	char	*exp_commande;
+	t_p		p = {0, 0, 0, '\0'};
+
+	if (!commande)
+		exit(exit_stat(1));
+	exp_commande = ft_strdup(commande);
+	check_memory_allocation(exp_commande);
+	while (exp_commande && exp_commande[p.i] != '\0')
+	{
+		handle_quotes(exp_commande, &p);
+		if (exp_commande[p.i] == '$' && exp_commande[p.i + 1] == '?')
+			exp_commande = ft_str_replace(exp_commande, ft_strdup("$?"), ft_itoa(exit_stat(-1)));
+		if (exp_commande[p.i] == '$')
+		{
+			exp_commande = process_variable(exp_commande, &p, export_i);
+			check_memory_allocation(exp_commande);
+		}
+		p.i++;
+	}
+	return (exp_commande);
+}
+
 void	handle_heredocs(char **delem, ExecutionData *data)
 {
 	int		fd;
 	char	*buf;
+	char	*file_name;
 	int		flag;
 	int		p;
 	
 	p = 0;
 	flag = 0;
+	file_name = generate_name("tmp.txt");
 	fd = open("tmp.txt", O_TRUNC | O_CREAT | O_RDWR, 0777);
 	buf = readline("heredocs >> ");
 	if (strstr(*delem, "'") || strstr(*delem, "\""))
 	{
 		flag = 1;
-		supprimerGuillemets(*delem);
+		if (*delem[0] == '"' || *delem[0] == '\'')
+			*delem = ft_substr2(*delem, 1, ft_strlen(*delem) - 2);
+		else
+			supprimerGuillemets(*delem);
 	}
 	while (1)
 	{
 		if (strcmp(buf, *delem) == 0)
 			break ;
 		if (flag == 0)
-			buf = exp_fct(buf, data->export_i, &p);
+			buf = expand_in_heredoc(buf, data->export_i);
 		write(fd, buf, ft_strlen(buf));
 		write(fd, "\n", 1);
 		buf = readline("heredocs >> ");
@@ -143,7 +203,7 @@ void	loop_fct(ExecutionData *data, char *line)
 	{
 		(pwd = print_directory(pwd), line = readline(pwd));
 		if (!line)
-			(printf("exit\n"),exit(0));
+			(printf("exit\n"),exit_stat(0));
 		if(line != NULL && only_spaces(line) == 0)
 		{
 			add_history(line);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expanding.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sel-jadi <sel-jadi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sdiouane <sdiouane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/27 19:58:08 by sdiouane          #+#    #+#             */
-/*   Updated: 2024/06/04 22:53:10 by sel-jadi         ###   ########.fr       */
+/*   Updated: 2024/06/05 10:16:19 by sdiouane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,7 +104,6 @@ char	*process_variable(char *exp_commande, t_p *p, s_env *export_i)
 			exp_commande = ft_str_replace(exp_commande, full_key, strdup(" "));
 		}
 		(free(key), free(value));
-		printf("%d\n", exit_stat(0));
 	}
 	else
 	{

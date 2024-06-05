@@ -6,7 +6,7 @@
 /*   By: sdiouane <sdiouane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/05 23:00:01 by sdiouane          #+#    #+#             */
-/*   Updated: 2024/06/04 19:17:27 by sdiouane         ###   ########.fr       */
+/*   Updated: 2024/06/05 10:12:52 by sdiouane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,10 +90,11 @@ void redirection_in(char *redirection, int *fd)
 			ft_putendl_fd(strerror(errno), 2);
 			exit(EXIT_FAILURE);
 		}
-		unlink(redirection);
-		redirection = NULL;
+		printf("-------> file : %s\n", redirection);
 		dup2(*fd, STDIN_FILENO);
 		close(*fd);
+		// unlink(redirection);
+		redirection = NULL;
 	}
 	else
 	{
