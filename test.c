@@ -146,7 +146,7 @@
 // 	return (*flag);
 // }
 
-// int builtins(ExecutionData *data)
+// int builtins(t_data *data)
 // {
 // 	char **args = NULL;
 // 	int flag = 0;
@@ -276,7 +276,7 @@
 // 	}
 // }
 
-// void execute_with_redirection(ExecutionData *data)
+// void execute_with_redirection(t_data *data)
 // {
 //     int fd_in;
 //     int fd_out;
@@ -326,7 +326,7 @@
 // 	}
 // }
 
-// static void handle_child_process(ExecutionData *data)
+// static void handle_child_process(t_data *data)
 // {
 // 	if (data->lst->redirection != NULL)
 // 	{
@@ -343,7 +343,7 @@
 // 	}
 // }
 
-// static void execute_command(ExecutionData *data)
+// static void execute_command(t_data *data)
 // {
 // 	int pipefd[2];
 //     pid_t pid;
@@ -369,7 +369,7 @@
 // }
 
 
-// void	ft_execution(ExecutionData *data)
+// void	ft_execution(t_data *data)
 // {
 //     add_last_cmd(&data->export_i, data->args);
 // 	if (!ft_strncmp(data->args[0], "<<", 2) && !data->args[1])
@@ -688,18 +688,18 @@
 //     char *new_str;
 //     int i = 0;
 //     int j = 0;
-//     int quote_open = 0; // 0: no quote, 1: single quote, 2: double quote
+//     int q_open = 0; // 0: no quote, 1: single quote, 2: double quote
 
 //     new_str = (char *)malloc(sizeof(char) * (strlen(str) + 1));
 //     if (!new_str)
 //         return NULL;
     
 //     while (str[i]) {
-//         if (str[i] == '\'' && quote_open != 2) {
-//             quote_open = (quote_open == 1) ? 0 : 1;
+//         if (str[i] == '\'' && q_open != 2) {
+//             q_open = (q_open == 1) ? 0 : 1;
 //             i++;
-//         } else if (str[i] == '\"' && quote_open != 1) {
-//             quote_open = (quote_open == 2) ? 0 : 2;
+//         } else if (str[i] == '\"' && q_open != 1) {
+//             q_open = (q_open == 2) ? 0 : 2;
 //             i++;
 //         } else {
 //             new_str[j++] = str[i++];
@@ -814,7 +814,7 @@
 
 
 
-void	handle_heredocs(char **delem, ExecutionData *data)
+void	handle_heredocs(char **delem, t_data *data)
 {
 	int		fd;
 	int		flag;
@@ -847,7 +847,7 @@ void	handle_heredocs(char **delem, ExecutionData *data)
 	*delem = ft_strdup("tmp,txt");
 }
 
-void check_here_doc(ExecutionData *data)
+void check_here_doc(t_data *data)
 {
 	int i;
 	
@@ -862,7 +862,7 @@ void check_here_doc(ExecutionData *data)
 	}
 }
 
-void loop_fct(ExecutionData *data, char *line)
+void loop_fct(t_data *data, char *line)
 {
 	char	*pwd;
 	

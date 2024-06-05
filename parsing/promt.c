@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   promt.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sel-jadi <sel-jadi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sdiouane <sdiouane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/12 20:27:18 by sel-jadi          #+#    #+#             */
-/*   Updated: 2024/06/04 23:04:47 by sel-jadi         ###   ########.fr       */
+/*   Updated: 2024/06/05 15:10:34 by sdiouane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "../minishell.h"
 
 void	add2write(char *dest, char *str, int *j)
 {

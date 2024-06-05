@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   merge_env.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sel-jadi <sel-jadi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sdiouane <sdiouane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/17 09:54:49 by sdiouane          #+#    #+#             */
-/*   Updated: 2024/06/04 22:33:49 by sel-jadi         ###   ########.fr       */
+/*   Updated: 2024/06/05 18:50:41 by sdiouane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-int	ft_lstsize(s_env *lst)
+int	ft_lstsize(void  *lst)
 {
 	int		c;
 	s_env	*p;

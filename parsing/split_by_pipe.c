@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   split_by_pipe.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sel-jadi <sel-jadi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sdiouane <sdiouane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/27 23:28:30 by sdiouane          #+#    #+#             */
-/*   Updated: 2024/06/04 23:26:54 by sel-jadi         ###   ########.fr       */
+/*   Updated: 2024/06/05 16:03:35 by sdiouane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-char *ft_strjoin(const char *s1, const char *s2)
+char *ft_strjoin( char *s1,  char *s2)
 {
 	size_t len_s1 = 0;
 	size_t len_s2 = 0;

@@ -6,7 +6,7 @@
 /*   By: sdiouane <sdiouane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/05 23:07:50 by sdiouane          #+#    #+#             */
-/*   Updated: 2024/06/05 10:38:45 by sdiouane         ###   ########.fr       */
+/*   Updated: 2024/06/05 15:22:55 by sdiouane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,32 +31,41 @@ static char *ft_value_of_shlvl(char *str)
 	++g_flags.shlvl;
 	return (ft_itoa(g_flags.shlvl++));
 }
-s_env *split_env(char **env)
+s_env *split_env(char **env, s_env *lst)
 {
-	int i = 0;
-	int j = 0;
-	s_env *lst = NULL;
+	int i;
+	int j;
 	char *key;
 	char *value;
 	char *str;
 
+	(1) && (i = 0);
 	while (env[i])
 	{
 		j = 0;
 		while (env[i][j] != '=')
 			j++;
 		key = ft_substr(env[i], 0, j);
+		check_memory_allocation(key);
 		if (!strcmp(key, "_"))
+		{
 			value = strdup("/usr/bin/env");
+			check_memory_allocation(value);
+		}
 		if (!strcmp(key, "SHLVL"))
 		{
 			str = ft_substr(env[i], j + 1, ft_strlen(env[i]));
+			check_memory_allocation(str);
 			value = ft_value_of_shlvl(str);
+			check_memory_allocation(value);
 		}
 		else if (!strcmp(key, "OLDPWD"))
 			value = NULL;
 		else
+		{
 			value = ft_substr(env[i], j + 1, ft_strlen(env[i]));
+			check_memory_allocation(value);
+		}
 		ft_lstadd_back(&lst, ft_lstnew_data(value, key));
 		i++;
 		if (!key)
@@ -76,6 +85,7 @@ s_env *add_env_entry(s_env *head, char *key, char *value)
 	if (lst == NULL)
 		exit(EXIT_FAILURE);
 	lst->key = ft_strdup(key);
+	ft_value_of_shlvl(lst->key);
 	if (value)
 		lst->value = ft_strdup(value);
 	else

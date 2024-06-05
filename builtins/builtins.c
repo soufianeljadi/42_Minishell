@@ -6,7 +6,7 @@
 /*   By: sdiouane <sdiouane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/26 01:07:33 by sel-jadi          #+#    #+#             */
-/*   Updated: 2024/06/05 11:21:56 by sdiouane         ###   ########.fr       */
+/*   Updated: 2024/06/05 14:49:02 by sdiouane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -133,7 +133,7 @@ int is_not_empty(char *str)
 	return (0);
 }
 
-int	builtins(ExecutionData *data)
+int	builtins(t_data *data)
 {
 	char	**args;
 	int		flag;

@@ -6,7 +6,7 @@
 /*   By: sdiouane <sdiouane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/05 23:00:01 by sdiouane          #+#    #+#             */
-/*   Updated: 2024/06/05 10:12:52 by sdiouane         ###   ########.fr       */
+/*   Updated: 2024/06/05 21:45:19 by sdiouane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,6 +111,7 @@ void redirection_out(char *redirection, int *fd)
 	if (redirection)
 	{
         *fd = open(file_nc(redirection), O_WRONLY | O_CREAT | O_TRUNC, 0666);
+		printf("file : %s\n", redirection);
         if (*fd < 0)
 		{
 			ft_putstr_fd("minishell: ", 2);
@@ -133,7 +134,7 @@ void redirection_out(char *redirection, int *fd)
 	// printf("here222\n");
 }
 
-void execute_with_redirection(ExecutionData *data)
+void execute_with_redirection(t_data *data)
 {
     int fd_in;
     int fd_out;
@@ -142,6 +143,7 @@ void execute_with_redirection(ExecutionData *data)
 
 	(1) && (fd_in = 0, fd_out = 1, i = 0,
 	red = line_to_args(data->lst->redirection));
+	// (1) && (fd_in = dup(0), fd_out = dup(1));
 	if (!red)
 		return ;
 	while (red[i])
@@ -154,6 +156,49 @@ void execute_with_redirection(ExecutionData *data)
 			redirection_out(red[i + 1], &fd_out);
 		i++;
 	}
-	if (data->lst->cmd != NULL && strspn(data->lst->cmd, " ") != strlen(data->lst->cmd))
-		execute(data->lst->cmd, data->env, data);
+	if (check_bultin(data->args[0]) == 0)
+	{
+		if (data->lst->cmd != NULL && strspn(data->lst->cmd, " ") != strlen(data->lst->cmd))
+			execute(data->lst->cmd, data->env, data);
+	}
 }
+
+
+
+
+// void ft_execution(t_data *data)
+// {
+// 	int st;
+// 	int	i;
+// 	int status;
+// 	int pid;
+
+// 	(data->env = struct_to_char(&data->export_i), i = 1, pid = 0);
+// 	add_last_cmd(&data->export_i, data->args);
+// 	signal(SIGINT, SIG_IGN);
+// 	if (ft_lstsize(data->lst) == 1 && check_bultin(data->args[0]) == 1)
+// 	{
+// 		execute_with_redirection(data);
+// 		builtins(data);
+// 	}
+// 	else
+// 	{
+// 		// pid = multiple_cmds(data);
+// 		while (data->lst)
+// 		{
+// 			g_flags.envire = ft_merge_envr(data->export_i);
+// 			if (i == ft_lstsize(data->export_i))
+// 				pid = execute_command(data);
+// 			else
+// 				execute_command(data);
+// 			data->lst = data->lst->next;
+// 			i++;
+// 		}
+// 		waitpid(pid, &status, 0);
+// 		while (0 < wait(NULL))
+// 		{
+// 			exit_stat(WEXITSTATUS(st));
+// 		}
+// 	signals_init();
+// 	}
+// }

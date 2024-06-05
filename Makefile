@@ -6,7 +6,7 @@
 #    By: sdiouane <sdiouane@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/03/12 23:52:42 by sdiouane          #+#    #+#              #
-#    Updated: 2024/06/04 15:40:25 by sdiouane         ###   ########.fr        #
+#    Updated: 2024/06/05 15:13:53 by sdiouane         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -19,12 +19,12 @@ CFLAGS = -Wall -Wextra -Werror
 RDFLAGS =  -L $(shell brew --prefix readline)/lib -lreadline
 
 SRC =	minishell.c \
-		ft_itoa.c \
-		promt.c \
-		exit_stat.c \
+		here_doc/here_doc.c \
+		parsing/exit_stat.c \
+		parsing/ft_itoa.c \
+		parsing/promt.c \
     	parsing/ft_split.c \
 		parsing/lsts.c \
-		parsing/token.c \
 		parsing/parsing.c \
 		parsing/ft_strtock.c \
 		parsing/split_args.c \
@@ -57,8 +57,6 @@ SRC =	minishell.c \
 		execution/execution_utils.c \
 		execution/merge_env.c  \
 		execution/handle_quotes.c \
-		gnl/get_next_line.c \
-		gnl/get_next_line_utils.c \
 		expanding/expanding.c \
 		expanding/expanding_utils.c 
 

@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   heredoc.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sel-jadi <sel-jadi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sdiouane <sdiouane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/11 19:37:55 by sel-jadi          #+#    #+#             */
-/*   Updated: 2024/06/04 22:32:55 by sel-jadi         ###   ########.fr       */
+/*   Updated: 2024/06/05 14:49:02 by sdiouane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-void	handle_herdoc(ExecutionData *data)
+void	handle_herdoc(t_data *data)
 {
 	int		i;
 	char	**redlin;
@@ -32,7 +32,7 @@ void	handle_herdoc(ExecutionData *data)
 	}
 }
 
-void	go_heredoc( char *red, ExecutionData *data, int fd_doc)
+void	go_heredoc( char *red, t_data *data, int fd_doc)
 {
 	char	*line;
 
@@ -51,7 +51,7 @@ void	go_heredoc( char *red, ExecutionData *data, int fd_doc)
 		free(line);
 }
 
-void	child_heredoc(char *red, ExecutionData *data, int *heredoc)
+void	child_heredoc(char *red, t_data *data, int *heredoc)
 {
 	signal(SIGINT, handle_sigint_heredoc);
 	close(heredoc[0]);
@@ -60,7 +60,7 @@ void	child_heredoc(char *red, ExecutionData *data, int *heredoc)
 	exit(0);
 }
 
-int	parent_heredoc(ExecutionData *data, int *heredoc)
+int	parent_heredoc(t_data *data, int *heredoc)
 {
 	int	exit_status;
 
@@ -80,7 +80,7 @@ int	parent_heredoc(ExecutionData *data, int *heredoc)
 	return (0);
 }
 
-int	heredoc(char *red, ExecutionData *data)
+int	heredoc(char *red, t_data *data)
 {
 	int	pid;
 	int	heredoc[2];

@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   exit_stat.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sel-jadi <sel-jadi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sdiouane <sdiouane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/04 22:54:31 by sel-jadi          #+#    #+#             */
-/*   Updated: 2024/06/04 22:55:10 by sel-jadi         ###   ########.fr       */
+/*   Updated: 2024/06/05 15:10:26 by sdiouane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "../minishell.h"
 
 int	exit_stat(int stat)
 {

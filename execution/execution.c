@@ -6,7 +6,7 @@
 /*   By: sdiouane <sdiouane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/31 22:14:48 by sdiouane          #+#    #+#             */
-/*   Updated: 2024/06/05 12:15:42 by sdiouane         ###   ########.fr       */
+/*   Updated: 2024/06/05 21:40:47 by sdiouane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ void remove_outermost_quotes(char *str)
 		str[len - 1] = '\0';
 }
 
-void execute(char *s, char **env, ExecutionData *data)
+void execute(char *s, char **env, t_data *data)
 {
 	char *chemin;
 	char **cmd;
@@ -70,18 +70,27 @@ void execute(char *s, char **env, ExecutionData *data)
 		chemin = get_path(cmd[0], env);
 		if (chemin == NULL)
 			(ft_free_tab(cmd), exit(0));
-		if (cmd[0][0] == '.' || cmd[0][0] == '/')
-			if (execve(cmd[0], cmd, env) == -1)
-				(ft_execut_error(cmd[0]), ft_free_tab(cmd), exit(0));
-		if (execve(chemin, cmd, env) == -1 && strcmp(cmd[0], "\0"))
+		if (check_bultin(data->lst->cmd) == 0)
 		{
-			if (strcmp(cmd[0], "\0"))
-				(ft_execut_error(cmd[0]), ft_free_tab(cmd), exit(0));
+			if (cmd[0][0] == '.' || cmd[0][0] == '/')
+				if (execve(cmd[0], cmd, env) == -1)
+					(ft_execut_error(cmd[0]), ft_free_tab(cmd), exit(0));
+			if (execve(chemin, cmd, env) == -1 && strcmp(cmd[0], "\0"))
+			{
+				if (strcmp(cmd[0], "\0"))
+					(ft_execut_error(cmd[0]), ft_free_tab(cmd), exit(0));
+			}
+		}
+		else if (check_bultin(data->lst->cmd) == 1)
+		{
+			printf("--------------------\n");
+			execute_with_redirection(data);
+			builtins(data);
 		}
 	}
 }
 
-static void handle_child_process(ExecutionData *data)
+static void handle_child_process(t_data *data)
 {
 	if (data->lst->redirection != NULL)
 		execute_with_redirection(data);
@@ -89,7 +98,7 @@ static void handle_child_process(ExecutionData *data)
 		execute(data->lst->cmd, data->env, data);
 }
 
-static pid_t execute_command(ExecutionData *data)
+static pid_t execute_command(t_data *data)
 {
 	pid_t pid;
 	int pipefd[2];
@@ -115,80 +124,84 @@ static pid_t execute_command(ExecutionData *data)
 	return (pid);
 }
 
-void ft_execution(ExecutionData *data)
+int	check_bultin(char *cmd)
 {
-	int st;
-	int	i = 1;
-	int	size;
-	int	pid = 0;
+	if (!strcmp(cmd, "echo"))
+		return (1);
+	else if (!strcmp(cmd, "cd"))
+		return (1);
+	else if (!strcmp(cmd, "pwd"))
+		return (1);
+	else if (!strcmp(cmd, "export"))
+		return (1);
+	else if (!strcmp(cmd, "unset"))
+		return (1);
+	else if (!strcmp(cmd, "env"))
+		return (1);
+	else if (!strcmp(cmd, "exit"))
+		return (1);
+	return (0);
+}
 
-	size = ft_lstsize(data->export_i);
-	data->env = struct_to_char(&data->export_i);
-	add_last_cmd(&data->export_i, data->args);
-	if (data->lst->next == NULL)
+int multiple_cmds(t_data *data)
+{
+	int i;
+	int pid;
+	
+	i = 1;
+	while (data->lst)
 	{
-		signal(SIGINT, SIG_IGN);
-		if (builtins(data) == 1)
+		g_flags.envire = ft_merge_envr(data->export_i);
+		if (i == ft_lstsize(data->export_i))
+			pid = execute_command(data);
+		else
 		{
 			execute_command(data);
 		}
+		data->lst = data->lst->next;
+		i++;
+	}
+	return (pid);
+}
+
+void ft_execution(t_data *data)
+{
+	int st;
+	int	i;
+	int pid ;
+
+	(data->env = struct_to_char(&data->export_i), i = 1, pid = 0);
+	add_last_cmd(&data->export_i, data->args);
+	signal(SIGINT, SIG_IGN);
+	if (ft_lstsize(data->lst) == 1 && check_bultin(data->args[0]) == 1)
+	{
+		execute_with_redirection(data);
+		builtins(data);
 	}
 	else
 	{
-		signal(SIGINT, SIG_IGN);
 		while (data->lst)
 		{
 			g_flags.envire = ft_merge_envr(data->export_i);
-			if (i == size)
+			if (i == ft_lstsize(data->lst))
 				pid = execute_command(data);
 			else
+			{
+				if (check_bultin(data->args[0]) == 1)
+					execute_with_redirection(data);
 				execute_command(data);
+			}
 			data->lst = data->lst->next;
 			i++;
 		}
+		printf("-----> :size : %d\n", i);
+		// pid = multiple_cmds(data);
+	// waitpid(pid, &st, 0);
 	}
 	waitpid(pid, &st, 0);
-	while (0 < wait(NULL))
-		;
-	exit_stat(WEXITSTATUS(st));
+	while (0 < wait(&st))
+	{
+		exit_stat(WEXITSTATUS(st));
+	}
 	signals_init();
 }
-
-
-// void ft_execution(ExecutionData *data)
-// {
-//     int status;
-// 	pid_t pid;
-// 	pid = 0;
-//     data->env = struct_to_char(&data->export_i);
-//     add_last_cmd(&data->export_i, data->args);
-//     // if (!ft_strncmp(data->args[0], "<<", 2) &&!data->args[1])
-//     //     (syntax_error(), exit(EXIT_FAILURE));
-//     if (data->lst->next == NULL)
-//     {
-//         // signal(SIGINT, SIG_IGN);
-//         if (builtins(data) == 1)
-//         {
-//             pid = execute_command(data);
-//         }
-//     }
-//     else
-//     {
-//         signal(SIGINT, SIG_IGN);
-//         while (data->lst)
-//         {
-//             g_flags.envire = ft_merge_envr(data->export_i);
-//             // check_here_doc(data);
-//             pid = execute_command(data);
-//             data->lst = data->lst->next;
-//         }
-//     }
-//     // Utilisation de waitpid pour attendre le processus enfant
-//     ; // Attendez le processus enfant avec pid
-// 	// waitpid(pid, &status, 0);
-// 	while (waitpid(pid, &status, 0) > 0)
-// 	{
-// 		exit_stat(WEXITSTATUS(status));
-// 	}
-//     signals_init();
-// }
