@@ -6,7 +6,7 @@
 /*   By: sdiouane <sdiouane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/23 22:30:21 by sdiouane          #+#    #+#             */
-/*   Updated: 2024/06/05 12:23:02 by sdiouane         ###   ########.fr       */
+/*   Updated: 2024/06/06 17:19:41 by sdiouane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,7 @@ static void	signal_ctrl_d(int sig)
 {
 	(void)sig;
 	rl_redisplay();
+	exit(1);
 }
 
 void	signals_init(void)

@@ -6,7 +6,7 @@
 /*   By: sdiouane <sdiouane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 23:52:10 by sdiouane          #+#    #+#             */
-/*   Updated: 2024/06/05 15:18:42 by sdiouane         ###   ########.fr       */
+/*   Updated: 2024/06/06 19:03:56 by sdiouane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,6 +63,11 @@ void main_loop(char *line, s_env *export_i)
 	data = NULL;
 	args = NULL;
 	cmd = NULL;
+	if (export_i == NULL)
+	{
+		ft_putstr_fd("envirement empty\n", 2);
+		return ;
+	}
 	data = init_data(args, cmd, export_i);
 	loop_fct(data, line);
 	free(line);

@@ -6,7 +6,7 @@
 /*   By: sdiouane <sdiouane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/31 22:14:48 by sdiouane          #+#    #+#             */
-/*   Updated: 2024/06/06 17:15:45 by sdiouane         ###   ########.fr       */
+/*   Updated: 2024/06/06 18:26:49 by sdiouane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -176,7 +176,7 @@ void ft_execution(t_data *data)
 	data->env = struct_to_char(&data->export_i);
 	add_last_cmd(&data->export_i, data->args);
 	signal(SIGINT, SIG_IGN);
-	if (size == 1 && check_bultin(data->lst->cmd) == 1)
+	if (size == 1 && check_bultin(data->args[0]) == 1)
 	{
 		execute_with_redirection(data);
 		builtins(data);
@@ -192,45 +192,3 @@ void ft_execution(t_data *data)
 	exit_stat(WEXITSTATUS(st));
 	signals_init();
 }
-
-// void ft_execution(t_data *data)
-// {
-// 	int st;
-// 	int	i;
-// 	int pid ;
-
-// 	(data->env = struct_to_char(&data->export_i), i = 1, pid = 0);
-// 	add_last_cmd(&data->export_i, data->args);
-// 	signal(SIGINT, SIG_IGN);
-// 	if (ft_lstsize(data->lst) == 1 && check_bultin(data->args[0]) == 1)
-// 	{
-// 		execute_with_redirection(data);
-// 		builtins(data);
-// 	}
-// 	else
-// 	{
-// 		while (data->lst)
-// 		{
-// 			g_flags.envire = ft_merge_envr(data->export_i);
-// 			if (i == ft_lstsize(data->lst))
-// 				pid = execute_command(data);
-// 			else
-// 			{
-// 				if (check_bultin(data->args[0]) == 1)
-// 					execute_with_redirection(data);
-// 				execute_command(data);
-// 			}
-// 			data->lst = data->lst->next;
-// 			i++;
-// 		}
-// 		printf("-----> :size : %d\n", i);
-// 		// pid = multiple_cmds(data);
-// 	// waitpid(pid, &st, 0);
-// 	}
-// 	waitpid(pid, &st, 0);
-// 	while (0 < wait(&st))
-// 	{
-// 		exit_stat(WEXITSTATUS(st));
-// 	}
-// 	signals_init();
-// }

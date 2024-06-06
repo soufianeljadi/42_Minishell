@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execution_utils.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sel-jadi <sel-jadi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sdiouane <sdiouane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/17 09:55:09 by sdiouane          #+#    #+#             */
-/*   Updated: 2024/06/04 22:26:34 by sel-jadi         ###   ########.fr       */
+/*   Updated: 2024/06/06 18:28:52 by sdiouane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,11 +31,13 @@ void	add_last_cmd(s_env **lst, char **args)
 
 char	**struct_to_char(s_env **lst)
 {
-	char	**env;
+	char	**env =  NULL;
 	s_env	*tmp;
 	int		i;
 
 	i = 0;
+	if (lst[0])
+	{	
 	tmp = *lst;
 	env = malloc(sizeof(char *) * (ft_lstsize(tmp) + 1));
 	while (tmp)
@@ -49,6 +51,7 @@ char	**struct_to_char(s_env **lst)
 		i++;
 	}
 	env[i] = NULL;
+	}
 	return (env);
 }
 
