@@ -6,7 +6,7 @@
 /*   By: sdiouane <sdiouane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 23:52:10 by sdiouane          #+#    #+#             */
-/*   Updated: 2024/06/06 19:03:56 by sdiouane         ###   ########.fr       */
+/*   Updated: 2024/06/07 09:31:53 by sdiouane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,7 +99,7 @@ int main(int ac, char **av, char **env)
 	if (env[0] == NULL)
 		export_i = split_export_i(export_i);
 	else
-		export_i = split_env(env, lst);
+		export_i = split_env(env);
 	signals_init();
 	main_loop(line, export_i);
 	free_s_env(export_i);

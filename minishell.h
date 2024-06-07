@@ -6,7 +6,7 @@
 /*   By: sdiouane <sdiouane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 23:51:44 by sdiouane          #+#    #+#             */
-/*   Updated: 2024/06/05 21:29:03 by sdiouane         ###   ########.fr       */
+/*   Updated: 2024/06/07 11:14:49 by sdiouane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,7 @@ typedef struct s_env
 {
 	int i;
 	int j;
+	char *curr;
 	char *key;
 	char *value;
 	struct s_env *next;
@@ -230,7 +231,7 @@ void ft_putendl_fd(char *s, int fd);
 char *file_nc(char *s);
 void execute_with_redirection(t_data *data);
 int only_spaces(char *str);
-s_env *split_env(char **env, s_env *lst);
+s_env *split_env(char **env);
 s_env *split_export_i(s_env *lst);
 s_env *add_env_entry(s_env *head, char *key, char *value);
 
@@ -318,4 +319,6 @@ void first_check(char *cmd, int i, int *t);
 int is_alpha_numirique(char *line);
 
 int	check_bultin(char *cmd);
+
+void	supprimer_protection(char *chaine);
 #endif

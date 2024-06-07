@@ -6,7 +6,7 @@
 /*   By: sdiouane <sdiouane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/31 22:14:48 by sdiouane          #+#    #+#             */
-/*   Updated: 2024/06/06 18:26:49 by sdiouane         ###   ########.fr       */
+/*   Updated: 2024/06/07 11:22:42 by sdiouane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,10 +67,36 @@ void check_error(char **cmd, char **env, char *chemin)
 	}
 }
 
+// void execute(char *s, char **env, t_data *data)
+// {
+// 	char *chemin;
+// 	char **cmd;
+
+// 	(void)data;
+// 	(1) && (cmd = NULL, chemin = NULL);
+// 	if (*env)
+// 	{
+// 		cmd = check_quotes_before_execution(s);
+// 		printf("cmd : %s\n", cmd[0]);
+// 		if (cmd[0] == NULL)
+// 			exit(exit_stat(-1));
+// 		chemin = get_path(cmd[0], env);
+// 		if (chemin == NULL)
+// 			(ft_free_tab(cmd), exit(0));
+// 		if (check_bultin(data->lst->cmd) == 0)
+// 			check_error(cmd, env, chemin);
+// 		else if (check_bultin(data->lst->cmd) == 1)
+// 		{
+// 			execute_with_redirection(data);
+// 			builtins(data);
+// 		}
+// 	}
+// }
+
 void execute(char *s, char **env, t_data *data)
 {
-	char *chemin;
-	char **cmd;
+	char    *chemin;
+	char    **cmd;
 
 	(void)data;
 	(1) && (cmd = NULL, chemin = NULL);
@@ -78,16 +104,18 @@ void execute(char *s, char **env, t_data *data)
 	{
 		cmd = check_quotes_before_execution(s);
 		if (cmd[0] == NULL)
-			exit(exit_stat(-1));
+			exit(exit_stat(1));
 		chemin = get_path(cmd[0], env);
+
 		if (chemin == NULL)
-			(ft_free_tab(cmd), exit(0));
-		if (check_bultin(data->lst->cmd) == 0)
-			check_error(cmd, env, chemin);
-		else if (check_bultin(data->lst->cmd) == 1)
+			(ft_free_tab(cmd), exit(EXIT_FAILURE));
+		if (cmd[0][0] == '.' || cmd[0][0] == '/')
+			if (execve(cmd[0], cmd, env) == -1)
+				(ft_execut_error(cmd[0]), ft_free_tab(cmd), exit(EXIT_FAILURE));
+		if (execve(chemin, cmd, env) == -1 && strcmp(cmd[0], "\0"))
 		{
-			execute_with_redirection(data);
-			builtins(data);
+			if (strcmp(cmd[0], "\0"))
+				(ft_execut_error(cmd[0]) ,ft_free_tab(cmd), exit(EXIT_FAILURE));
 		}
 	}
 }
@@ -188,7 +216,7 @@ void ft_execution(t_data *data)
 	}
 	waitpid(pid, &st, 0);
 	while (0 < wait(NULL))
-	;
+		;
 	exit_stat(WEXITSTATUS(st));
 	signals_init();
 }
