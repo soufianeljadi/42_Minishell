@@ -6,7 +6,7 @@
 /*   By: sdiouane <sdiouane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 23:51:44 by sdiouane          #+#    #+#             */
-/*   Updated: 2024/06/07 11:14:49 by sdiouane         ###   ########.fr       */
+/*   Updated: 2024/06/10 06:10:13 by sdiouane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,7 @@
 #include <sys/types.h>
 #include <sys/stat.h>
 #include <dirent.h>
+
 
 #define ANSI_RESET_ALL "\x1b[0m"
 #define ANSI_COLOR_RED "\x1b[31m"
@@ -52,7 +53,6 @@ typedef struct s_env
 {
 	int i;
 	int j;
-	char *curr;
 	char *key;
 	char *value;
 	struct s_env *next;
@@ -194,13 +194,13 @@ void fct_equal(char **args, s_env *env, char *key);
 void ftc_concatination(char **args, s_env *env, char *key);
 
 // pwd :
-char *pwd_without_options(char **args, char *pwd);
+char *pwd_without_options(char **args, char *pwd, s_env *env);
 // unset :
 s_env *unset_fct(char **args, s_env *env);
 void remove_key(s_env **begin_list, void *data_ref, int (*cmp)());
 int cmp(void *data1, void *data2);
 // cd :
-s_env *execute_cd(char **args, s_env *lst);
+s_env *execute_cd(char **args, s_env *lst, char *curr);
 // echo :
 void echo_fct(char **args);
 // exit :
@@ -321,4 +321,11 @@ int is_alpha_numirique(char *line);
 int	check_bultin(char *cmd);
 
 void	supprimer_protection(char *chaine);
+
+int	is_blank(char *str);
+void print_error(char *str, char *type);
+
+int just_quotes(char *str);
+
+
 #endif

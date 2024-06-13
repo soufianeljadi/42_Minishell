@@ -6,7 +6,7 @@
 /*   By: sdiouane <sdiouane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 23:52:10 by sdiouane          #+#    #+#             */
-/*   Updated: 2024/06/07 09:31:53 by sdiouane         ###   ########.fr       */
+/*   Updated: 2024/06/09 16:16:29 by sdiouane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,9 +32,10 @@ void loop_fct(t_data *data, char *line)
 	pwd = NULL;
 	while (42)
 	{
+		
 		(pwd = print_directory(pwd), line = readline(pwd));
 		if (!line)
-			(printf("exit\n"), exit_stat(0));
+			(printf("exit\n"), exit_stat(0), exit(0));
 		if (line != NULL && only_spaces(line) == 0)
 		{
 			add_history(line);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_redirection.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sel-jadi <sel-jadi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sdiouane <sdiouane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/18 23:09:54 by sdiouane          #+#    #+#             */
-/*   Updated: 2024/06/04 23:23:43 by sel-jadi         ###   ########.fr       */
+/*   Updated: 2024/06/08 10:21:55 by sdiouane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,8 @@ static int	check_line(char *line, int i, int *r)
 {
 	while (line[i] != '\0')
 	{
+		if (line[i] == '"')
+			break ;
 		if (line[i + 1] != '\0' && ((line[i] == '>' && line[i + 1] == '>')
 				|| (line[i] == '<' && line[i + 1] == '<')))
 		{
@@ -70,24 +72,6 @@ int	is_alpha_numirique(char *line)
 			return (1);
 	}
 	return (0);
-}
-
-void	first_check(char *cmd, int i, int *t)
-{
-	char	**line;
-
-	line = ft_split(cmd, ' ');
-	printf("i : %d\n", i);
-	while (line[i])
-	{
-		if (!strcmp(line[i], "<<") && is_alpha_numirique(line[i + 1]))
-		{
-			printf("%s\t%s \n", line[i + 1], line[i + 2]);
-			*t = 1;
-			break ;
-		}
-		i++;
-	}
 }
 
 int	parse_redirection(char *line)

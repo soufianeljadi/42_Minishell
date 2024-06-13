@@ -6,7 +6,7 @@
 /*   By: sdiouane <sdiouane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/17 09:55:09 by sdiouane          #+#    #+#             */
-/*   Updated: 2024/06/07 10:20:47 by sdiouane         ###   ########.fr       */
+/*   Updated: 2024/06/08 09:57:03 by sdiouane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,8 +102,7 @@ char	**check_quotes_before_execution(char *s)
 	char	**cmd;
 	int		i;
 
-	cmd = NULL;
-	i = 0;
+	(cmd = NULL, i = 0);
 	if (!s)
 		exit(EXIT_FAILURE);
 	if (s[0] == '\\')
@@ -122,10 +121,9 @@ char	**check_quotes_before_execution(char *s)
 		exit(EXIT_FAILURE);
 	while (cmd[i])
 	{
-		if (count_quotes(cmd[i], '\"') % 2 == 0 && strstr(cmd[i], "\"") != NULL)
+		if (count_quotes(cmd[i], '\"') % 2 == 0 && strstr(cmd[i], "\"") != NULL && !just_quotes(cmd[i]))
 			del_dbl_quotes(cmd[i]);
-		else if (count_quotes(cmd[i], '\'') % 2 == 0
-			&& strstr(cmd[i], "'") != NULL)
+		else if (count_quotes(cmd[i], '\'') % 2 == 0 && strstr(cmd[i], "'") != NULL && !just_quotes(cmd[i]))
 			del_sngl_quotes(cmd[i]);
 		i++;
 	}

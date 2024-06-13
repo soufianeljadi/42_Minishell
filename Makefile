@@ -5,16 +5,16 @@
 #                                                     +:+ +:+         +:+      #
 #    By: sdiouane <sdiouane@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
-#    Created: 2024/03/12 23:52:42 by sdiouane          #+#    #+#              #
-#    Updated: 2024/06/06 18:45:40 by sdiouane         ###   ########.fr        #
+#    Created: 2024/06/10 06:04:10 by sdiouane          #+#    #+#              #
+#    Updated: 2024/06/10 06:04:13 by sdiouane         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
+
 
 NAME = minishell
 
 CC = cc -g -fsanitize=address
 
-CFLAGS = -Wall -Wextra -Werror 
 
 RDFLAGS =  -L $(shell brew --prefix readline)/lib -lreadline
 
@@ -58,12 +58,13 @@ SRC =	minishell.c \
 		execution/merge_env.c  \
 		execution/handle_quotes.c \
 		expanding/expanding.c \
-		expanding/expanding_utils.c 
+		expanding/expanding_utils.c \
+		allocate/ft_allocate.c 
 
 OBJ = $(SRC:.c=.o)
 
 $(NAME): $(OBJ)
-	@$(CC) $(CFLAGS) $(OBJ) -o $(NAME) $(RDFLAGS)
+	@$(CC) $(CFLAGS) $(OBJ) -o $(NAME) -L $(shell brew --prefix readline)/lib -lreadline
 
 all: $(NAME)
 

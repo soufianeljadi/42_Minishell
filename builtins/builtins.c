@@ -6,7 +6,7 @@
 /*   By: sdiouane <sdiouane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/26 01:07:33 by sel-jadi          #+#    #+#             */
-/*   Updated: 2024/06/05 14:49:02 by sdiouane         ###   ########.fr       */
+/*   Updated: 2024/06/07 15:36:12 by sdiouane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,7 +100,7 @@ int	is_builtins(char **args, s_env **export_i, char **env, int *flag)
 	else if (args[0] && !strcmp(args[0], "pwd"))
 	{
 		pwd = getcwd(NULL, 0);
-		pwd_without_options(args, pwd);
+		pwd_without_options(args, pwd, *export_i);
 		free(pwd);
 	}
 	else if (args[0] && !strcmp(args[0], "export"))
@@ -108,7 +108,10 @@ int	is_builtins(char **args, s_env **export_i, char **env, int *flag)
 	else if (args[0] && !strcmp(args[0], "unset"))
 		*export_i = unset_fct(args, *export_i);
 	else if (args[0] && !strcmp(args[0], "cd"))
-		*export_i = execute_cd(args, *export_i);
+	{
+		char *curr  = get_env_value("PWD", *export_i);
+		*export_i = execute_cd(args, *export_i, curr);
+	}
 	else if (args[0] && !strcmp(args[0], "env") && !args[1])
 	{
 		if (*(env) || !*(env))
