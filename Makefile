@@ -5,21 +5,20 @@
 #                                                     +:+ +:+         +:+      #
 #    By: sdiouane <sdiouane@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
-#    Created: 2024/06/10 06:04:10 by sdiouane          #+#    #+#              #
-#    Updated: 2024/06/10 06:04:13 by sdiouane         ###   ########.fr        #
+#    Created: 2024/03/12 23:52:42 by sdiouane          #+#    #+#              #
+#    Updated: 2024/07/15 01:56:59 by sdiouane         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-
 NAME = minishell
 
-CC = cc -g -fsanitize=address
+CC = cc -Wall -Wextra -Werror
 
 
 RDFLAGS =  -L $(shell brew --prefix readline)/lib -lreadline
-
 SRC =	minishell.c \
 		here_doc/here_doc.c \
+		here_doc/here_doc_utils.c \
 		parsing/exit_stat.c \
 		parsing/ft_itoa.c \
 		parsing/promt.c \
@@ -36,35 +35,54 @@ SRC =	minishell.c \
 		parsing/quotes.c \
 		parsing/ft_substr.c \
 		parsing/ft_strlen.c \
+		parsing/split_args_helper_two.c \
+		parsing/noued_cmd.c \
+		parsing/print_export.c \
+		parsing/ft_strjoin.c \
 		parsing/split_args_helper.c \
 		builtins/builtins.c \
+		builtins/builtins_utils.c \
 		builtins/export.c \
 		builtins/export_null.c \
+		builtins/export_null_utils.c \
 		builtins/export_not_null.c \
-		builtins/export_not_null_utils.c \
+		builtins/export_not_null_utils_one.c \
+		builtins/export_not_null_utils_two.c \
+		builtins/export_not_null_utils_three.c \
 		builtins/pwd.c \
 		builtins/cd.c \
+		builtins/cd_utils.c \
 		builtins/unset.c \
+		builtins/unset_utils.c \
 		builtins/echo.c \
 		builtins/exit_fct.c \
     	signals/signal.c \
 		execution/find_path.c \
 		execution/execution.c \
+		execution/check_builtin.c \
 		execution/redirections.c \
+		execution/redirections_utils.c \
+		execution/redirections_utils_two.c \
+		execution/file_nc.c \
 		execution/helper.c \
+		execution/helper_two.c \
 		execution/split_space_tab.c \
-		execution/heredoc.c \
-		execution/execution_utils.c \
-		execution/merge_env.c  \
+		execution/execution_utils_one.c \
+		execution/execution_utils_two.c \
+		execution/execution_utils_three.c \
+		execution/execution_utils_four.c \
 		execution/handle_quotes.c \
+		execution/struct2char.c \
 		expanding/expanding.c \
-		expanding/expanding_utils.c \
-		allocate/ft_allocate.c 
+		expanding/expanding_utils_one.c \
+		expanding/expanding_utils_two.c \
+		expanding/expanding_utils_three.c \
+		ft_malloc/ft_malloc.c 
 
 OBJ = $(SRC:.c=.o)
 
 $(NAME): $(OBJ)
-	@$(CC) $(CFLAGS) $(OBJ) -o $(NAME) -L $(shell brew --prefix readline)/lib -lreadline
+	@$(CC) $(CFLAGS) $(OBJ) -o $(NAME) $(RDFLAGS)
 
 all: $(NAME)
 

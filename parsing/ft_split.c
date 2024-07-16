@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_split.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sdiouane <sdiouane@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sel-jadi <sel-jadi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 23:51:36 by sdiouane          #+#    #+#             */
-/*   Updated: 2024/05/08 15:47:46 by sdiouane         ###   ########.fr       */
+/*   Updated: 2024/07/11 23:24:47 by sel-jadi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ static char	*mall_wrd(const char *s1, int n)
 	char	*new;
 
 	i = 0;
-	new = (char *)malloc(n + 1);
+	new = (char *)ft_malloc(n + 1);
 	if (!new)
 		return (NULL);
 	while (i < n)
@@ -73,7 +73,7 @@ char	**ft_split(char	*s, char c)
 
 	len = count_words(s, c);
 	j = -1;
-	ch = (char **)malloc((sizeof(char *)) * (len + 1));
+	ch = (char **)ft_malloc((sizeof(char *)) * (len + 1));
 	if (!ch)
 		return (NULL);
 	while (++j < len)

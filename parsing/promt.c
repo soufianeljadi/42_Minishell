@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   promt.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sdiouane <sdiouane@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sel-jadi <sel-jadi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/12 20:27:18 by sel-jadi          #+#    #+#             */
-/*   Updated: 2024/06/05 15:10:34 by sdiouane         ###   ########.fr       */
+/*   Updated: 2024/07/11 23:25:43 by sel-jadi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ char	*add_write_str(char *str1, char *str2, char *str3)
 	int		j;
 
 	j = 0;
-	dest = malloc(sizeof(char) * (ft_strlen(str1)
+	dest = ft_malloc(sizeof(char) * (ft_strlen(str1)
 				+ ft_strlen(str2) + ft_strlen(str3) + 1));
 	add2write(dest, str1, &j);
 	add2write(dest, str2, &j);
@@ -57,7 +57,7 @@ char	*get_directory(char *pwd)
 		i--;
 	}
 	i++;
-	str = malloc(sizeof(char) * ((ft_strlen(pwd) - i) + 3));
+	str = ft_malloc(sizeof(char) * ((ft_strlen(pwd) - i) + 3));
 	len = 0;
 	while (pwd[i] && pwd[i + 1])
 	{
@@ -91,5 +91,6 @@ char	*print_directory(char *pwd)
 		free(pwd2);
 		return (fin);
 	}
+	free (fin);
 	return (pwd);
 }

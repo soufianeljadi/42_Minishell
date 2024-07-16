@@ -6,7 +6,7 @@
 /*   By: sel-jadi <sel-jadi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/22 22:11:52 by sdiouane          #+#    #+#             */
-/*   Updated: 2024/06/04 22:20:12 by sel-jadi         ###   ########.fr       */
+/*   Updated: 2024/07/15 00:39:16 by sel-jadi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,31 +35,31 @@ char	*remove_quotes(char *input)
 {
 	char	*result;
 
-	if (input == NULL || strlen(input) < 2)
+	if (input == NULL || ft_strlen(input) < 2)
 		return (NULL);
-	result = malloc(strlen(input) - 1);
+	result = ft_malloc(ft_strlen(input) - 1);
 	if (result == NULL)
 		return (NULL);
-	strncpy(result, input + 1, strlen(input) - 1);
-	result[strlen(input) - 1] = '\0';
+	ft_strncpy(result, input + 1, ft_strlen(input) - 1);
+	result[ft_strlen(input) - 1] = '\0';
 	return (result);
 }
 
-int	existe_deja(char *key, s_env *env)
+int	existe_deja(char *key, t_env *env)
 {
-	s_env	*current;
+	t_env	*current;
 
 	current = env;
 	while (current != NULL)
 	{
-		if (strcmp(current->key, key) == 0)
+		if (ft_strcmp(current->key, key) == 0)
 			return (1);
 		current = current->next;
 	}
 	return (0);
 }
 
-s_env	*export_fct(char **args, s_env *env, char **eenv)
+t_env	*export_fct(char **args, t_env *env, char **eenv)
 {
 	if (!eenv[0])
 		is_null(args, env);

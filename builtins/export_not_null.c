@@ -6,71 +6,56 @@
 /*   By: sdiouane <sdiouane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/24 21:25:42 by sdiouane          #+#    #+#             */
-/*   Updated: 2024/06/07 19:42:00 by sdiouane         ###   ########.fr       */
+/*   Updated: 2024/07/13 18:01:16 by sdiouane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-void	remove_q(char *chaine)
+void	print_error(char *str, char *type)
+{
+	ft_putstr_fd("minishell: `", 2);
+	ft_putstr_fd(type, 2);
+	ft_putstr_fd(str, 2);
+	ft_putstr_fd("': not a valid identifier\n", 2);
+	free(str);
+}
+
+void	process_argument(char **args, t_env *env, int i)
+{
+	char	*key;
+	int		j;
+
+	(1) && (j = 0, key = NULL);
+	key = extract_key(args[i], &j);
+	if (is_invalid_plus(args[i], j))
+		handle_invalid_plus(key, args[i], j);
+	else if (verif_export(key) == 0)
+	{
+		(1) && (env->i = i, env->j = j);
+		begin_export(env, args, key);
+		free(key);
+	}
+	else
+		handle_invalid_key(key);
+}
+
+t_env	*process_export_args(char **args, t_env *env)
 {
 	int	i;
-	int	j;
 
-	i = 0;
-	j = 0;
-	while (chaine[i])
-	{
-		if (chaine[i] != '\'')
-			chaine[j++] = chaine[i];
-		i++;
-	}
-	chaine[j] = '\0';
-}
-
-s_env *begin_export(s_env *env, char **args, char *key)
-{
-	if (args[env->i][env->j] == '=')
-		fct_equal(args, env, key);
-	else if (args[env->i][env->j] == '+' && args[env->i][env->j + 1] == '=')
-		ftc_concatination(args, env, key);
-	else if (existe_deja(key, env) == 0)
-		ft_lstadd_back(&env, ft_lstnew_data(NULL, key));
-	return (env);
-}
-
-s_env	*process_export_args(char **args, s_env *env)
-{
-	int		i;
-	int		j;
-	char	*key;
-
-	(1) && (i = 1, key = NULL);
+	i = 1;
 	while (args[i])
 	{
-		if (strstr(args[i], " ") || strstr(args[i], "\t"))
-			del_dbl_quotes(args[i]);
-		j = 0;
-		while (args[i][j] && args[i][j] != '=' && args[i][j] != '+')
-			j++;
-		key = ft_substr(args[i], 0, j);
-		if (args[i][j] == '+' && args[i][j + 1] != '=')
-			(print_error(ft_strjoin(key, ft_strdup(&args[i][j])), "export"), exit_stat(1));
-		else if (verif_export(key) == 0)
-		{
-			(env->i = i, env->j = j);
-			begin_export(env, args, key);
-		}
-		else
-			(print_error(key, "export"), exit_stat(1));
+		process_argument(args, env, i);
 		i++;
 	}
 	return (env);
 }
 
-s_env	*not_null(char **args, s_env *env)
+t_env	*not_null(char **args, t_env *env)
 {
-	if (!strcmp(args[0], "export"))
+	if (!ft_strcmp(args[0], "export"))
 	{
 		if (!args[1])
 			print_export(env);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_substr.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sdiouane <sdiouane@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sel-jadi <sel-jadi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/25 16:59:26 by sdiouane          #+#    #+#             */
-/*   Updated: 2024/06/07 19:21:15 by sdiouane         ###   ########.fr       */
+/*   Updated: 2024/07/15 00:40:01 by sel-jadi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,9 +18,11 @@ char	*ft_strdup(char *s1)
 	int		i;
 	int		len;
 
+	if (!s1)
+		return (NULL);
 	i = 0;
 	len = ft_strlen(s1);
-	s2 = (char *)malloc(sizeof(char) * (len + 1));
+	s2 = (char *)ft_malloc(sizeof(char) * (len + 1));
 	if (!s2)
 		return (NULL);
 	while (s1[i] != '\0')
@@ -39,12 +41,12 @@ char	*ft_substr(char const *s, unsigned int start, size_t len)
 
 	if (!s)
 		return (NULL);
-	if (!len || start >= strlen(s))
+	if (!len || start >= ft_strlen(s))
 		return (ft_strdup(""));
-	i = strlen(s) - start ;
+	i = ft_strlen(s) - start ;
 	if (i > len)
 		i = len;
-	str = (char *)malloc(sizeof(char) * (i + 1));
+	str = (char *)ft_malloc(sizeof(char) * (i + 1));
 	if (!str)
 		return (0);
 	strlcpy(str, s + start, i + 1);
@@ -60,7 +62,7 @@ char	*ft_substr2(const char *inp, int start, int end)
 	i = 0;
 	len = end - start;
 	s = NULL;
-	s = (char *)malloc(len + 2);
+	s = (char *)ft_malloc(len + 2);
 	if (!s)
 		return (syntax_error(), NULL);
 	while (end >= start + i)

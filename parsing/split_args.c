@@ -6,7 +6,7 @@
 /*   By: sel-jadi <sel-jadi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/26 00:12:06 by sel-jadi          #+#    #+#             */
-/*   Updated: 2024/06/04 23:26:35 by sel-jadi         ###   ########.fr       */
+/*   Updated: 2024/07/15 00:41:02 by sel-jadi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,8 @@ void	ft_free(char **s)
 		s[i] = NULL;
 		i++;
 	}
-	free(s);
+	if (s)
+		free(s);
 	s = NULL;
 }
 
@@ -91,15 +92,25 @@ int	get_end_quots(char *inp)
 char	**line_to_args(char *line)
 {
 	char	**cmds;
-	char	*sp_line;
 	t_parse	d;
+	char	*str;
 
 	d.count = 0;
 	d.dq = 0;
 	d.sq = 0;
 	d.i = 0;
-	sp_line = ft_add_sep(line, d);
-	cmds = split_args(sp_line);
-	free(sp_line);
+	if (ft_strstr(line, "\"") || ft_strstr(line, "'"))
+	{
+		str = ft_add_sep(line);
+		cmds = split_args(str);
+		free (str);
+		return (cmds);
+	}
+	else
+	{
+		str = ft_add_sep(line);
+		cmds = split_args(str);
+		free (str);
+	}
 	return (cmds);
 }

@@ -3,24 +3,26 @@
 /*                                                        :::      ::::::::   */
 /*   split_space_tab.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sdiouane <sdiouane@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sel-jadi <sel-jadi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 16:00:39 by sdiouane          #+#    #+#             */
-/*   Updated: 2024/05/08 16:33:22 by sdiouane         ###   ########.fr       */
+/*   Updated: 2024/07/11 23:24:06 by sel-jadi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-static int count_wrds(char const *s, char c) {
-	int i;
-	int cnt;
+static int	count_wrds(char const *s, char c)
+{
+	int	i;
+	int	cnt;
 
 	i = 0;
 	cnt = 0;
 	if (!s)
 		return (0);
-	while (s[i]) {
+	while (s[i])
+	{
 		while (s[i] == c || s[i] == '\t')
 			i++;
 		if (s[i] != '\0')
@@ -31,15 +33,17 @@ static int count_wrds(char const *s, char c) {
 	return (cnt);
 }
 
-static char *allocation_words(const char *s1, int n) {
-	int i;
-	char *new;
+static char	*allocation_words(const char *s1, int n)
+{
+	int		i;
+	char	*new;
 
 	i = 0;
-	new = (char *)malloc(n + 1);
+	new = (char *)ft_malloc(n + 1);
 	if (!new)
 		return (NULL);
-	while (i < n) {
+	while (i < n)
+	{
 		new[i] = s1[i];
 		i++;
 	}
@@ -47,16 +51,15 @@ static char *allocation_words(const char *s1, int n) {
 	return (new);
 }
 
-char **split_space_tab(char *s, char c)
+char	**split_space_tab(char *s, char c)
 {
-	int i;
-	int j;
-	int len;
-	char **ch;
+	int		i;
+	int		j;
+	int		len;
+	char	**ch;
 
-	len = count_wrds(s, c);
-	j = -1;
-	ch = (char **)malloc((sizeof(char *)) * (len + 1));
+	(1) && (len = count_wrds(s, c), j = -1);
+	ch = (char **)ft_malloc((sizeof(char *)) * (len + 1));
 	if (!ch)
 		return (NULL);
 	while (++j < len)
@@ -68,10 +71,7 @@ char **split_space_tab(char *s, char c)
 			i++;
 		ch[j] = allocation_words(s, i);
 		if (!ch[j])
-		{
-			ft_free_tab(ch);
-			return (NULL);
-		}
+			return (ft_free_tab(ch), NULL);
 		s += i;
 	}
 	ch[j] = NULL;

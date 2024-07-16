@@ -5,85 +5,20 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: sdiouane <sdiouane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/03/27 23:28:30 by sdiouane          #+#    #+#             */
-/*   Updated: 2024/06/05 16:03:35 by sdiouane         ###   ########.fr       */
+/*   Created: 2024/06/09 22:07:07 by sel-jadi          #+#    #+#             */
+/*   Updated: 2024/07/11 14:12:19 by sdiouane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-char *ft_strjoin( char *s1,  char *s2)
+char	*fct(char **args, char *s, int i)
 {
-	size_t len_s1 = 0;
-	size_t len_s2 = 0;
-	size_t i = 0;
-	size_t j = 0;
-	char *result;
+	char	*temp;
 
-	if (s1)
-		while (s1[len_s1])
-			len_s1++;
-	if (s2)
-		while (s2[len_s2])
-			len_s2++;
-	result = (char *)malloc(sizeof(char) * (len_s1 + len_s2 + 1));
-	if (!result)
-		return (exit(exit_stat(1)), NULL);
-	while (i < len_s1)
-	{
-		result[i] = s1[i];
-		i++;
-	}
-	while (j < len_s2)
-	{
-		result[i + j] = s2[j];
-		j++;
-	}
-	result[i + j] = '\0';
-	return result;
-}
-
-noued_cmd *new_noued_cmd(char *commande, char *redirection)
-{
-	noued_cmd *nouveau_noeud = (noued_cmd *)malloc(sizeof(noued_cmd));
-	if (!nouveau_noeud)
-		return (exit(exit_stat(1)), NULL);
-	if (!commande)
-		nouveau_noeud->cmd = NULL;
-	else
-		nouveau_noeud->cmd = strdup(commande);
-	nouveau_noeud->redirection = (redirection) ? strdup(redirection) : NULL;
-	nouveau_noeud->next = NULL;
-	return nouveau_noeud;
-}
-
-void add_back_noued_cmd(noued_cmd **tete, char *commande, char *redirection)
-{
-	if (!*tete)
-		*tete = new_noued_cmd(commande, redirection);
-	else
-	{
-		noued_cmd *courant = *tete;
-		while (courant->next)
-			courant = courant->next;
-		courant->next = new_noued_cmd(commande, redirection);
-	}
-}
-
-void free_noued_cmd(noued_cmd *node)
-{
-	if (node == NULL)
-		exit(exit_stat(1));
-	free_noued_cmd(node->next);
-	free(node->cmd);
-	free(node->redirection);
-	free(node);
-}
-
-char	*fct(char **args, char *temp, char *s, int i)
-{
+	temp = NULL;
 	if (!s)
-		s = strdup(args[i]);
+		s = ft_strdup(args[i]);
 	else
 	{
 		temp = ft_strjoin(s, " ");
@@ -94,50 +29,53 @@ char	*fct(char **args, char *temp, char *s, int i)
 	return (s);
 }
 
-noued_cmd *split_args_by_pipe(char **args)
+static char	*handle_redirection(char *redirection, char *arg1, char *arg2)
 {
-	noued_cmd	*cmd;
-	char		*s;
-	char		*redirection;
-	int			i;
-	char 		*temp;
+	char	*temp1;
+	char	*temp2;
+	char	*temp3;
 
-	(1) && (i = 0, cmd = NULL, s = NULL, redirection = NULL, temp = NULL);
-	
-	i = 0;
+	temp1 = ft_strjoin(arg1, arg2);
+	temp2 = ft_strjoin(redirection, temp1);
+	free(temp1);
+	temp3 = ft_strjoin(temp2, " ");
+	free(temp2);
+	free(redirection);
+	return (temp3);
+}
+
+static void	add_and_reset_cmd(t_noued_cmd **cmd, char *s, char *redirection)
+{
+	add_back_noued_cmd(cmd, s, redirection);
+	free(s);
+	free(redirection);
+}
+
+t_noued_cmd	*split_args_by_pipe(char **args)
+{
+	t_noued_cmd	*cmd;
+	char		*s;
+	char		*red;
+	int			i;
+
+	(1) && (i = 0, cmd = NULL, s = NULL, red = NULL);
 	while (args[i] != NULL)
 	{
-		if (strcmp(args[i], "|") == 0) 
-			(add_back_noued_cmd(&cmd, s, redirection), free(s), free (redirection), redirection = NULL, s = NULL);
-		else if (strcmp(args[i], "<") == 0 || strcmp(args[i], ">") == 0 || strcmp(args[i], ">>") == 0 || strcmp(args[i], "<<") == 0)
+		if (ft_strcmp(args[i], "|") == 0)
+			(add_and_reset_cmd(&cmd, s, red), red = NULL, s = NULL);
+		else if (ft_strcmp(args[i], "<") == 0 || ft_strcmp(args[i], ">") == 0
+			|| ft_strcmp(args[i], ">>") == 0 || ft_strcmp(args[i], "<<") == 0)
 		{
 			if (args[i + 1] == NULL)
 				return (cmd);
-			(!s) && (s = strdup(""));
-			(1) && (redirection = ft_strjoin(redirection, strdup(ft_strjoin(args[i], args[i + 1]))), redirection = ft_strjoin(redirection, " "),	i++);
+			red = handle_redirection(red, args[i], args[i + 1]);
+			i++;
 		}
 		else
-			s = fct(args, temp, s, i);
+			s = fct(args, s, i);
 		i++;
 	}
-	if (s || redirection)	
-		(add_back_noued_cmd(&cmd, s, redirection),	free(s));
+	if (s || red)
+		add_and_reset_cmd(&cmd, s, red);
 	return (cmd);
 }
-
-void print_command_list(noued_cmd *head)
-{
-	noued_cmd *current = head;
-	int i = 0;
-
-	(void)head;
-	
-	while (current != NULL)
-	{
-		printf("Noeud : %d\n", i);
-		printf("->cmd : %s\n->rederection : %s \n", current->cmd, current->redirection);
-		current = current->next;
-		i++;
-	}
-}
-

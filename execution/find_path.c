@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   find_path.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sdiouane <sdiouane@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sel-jadi <sel-jadi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/30 22:27:39 by sdiouane          #+#    #+#             */
-/*   Updated: 2024/06/07 09:36:33 by sdiouane         ###   ########.fr       */
+/*   Updated: 2024/07/15 00:39:30 by sel-jadi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ void	ft_putendl_fd(char *s, int fd)
 {
 	if (fd < 0 || !s)
 		return ;
-	write(fd, s, strlen(s));
+	write(fd, s, ft_strlen(s));
 	write(fd, "\n", 1);
 }
 

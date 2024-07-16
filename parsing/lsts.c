@@ -3,20 +3,20 @@
 /*                                                        :::      ::::::::   */
 /*   lsts.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sdiouane <sdiouane@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sel-jadi <sel-jadi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/13 00:32:13 by sdiouane          #+#    #+#             */
-/*   Updated: 2024/06/06 18:47:21 by sdiouane         ###   ########.fr       */
+/*   Updated: 2024/07/11 23:25:17 by sel-jadi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-s_env	*ft_lstnew(void)
+t_env	*ft_lstnew(void)
 {
-	s_env	*b;
+	t_env	*b;
 
-	b = (s_env *)malloc(sizeof(s_env));
+	b = (t_env *)ft_malloc(sizeof(t_env));
 	if (!b)
 		exit(EXIT_FAILURE);
 	b ->key = NULL;
@@ -25,14 +25,17 @@ s_env	*ft_lstnew(void)
 	return (b);
 }
 
-s_env	*ft_lstnew_data(char *value, char *key)
+t_env	*ft_lstnew_data(char *value, char *key)
 {
-	s_env	*b;
+	t_env	*b;
 
-	b = (s_env *)malloc(sizeof(s_env));
+	b = (t_env *)ft_malloc(sizeof(t_env));
 	if (!b)
 		exit(EXIT_FAILURE);
-	b->key = key;
+	if (key)
+		b->key = key;
+	else
+		b->key = NULL;
 	if (value)
 		b->value = value;
 	else
@@ -41,9 +44,9 @@ s_env	*ft_lstnew_data(char *value, char *key)
 	return (b);
 }
 
-void	ft_lstadd_back(s_env **lst, s_env *new)
+void	ft_lstadd_back(t_env **lst, t_env *new)
 {
-	s_env	*tmp;
+	t_env	*tmp;
 
 	if (!lst || !new)
 		return ;
@@ -58,10 +61,10 @@ void	ft_lstadd_back(s_env **lst, s_env *new)
 	tmp->next = new;
 }
 
-void	free_s_env(s_env *head)
+void	free_s_env(t_env *head)
 {
-	s_env	*current;
-	s_env	*next;
+	t_env	*current;
+	t_env	*next;
 
 	current = head;
 	while (current != NULL)
@@ -74,43 +77,15 @@ void	free_s_env(s_env *head)
 	}
 }
 
-void	print_list(s_env *list)
+void	print_list(t_env *list)
 {
 	while (list)
 	{
-		if (list->value != NULL && (list->value[0] || !strcmp(list->value, "")))
+		if (list->value != NULL
+			&& (list->value[0] || !ft_strcmp(list->value, "")))
 		{
 			printf("%s", list->key);
 			printf("=%s\n", list->value);
-		}
-		list = list->next;
-	}
-}
-
-void	print_export(s_env *list)
-{
-	while (list)
-	{
-		if (strcmp(list->key, "_") != 0 && strcmp(list->key, "?") != 0)
-		{
-			if (list->value == NULL)
-				printf("declare -x %s\n", list->key);
-			else
-			{
-				if (!strcmp(list->value, ""))
-				{
-					printf("declare -x %s=", list->key);
-					printf("\"%s\"\n", list->value);
-				}
-				else if (strcmp(list->value, ""))
-				{
-					printf("declare -x %s=", list->key);
-					if (list->value[0] == '"')
-						printf("%s\n", list->value);
-					else
-						printf("\"%s\"\n", list->value);
-				}
-			}
 		}
 		list = list->next;
 	}

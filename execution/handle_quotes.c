@@ -6,7 +6,7 @@
 /*   By: sel-jadi <sel-jadi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/17 09:54:34 by sdiouane          #+#    #+#             */
-/*   Updated: 2024/06/04 22:31:23 by sel-jadi         ###   ########.fr       */
+/*   Updated: 2024/06/10 23:24:19 by sel-jadi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ void	del_dbl_quotes(char *chaine)
 	chaine[j] = '\0';
 }
 
-void	supprimerGuillemets(char *chaine)
+void	supprimerguillemets(char *chaine)
 {
 	int	i;
 	int	j;

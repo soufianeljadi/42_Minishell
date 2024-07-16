@@ -6,108 +6,99 @@
 /*   By: sdiouane <sdiouane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/25 23:56:31 by sel-jadi          #+#    #+#             */
-/*   Updated: 2024/06/05 10:07:45 by sdiouane         ###   ########.fr       */
+/*   Updated: 2024/07/11 14:04:38 by sdiouane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-char	*ft_add(char c, char *s, int index)
+static int	ft_is_operator(char *s, int i)
 {
-	int		len;
-	char	*tmp;
-
-	len = strlen(s);
-	tmp = (char *)malloc(sizeof(char) * (len + 2));
-	if (!tmp)
+	if (s)
 	{
-		free(s);
-		return (NULL);
+		if ((s[i] == '>' && s[i + 1] == '>') || \
+			(s[i] == '<' && s[i + 1] == '<'))
+			return (2);
+		else if (s[i] == '|' || s[i] == '<' || \
+			s[i] == '>')
+			return (1);
 	}
-	for (int i = 0, j = 0; i <= len; i++, j++)
-	{
-		if (j == index)
-			tmp[j++] = c;
-		tmp[j] = s[i];
-	}
-	tmp[len + 1] = '\0';
-	return (tmp);
+	return (0);
 }
 
-int	ft_sep_red(char **s, int *i)
+int	ft_scape_quotes(char *input, int i)
 {
-	if ((*s)[*i + 1] == (*s)[*i])
+	char		qt;
+
+	if (input)
 	{
-		*s = ft_add(' ', *s, *i);
-		if (*s == NULL)
-			return (-1);
-		(*i) += 2;
+		qt = input[i];
+		while (input[++i] && ((input[i] != qt) || \
+			((input[i] == qt) && (!i || \
+				input[i - 1] == '\\'))))
+			;
 	}
-	else if ((*s)[*i] == '>' || (*s)[*i] == '<')
-	{
-		*s = ft_add(' ', *s, *i);
-		if (*s == NULL)
-			return (-1);
-		(*i)++;
-	}
-	(*i)++;
-	*s = ft_add(' ', *s, *i);
-	if (*s == NULL)
-		return (-1);
-	return (1);
+	return (i);
 }
 
-void	ft_count_quotes(char *s, int i, t_parse *d)
+static int	ft_word_len(char *s, int *i)
 {
-	if (s[i] == '\'' && d->dq == 0)
-		(d->sq)++;
-	if (s[i] == '"' && d->sq == 0)
-		(d->dq)++;
-	if (d->sq == 2)
-		d->sq = 0;
-	else if (d->dq == 2)
-		d->dq = 0;
-}
+	int			l;
+	int			ref;
 
-int	check_after(char *s, int i)
-{
-	while (s[i])
+	l = ft_is_operator(s, *i);
+	if (s && !l)
 	{
-		if (s[i] == ' ' || s[i] == '\t')
-			i++;
-		else
-			return (0);
-	}
-	return (1);
-}
-
-char	*ft_add_sep(char *s, t_parse d)
-{
-	if (!s)
-		return (NULL);
-	d.i = 0;
-	d.dq = 0;
-	d.sq = 0;
-	while (s[(d.i)] != '\0')
-	{
-		if (s[d.i] == '\'' || s[d.i] == '"')
-			ft_count_quotes(s, d.i, &d);
-		else if ((s[d.i] == '>' || s[d.i] == '<') && (d.sq == 0 && d.dq == 0))
+		ref = *i;
+		while (s && s[*i])
 		{
-			if (ft_sep_red(&s, &(d.i)) == -1)
-				return (NULL);
+			if ((s[*i] == '\'' || s[*i] == '\"') && \
+				(!(*i) || s[(*i) - 1] != '\\'))
+				*i = ft_scape_quotes(s, *i);
+			else if (ft_is_operator(s, *i))
+				break ;
+			if (s[*i])
+				(*i)++;
 		}
-		else if ((s[d.i] == '|') && (d.sq == 0 && d.dq == 0))
-		{
-			s = ft_add(' ', s, d.i);
-			if (s == NULL)
-				return (NULL);
-			d.i += 2;
-			s = ft_add(' ', s, d.i);
-			if (s == NULL)
-				return (NULL);
-		}
-		d.i++;
+		return (*i - ref);
 	}
-	return (s);
+	*i += l;
+	return (l);
+}
+
+char	*ft_strs_join(char *s1, char *s2)
+{
+	char		*str;
+
+	str = NULL;
+	if (!s1 && s2)
+		str = ft_strdup(s2);
+	else if (s1 && !s2)
+		str = ft_strdup(s1);
+	else if (s1 && s2)
+		str = ft_strjoin(s1, s2);
+	return (free (s1), free (s2), str);
+}
+
+char	*ft_add_sep(char *s)
+{
+	int			i;
+	int			j;
+	int			w_len;
+	char		*str;
+
+	j = 0;
+	i = 0;
+	str = NULL;
+	while (s && s[i])
+	{
+		w_len = ft_word_len(s, &i);
+		if (w_len)
+		{
+			str = ft_strs_join(str, ft_substr(s, j, w_len));
+			str = ft_strs_join(str, ft_strdup(" "));
+			j += w_len;
+		}
+	}
+	return (str);
 }

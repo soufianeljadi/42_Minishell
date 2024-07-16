@@ -6,127 +6,96 @@
 /*   By: sdiouane <sdiouane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/27 19:58:08 by sdiouane          #+#    #+#             */
-/*   Updated: 2024/06/07 10:09:09 by sdiouane         ###   ########.fr       */
+/*   Updated: 2024/07/15 01:25:14 by sdiouane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-void check_memory_allocation(void *ptr)
+void	protect_value(char *value)
 {
-	if (!ptr)
-		exit(exit_stat(1));
+	if (value)
+		free(value);
 }
 
-void handle_quotes(char *exp_commande, t_p *p)
+char	*prc_variable(char *exp_commande, t_p *p, t_env *export_i)
 {
-	if (exp_commande[p->i] == '"' || exp_commande[p->i] == '\'')
-	{
-		if (p->q_open && exp_commande[p->i] == p->cur_quote)
-		{
-			p->q_open = 0;
-			p->cur_quote = '\0';
-		}
-		else if (!p->q_open)
-		{
-			p->q_open = 1;
-			p->cur_quote = exp_commande[p->i];
-		}
-	}
-}
+	char	*key;
+	char	*value;
+	char	*full_key;
+	char	*str;
 
-
-char *format_value_if_needed(char *key, s_env *export_i)
-{
-	char *value;
-	value = get_env_value(key, export_i);
-	if (value && value[0] == '\"' && value[ft_strlen(value) - 1] == '\"')
-		value = ft_substr2(value, 1, ft_strlen(value) - 2);
-	else if (value && value[0] == '\'' && strcmp(value, "\""))
-	{
-		value = ft_strjoin("\\", value);
-		check_memory_allocation(value);
-		value = ft_strjoin(value, "\\");
-		check_memory_allocation(value);
-	}
-	return (value);
-}
-
-char *variable_with_value(char *full_key, char *key, char *value, char *exp_commande)
-{
-	char *exp_cmd;
-
-	full_key = ft_strjoin("$", key);
-	check_memory_allocation(full_key);
-	exp_cmd = ft_str_replace(exp_commande, full_key, value);
-	(check_memory_allocation(exp_cmd), free(exp_commande));
-	exp_commande = strdup(exp_cmd);
-	check_memory_allocation(exp_commande);
-	(free(full_key), free(exp_cmd), free(key), free(value));
-	return (exp_commande);
-}
-
-char *process_variable(char *exp_commande, t_p *p, s_env *export_i)
-{
-	char *key;
-	char *value;
-	char *full_key;
-
-	full_key = NULL;
+	(1) && (str = NULL, full_key = NULL);
 	key = get_env_key(exp_commande, p->i);
-	check_memory_allocation(key);
 	value = format_value_if_needed(key, export_i);
-	if (!value || !strcmp(value, "") || !strcmp(value, " "))
+	if (!value || !ft_strcmp(value, "") || !ft_strcmp(value, " "))
 	{
-		if (strcmp(key, ""))
+		if (ft_strcmp(key, ""))
 		{
 			full_key = ft_strjoin("$", key);
-			exp_commande = ft_str_replace(exp_commande, full_key, strdup(" "));
+			str = ft_str_replace(exp_commande, full_key, ft_strdup(" "));
+			return (protect_value(value), free(key), free(exp_commande), str);
 		}
-		(free(key), free(value));
+		else
+			return (free(key), exp_commande);
 	}
 	else
 	{
-		exp_commande = variable_with_value(full_key, key, value, exp_commande);
-		check_memory_allocation(exp_commande);
+		str = variable_with_value(full_key, key, value, exp_commande);
+		(check_memory_allocation(str), free(exp_commande));
 	}
-	return (exp_commande);
+	return (str);
 }
 
-char *exp_fct(char *commande, s_env *export_i, int *flag)
+void	check_(char *str)
+{
+	size_t	len;
+
+	len = ft_strlen(str);
+	if (len < 2)
+		return ;
+	if ((str[0] == '\'' && str[len - 1] == '\'')
+		|| (str[0] == '"' && str[len - 1] == '"'))
+	{
+		memmove(str, str + 1, len - 2);
+		str[len - 2] = '\0';
+	}
+}
+
+char	*exp_fct(char *commande, t_env *export_i, int *flag)
 {
 	char	*exp_commande;
 	t_p		p;
 
-	p.i= 0;
-	p.j = 0;
-	p.q_open = 0;
-	p.cur_quote = 0;
+	init_t_p(&p);
 	if (!commande)
 		exit(exit_stat(1));
-	(exp_commande = ft_strdup(commande), check_memory_allocation(exp_commande));
+	exp_commande = ft_strdup(commande);
+	check_memory_allocation(exp_commande);
+	free(commande);
 	while (exp_commande && exp_commande[p.i] != '\0')
 	{
 		handle_quotes(exp_commande, &p);
 		if (exp_commande[p.i] == '$' && exp_commande[p.i + 1] == '?')
-			(exp_commande = ft_str_replace(exp_commande, ft_strdup("$?"),
-				ft_itoa(exit_stat(-1))), check_memory_allocation(exp_commande));
-		if (exp_commande[p.i] == '$' && (!p.q_open
-			|| (p.q_open && p.cur_quote == '"')))
+			exp_commande = replace_exit_status(exp_commande);
+		else if (exp_commande[p.i] == '$' && (!p.q_open
+				|| (p.q_open && p.cur_quote == '"')))
 		{
-			exp_commande = process_variable(exp_commande, &p, export_i);
-				(check_memory_allocation(exp_commande), *flag = 1);
+			exp_commande = prc_variable(exp_commande, &p, export_i);
+			check_(exp_commande);
+			check_memory_allocation(exp_commande);
+			*flag = 1;
 		}
 		p.i++;
 	}
 	return (exp_commande);
 }
 
-noued_cmd	*ft_expanding(t_data **data, s_env *export_i)
+t_noued_cmd	*ft_expanding(t_data **data, t_env *export_i)
 {
-	t_data *tmp;
-	noued_cmd *current;
-	int f;
+	t_data		*tmp;
+	t_noued_cmd	*current;
+	int			f;
 
 	tmp = *data;
 	current = tmp->lst;
@@ -145,8 +114,5 @@ noued_cmd	*ft_expanding(t_data **data, s_env *export_i)
 		}
 		current = current->next;
 	}
-	current = tmp->lst;
-	while (current)
-		current = current->next;
 	return (tmp->lst);
 }

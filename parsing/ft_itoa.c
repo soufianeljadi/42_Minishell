@@ -6,7 +6,7 @@
 /*   By: sdiouane <sdiouane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/23 06:29:59 by sel-jadi          #+#    #+#             */
-/*   Updated: 2024/06/05 15:10:43 by sdiouane         ###   ########.fr       */
+/*   Updated: 2024/07/14 00:57:18 by sdiouane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ char	*ft_itoa(unsigned int n)
 
 	i = 0;
 	len = ft_intlen(n);
-	p = (char *)malloc(sizeof(*p) * (len + 1));
+	p = (char *)ft_malloc(sizeof(*p) * (len + 1));
 	if (!p)
 		return (0);
 	p[len] = '\0';
@@ -78,40 +78,37 @@ char	*ft_itoa(unsigned int n)
 	return (p);
 }
 
-static int	ft_sing(const char *str, int *hi)
+static int	ft_isdigit(int c)
 {
-	int	sign;
-	int	i;
-
-	i = 0;
-	sign = 1;
-	while ((str[i] >= 9 && str[i] <= 13) || (str[i] == 32))
-		i++;
-	if (str[i] == 45 || str[i] == 43)
-	{
-		if (str[i] == 45)
-			sign *= -1;
-		i++;
-	}
-	*hi = i;
-	return (sign);
+	if (c >= '0' && c <= '9')
+		return (1);
+	return (0);
 }
 
-int	ft_atoi(const char *str)
+int	ft_atoi( char *str)
 {
-	int	sign;
-	int	result;
-	int	i;
+	int		i;
+	int		s;
+	long	x;
 
-	result = 0;
 	i = 0;
-	sign = ft_sing(str, &i);
-	while (str[i] && str[i] >= 48 && str[i] <= 57)
+	s = 1;
+	x = 0;
+	if (!str[0])
+		return (-1);
+	while (str[i] == ' ')
+		i++;
+	if ((str[i] == '-' || str[i] == '+') && (str[i + 1]))
+		s = 44 - str[i++];
+	while (str[i])
 	{
-		result *= 10;
-		result += str[i] - 48;
+		if (!ft_isdigit(str[i]))
+			return (-1);
+		if (((x * 10 + str[i] - '0') > 2147483647 && s == 1)
+			|| ((x * 10 + str[i] - '0') > 2147483648 && s == -1))
+			return (-1);
+		x = x * 10 + str[i] - '0';
 		i++;
 	}
-	result *= sign;
-	return (result);
+	return (x * s);
 }
