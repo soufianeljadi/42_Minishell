@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execution_utils_one.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sel-jadi <sel-jadi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sdiouane <sdiouane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/17 09:55:09 by sdiouane          #+#    #+#             */
-/*   Updated: 2024/07/15 00:54:37 by sel-jadi         ###   ########.fr       */
+/*   Updated: 2024/07/16 13:27:57 by sdiouane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,24 +18,6 @@ char	**splt_args(char *line)
 
 	cmds = split_args(line);
 	return (cmds);
-}
-
-void	process_command(char **cmd)
-{
-	int	i;
-
-	i = 0;
-	while (cmd[i])
-	{
-		if (count_quotes(cmd[i], '\"') % 2 == 0
-			&& ft_strstr(cmd[i], "\"") != NULL
-			&& !just_quotes(cmd[i]))
-			del_dbl_quotes(cmd[i]);
-		else if (count_quotes(cmd[i], '\'') % 2 == 0
-			&& ft_strstr(cmd[i], "'") != NULL && !just_quotes(cmd[i]))
-			del_sngl_quotes(cmd[i]);
-		i++;
-	}
 }
 
 int	should_remove_quotes(char *s)
@@ -72,11 +54,9 @@ char	**check_quotes_before_execution(char *s)
 
 	if (!s)
 		exit(EXIT_FAILURE);
-	if (should_remove_quotes(s))
-		supprimerguillemets(s);
+	ft_rm_quotes(s);
 	cmd = splt_args(s);
 	if (!cmd)
 		exit(EXIT_FAILURE);
-	process_command(cmd);
 	return (cmd);
 }

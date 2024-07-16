@@ -6,13 +6,13 @@
 #    By: sdiouane <sdiouane@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/03/12 23:52:42 by sdiouane          #+#    #+#              #
-#    Updated: 2024/07/15 01:56:59 by sdiouane         ###   ########.fr        #
+#    Updated: 2024/07/16 21:57:08 by sdiouane         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = minishell
 
-CC = cc -Wall -Wextra -Werror
+CC = cc -Wall -Wextra -Werror -g -fsanitize=address 
 
 
 RDFLAGS =  -L $(shell brew --prefix readline)/lib -lreadline
@@ -63,6 +63,9 @@ SRC =	minishell.c \
 		execution/redirections.c \
 		execution/redirections_utils.c \
 		execution/redirections_utils_two.c \
+		execution/redirections_builtins.c \
+		execution/redirections_utils_builtins.c \
+		execution/redirections_utils_two_builtins.c \
 		execution/file_nc.c \
 		execution/helper.c \
 		execution/helper_two.c \

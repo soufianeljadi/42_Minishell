@@ -6,13 +6,68 @@
 /*   By: sdiouane <sdiouane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 23:52:10 by sdiouane          #+#    #+#             */
-/*   Updated: 2024/07/14 01:34:23 by sdiouane         ###   ########.fr       */
+/*   Updated: 2024/07/16 22:15:07 by sdiouane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static void	init_data(t_data *data, char *line)
+static int find_first_quote(const char *str)
+{
+    int i = 0;
+    while (str[i] != '\0')
+    {
+        if (str[i] == '"' || str[i] == '\'')
+            return i;
+        i++;
+    }
+    return -1;
+}
+
+static int find_matching_quote(const char *str, char quote_type, int start)
+{
+    int i = start + 1;
+    while (str[i] != '\0')
+    {
+        if (str[i] == quote_type)
+            return i;
+        i++;
+    }
+    return -1;
+}
+
+static void remove_quotes(char *str)
+{
+    int len = strlen(str);
+    int start = find_first_quote(str);
+    int end = find_matching_quote(str, str[start], start);
+
+    if (start != -1 && end != -1)
+    {
+        memmove(&str[start], &str[start + 1], end - start);
+        memmove(&str[end - 1], &str[end + 1], len - end);
+    }
+}
+
+void ft_rm_quotes(char *str)
+{
+    int len = strlen(str);
+    if (len < 2)
+        return; // Pas de quotes à enlever si la chaîne a moins de 2 caractères
+
+    int start = find_first_quote(str);
+    if (start == -1)
+        return; // Si aucune quote ouvrante trouvée, retourner
+
+    char quote_type = str[start];
+    int end = find_matching_quote(str, quote_type, start);
+    if (end == -1)
+        return; // Si aucune quote fermante correspondante trouvée, retourner
+
+    remove_quotes(str);
+}
+
+static void init_data(t_data *data, char *line)
 {
 	data->args = line_to_args(line);
 	check_here_doc(data);
@@ -20,23 +75,9 @@ static void	init_data(t_data *data, char *line)
 	data->lst = ft_expanding(&data, data->export_i);
 }
 
-void	free_env(t_env *env)
+void loop_fct(t_data *data, char *line)
 {
-	t_env	*tmp;
-
-	while (env != NULL)
-	{
-		tmp = env;
-		env = env->next;
-		free(tmp->key);
-		free(tmp->value);
-		free(tmp);
-	}
-}
-
-void	loop_fct(t_data *data, char *line)
-{
-	char	*pwd;
+	char *pwd;
 
 	pwd = NULL;
 	while (42)
@@ -63,18 +104,18 @@ void	loop_fct(t_data *data, char *line)
 	}
 }
 
-void	main_loop(char *line, t_env *export_i)
+void main_loop(char *line, t_env *export_i)
 {
-	t_data	*data;
+	t_data *data;
 
 	if (export_i == NULL)
 	{
 		ft_putstr_fd("envirement empty\n", 2);
-		return ;
+		return;
 	}
 	data = (t_data *)ft_malloc(sizeof(t_data));
 	if (!data)
-		return ;
+		return;
 	data->lst = NULL;
 	data->args = NULL;
 	data->env = NULL;
@@ -85,11 +126,11 @@ void	main_loop(char *line, t_env *export_i)
 	clear_history();
 }
 
-int	main(int ac, char **av, char **env)
+int main(int ac, char **av, char **env)
 {
-	char	*line;
-	t_env	*export_i;
-	t_env	*lst;
+	char *line;
+	t_env *export_i;
+	t_env *lst;
 
 	(void)av;
 	export_i = NULL;

@@ -6,7 +6,7 @@
 /*   By: sdiouane <sdiouane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/27 19:58:08 by sdiouane          #+#    #+#             */
-/*   Updated: 2024/07/15 01:25:14 by sdiouane         ###   ########.fr       */
+/*   Updated: 2024/07/16 22:23:39 by sdiouane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,11 +105,13 @@ t_noued_cmd	*ft_expanding(t_data **data, t_env *export_i)
 		if (current->cmd)
 		{
 			current->cmd = exp_fct(current->cmd, export_i, &f);
+			// ft_rm_quotes(current->cmd);
 			check_memory_allocation(current->cmd);
 		}
 		if (current->redirection)
 		{
 			current->redirection = exp_fct(current->redirection, export_i, &f);
+			// ft_rm_quotes(current->redirection);
 			check_memory_allocation(current->redirection);
 		}
 		current = current->next;

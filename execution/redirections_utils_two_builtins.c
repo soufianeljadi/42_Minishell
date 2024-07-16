@@ -1,30 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   redirections_utils_two.c                           :+:      :+:    :+:   */
+/*   redirections_utils_two_builtins.c                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: sdiouane <sdiouane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/13 01:29:40 by sel-jadi          #+#    #+#             */
-/*   Updated: 2024/07/16 11:27:17 by sdiouane         ###   ########.fr       */
+/*   Updated: 2024/07/16 11:38:58 by sdiouane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-void	put_ambiguous(char *redirection)
+void	put_ambiguous_builtins(char *redirection)
 {
 	ft_putstr_fd("minishell: ", 2);
 	ft_putstr_fd(redirection, 2);
 	ft_putstr_fd(": ambiguous redirect\n", 2);
-	exit(EXIT_FAILURE);
 }
 
-void	put_errno(char *redirection)
+void	put_errno_builtins(char *redirection)
 {
 	ft_putstr_fd("minishell: ", 2);
 	ft_putstr_fd(redirection, 2);
 	ft_putstr_fd(": ", 2);
 	ft_putendl_fd(strerror(errno), 2);
-	exit(EXIT_FAILURE);
 }

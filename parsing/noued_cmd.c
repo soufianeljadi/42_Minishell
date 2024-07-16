@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   noued_cmd.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sel-jadi <sel-jadi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sdiouane <sdiouane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/09 22:25:13 by sel-jadi          #+#    #+#             */
-/*   Updated: 2024/07/15 00:42:23 by sel-jadi         ###   ########.fr       */
+/*   Updated: 2024/07/16 16:54:25 by sdiouane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,8 @@ void	free_noued_cmd(t_noued_cmd *head)
 			free(current->redirection);
 		if (current->cmd != NULL)
 			free(current->cmd);
-		free(current);
+		if (current)
+			free(current);////////////
 		current = next;
 	}
 }

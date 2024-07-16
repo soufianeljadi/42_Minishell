@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   handle_quotes.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sel-jadi <sel-jadi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sdiouane <sdiouane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/17 09:54:34 by sdiouane          #+#    #+#             */
-/*   Updated: 2024/06/10 23:24:19 by sel-jadi         ###   ########.fr       */
+/*   Updated: 2024/07/16 11:04:58 by sdiouane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,13 +35,14 @@ void	del_dbl_quotes(char *chaine)
 
 	i = 0;
 	j = 0;
-	while (chaine[i])
+	while (chaine && chaine[i])
 	{
 		if (chaine[i] != '"')
 			chaine[j++] = chaine[i];
 		i++;
 	}
-	chaine[j] = '\0';
+	if (chaine)
+		chaine[j] = '\0';
 }
 
 void	supprimerguillemets(char *chaine)

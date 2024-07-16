@@ -6,7 +6,7 @@
 /*   By: sdiouane <sdiouane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/31 22:14:48 by sdiouane          #+#    #+#             */
-/*   Updated: 2024/07/15 01:28:36 by sdiouane         ###   ########.fr       */
+/*   Updated: 2024/07/16 22:16:52 by sdiouane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,8 +38,10 @@ static pid_t	execute_command(t_data *data)
 		check_sign(data);
 		signal(SIGINT, SIG_DFL);
 		if (data->lst->next != NULL)
+		{
 			if (dup2(pipefd[1], STDOUT_FILENO) == -1)
 				(perror("dup2"), exit(EXIT_FAILURE));
+		}
 		(close(pipefd[1]), close(pipefd[0]));
 		(handle_child_process(data), exit(EXIT_SUCCESS));
 	}
@@ -85,13 +87,17 @@ void	ft_execution(t_data *data)
 	int	size;
 	int	pid;
 
+
 	if (g_signal == 1 && data->lst->cmd && data->lst->redirection)
 		return ;
 	(1) && (pid = 0, size = ft_lstsize(data->lst));
 	data->env = struct_to_char(&data->export_i);
 	(add_last_cmd(&data->export_i, data->args), signal(SIGINT, SIG_IGN));
 	if (size == 1 && check_bultin(data->args[0]) == 1)
-		(execute_with_redirection(data), builtins(data));
+	{
+		if (execute_with_redirection_builtins(data) != -1)
+			builtins(data);
+	}
 	else
 	{
 		signal(SIGINT, SIG_IGN);

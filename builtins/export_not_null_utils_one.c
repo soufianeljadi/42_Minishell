@@ -6,7 +6,7 @@
 /*   By: sdiouane <sdiouane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/20 15:24:11 by sdiouane          #+#    #+#             */
-/*   Updated: 2024/07/11 08:08:15 by sdiouane         ###   ########.fr       */
+/*   Updated: 2024/07/16 15:32:41 by sdiouane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,8 +39,6 @@ void	fct_equal(char **args, t_env *env, char *key)
 	while (args[env->i][env->j] && args[env->i][env->j] != '\0')
 		env->j++;
 	value = extract_value(args[env->i], start, env->j);
-	if (value[0] == '\'' && (ft_strstr(value, " ") || ft_strstr(value, "\t")))
-		del_sngl_quotes(value);
 	update_env_value(env, key, value);
 	exit_stat(0);
 }

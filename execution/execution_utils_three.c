@@ -6,7 +6,7 @@
 /*   By: sdiouane <sdiouane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/10 23:12:09 by sel-jadi          #+#    #+#             */
-/*   Updated: 2024/07/15 01:27:36 by sdiouane         ###   ########.fr       */
+/*   Updated: 2024/07/16 22:09:04 by sdiouane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 
 void	handle_child_process(t_data *data)
 {
+	// (void)data;
 	signal(SIGQUIT, SIG_DFL);
 	if (data->lst->redirection != NULL)
 		execute_with_redirection(data);

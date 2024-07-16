@@ -6,7 +6,7 @@
 /*   By: sdiouane <sdiouane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 23:51:44 by sdiouane          #+#    #+#             */
-/*   Updated: 2024/07/15 01:56:28 by sdiouane         ###   ########.fr       */
+/*   Updated: 2024/07/16 15:03:55 by sdiouane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -186,7 +186,7 @@ int			parse_redirection(char *line);
 int			builtins(t_data *data);
 t_env		*export_fct(char **args, t_env *env, char **eenv);
 int			existe_deja(char *key, t_env *env);
-char		*remove_quotes(char *input);
+void		ft_rm_quotes(char *str);
 int			verif_export(char *str);
 void		is_null(char **args, t_env *env);
 void		concatenation(char **args, t_env *env, char *key);
@@ -209,6 +209,7 @@ void		ft_putstr_fd(char *s, int fd);
 void		ft_putendl_fd(char *s, int fd);
 char		*file_nc(char *s);
 void		execute_with_redirection(t_data *data);
+int			execute_with_redirection_builtins(t_data *data);
 int			only_spaces(char *str);
 t_env		*split_env(char **env, t_env *lst);
 t_env		*split_export_i(t_env *lst);
@@ -229,6 +230,9 @@ int			ft_lstsize(void *lst);
 void		redirection_in(char *oper, char *redirection, int *fd);
 void		redirection_double_out(char *redirection, int *fd);
 void		redirection_out(char *redirection, int *fd);
+int			redirection_in_builtins(char *oper, char *redirection, int *fd);
+int			redirection_double_out_builtins(char *redirection, int *fd);
+int			redirection_out_builtins(char *redirection, int *fd);
 void		del_qotes1(char *chaine);
 void		del_qotes(char *chaine);
 void		del_dbl_quotes(char *chaine);
@@ -240,6 +244,7 @@ char		**check_quotes_before_execution(char *s);
 t_noued_cmd	*new_noued_cmd(char *commande, char *redirection);
 t_noued_cmd	*split_args_by_pipe(char **args);
 t_noued_cmd	*ft_expanding(t_data **data, t_env *export_i);
+void ft_rm_quotes(char *str);
 void		sng_q(char *chaine);
 void		dbl_q(char *chaine);
 char		*variable_with_value(char *full_key, char *key, char *value,
@@ -278,6 +283,8 @@ char		*get_env_var(t_env	*lst, char	*key);
 int			set_env_var(t_env	**lst, char	*key, char	*value);
 void		put_ambiguous(char *redirection);
 void		put_errno(char *redirection);
+void		put_ambiguous_builtins(char *redirection);
+void		put_errno_builtins(char *redirection);
 int			check_bultin(char *cmd);
 char		*format_value_if_needed(char *key, t_env *export_i);
 void		*ft_malloc(size_t size);

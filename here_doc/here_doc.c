@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   here_doc.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sel-jadi <sel-jadi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sdiouane <sdiouane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/05 14:45:36 by sdiouane          #+#    #+#             */
-/*   Updated: 2024/07/15 00:44:40 by sel-jadi         ###   ########.fr       */
+/*   Updated: 2024/07/16 22:17:25 by sdiouane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,7 +98,7 @@ void	handle_heredocs(char **delem, t_data *data)
 		process_heredoc(fd, *delem, flag, data);
 		exit(0);
 	}
-	else if (pid > 0)
+	else
 	{
 		waitpid(pid, NULL, 0);
 		signal(SIGINT, SIG_IGN);
