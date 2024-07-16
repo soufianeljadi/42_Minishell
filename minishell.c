@@ -1,4 +1,4 @@
-/* ************************************************************************** */
+//* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
@@ -73,6 +73,12 @@ static void init_data(t_data *data, char *line)
 	check_here_doc(data);
 	data->lst = split_args_by_pipe(data->args);
 	data->lst = ft_expanding(&data, data->export_i);
+	int i = 0;
+	while (data->args[i])
+	{
+		ft_rm_quotes(data->args[i]);
+		i++;
+	}
 }
 
 void loop_fct(t_data *data, char *line)
@@ -151,3 +157,10 @@ int main(int ac, char **av, char **env)
 	free(line);
 	return (0);
 }
+// leaks export with >
+// bash-3.2$ export x="a  b"
+// bash-3.2$ ls > $x
+
+
+// exit() long long 
+// echo -nnnnnn

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cd.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sel-jadi <sel-jadi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sdiouane <sdiouane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/25 17:00:00 by sdiouane          #+#    #+#             */
-/*   Updated: 2024/07/15 00:41:35 by sel-jadi         ###   ########.fr       */
+/*   Updated: 2024/07/16 23:01:10 by sdiouane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,7 +86,10 @@ t_env	*execute_cd(char	**args, t_env	*lst, char	*curr)
 	char	*old;
 	char	*des;
 
-	des = ft_getdes(lst, args[1]);
+	if (args[1] && strcmp(args[1], "~") == 0)
+		des = ft_getdes(lst, get_env_var(lst, "HOME"));
+	else
+		des = ft_getdes(lst, args[1]);
 	old = NULL;
 	if (!des)
 		return (free(curr), lst);

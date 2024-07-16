@@ -6,13 +6,13 @@
 #    By: sdiouane <sdiouane@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/03/12 23:52:42 by sdiouane          #+#    #+#              #
-#    Updated: 2024/07/16 21:57:08 by sdiouane         ###   ########.fr        #
+#    Updated: 2024/07/16 23:01:32 by sdiouane         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = minishell
 
-CC = cc -Wall -Wextra -Werror -g -fsanitize=address 
+CC = cc -Wall -Wextra -Werror #-g -fsanitize=address 
 
 
 RDFLAGS =  -L $(shell brew --prefix readline)/lib -lreadline

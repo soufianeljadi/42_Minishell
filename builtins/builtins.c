@@ -6,17 +6,20 @@
 /*   By: sdiouane <sdiouane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/26 01:07:33 by sel-jadi          #+#    #+#             */
-/*   Updated: 2024/07/13 16:19:41 by sdiouane         ###   ########.fr       */
+/*   Updated: 2024/07/16 22:49:14 by sdiouane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-static void	handle_builtin_pwd(char **args)
+static void	handle_builtin_pwd(char **args, t_env *export_i)
 {
 	char	*pwd;
 
+	
 	pwd = getcwd(NULL, 0);
+	if (!pwd)
+		pwd = get_env_value("PWD", export_i);
 	pwd_without_options(args, pwd);
 	free(pwd);
 }
@@ -53,7 +56,7 @@ int	is_builtins(char **args, t_env **export_i, char **env, int *flag)
 	else if (args[0] && !ft_strcmp(args[0], "echo"))
 		echo_fct(args);
 	else if (args[0] && !ft_strcmp(args[0], "pwd"))
-		handle_builtin_pwd(args);
+		handle_builtin_pwd(args, *export_i);
 	else if (args[0] && !ft_strcmp(args[0], "export"))
 		*export_i = export_fct(args, *export_i, env);
 	else if (args[0] && !ft_strcmp(args[0], "unset"))
