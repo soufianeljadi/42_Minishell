@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execution.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sdiouane <sdiouane@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sel-jadi <sel-jadi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/31 22:14:48 by sdiouane          #+#    #+#             */
-/*   Updated: 2024/07/16 22:16:52 by sdiouane         ###   ########.fr       */
+/*   Updated: 2024/07/16 22:35:50 by sel-jadi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,12 +16,6 @@ static void	protect_fork(int pid)
 {
 	if (pid == -1)
 		(perror("fork"), exit(EXIT_FAILURE));
-}
-
-void	check_sign(t_data *data)
-{
-	if (g_signal == 1 && (data->lst->cmd || data->lst->redirection))
-		exit (0);
 }
 
 static pid_t	execute_command(t_data *data)
@@ -35,7 +29,6 @@ static pid_t	execute_command(t_data *data)
 	protect_fork(pid);
 	if (pid == 0)
 	{
-		check_sign(data);
 		signal(SIGINT, SIG_DFL);
 		if (data->lst->next != NULL)
 		{
