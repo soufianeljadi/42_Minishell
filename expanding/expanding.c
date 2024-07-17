@@ -6,7 +6,7 @@
 /*   By: sdiouane <sdiouane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/27 19:58:08 by sdiouane          #+#    #+#             */
-/*   Updated: 2024/07/16 22:23:39 by sdiouane         ###   ########.fr       */
+/*   Updated: 2024/07/17 14:46:44 by sdiouane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ char	*prc_variable(char *exp_commande, t_p *p, t_env *export_i)
 		if (ft_strcmp(key, ""))
 		{
 			full_key = ft_strjoin("$", key);
-			str = ft_str_replace(exp_commande, full_key, ft_strdup(" "));
+			str = ft_str_replace(exp_commande, full_key, ft_strdup(""));
 			return (protect_value(value), free(key), free(exp_commande), str);
 		}
 		else
@@ -86,6 +86,8 @@ char	*exp_fct(char *commande, t_env *export_i, int *flag)
 			check_memory_allocation(exp_commande);
 			*flag = 1;
 		}
+		if (exp_commande[p.i] == '\0')
+			break ;
 		p.i++;
 	}
 	return (exp_commande);

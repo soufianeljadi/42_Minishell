@@ -6,7 +6,7 @@
 /*   By: sdiouane <sdiouane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/05 23:00:01 by sdiouane          #+#    #+#             */
-/*   Updated: 2024/07/16 11:56:50 by sdiouane         ###   ########.fr       */
+/*   Updated: 2024/07/17 16:06:45 by sdiouane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,22 +34,18 @@ int	redirection_double_out_builtins(char *redirection, int *fd)
 
 int	redirection_in_builtins(char *oper, char *redirection, int *fd)
 {
-	char	*file;
 	int		flag;
 
 	flag = 1;
-	file = file_nc(redirection);
 	if (redirection != NULL)
 	{
-		if (redirection[0] == '\\')
-			supprimer_protection(redirection);
 		if (just_quotes(redirection) == 1)
 		{
 			ft_putendl_fd("minishell: : No such file or directory", 2);
 			flag = -1;
 		}
 		else
-			*fd = open(file, O_RDONLY);
+			*fd = open(redirection, O_RDONLY);
 		if (*fd < 0)
 			(put_errno_builtins(redirection), flag = -1);
 		if (!ft_strcmp(oper, "<<") || !ft_strcmp(oper, "<"))
@@ -60,7 +56,6 @@ int	redirection_in_builtins(char *oper, char *redirection, int *fd)
 	}
 	else
 		(put_ambiguous_builtins(redirection), flag = -1);
-	free (file);
 	return (flag);
 }
 

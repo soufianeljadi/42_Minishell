@@ -6,7 +6,7 @@
 /*   By: sdiouane <sdiouane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/05 23:00:01 by sdiouane          #+#    #+#             */
-/*   Updated: 2024/07/16 11:27:20 by sdiouane         ###   ########.fr       */
+/*   Updated: 2024/07/17 16:54:47 by sdiouane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,9 +29,14 @@ int	just_quotes(char *str)
 
 void	redirection_double_out(char *redirection, int *fd)
 {
-	del_dbl_quotes(redirection);
 	if (redirection)
 	{
+		if (just_quotes(redirection) == 1)
+		{
+			ft_putendl_fd("minishell: : No such file or directory", 2);
+			exit(EXIT_FAILURE);
+		}
+		ft_rm_quotes(redirection);
 		*fd = open(redirection, O_WRONLY | O_CREAT | O_APPEND, 0666);
 		if (*fd < 0)
 			put_errno(redirection);
@@ -44,20 +49,18 @@ void	redirection_double_out(char *redirection, int *fd)
 
 void	redirection_in(char *oper, char *redirection, int *fd)
 {
-	char	*file;
-
-	file = file_nc(redirection);
 	if (redirection != NULL)
 	{
-		if (redirection[0] == '\\')
-			supprimer_protection(redirection);
 		if (just_quotes(redirection) == 1)
 		{
 			ft_putendl_fd("minishell: : No such file or directory", 2);
 			exit(EXIT_FAILURE);
 		}
 		else
-			*fd = open(file, O_RDONLY);
+		{
+			ft_rm_quotes(redirection);
+			*fd = open(redirection, O_RDONLY);
+		}
 		if (*fd < 0)
 			put_errno(redirection);
 		if (!ft_strcmp(oper, "<<") || !ft_strcmp(oper, "<"))
@@ -68,19 +71,18 @@ void	redirection_in(char *oper, char *redirection, int *fd)
 	}
 	else
 		put_ambiguous(redirection);
-	free (file);
 }
 
 void	redirection_out(char *redirection, int *fd)
 {
 	if (redirection)
 	{
-		del_dbl_quotes(redirection);
-		del_sngl_quotes(redirection);
-	}
-	if (redirection)
-	{
-		del_dbl_quotes(redirection);
+		if (just_quotes(redirection) == 1)
+		{
+			ft_putendl_fd("minishell: : No such file or directory", 2);
+			exit(EXIT_FAILURE);
+		}
+		ft_rm_quotes(redirection);
 		*fd = open(redirection, O_WRONLY | O_CREAT | O_TRUNC, 0666);
 		if (*fd < 0)
 			put_errno(redirection);

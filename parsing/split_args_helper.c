@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   split_args_helper.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sel-jadi <sel-jadi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sdiouane <sdiouane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/18 23:09:54 by sdiouane          #+#    #+#             */
-/*   Updated: 2024/07/14 00:20:40 by sel-jadi         ###   ########.fr       */
+/*   Updated: 2024/07/17 14:51:23 by sdiouane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,6 +58,8 @@ char	**split_args(char *inp)
 	char		**strs;
 	t_points	p;
 
+	if (!inp)
+		return (NULL);
 	strs = ft_allocation(inp, &p);
 	if (strs == NULL)
 		return (NULL);

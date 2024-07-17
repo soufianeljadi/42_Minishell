@@ -6,7 +6,7 @@
 /*   By: sdiouane <sdiouane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/14 16:49:09 by sel-jadi          #+#    #+#             */
-/*   Updated: 2024/07/16 11:54:05 by sdiouane         ###   ########.fr       */
+/*   Updated: 2024/07/17 16:08:09 by sdiouane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,10 +56,12 @@ static char	**l_to_args(char *line)
 	{
 		str = ft_add_sep(line);
 		cmds = split_args(str);
+		free(str);
 		return (cmds);
 	}
 	str = ft_add_sep(line);
 	cmds = split_args(str);
+	free (str);
 	return (cmds);
 }
 

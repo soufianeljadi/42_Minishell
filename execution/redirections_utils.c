@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redirections_utils.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sel-jadi <sel-jadi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sdiouane <sdiouane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/14 16:49:09 by sel-jadi          #+#    #+#             */
-/*   Updated: 2024/07/13 01:31:06 by sel-jadi         ###   ########.fr       */
+/*   Updated: 2024/07/17 14:53:52 by sdiouane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,9 +56,13 @@ static char	**l_to_args(char *line)
 	{
 		str = ft_add_sep(line);
 		cmds = split_args(str);
+		if (str)
+			free(str);
 		return (cmds);
 	}
 	str = ft_add_sep(line);
+		if (str)
+			free(str);
 	cmds = split_args(str);
 	return (cmds);
 }

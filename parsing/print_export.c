@@ -6,7 +6,7 @@
 /*   By: sdiouane <sdiouane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/09 22:02:27 by sel-jadi          #+#    #+#             */
-/*   Updated: 2024/07/16 15:36:27 by sdiouane         ###   ########.fr       */
+/*   Updated: 2024/07/17 16:50:19 by sdiouane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,6 +72,7 @@
 
 void	print_export(t_env *list)
 {
+	char *tmp = NULL;
 	while (list)
 	{
 		if (ft_strcmp(list->key, "_") != 0 && ft_strcmp(list->key, "?") != 0)
@@ -88,8 +89,10 @@ void	print_export(t_env *list)
 				else if (ft_strcmp(list->value, ""))
 				{
 					printf("declare -x %s=", list->key);
-					ft_rm_quotes(list->value);
-					printf("\"%s\"\n", list->value);
+					tmp = ft_strdup(list->value);
+					ft_rm_quotes(tmp);
+					printf("\"%s\"\n", tmp);
+					free (tmp);
 				}
 			}
 		}

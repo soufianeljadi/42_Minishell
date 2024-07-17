@@ -12,60 +12,65 @@
 
 #include "minishell.h"
 
-static int find_first_quote(const char *str)
-{
-    int i = 0;
-    while (str[i] != '\0')
-    {
-        if (str[i] == '"' || str[i] == '\'')
-            return i;
-        i++;
-    }
-    return -1;
-}
-
-static int find_matching_quote(const char *str, char quote_type, int start)
-{
-    int i = start + 1;
-    while (str[i] != '\0')
-    {
-        if (str[i] == quote_type)
-            return i;
-        i++;
-    }
-    return -1;
-}
-
-static void remove_quotes(char *str)
-{
-    int len = strlen(str);
-    int start = find_first_quote(str);
-    int end = find_matching_quote(str, str[start], start);
-
-    if (start != -1 && end != -1)
-    {
-        memmove(&str[start], &str[start + 1], end - start);
-        memmove(&str[end - 1], &str[end + 1], len - end);
-    }
-}
-
 void ft_rm_quotes(char *str)
 {
-    int len = strlen(str);
-    if (len < 2)
-        return; // Pas de quotes à enlever si la chaîne a moins de 2 caractères
+	int len = strlen(str);
+	int i, j;
+	char quote_type = '\0'; // Type de quote actuelle
 
-    int start = find_first_quote(str);
-    if (start == -1)
-        return; // Si aucune quote ouvrante trouvée, retourner
-
-    char quote_type = str[start];
-    int end = find_matching_quote(str, quote_type, start);
-    if (end == -1)
-        return; // Si aucune quote fermante correspondante trouvée, retourner
-
-    remove_quotes(str);
+	for (i = 0, j = 0; i < len; i++)
+	{
+		if (quote_type == '\0' && (str[i] == '"' || str[i] == '\''))
+		{
+			// Si on trouve une quote ouvrante, on marque son type et on la saute
+			quote_type = str[i];
+		}
+		else if (str[i] == quote_type)
+		{
+			// Si on trouve une quote fermante correspondante, on réinitialise le type de quote et on la saute
+			quote_type = '\0';
+		}
+		else
+		{
+			// Sinon, on copie le caractère
+			str[j++] = str[i];
+		}
+	}
+	str[j] = '\0'; // Terminer la chaîne
 }
+
+// void ft_rm_quotes(char *str)
+// {
+//     int len = strlen(str);
+//     int i, j;
+//     char quote_type = '\0'; // Type de quote actuelle
+
+//     for (i = 0, j = 0; i < len; i++)
+//     {
+//         if (quote_type == '\0' && (str[i] == '"' || str[i] == '\''))
+//         {
+//             // Si on trouve une quote ouvrante, on marque son type et on la saute
+//             quote_type = str[i];
+//         }
+//         else if (str[i] == quote_type)
+//         {
+//             // Si on trouve une quote fermante correspondante, on réinitialise le type de quote et on la saute
+//             quote_type = '\0';
+//         }
+//         else if (quote_type != '\0' && (str[i] == '"' || str[i] == '\'') && str[i] != quote_type)
+//         {
+//             // Si on trouve une quote intérieure alors qu'on est déjà à l'intérieur d'une paire de quotes, on la garde
+//             str[j++] = str[i];
+//         }
+//         else
+//         {
+//             // Sinon, on copie le caractère
+//             str[j++] = str[i];
+//         }
+//     }
+//     str[j] = '\0'; // Terminer la chaîne
+// }
+
 
 static void init_data(t_data *data, char *line)
 {
@@ -73,12 +78,6 @@ static void init_data(t_data *data, char *line)
 	check_here_doc(data);
 	data->lst = split_args_by_pipe(data->args);
 	data->lst = ft_expanding(&data, data->export_i);
-	int i = 0;
-	while (data->args[i])
-	{
-		ft_rm_quotes(data->args[i]);
-		i++;
-	}
 }
 
 void loop_fct(t_data *data, char *line)
@@ -161,6 +160,5 @@ int main(int ac, char **av, char **env)
 // bash-3.2$ export x="a  b"
 // bash-3.2$ ls > $x
 
-
-// exit() long long 
+// exit() long long
 // echo -nnnnnn

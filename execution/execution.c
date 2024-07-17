@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execution.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sel-jadi <sel-jadi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sdiouane <sdiouane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/31 22:14:48 by sdiouane          #+#    #+#             */
-/*   Updated: 2024/07/16 22:35:50 by sel-jadi         ###   ########.fr       */
+/*   Updated: 2024/07/17 16:51:39 by sdiouane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,7 +80,6 @@ void	ft_execution(t_data *data)
 	int	size;
 	int	pid;
 
-
 	if (g_signal == 1 && data->lst->cmd && data->lst->redirection)
 		return ;
 	(1) && (pid = 0, size = ft_lstsize(data->lst));
@@ -106,3 +105,7 @@ void	ft_execution(t_data *data)
 	}
 	(signals_init(), ft_free_tab(data->env));
 }
+
+
+
+// exit_stat : cat ctrl c 

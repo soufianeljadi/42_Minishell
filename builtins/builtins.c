@@ -6,7 +6,7 @@
 /*   By: sdiouane <sdiouane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/26 01:07:33 by sel-jadi          #+#    #+#             */
-/*   Updated: 2024/07/16 22:49:14 by sdiouane         ###   ########.fr       */
+/*   Updated: 2024/07/17 16:40:22 by sdiouane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,8 +49,8 @@ char	*get_pwd_value(char *key, t_env *export_i)
 
 int	is_builtins(char **args, t_env **export_i, char **env, int *flag)
 {
-	if (args[0] && ft_strcmp(args[0], ""))
-		supprimerguillemets(args[0]);
+	// if (args[0] && ft_strcmp(args[0], ""))
+	// 	supprimerguillemets(args[0]);
 	if (args[0] && !ft_strcmp(args[0], "exit"))
 		exit_fct(args);
 	else if (args[0] && !ft_strcmp(args[0], "echo"))

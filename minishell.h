@@ -6,7 +6,7 @@
 /*   By: sdiouane <sdiouane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 23:51:44 by sdiouane          #+#    #+#             */
-/*   Updated: 2024/07/16 15:03:55 by sdiouane         ###   ########.fr       */
+/*   Updated: 2024/07/17 15:07:46 by sdiouane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -244,7 +244,7 @@ char		**check_quotes_before_execution(char *s);
 t_noued_cmd	*new_noued_cmd(char *commande, char *redirection);
 t_noued_cmd	*split_args_by_pipe(char **args);
 t_noued_cmd	*ft_expanding(t_data **data, t_env *export_i);
-void ft_rm_quotes(char *str);
+void		ft_rm_quotes(char *str);
 void		sng_q(char *chaine);
 void		dbl_q(char *chaine);
 char		*variable_with_value(char *full_key, char *key, char *value,
