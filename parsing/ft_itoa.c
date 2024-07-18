@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_itoa.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sdiouane <sdiouane@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sel-jadi <sel-jadi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/23 06:29:59 by sel-jadi          #+#    #+#             */
-/*   Updated: 2024/07/16 16:05:22 by sdiouane         ###   ########.fr       */
+/*   Updated: 2024/07/18 23:13:53 by sel-jadi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,37 +78,30 @@ char	*ft_itoa(unsigned int n)
 	return (p);
 }
 
-static int	ft_isdigit(int c)
+int	ft_atoi(char *str)
 {
-	if (c >= '0' && c <= '9')
-		return (1);
-	return (0);
-}
-
-int	ft_atoi( char *str)
-{
-	int		i;
-	int		s;
-	long	x;
+	int			i;
+	int			s;
+	long int	r;
+	long int	x;
 
 	i = 0;
 	s = 1;
-	x = 0;
+	r = 0;
 	if (!str[0])
 		return (-1);
-	while (str[i] == ' ')
+	while (str[i] == 32 || (str[i] >= 9 && str[i] <= 13))
 		i++;
-	if ((str[i] == '-' || str[i] == '+') && (str[i + 1]))
+	if (str[i] == '-' || str[i] == '+')
 		s = 44 - str[i++];
-	while (str[i])
+	while (str[i] >= '0' && str[i] <= '9')
 	{
-		if (!ft_isdigit(str[i]))
+		x = r * 10 + (str[i++] - 48);
+		if (r > x && s == 1)
 			return (-1);
-		if (((x * 10 + str[i] - '0') > 2147483647 && s == 1)
-			|| ((x * 10 + str[i] - '0') > 2147483648 && s == -1))
-			return (-1);
-		x = x * 10 + str[i] - '0';
-		i++;
+		else if (r > x && s == -1)
+			return (0);
+		r = x;
 	}
-	return (x * s);
+	return (r * s);
 }
