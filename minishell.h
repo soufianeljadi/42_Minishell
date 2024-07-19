@@ -6,7 +6,7 @@
 /*   By: sel-jadi <sel-jadi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 23:51:44 by sdiouane          #+#    #+#             */
-/*   Updated: 2024/07/19 22:59:13 by sel-jadi         ###   ########.fr       */
+/*   Updated: 2024/07/19 23:07:33 by sel-jadi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -114,6 +114,8 @@ t_env		*ft_lstnew_data(char *value, char *key);
 void		free_noued_cmd(t_noued_cmd *node);
 char		*get_dest(char *args, t_env	*lst);
 void		free_s_env(t_env *head);
+char		*ft_getdes(t_env	*lst, char	*des);
+void		protect_value(char *value);
 void		ft_free_tab(char **tab);
 char		**ft_split(char *s, char c);
 char		**split_space_tab(char *s, char c);
