@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cd.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sdiouane <sdiouane@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sel-jadi <sel-jadi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/25 17:00:00 by sdiouane          #+#    #+#             */
-/*   Updated: 2024/07/19 22:50:25 by sdiouane         ###   ########.fr       */
+/*   Updated: 2024/07/19 23:00:17 by sel-jadi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,18 +80,6 @@ static void	ft_error(char *cmd)
 	exit_stat(0);
 }
 
-char	*get_dest(char *args, t_env	*lst)
-{
-	char	*des;
-
-	des = NULL;
-	if (args && ft_strcmp(args, "~") == 0)
-		des = ft_getdes(lst, get_env_var(lst, "HOME"));
-	else
-		des = ft_getdes(lst, args);
-	return (des);
-}
-
 t_env	*execute_cd(char	**args, t_env	*lst, char	*curr)
 {
 	char	*pwd;
@@ -102,7 +90,7 @@ t_env	*execute_cd(char	**args, t_env	*lst, char	*curr)
 	old = NULL;
 	if (!des)
 		return (free(curr), lst);
-	if (set_old_pwd(old, lst, des))	
+	if (set_old_pwd(old, lst, des))
 		return (free(des), free(curr), exit_stat(1), lst);
 	if (chdir(des) == -1)
 		return (ft_error(des), free(old), free(des), free(curr), exit_stat(1),

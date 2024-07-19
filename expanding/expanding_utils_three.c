@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expanding_utils_three.c                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sdiouane <sdiouane@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sel-jadi <sel-jadi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/14 00:09:48 by sel-jadi          #+#    #+#             */
-/*   Updated: 2024/07/15 01:25:22 by sdiouane         ###   ########.fr       */
+/*   Updated: 2024/07/19 22:57:59 by sel-jadi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,4 +63,32 @@ char	*ft_strncpy(char *dest, const char *src, size_t n)
 		i++;
 	}
 	return (dest);
+}
+
+char	*prc_variable(char *exp_commande, t_p *p, t_env *export_i)
+{
+	char	*key;
+	char	*value;
+	char	*str;
+	char	*full_key;
+
+	(1) && (str = NULL, full_key = NULL);
+	key = get_env_key(exp_commande, p->i);
+	value = format_value_if_needed(key, export_i);
+	if (!value || !ft_strcmp(value, "") || !ft_strcmp(value, " "))
+	{
+		if (ft_strcmp(key, ""))
+		{
+			str = ft_str_replace(exp_commande, key, ft_strdup(""));
+			return (protect_value(value), free(exp_commande), str);
+		}
+		else
+			return (free(key), exp_commande);
+	}
+	else
+	{
+		str = variable_with_value(full_key, key, value, exp_commande);
+		(check_memory_allocation(str), free(exp_commande));
+	}
+	return (str);
 }

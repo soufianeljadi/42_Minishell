@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execution.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sdiouane <sdiouane@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sel-jadi <sel-jadi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/31 22:14:48 by sdiouane          #+#    #+#             */
-/*   Updated: 2024/07/19 22:45:45 by sdiouane         ###   ########.fr       */
+/*   Updated: 2024/07/19 23:01:33 by sel-jadi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,15 +25,14 @@ static pid_t	execute_command(t_data *data)
 
 	if (pipe(pipefd) == -1)
 		exit(EXIT_FAILURE);
-	(pid = fork(), protect_fork(pid));
+	pid = fork();
+	protect_fork(pid);
 	if (pid == 0)
 	{
 		signal(SIGINT, SIG_DFL);
 		if (data->lst->next != NULL)
-		{
 			if (dup2(pipefd[1], STDOUT_FILENO) == -1)
 				(perror("dup2"), exit(EXIT_FAILURE));
-		}
 		(close(pipefd[1]), close(pipefd[0]));
 		(handle_child_process(data), exit(EXIT_SUCCESS));
 	}
@@ -73,14 +72,14 @@ int	multiple_cmds(t_data *data, int size)
 	return (pid);
 }
 
-void set_exit_star(int st)
+void	set_exit_star(int st)
 {
 	if (g_signal == 1)
 		exit_stat(1);
 	else if (WIFSIGNALED(st))
 		exit_stat(128 + WTERMSIG(st));
 	else
-		exit_stat(WEXITSTATUS(st));	
+		exit_stat(WEXITSTATUS(st));
 }
 
 void	ft_execution(t_data *data)

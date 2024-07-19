@@ -6,11 +6,23 @@
 /*   By: sel-jadi <sel-jadi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/26 01:07:33 by sel-jadi          #+#    #+#             */
-/*   Updated: 2024/07/19 21:40:49 by sel-jadi         ###   ########.fr       */
+/*   Updated: 2024/07/19 22:59:35 by sel-jadi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
+
+char	*get_dest(char *args, t_env	*lst)
+{
+	char	*des;
+
+	des = NULL;
+	if (args && ft_strcmp(args, "~") == 0)
+		des = ft_getdes(lst, get_env_var(lst, "HOME"));
+	else
+		des = ft_getdes(lst, args);
+	return (des);
+}
 
 static void	handle_builtin_pwd(char **args, t_env *export_i)
 {

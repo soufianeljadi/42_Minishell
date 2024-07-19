@@ -1,0 +1,14 @@
+Makefile
+a
+builtins
+execution
+expanding
+f
+ft_malloc
+here_doc
+minishell
+minishell.c
+minishell.h
+parsing
+s
+signals

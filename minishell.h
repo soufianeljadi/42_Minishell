@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sdiouane <sdiouane@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sel-jadi <sel-jadi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 23:51:44 by sdiouane          #+#    #+#             */
-/*   Updated: 2024/07/17 15:07:46 by sdiouane         ###   ########.fr       */
+/*   Updated: 2024/07/19 22:59:13 by sel-jadi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,6 +112,7 @@ void		print_list(t_env *list);
 void		print_export(t_env *list);
 t_env		*ft_lstnew_data(char *value, char *key);
 void		free_noued_cmd(t_noued_cmd *node);
+char		*get_dest(char *args, t_env	*lst);
 void		free_s_env(t_env *head);
 void		ft_free_tab(char **tab);
 char		**ft_split(char *s, char c);
