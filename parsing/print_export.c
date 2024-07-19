@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   print_export.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sel-jadi <sel-jadi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sdiouane <sdiouane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/09 22:02:27 by sel-jadi          #+#    #+#             */
-/*   Updated: 2024/07/19 22:14:42 by sel-jadi         ###   ########.fr       */
+/*   Updated: 2024/07/19 22:43:10 by sdiouane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,17 +26,14 @@ void	print_export(t_env *list)
 			else
 			{
 				if (!ft_strcmp(list->value, ""))
-				{
-					printf("declare -x %s=", list->key);
-					printf("\"%s\"\n", list->value);
-				}
+					(printf("declare -x %s=", list->key),
+						printf("\"%s\"\n", list->value));
 				else if (ft_strcmp(list->value, ""))
 				{
 					printf("declare -x %s=", list->key);
 					tmp = ft_strdup(list->value);
 					ft_rm_quotes(tmp);
-					printf("\"%s\"\n", tmp);
-					free (tmp);
+					(printf("\"%s\"\n", tmp), free (tmp));
 				}
 			}
 		}

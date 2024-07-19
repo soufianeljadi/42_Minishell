@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expanding.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sel-jadi <sel-jadi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sdiouane <sdiouane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/27 19:58:08 by sdiouane          #+#    #+#             */
-/*   Updated: 2024/07/19 21:52:38 by sel-jadi         ###   ########.fr       */
+/*   Updated: 2024/07/19 22:46:12 by sdiouane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,8 +23,9 @@ char	*prc_variable(char *exp_commande, t_p *p, t_env *export_i)
 	char	*key;
 	char	*value;
 	char	*str;
+	char	*full_key;
 
-	(1) && (str = NULL);
+	(1) && (str = NULL, full_key = NULL);
 	key = get_env_key(exp_commande, p->i);
 	value = format_value_if_needed(key, export_i);
 	if (!value || !ft_strcmp(value, "") || !ft_strcmp(value, " "))
@@ -69,8 +70,7 @@ char	*exp_fct(char *commande, t_env *export_i, int *flag)
 	if (!commande)
 		exit(exit_stat(1));
 	exp_commande = ft_strdup(commande);
-	check_memory_allocation(exp_commande);
-	free(commande);
+	(check_memory_allocation(exp_commande), free(commande));
 	while (exp_commande && exp_commande[p.i] != '\0')
 	{
 		handle_quotes(exp_commande, &p);
@@ -81,8 +81,7 @@ char	*exp_fct(char *commande, t_env *export_i, int *flag)
 		{
 			exp_commande = prc_variable(exp_commande, &p, export_i);
 			check_(exp_commande);
-			check_memory_allocation(exp_commande);
-			*flag = 1;
+			(check_memory_allocation(exp_commande), *flag = 1);
 		}
 		if (exp_commande[p.i] == '\0')
 			break ;
@@ -118,10 +117,8 @@ t_noued_cmd	*ft_expanding(t_data **data, t_env *export_i)
 		if (current->cmd)
 		{
 			if (get_pos_doll(current->cmd))
-			{
-				current->cmd = exp_fct(current->cmd, export_i, &f);
-				flag = 1;
-			}
+				(1) && (current->cmd = exp_fct(current->cmd, export_i, &f),
+					flag = 1);
 			if (flag == 1)
 				supprimerguillemets(current->cmd);
 			check_memory_allocation(current->cmd);

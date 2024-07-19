@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sel-jadi <sel-jadi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sdiouane <sdiouane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/19 21:37:55 by sel-jadi          #+#    #+#             */
-/*   Updated: 2024/07/19 21:39:53 by sel-jadi         ###   ########.fr       */
+/*   Updated: 2024/07/19 22:42:20 by sdiouane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ void	ft_rm_quotes(char *str)
 
 	i = 0;
 	j = 0;
-	len = strlen(str);
+	len = ft_strlen(str);
 	quote_type = '\0';
 	while (i < len)
 	{

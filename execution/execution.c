@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execution.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sel-jadi <sel-jadi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sdiouane <sdiouane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/31 22:14:48 by sdiouane          #+#    #+#             */
-/*   Updated: 2024/07/19 21:41:46 by sel-jadi         ###   ########.fr       */
+/*   Updated: 2024/07/19 22:45:45 by sdiouane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,8 +25,7 @@ static pid_t	execute_command(t_data *data)
 
 	if (pipe(pipefd) == -1)
 		exit(EXIT_FAILURE);
-	pid = fork();
-	protect_fork(pid);
+	(pid = fork(), protect_fork(pid));
 	if (pid == 0)
 	{
 		signal(SIGINT, SIG_DFL);
@@ -74,6 +73,16 @@ int	multiple_cmds(t_data *data, int size)
 	return (pid);
 }
 
+void set_exit_star(int st)
+{
+	if (g_signal == 1)
+		exit_stat(1);
+	else if (WIFSIGNALED(st))
+		exit_stat(128 + WTERMSIG(st));
+	else
+		exit_stat(WEXITSTATUS(st));	
+}
+
 void	ft_execution(t_data *data)
 {
 	int	st;
@@ -96,12 +105,7 @@ void	ft_execution(t_data *data)
 		(1) && (pid = multiple_cmds(data, size), waitpid(pid, &st, 0));
 		while (0 < wait(NULL))
 			;
-		if (g_signal == 1)
-			exit_stat(1);
-		else if (WIFSIGNALED(st))
-			exit_stat(128 + WTERMSIG(st));
-		else
-			exit_stat(WEXITSTATUS(st));
+		set_exit_star(st);
 	}
 	(signals_init(), ft_free_tab(data->env));
 }
