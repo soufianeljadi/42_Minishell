@@ -6,7 +6,7 @@
 /*   By: sdiouane <sdiouane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/27 19:58:08 by sdiouane          #+#    #+#             */
-/*   Updated: 2024/07/19 20:53:07 by sdiouane         ###   ########.fr       */
+/*   Updated: 2024/07/19 21:34:10 by sdiouane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,11 +101,11 @@ int get_pos_doll(char *str)
 	i = 0;
 	while (str[i])
 	{
-		if (str[i] == '$')
-			return (i);
+		if (str[i] == '$' && str[i + 1] != ' ' &&  str[i + 1] != '\t')
+			return (1);
 		i++;
 	}
-	return (-1);
+	return (0);
 }
 
 t_noued_cmd	*ft_expanding(t_data **data, t_env *export_i)
@@ -122,19 +122,14 @@ t_noued_cmd	*ft_expanding(t_data **data, t_env *export_i)
 	{
 		if (current->cmd)
 		{
-			if (current->cmd[get_pos_doll(current->cmd)] != -1)
-			{
-				if (current->cmd[get_pos_doll(current->cmd)] == '$' && (current->cmd[get_pos_doll(current->cmd) + 1] != ' ' && current->cmd[get_pos_doll(current->cmd) + 1] != '\t' && current->cmd[get_pos_doll(current->cmd) + 1] != '\0'))
+				if (get_pos_doll(current->cmd))
 				{	
-					flag = 1;
 					current->cmd = exp_fct(current->cmd, export_i, &f);
+					flag = 1;
 				}
-				printf("flag : %d\n", flag);
 				if (flag == 1)
 					supprimerguillemets(current->cmd);
-				printf(" ----> ; : %s\n", current->cmd);
 				check_memory_allocation(current->cmd);
-			}
 		}
 		if (current->redirection)
 		{
