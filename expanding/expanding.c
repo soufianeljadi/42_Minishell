@@ -6,7 +6,7 @@
 /*   By: sdiouane <sdiouane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/27 19:58:08 by sdiouane          #+#    #+#             */
-/*   Updated: 2024/07/17 14:46:44 by sdiouane         ###   ########.fr       */
+/*   Updated: 2024/07/19 20:53:07 by sdiouane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,8 +33,9 @@ char	*prc_variable(char *exp_commande, t_p *p, t_env *export_i)
 		if (ft_strcmp(key, ""))
 		{
 			full_key = ft_strjoin("$", key);
-			str = ft_str_replace(exp_commande, full_key, ft_strdup(""));
-			return (protect_value(value), free(key), free(exp_commande), str);
+			str = ft_str_replace(exp_commande, key, ft_strdup(""));
+			
+			return (protect_value(value), /*free(key),*/ free(exp_commande), str);
 		}
 		else
 			return (free(key), exp_commande);
@@ -93,11 +94,26 @@ char	*exp_fct(char *commande, t_env *export_i, int *flag)
 	return (exp_commande);
 }
 
+int get_pos_doll(char *str)
+{
+	int i;
+
+	i = 0;
+	while (str[i])
+	{
+		if (str[i] == '$')
+			return (i);
+		i++;
+	}
+	return (-1);
+}
+
 t_noued_cmd	*ft_expanding(t_data **data, t_env *export_i)
 {
 	t_data		*tmp;
 	t_noued_cmd	*current;
 	int			f;
+	int			flag = 0;
 
 	tmp = *data;
 	current = tmp->lst;
@@ -106,14 +122,23 @@ t_noued_cmd	*ft_expanding(t_data **data, t_env *export_i)
 	{
 		if (current->cmd)
 		{
-			current->cmd = exp_fct(current->cmd, export_i, &f);
-			// ft_rm_quotes(current->cmd);
-			check_memory_allocation(current->cmd);
+			if (current->cmd[get_pos_doll(current->cmd)] != -1)
+			{
+				if (current->cmd[get_pos_doll(current->cmd)] == '$' && (current->cmd[get_pos_doll(current->cmd) + 1] != ' ' && current->cmd[get_pos_doll(current->cmd) + 1] != '\t' && current->cmd[get_pos_doll(current->cmd) + 1] != '\0'))
+				{	
+					flag = 1;
+					current->cmd = exp_fct(current->cmd, export_i, &f);
+				}
+				printf("flag : %d\n", flag);
+				if (flag == 1)
+					supprimerguillemets(current->cmd);
+				printf(" ----> ; : %s\n", current->cmd);
+				check_memory_allocation(current->cmd);
+			}
 		}
 		if (current->redirection)
 		{
 			current->redirection = exp_fct(current->redirection, export_i, &f);
-			// ft_rm_quotes(current->redirection);
 			check_memory_allocation(current->redirection);
 		}
 		current = current->next;

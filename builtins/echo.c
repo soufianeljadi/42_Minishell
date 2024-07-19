@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   echo.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sel-jadi <sel-jadi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sdiouane <sdiouane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/23 16:50:26 by sdiouane          #+#    #+#             */
-/*   Updated: 2024/07/18 23:18:08 by sel-jadi         ###   ########.fr       */
+/*   Updated: 2024/07/19 08:54:46 by sdiouane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ void	echo_fct(char **args)
 	}
 	while (args[i])
 	{
-		// ft_rm_quotes(args[i]);
+		ft_rm_quotes(args[i]);
 		ft_putstr_fd(args[i], 1);
 		if (args[i + 1])
 			ft_putstr_fd(" ", 1);
@@ -51,3 +51,4 @@ void	echo_fct(char **args)
 		ft_putstr_fd("\n", 1);
 	exit_stat(0);
 }
+// exit | exit 200

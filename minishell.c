@@ -39,38 +39,6 @@ void ft_rm_quotes(char *str)
 	str[j] = '\0'; // Terminer la chaîne
 }
 
-// void ft_rm_quotes(char *str)
-// {
-//     int len = strlen(str);
-//     int i, j;
-//     char quote_type = '\0'; // Type de quote actuelle
-
-//     for (i = 0, j = 0; i < len; i++)
-//     {
-//         if (quote_type == '\0' && (str[i] == '"' || str[i] == '\''))
-//         {
-//             // Si on trouve une quote ouvrante, on marque son type et on la saute
-//             quote_type = str[i];
-//         }
-//         else if (str[i] == quote_type)
-//         {
-//             // Si on trouve une quote fermante correspondante, on réinitialise le type de quote et on la saute
-//             quote_type = '\0';
-//         }
-//         else if (quote_type != '\0' && (str[i] == '"' || str[i] == '\'') && str[i] != quote_type)
-//         {
-//             // Si on trouve une quote intérieure alors qu'on est déjà à l'intérieur d'une paire de quotes, on la garde
-//             str[j++] = str[i];
-//         }
-//         else
-//         {
-//             // Sinon, on copie le caractère
-//             str[j++] = str[i];
-//         }
-//     }
-//     str[j] = '\0'; // Terminer la chaîne
-// }
-
 
 static void init_data(t_data *data, char *line)
 {
@@ -156,9 +124,4 @@ int main(int ac, char **av, char **env)
 	free(line);
 	return (0);
 }
-// leaks export with >
-// bash-3.2$ export x="a  b"
-// bash-3.2$ ls > $x
-
-// exit() long long
-// echo -nnnnnn
+// '            'ls 

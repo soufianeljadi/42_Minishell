@@ -6,7 +6,7 @@
 /*   By: sdiouane <sdiouane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/17 09:55:09 by sdiouane          #+#    #+#             */
-/*   Updated: 2024/07/17 16:51:09 by sdiouane         ###   ########.fr       */
+/*   Updated: 2024/07/19 19:07:00 by sdiouane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,8 +15,15 @@
 char	**splt_args(char *line)
 {
 	char	**cmds;
+	int		i;
 
+	i = 0;
 	cmds = split_args(line);
+	while (cmds[i])
+	{
+		ft_rm_quotes(cmds[i]);
+		i++;
+	}
 	return (cmds);
 }
 
@@ -54,7 +61,6 @@ char	**check_quotes_before_execution(char *s)
 
 	if (!s)
 		exit(EXIT_FAILURE);
-	ft_rm_quotes(s);
 	cmd = splt_args(s);
 	if (!cmd)
 		exit(EXIT_FAILURE);

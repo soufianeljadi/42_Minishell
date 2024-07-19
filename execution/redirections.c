@@ -6,7 +6,7 @@
 /*   By: sdiouane <sdiouane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/05 23:00:01 by sdiouane          #+#    #+#             */
-/*   Updated: 2024/07/17 16:54:47 by sdiouane         ###   ########.fr       */
+/*   Updated: 2024/07/19 19:03:56 by sdiouane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,10 +14,10 @@
 
 int	just_quotes(char *str)
 {
-	if (strstr(str, " ") || strstr(str, "\t"))
-	{
-		return (0);
-	}
+	// if (strstr(str, " ") || strstr(str, "\t"))
+	// {
+	// 	return (0);
+	// }
 	while (*str)
 	{
 		if (*str != '"' && *str != '\'' && *str != ' ' && *str != '\t')

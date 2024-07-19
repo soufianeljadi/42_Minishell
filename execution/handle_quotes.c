@@ -6,7 +6,7 @@
 /*   By: sdiouane <sdiouane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/17 09:54:34 by sdiouane          #+#    #+#             */
-/*   Updated: 2024/07/16 11:04:58 by sdiouane         ###   ########.fr       */
+/*   Updated: 2024/07/19 20:44:09 by sdiouane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ void	supprimerguillemets(char *chaine)
 	j = 0;
 	while (chaine[i])
 	{
-		if (chaine[i] != '\"' && chaine[i] != '\'')
+		if (chaine[i] != '$')
 			chaine[j++] = chaine[i];
 		i++;
 	}
