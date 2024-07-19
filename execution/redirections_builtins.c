@@ -3,19 +3,18 @@
 /*                                                        :::      ::::::::   */
 /*   redirections_builtins.c                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sdiouane <sdiouane@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sel-jadi <sel-jadi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/05 23:00:01 by sdiouane          #+#    #+#             */
-/*   Updated: 2024/07/17 16:06:45 by sdiouane         ###   ########.fr       */
+/*   Updated: 2024/07/19 21:55:34 by sel-jadi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-
 int	redirection_double_out_builtins(char *redirection, int *fd)
 {
-	int flag;
+	int	flag;
 
 	flag = 1;
 	del_dbl_quotes(redirection);
@@ -23,7 +22,7 @@ int	redirection_double_out_builtins(char *redirection, int *fd)
 	{
 		*fd = open(redirection, O_WRONLY | O_CREAT | O_APPEND, 0666);
 		if (*fd < 0)
-			(put_errno_builtins(redirection), flag= -1);
+			(put_errno_builtins(redirection), flag = -1);
 		redirection = NULL;
 		(dup2(*fd, STDOUT_FILENO), close(*fd));
 	}
@@ -61,7 +60,7 @@ int	redirection_in_builtins(char *oper, char *redirection, int *fd)
 
 int	redirection_out_builtins(char *redirection, int *fd)
 {
-	int flag;
+	int	flag;
 
 	flag = 1;
 	if (redirection)

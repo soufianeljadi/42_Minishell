@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redirections_utils_builtins.c                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sdiouane <sdiouane@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sel-jadi <sel-jadi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/14 16:49:09 by sel-jadi          #+#    #+#             */
-/*   Updated: 2024/07/17 16:08:09 by sdiouane         ###   ########.fr       */
+/*   Updated: 2024/07/19 21:54:12 by sel-jadi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,7 @@ static char	**l_to_args(char *line)
 	return (cmds);
 }
 
-static int	handle_redirections_builtins(char **red, int *fd_in, int *fd_out, char *cmd)
+int	handle_redirections_builtins(char **red, int *fd_in, int *fd_out, char *cmd)
 {
 	int	i;
 	int	flag;
@@ -103,8 +103,9 @@ int	execute_with_redirection_builtins(t_data *data)
 		r = ft_strdup(data->lst->redirection);
 		red = l_to_args(r);
 		if (!red)
-			return (0) ;
-		flag = handle_redirections_builtins(red, &fd_in, &fd_out, data->lst->cmd);
+			return (0);
+		flag = handle_redirections_builtins(red, \
+			&fd_in, &fd_out, data->lst->cmd);
 		(free(r), ft_free_tab(red));
 	}
 	return (flag);

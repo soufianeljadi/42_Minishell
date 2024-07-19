@@ -3,76 +3,20 @@
 /*                                                        :::      ::::::::   */
 /*   print_export.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sdiouane <sdiouane@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sel-jadi <sel-jadi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/09 22:02:27 by sel-jadi          #+#    #+#             */
-/*   Updated: 2024/07/17 16:50:19 by sdiouane         ###   ########.fr       */
+/*   Updated: 2024/07/19 22:14:42 by sel-jadi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-// void ft_rm_quotes(char *str)
-// {
-//     int len = strlen(str);
-//     if (len < 2)
-//         return; // Pas de quotes à enlever si la chaîne a moins de 2 caractères
-
-//     char quote_type = '\0';
-//     int start = -1, end = -1;
-
-//     // Trouver la première quote ouvrante
-//     for (int i = 0; i < len; i++)
-//     {
-//         if (str[i] == '"' || str[i] == '\'')
-//         {
-//             quote_type = str[i];
-//             start = i;
-//             break;
-//         }
-//     }
-
-//     // Si aucune quote ouvrante trouvée, retourner
-//     if (start == -1)
-//         return;
-
-//     // Si la première quote est au début et il y a un espace après
-//     if (start == 0 && len > 2 && (str[start + 1] == ' ' || str[start + 1] == '\t'))
-//         return;
-
-//     // Trouver la première quote fermante correspondante
-//     for (int i = start + 1; i < len; i++)
-//     {
-//         if (str[i] == quote_type)
-//         {
-//             end = i;
-//             break;
-//         }
-//     }
-
-//     // Si aucune quote fermante correspondante trouvée, retourner
-//     if (end == -1)
-//         return;
-
-//     // Supprimer les premières quotes fermées
-//     memmove(&str[start], &str[start + 1], end - start - 1);
-//     memmove(&str[end - 1], &str[end + 1], len - end);
-//     len -= 2; // Ajuster la longueur de la chaîne après suppression des quotes
-
-//     // Vérifie si les nouvelles premières et dernières quotes sont appariées
-//     if ((str[0] == '"' && str[len - 1] == '"') || (str[0] == '\'' && str[len - 1] == '\''))
-//     {
-//         // Supprime la première quote
-//         memmove(str, str + 1, len - 1);
-//         // Supprime la dernière quote
-//         str[len - 2] = '\0'; // Ajuste la longueur de la chaîne
-//     }
-// }
-
-
 void	print_export(t_env *list)
 {
-	char *tmp = NULL;
+	char	*tmp;
+
+	tmp = NULL;
 	while (list)
 	{
 		if (ft_strcmp(list->key, "_") != 0 && ft_strcmp(list->key, "?") != 0)

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export_not_null.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sdiouane <sdiouane@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sel-jadi <sel-jadi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/24 21:25:42 by sdiouane          #+#    #+#             */
-/*   Updated: 2024/07/17 16:40:28 by sdiouane         ###   ########.fr       */
+/*   Updated: 2024/07/19 21:54:49 by sel-jadi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,6 @@ void	process_argument(char **args, t_env *env, int i)
 	int		j;
 
 	(1) && (j = 0, key = NULL);
-	// ft_rm_quotes(args[i]);
 	key = extract_key(args[i], &j);
 	if (is_invalid_plus(args[i], j))
 		handle_invalid_plus(key, args[i], j);

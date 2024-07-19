@@ -1,46 +1,42 @@
-//* ************************************************************************** */
+/* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sdiouane <sdiouane@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sel-jadi <sel-jadi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/03/12 23:52:10 by sdiouane          #+#    #+#             */
-/*   Updated: 2024/07/16 22:15:07 by sdiouane         ###   ########.fr       */
+/*   Created: 2024/07/19 21:37:55 by sel-jadi          #+#    #+#             */
+/*   Updated: 2024/07/19 21:39:53 by sel-jadi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void ft_rm_quotes(char *str)
+void	ft_rm_quotes(char *str)
 {
-	int len = strlen(str);
-	int i, j;
-	char quote_type = '\0'; // Type de quote actuelle
+	int		len;
+	int		i;
+	int		j;
+	char	quote_type;
 
-	for (i = 0, j = 0; i < len; i++)
+	i = 0;
+	j = 0;
+	len = strlen(str);
+	quote_type = '\0';
+	while (i < len)
 	{
 		if (quote_type == '\0' && (str[i] == '"' || str[i] == '\''))
-		{
-			// Si on trouve une quote ouvrante, on marque son type et on la saute
 			quote_type = str[i];
-		}
 		else if (str[i] == quote_type)
-		{
-			// Si on trouve une quote fermante correspondante, on réinitialise le type de quote et on la saute
 			quote_type = '\0';
-		}
 		else
-		{
-			// Sinon, on copie le caractère
 			str[j++] = str[i];
-		}
+		i++;
 	}
-	str[j] = '\0'; // Terminer la chaîne
+	str[j] = '\0';
 }
 
-
-static void init_data(t_data *data, char *line)
+static void	init_data(t_data *data, char *line)
 {
 	data->args = line_to_args(line);
 	check_here_doc(data);
@@ -48,9 +44,9 @@ static void init_data(t_data *data, char *line)
 	data->lst = ft_expanding(&data, data->export_i);
 }
 
-void loop_fct(t_data *data, char *line)
+void	loop_fct(t_data *data, char *line)
 {
-	char *pwd;
+	char	*pwd;
 
 	pwd = NULL;
 	while (42)
@@ -77,18 +73,18 @@ void loop_fct(t_data *data, char *line)
 	}
 }
 
-void main_loop(char *line, t_env *export_i)
+void	main_loop(char *line, t_env *export_i)
 {
-	t_data *data;
+	t_data	*data;
 
 	if (export_i == NULL)
 	{
 		ft_putstr_fd("envirement empty\n", 2);
-		return;
+		return ;
 	}
 	data = (t_data *)ft_malloc(sizeof(t_data));
 	if (!data)
-		return;
+		return ;
 	data->lst = NULL;
 	data->args = NULL;
 	data->env = NULL;
@@ -99,11 +95,11 @@ void main_loop(char *line, t_env *export_i)
 	clear_history();
 }
 
-int main(int ac, char **av, char **env)
+int	main(int ac, char **av, char **env)
 {
-	char *line;
-	t_env *export_i;
-	t_env *lst;
+	char	*line;
+	t_env	*export_i;
+	t_env	*lst;
 
 	(void)av;
 	export_i = NULL;
@@ -124,4 +120,3 @@ int main(int ac, char **av, char **env)
 	free(line);
 	return (0);
 }
-// '            'ls 

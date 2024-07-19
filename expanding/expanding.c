@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expanding.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sdiouane <sdiouane@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sel-jadi <sel-jadi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/27 19:58:08 by sdiouane          #+#    #+#             */
-/*   Updated: 2024/07/19 21:34:10 by sdiouane         ###   ########.fr       */
+/*   Updated: 2024/07/19 21:52:38 by sel-jadi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,20 +22,17 @@ char	*prc_variable(char *exp_commande, t_p *p, t_env *export_i)
 {
 	char	*key;
 	char	*value;
-	char	*full_key;
 	char	*str;
 
-	(1) && (str = NULL, full_key = NULL);
+	(1) && (str = NULL);
 	key = get_env_key(exp_commande, p->i);
 	value = format_value_if_needed(key, export_i);
 	if (!value || !ft_strcmp(value, "") || !ft_strcmp(value, " "))
 	{
 		if (ft_strcmp(key, ""))
 		{
-			full_key = ft_strjoin("$", key);
 			str = ft_str_replace(exp_commande, key, ft_strdup(""));
-			
-			return (protect_value(value), /*free(key),*/ free(exp_commande), str);
+			return (protect_value(value), free(exp_commande), str);
 		}
 		else
 			return (free(key), exp_commande);
@@ -94,14 +91,14 @@ char	*exp_fct(char *commande, t_env *export_i, int *flag)
 	return (exp_commande);
 }
 
-int get_pos_doll(char *str)
+int	get_pos_doll(char *str)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	while (str[i])
 	{
-		if (str[i] == '$' && str[i + 1] != ' ' &&  str[i + 1] != '\t')
+		if (str[i] == '$' && str[i + 1] != ' ' && str[i + 1] != '\t')
 			return (1);
 		i++;
 	}
@@ -113,23 +110,21 @@ t_noued_cmd	*ft_expanding(t_data **data, t_env *export_i)
 	t_data		*tmp;
 	t_noued_cmd	*current;
 	int			f;
-	int			flag = 0;
+	int			flag;
 
-	tmp = *data;
-	current = tmp->lst;
-	f = 0;
+	(1) && (flag = 0, tmp = *data, current = tmp->lst, f = 0);
 	while (current)
 	{
 		if (current->cmd)
 		{
-				if (get_pos_doll(current->cmd))
-				{	
-					current->cmd = exp_fct(current->cmd, export_i, &f);
-					flag = 1;
-				}
-				if (flag == 1)
-					supprimerguillemets(current->cmd);
-				check_memory_allocation(current->cmd);
+			if (get_pos_doll(current->cmd))
+			{
+				current->cmd = exp_fct(current->cmd, export_i, &f);
+				flag = 1;
+			}
+			if (flag == 1)
+				supprimerguillemets(current->cmd);
+			check_memory_allocation(current->cmd);
 		}
 		if (current->redirection)
 		{

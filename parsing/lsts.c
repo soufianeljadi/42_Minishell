@@ -6,7 +6,7 @@
 /*   By: sel-jadi <sel-jadi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/13 00:32:13 by sdiouane          #+#    #+#             */
-/*   Updated: 2024/07/11 23:25:17 by sel-jadi         ###   ########.fr       */
+/*   Updated: 2024/07/19 22:29:34 by sel-jadi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,6 +85,7 @@ void	print_list(t_env *list)
 			&& (list->value[0] || !ft_strcmp(list->value, "")))
 		{
 			printf("%s", list->key);
+			ft_rm_quotes(list->value);
 			printf("=%s\n", list->value);
 		}
 		list = list->next;
