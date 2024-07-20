@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expanding.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sel-jadi <sel-jadi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sdiouane <sdiouane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/27 19:58:08 by sdiouane          #+#    #+#             */
-/*   Updated: 2024/07/19 22:58:10 by sel-jadi         ###   ########.fr       */
+/*   Updated: 2024/07/20 09:59:53 by sdiouane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,7 +91,7 @@ t_noued_cmd	*ft_expanding(t_data **data, t_env *export_i)
 			if (get_pos_doll(current->cmd))
 				(1) && (current->cmd = exp_fct(current->cmd, export_i, &f),
 					flag = 1);
-			if (flag == 1)
+			if (flag == 1 && f == 1)
 				supprimerguillemets(current->cmd);
 			check_memory_allocation(current->cmd);
 		}
