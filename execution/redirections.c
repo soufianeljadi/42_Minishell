@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redirections.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sel-jadi <sel-jadi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sdiouane <sdiouane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/05 23:00:01 by sdiouane          #+#    #+#             */
-/*   Updated: 2024/07/19 21:41:55 by sel-jadi         ###   ########.fr       */
+/*   Updated: 2024/07/20 12:01:19 by sdiouane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,12 +73,12 @@ void	redirection_out(char *redirection, int *fd)
 {
 	if (redirection)
 	{
-		if (just_quotes(redirection) == 1)
-		{
-			ft_putendl_fd("minishell: : No such file or directory", 2);
-			exit(EXIT_FAILURE);
-		}
-		ft_rm_quotes(redirection);
+		del_dbl_quotes(redirection);
+		del_sngl_quotes(redirection);
+	}
+	if (redirection)
+	{
+		del_dbl_quotes(redirection);
 		*fd = open(redirection, O_WRONLY | O_CREAT | O_TRUNC, 0666);
 		if (*fd < 0)
 			put_errno(redirection);

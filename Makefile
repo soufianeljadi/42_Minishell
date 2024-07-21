@@ -3,17 +3,16 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: sel-jadi <sel-jadi@student.42.fr>          +#+  +:+       +#+         #
+#    By: sdiouane <sdiouane@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/03/12 23:52:42 by sdiouane          #+#    #+#              #
-#    Updated: 2024/07/19 22:53:22 by sel-jadi         ###   ########.fr        #
+#    Updated: 2024/07/20 12:03:09 by sdiouane         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = minishell
 
-CC = cc -Wall -Wextra -Werror #-g -fsanitize=address 
-
+CC = cc -Wall -Wextra -Werror
 
 RDFLAGS =  -L $(shell brew --prefix readline)/lib -lreadline
 SRC =	minishell.c \

@@ -3,14 +3,38 @@
 /*                                                        :::      ::::::::   */
 /*   ft_remove_quotes.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sel-jadi <sel-jadi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sdiouane <sdiouane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/17 10:16:07 by sdiouane          #+#    #+#             */
-/*   Updated: 2024/07/19 21:47:44 by sel-jadi         ###   ########.fr       */
+/*   Updated: 2024/07/20 10:59:41 by sdiouane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
+
+void	*ft_memmove(void *dst, void *src, size_t len)
+{
+	char	*d;
+	char	*s;
+
+	if (dst == src || len == 0)
+		return (dst);
+	if (dst < src)
+	{
+		d = (char *)dst;
+		s = (char *)src;
+		while (len--)
+			*d++ = *s++;
+	}
+	else
+	{
+		d = (char *) dst + (len - 1);
+		s = (char *) src + (len - 1);
+		while (len--)
+			*d-- = *s--;
+	}
+	return (dst);
+}
 
 static int	find_first_quote(const char *str)
 {
@@ -46,7 +70,7 @@ static void	remove_quotes(char *str)
 	int	start;
 	int	end;
 
-	len = strlen(str);
+	len = ft_strlen(str);
 	start = find_first_quote(str);
 	end = find_matching_quote(str, str[start], start);
 	if (start != -1 && end != -1)
@@ -63,7 +87,7 @@ void	ft_rm_quotes(char *str)
 	int		start;
 	int		end;
 
-	len = strlen(str);
+	len = ft_strlen(str);
 	if (len < 2)
 		return ;
 	start = find_first_quote(str);

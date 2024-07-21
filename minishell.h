@@ -6,7 +6,7 @@
 /*   By: sel-jadi <sel-jadi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 23:51:44 by sdiouane          #+#    #+#             */
-/*   Updated: 2024/07/19 23:07:33 by sel-jadi         ###   ########.fr       */
+/*   Updated: 2024/07/20 11:24:34 by sel-jadi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,12 +43,6 @@
 
 # define MAX_TOKEN_LENGTH 100
 # define MAX_COMMAND_LENGTH 100
-
-# ifndef BUFFER_SIZE
-#  define BUFFER_SIZE 1042
-# endif
-
-# define MAX_OUTPUT_SIZE 1024
 
 extern int	g_signal;
 
@@ -112,10 +106,7 @@ void		print_list(t_env *list);
 void		print_export(t_env *list);
 t_env		*ft_lstnew_data(char *value, char *key);
 void		free_noued_cmd(t_noued_cmd *node);
-char		*get_dest(char *args, t_env	*lst);
 void		free_s_env(t_env *head);
-char		*ft_getdes(t_env	*lst, char	*des);
-void		protect_value(char *value);
 void		ft_free_tab(char **tab);
 char		**ft_split(char *s, char c);
 char		**split_space_tab(char *s, char c);
@@ -190,6 +181,7 @@ int			builtins(t_data *data);
 t_env		*export_fct(char **args, t_env *env, char **eenv);
 int			existe_deja(char *key, t_env *env);
 void		ft_rm_quotes(char *str);
+
 int			verif_export(char *str);
 void		is_null(char **args, t_env *env);
 void		concatenation(char **args, t_env *env, char *key);
@@ -281,7 +273,7 @@ char		*extract_key(char *arg, int *j);
 int			contains_space_or_tab(char *arg);
 void		init_t_p(t_p	*p);
 char		*replace_exit_status(char	*exp_commande);
-void		print_error(char	*str, char	*type);
+void		print_error(char	*str);
 char		*get_env_var(t_env	*lst, char	*key);
 int			set_env_var(t_env	**lst, char	*key, char	*value);
 void		put_ambiguous(char *redirection);
@@ -293,4 +285,8 @@ char		*format_value_if_needed(char *key, t_env *export_i);
 void		*ft_malloc(size_t size);
 void		handle_path_error(char **cmd);
 char		*ft_check(char *str);
+char		*ft_getdes(t_env	*lst, char	*des);
+char		*get_dest(char *args, t_env	*lst);
+void		*ft_memmove(void *dst, void *src, size_t len);
+void		protect_value(char *value);
 #endif

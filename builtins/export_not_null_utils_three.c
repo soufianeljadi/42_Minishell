@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export_not_null_utils_three.c                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sel-jadi <sel-jadi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sdiouane <sdiouane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/06 15:16:52 by sdiouane          #+#    #+#             */
-/*   Updated: 2024/07/15 00:40:37 by sel-jadi         ###   ########.fr       */
+/*   Updated: 2024/07/20 11:13:36 by sdiouane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 void	handle_invalid_key(char *key)
 {
-	print_error(key, "export");
+	print_error(key);
 	exit_stat(1);
 }
 
@@ -25,8 +25,9 @@ void	handle_invalid_plus(char *key, char *arg, int j)
 
 	tmp = ft_strdup(&arg[j]);
 	error_message = ft_strjoin(key, tmp);
-	print_error(error_message, "export");
+	print_error(error_message);
 	free(tmp);
+	free (key);
 	exit_stat(1);
 }
 

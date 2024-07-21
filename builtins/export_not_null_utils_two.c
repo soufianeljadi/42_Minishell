@@ -6,7 +6,7 @@
 /*   By: sdiouane <sdiouane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/09 23:16:44 by sel-jadi          #+#    #+#             */
-/*   Updated: 2024/07/14 03:36:41 by sdiouane         ###   ########.fr       */
+/*   Updated: 2024/07/20 11:59:50 by sdiouane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,5 +64,3 @@ t_env	*begin_export(t_env *env, char **args, char *key)
 	}
 	return (env);
 }
-
-//change pwd and old pwd ila tms7o b unset

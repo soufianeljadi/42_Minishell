@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   unset.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sdiouane <sdiouane@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sel-jadi <sel-jadi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/23 15:04:54 by sdiouane          #+#    #+#             */
-/*   Updated: 2024/07/15 01:34:38 by sdiouane         ###   ########.fr       */
+/*   Updated: 2024/07/20 11:21:48 by sel-jadi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,12 @@ static t_env	*remove_env_var(t_env *env, char *key)
 	return (env);
 }
 
+void	ft_free_key(char *key)
+{
+	if (key)
+		free (key);
+}
+
 t_env	*unset_fct(char **args, t_env *env)
 {
 	int		i;
@@ -62,20 +68,20 @@ t_env	*unset_fct(char **args, t_env *env)
 		while (args[++i])
 		{
 			handle_unset_quotes(args[i]);
-			key = strtok(args[i], " \t");
+			key = ft_strtok(args[i], " \t");
 			while (key)
 			{
 				if (is_valid_key(key))
-				{
-					fprintf(stderr,
-						"minishell: unset: %s: not a valid identifier\n", key);
-					exit_stat(1);
-				}
+					(print_error(key), exit_stat(1));
 				else
+				{
 					env = remove_env_var(env, key);
-				key = strtok(NULL, " \t");
+					free (key);
+				}
+				(key = ft_strtok(NULL, " \t"));
 			}
 		}
+		ft_free_key(key);
 	}
 	return (exit_stat(0), env);
 }

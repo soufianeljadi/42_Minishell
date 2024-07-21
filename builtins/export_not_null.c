@@ -3,19 +3,18 @@
 /*                                                        :::      ::::::::   */
 /*   export_not_null.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sel-jadi <sel-jadi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sdiouane <sdiouane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/24 21:25:42 by sdiouane          #+#    #+#             */
-/*   Updated: 2024/07/19 21:54:49 by sel-jadi         ###   ########.fr       */
+/*   Updated: 2024/07/20 12:01:04 by sdiouane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-void	print_error(char *str, char *type)
+void	print_error(char *str)
 {
 	ft_putstr_fd("minishell: `", 2);
-	ft_putstr_fd(type, 2);
 	ft_putstr_fd(str, 2);
 	ft_putstr_fd("': not a valid identifier\n", 2);
 	free(str);
