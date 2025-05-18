@@ -6,7 +6,7 @@
 /*   By: sel-jadi <sel-jadi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/25 16:59:26 by sdiouane          #+#    #+#             */
-/*   Updated: 2024/07/15 00:40:01 by sel-jadi         ###   ########.fr       */
+/*   Updated: 2025/05/18 21:06:53 by sel-jadi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ char	*ft_substr(char const *s, unsigned int start, size_t len)
 	str = (char *)ft_malloc(sizeof(char) * (i + 1));
 	if (!str)
 		return (0);
-	strlcpy(str, s + start, i + 1);
+	ft_strncpy(str, s + start, i + 1);
 	return (str);
 }
 
